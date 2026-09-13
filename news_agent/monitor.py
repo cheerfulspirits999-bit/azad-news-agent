@@ -44,8 +44,16 @@ REGION_KEYS = {
     "india": ["india", "new delhi", "mumbai", "pm modi", "supreme court", "high court",
               "parliament", "bsf", "crpf", "nia court", "cbi", "isro", "rbi", "brics",
               "bengaluru", "chennai", "kolkata", "jammu and kashmir", "punjab police",
-              "maharashtra", "kerala", "tamil nadu", "gujarat", "uttar pradesh",
-              "central government", "union government", "andhra pradesh"],
+              "maharashtra", "kerala", "keralam", "tamil nadu", "gujarat", "uttar pradesh",
+              "central government", "union government", "andhra pradesh",
+              "manipur", "imphal", "kuki", "assam", "meghalaya", "tripura", "mizoram",
+              "nagaland", "arunachal", "odisha", "bhubaneswar", "bihar", "patna",
+              "jharkhand", "ranchi", "chhattisgarh", "raipur", "madhya pradesh", "bhopal",
+              "rajasthan", "jaipur", "uttarakhand", "dehradun", "himachal", "shimla",
+              "haryana", "chandigarh", "goa", "puducherry", "karnataka", "mysuru",
+              "mangaluru", "hubballi", "thiruvananthapuram", "kozhikode", "kochi",
+              "coimbatore", "madurai", "vijayawada", "visakhapatnam", "amaravati",
+              "tirupati", "aiims", "drdo", "iiser", "iit ", "ediic", "delhi"],
 }
 
 CATEGORY_RULES = [
@@ -238,6 +246,16 @@ def detect_region(item):
     for region in ("hyderabad", "telangana", "india"):
         if any(kw_hit(title, k) for k in REGION_KEYS[region]):
             return region
+    # URL section path is a reliable editorial signal
+    if "/international/" in url or "/world/" in url:
+        return "world"
+    if "/national/" in url or "/india/" in url:
+        return "india"
+    # domain priors for locally-focused outlets
+    if "telanganatoday.com" in url:
+        return "telangana"
+    if "siasat.com" in url or "munsifdaily.com" in url:
+        return "hyderabad"
     # last resort: a strict dateline, e.g. "Hyderabad: police said..." -- only at the
     # very start of the excerpt. Loose excerpt matching was picking up Siasat's
     # boilerplate tagline ("Get the latest updates in Hyderabad City News...").
