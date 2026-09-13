@@ -461,7 +461,8 @@ def _extend(c, en, ur):
     cats = set(c.get("categories", []))
     non_incident = bool(cats & {"disaster_weather", "govt_announcement",
                                 "court_judgment", "traffic_disruption",
-                                "protest_major"})
+                                "protest_major", "political_major",
+                                "economic_major"})
     for key, rx, en_t, ur_t in EXTENSIONS:
         if len(en) >= 5:
             break
@@ -482,6 +483,63 @@ def _extend(c, en, ur):
     return en, ur
 
 
+POLI_VERBS = [
+    ("seeks", "maang"), ("demands", "maang"), ("urges", "maang"),
+    ("calls for", "maang"), ("wants", "maang"), ("asks for", "maang"),
+    ("opposes", "virodh"), ("objects to", "virodh"),
+    ("questions", "sawal"), ("slams", "tankeed"), ("criticises", "tankeed"),
+    ("supports", "taid"), ("backs", "taid"),
+]
+POLI_ACTOR = re.compile(r"^([A-Z][A-Za-z().,'& ]{2,40}?)\s+(?:seeks|demands|urges|"
+                        r"calls for|wants|asks for|opposes|objects to|questions|"
+                        r"slams|criticises|supports|backs)\b")
+
+
+def _frame_politics(c):
+    title = c["title"].strip()
+    m = POLI_ACTOR.match(title)
+    if not m:
+        return None
+    actor = m.group(1).strip()
+    rest = title[m.end(1):].strip()
+    verb = None
+    for en_v, ur_kind in POLI_VERBS:
+        if rest.lower().startswith(en_v):
+            verb = (en_v, ur_kind)
+            break
+    if not verb:
+        return None
+    what = rest[len(verb[0]):].strip().rstrip(".")
+    if len(what) < 8 or len(what) > 90:
+        return None
+    kind = verb[1]
+    if kind == "maang":
+        en1 = f"{actor} has sought {what}."
+        ur1 = f"{actor} ne {what} ki maang ki hai."
+    elif kind == "virodh":
+        en1 = f"{actor} has opposed {what}."
+        ur1 = f"{actor} ne {what} ka virodh kiya hai."
+    elif kind == "sawal":
+        en1 = f"{actor} has raised questions over {what}."
+        ur1 = f"{actor} ne {what} par sawal uthaye hain."
+    elif kind == "tankeed":
+        en1 = f"{actor} has criticised {what}."
+        ur1 = f"{actor} ne {what} ki tankeed ki hai."
+    else:
+        en1 = f"{actor} has backed {what}."
+        ur1 = f"{actor} ne {what} ki himayat ki hai."
+    text = title + " " + _dedateline(c["excerpt"])
+    issue_en, issue_ur = _issue(text)
+    if issue_en:
+        en2 = f"The matter relates to {issue_en}."
+        ur2 = f"Yeh mamla {issue_ur} se mutalliq hai."
+    else:
+        en2, ur2 = AWAIT_EN, AWAIT_UR
+    en3 = "More updates on this development will follow."
+    ur3 = "Is silsile mein mazeed updates aayengi."
+    return [en1, en2, en3], [ur1, ur2, ur3]
+
+
 BUILDERS = [
     (("traffic_disruption", "protest_major"), _frame_strike),
     (("accident_casualty", "missing_person"), _frame_casualty),
@@ -489,6 +547,7 @@ BUILDERS = [
     (("police_operation", "major_crime", "security_terror"), _frame_police),
     (("court_judgment",), _frame_court),
     (("govt_announcement",), _frame_govt),
+    (("political_major",), _frame_politics),
     (("disaster_weather",), _frame_weather),
 ]
 
