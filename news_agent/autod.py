@@ -183,6 +183,36 @@ def one_cycle():
         else:
             log(f"refused by pre-publish checks (rc={rc}):", story["slug"])
 
+    # ---- editorial inbox: owner-pasted story files are published here ----
+    sdir = os.path.join(BASE, "stories")
+    inbox = sorted(os.path.join(sdir, f) for f in os.listdir(sdir)
+                   if f.startswith("inbox-") and f.endswith(".json"))         if os.path.isdir(sdir) else []
+    for fp in inbox:
+        if n >= MAX_POSTS_PER_CYCLE:
+            log("inbox held for next cycle (post cap):", os.path.basename(fp))
+            continue
+        try:
+            story = json.load(open(fp, encoding="utf-8"))
+        except Exception as e:
+            log("inbox file unreadable, removed:", os.path.basename(fp), e)
+            os.remove(fp)
+            continue
+        log("INBOX story:", story.get("slug", os.path.basename(fp)))
+        rc, path = try_publish(story)
+        if rc == 0:
+            n += 1
+            log("published from inbox:", story.get("slug"))
+            os.remove(fp)
+        elif rc == 3:
+            log("inbox duplicate suppressed:", story.get("slug"))
+            os.remove(fp)
+        elif rc == 5:
+            log("inbox publish failed (FB), keeping for retry:", story.get("slug"))
+        else:
+            log(f"inbox refused by pre-publish checks (rc={rc}), removed:",
+                story.get("slug"))
+            os.remove(fp)
+
     summary = {"cycle": cyc["cycle_id"], "at": datetime.now(IST).isoformat(),
                "candidates": len(cyc["candidates"]), "published_this_cycle": n}
     os.makedirs(STATE, exist_ok=True)
