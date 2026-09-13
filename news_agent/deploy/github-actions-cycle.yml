@@ -1,0 +1,25 @@
+# Runs ONE monitoring+publish cycle every 90 minutes on GitHub's runners and
+# commits the agent's memory (state/, out/, stories/) back to the repo, so the
+# duplicate-guard survives between runs. No server needed.
+# Repo layout: put this file at .github/workflows/news-cycle.yml, keep the
+# whole agent folder at the repository root.
+name: news-cycle
+on:
+  schedule:
+    - cron: "10 */2 * * *"     # every 2 hours at :10 (use an external VPS for 90-min)
+  workflow_dispatch:
+jobs:
+  cycle:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with: { python-version: "3.11" }
+      - run: pip install -r requirements.txt
+      - run: python3 news_agent/autod.py --once
+      - name: commit agent memory
+        run: |
+          git config user.name "news-agent"
+          git config user.email "agent@localhost"
+          git add news_agent/state news_agent/stories out || true
+          git diff --cached --quiet || git commit -m "cycle $(date -u +%FT%TZ)" && git push

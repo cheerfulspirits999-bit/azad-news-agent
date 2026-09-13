@@ -1,0 +1,213 @@
+#!/usr/bin/env python3
+"""
+AUTONOMOUS MODE daemon.
+
+Runs forever, one cycle every CYCLE_SECONDS (default 90 min):
+    1. monitor preferred sources (Hyderabad > Telangana > India > World)
+    2. pick publishable stories: class A/B, or class C from a preferred source
+       with score >= 72, age <= 12h, not a duplicate
+    3. auto-write exactly 3 English + 3 Roman Urdu bullets from a verified
+       fact frame (writer.build); stories without a safe frame wait for the
+       editorial pass - they are NEVER guessed
+    4. render the branded graphic with the page logo (no source names)
+    5. publish to the connected Facebook Page; log the record
+    6. if publishing is not connected yet, keep the ready package in a pending
+       list and retry it automatically once credentials appear in config.json
+    7. max 2 posts per cycle (anti-flood); nothing important is ever forced
+
+Stops and raises an alert (state/ALERT.md + exit code 9) ONLY on:
+    * Facebook auth/permission errors (Graph API 190/102/permissions)
+    * repeated publish failures
+    * all monitored feeds failing (technical outage)
+"""
+import json
+import os
+import re
+import sys
+import time
+import traceback
+from datetime import datetime
+
+BASE = os.path.dirname(os.path.abspath(__file__))
+sys.path.insert(0, BASE)
+import monitor  # noqa: E402
+import publish  # noqa: E402
+import writer  # noqa: E402
+
+CYCLE_SECONDS = 90 * 60
+MAX_POSTS_PER_CYCLE = 2
+STATE = os.path.join(BASE, "state")
+STORIES = os.path.join(BASE, "stories")
+IST = monitor.IST
+
+HEADLINE_MAP = monitor.HEADLINE_MAP
+
+
+def log(*a):
+    print(f"[{datetime.now(IST).strftime('%d %b %H:%M:%S')}]", *a, flush=True)
+
+
+def alert(reason, detail=""):
+    os.makedirs(STATE, exist_ok=True)
+    with open(os.path.join(STATE, "ALERT.md"), "w", encoding="utf-8") as f:
+        f.write(f"# AGENT STOPPED - ACTION NEEDED\n\n"
+                f"**When:** {datetime.now(IST).isoformat()}\n\n"
+                f"**Reason:** {reason}\n\n{detail}\n")
+    log("!!! ALERT:", reason)
+    log(detail[:400])
+
+
+def slugify(t):
+    t = re.sub(r"[^a-z0-9]+", "-", t.lower()).strip("-")
+    return t[:60]
+
+
+def eligible(c):
+    cls, score, pref = c["class"], c["score"], c["source_preferred"]
+    age = c.get("age_hours") or 99
+    if cls in ("A", "B"):
+        return True
+    if cls == "C" and pref and score >= 72 and age <= 12:
+        return True
+    return False
+
+
+def story_from(c, framed):
+    now = datetime.now(IST)
+    srcs = [c["source"]] + [x for x in c.get("corroboration", []) if x != c["source"]]
+    return {
+        "slug": "auto-" + slugify(c["title"]),
+        "title": c["title"],
+        "headline": HEADLINE_MAP[c["region"]],
+        "topic": c["region"] + "-" + slugify(c["title"])[:40],
+        "region": c["region"],
+        "classification": c["class"],
+        "timestamp": now.strftime("%d %b %Y, %I:%M %p IST"),
+        "source": " / ".join(srcs),           # internal record only - never shown
+        "source_urls": [c["url"]],
+        "verified_by": srcs,
+        "not_verified": [],
+        "key_facts": framed["bullets_en"],
+        "frame": framed["frame"],
+        "image_rights": "branded graphic only; no third-party photograph used",
+        "bullets_en": framed["bullets_en"],
+        "bullets_ur": framed["bullets_ur"],
+        "auto": True,
+    }
+
+
+def try_publish(story):
+    """Returns publish.run exit code."""
+    os.makedirs(STORIES, exist_ok=True)
+    path = os.path.join(STORIES, story["slug"] + ".json")
+    with open(path, "w", encoding="utf-8") as f:
+        json.dump(story, f, indent=2, ensure_ascii=False)
+    return publish.run(path, True), path
+
+
+def retry_pending():
+    """Once credentials exist, pending packages publish themselves."""
+    pp = os.path.join(STATE, "pending_publish.json")
+    if not os.path.exists(pp):
+        return 0
+    pend = json.load(open(pp, encoding="utf-8"))
+    cfg = json.load(open(os.path.join(BASE, "config.json"), encoding="utf-8"))
+    pub = cfg.get("publish", {})
+    connected = (pub.get("route") == "zapier" and pub.get("zapier_webhook")
+                 and pub.get("zapier_live", False)) or (
+        cfg["page"].get("facebook_page_id") and cfg["page"].get("page_access_token"))
+    if not connected:
+        return 0
+    done = 0
+    for item in list(pend):
+        if done >= MAX_POSTS_PER_CYCLE:
+            break
+        sf = item.get("story_file")
+        if not sf or not os.path.exists(sf):
+            pend.remove(item)
+            continue
+        log("retrying pending story:", item["story"])
+        rc = publish.run(sf, True)
+        if rc == 0:
+            pend.remove(item)
+            done += 1
+        elif rc == 3:  # duplicate of an already-published story: drop from queue
+            log("pending item now duplicate, dropped:", item["story"])
+            pend.remove(item)
+        elif rc == 5:
+            json.dump(pend, open(pp, "w", encoding="utf-8"), indent=2)
+            return 5
+    json.dump(pend, open(pp, "w", encoding="utf-8"), indent=2)
+    return done
+
+
+def one_cycle():
+    cfg = json.load(open(os.path.join(BASE, "config.json"), encoding="utf-8"))
+    log("=== cycle start ===")
+    cyc = monitor.run_cycle(cfg["rules"]["max_post_age_hours"], 12)
+    if cyc["errors"] and cyc["feeds_ok"] == 0:
+        alert("All monitored feeds failed", "\n".join(cyc["errors"]))
+        raise SystemExit(9)
+
+    posted = retry_pending()
+    if posted == 5:
+        alert("Facebook publish failed while retrying pending posts",
+              "Check Page token permissions (pages_manage_posts).")
+        raise SystemExit(9)
+    n = 0 if not isinstance(posted, int) else posted
+
+    for c in cyc["candidates"]:
+        if n >= MAX_POSTS_PER_CYCLE:
+            break
+        if not eligible(c):
+            continue
+        framed = writer.build(c)
+        if not framed:
+            log("queued for editorial pass (no safe auto frame):", c["title"][:70])
+            continue
+        story = story_from(c, framed)
+        log(f"AUTO POST candidate [{c['class']}|{c['score']}|{c['region']}]:",
+            c["title"][:70])
+        rc, path = try_publish(story)
+        if rc == 0:
+            n += 1
+            log("published:", story["slug"])
+        elif rc == 3:
+            log("duplicate suppressed:", story["slug"])
+        elif rc == 4:
+            log("packaged, awaiting Facebook connection:", story["slug"])
+        elif rc == 5:
+            alert("Facebook API error during publish",
+                  f"story={story['slug']}\nSee logs above for the Graph API response.")
+            raise SystemExit(9)
+        else:
+            log(f"refused by pre-publish checks (rc={rc}):", story["slug"])
+
+    summary = {"cycle": cyc["cycle_id"], "at": datetime.now(IST).isoformat(),
+               "candidates": len(cyc["candidates"]), "published_this_cycle": n}
+    os.makedirs(STATE, exist_ok=True)
+    json.dump(summary, open(os.path.join(STATE, "last_cycle.json"), "w"), indent=2)
+    log(f"=== cycle end: {n} new post(s), "
+        f"{len(cyc['candidates'])} candidates scanned ===")
+
+
+def main():
+    if "--once" in sys.argv:
+        log("single-cycle mode (--once)")
+        one_cycle()
+        return
+    log("autonomous daemon up - cycle every", CYCLE_SECONDS // 60, "minutes")
+    while True:
+        try:
+            one_cycle()
+        except SystemExit:
+            raise
+        except Exception as e:
+            alert("Unhandled technical error in cycle",
+                  traceback.format_exc()[-1500:])
+            raise SystemExit(9)
+        time.sleep(CYCLE_SECONDS)
+
+
+if __name__ == "__main__":
+    main()
