@@ -27,9 +27,9 @@ jobs:
         run: |
           git config user.name "azad-news-agent"
           git config user.email "agent@localhost"
-          git pull --rebase origin "$GITHUB_REF_NAME" || true
           git add news_agent/state news_agent/stories
           if ! git diff --cached --quiet; then
             git commit -m "cycle $(date -u +%FT%TZ)"
-            git push
+            git pull --rebase origin "$GITHUB_REF_NAME" || true
+            git push || true
           fi
