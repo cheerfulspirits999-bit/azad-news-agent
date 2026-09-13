@@ -1,13 +1,13 @@
 {
-  "cycle_id": "20260914-0353",
-  "generated_at": "2026-09-14T03:53:09.727385+05:30",
+  "cycle_id": "20260914-0511",
+  "generated_at": "2026-09-14T05:11:16.040270+05:30",
   "feeds_ok": 4,
   "errors": [],
   "counts": {
-    "fetched": 789,
-    "fresh": 298,
+    "fetched": 790,
+    "fresh": 290,
     "candidates": 12,
-    "duplicates_suppressed": 8
+    "duplicates_suppressed": 7
   },
   "candidates": [
     {
@@ -22,7 +22,7 @@
       "source": "Munsif Daily",
       "source_preferred": true,
       "published_at": "2026-09-13T17:37:44+05:30",
-      "age_hours": 10.26,
+      "age_hours": 11.56,
       "categories": [
         "accident_casualty"
       ],
@@ -33,25 +33,44 @@
     },
     {
       "rank": 2,
-      "class": "A",
-      "score": 78,
-      "region": "hyderabad",
+      "class": "C",
+      "score": 76,
+      "region": "india",
       "region_confidence": 1.0,
-      "suggested_headline": "📰 LATEST NEWS — HYDERABAD",
-      "title": "Man killed in accident in Hyderabad as car hits lorry",
-      "url": "https://www.siasat.com/man-killed-in-accident-in-hyderabad-as-car-hits-lorry-3541422/",
-      "source": "Munsif Daily",
+      "suggested_headline": "📰 LATEST NEWS — INDIA",
+      "title": "Mumbai on ‘orange’ alert as IMD warns of heavy rain in parts of Maharashtra",
+      "url": "https://www.thehindu.com/news/cities/mumbai/mumbai-on-orange-alert-with-moderate-rain-likely-on-sept-14/article71464389.ece",
+      "source": "The Hindu",
       "source_preferred": true,
-      "published_at": "2026-09-13T16:26:33+05:30",
-      "age_hours": 11.44,
+      "published_at": "2026-09-14T04:57:17+05:30",
+      "age_hours": 0.23,
       "categories": [
-        "accident_casualty"
+        "disaster_weather"
       ],
-      "excerpt": "Hyderabad: A man was killed after his car rammed a lorry from behind on the Keesara Outer Ring Road in Hyderabad on Sunday, September 13. The accident occurred at 12 noon when the car was travelling from Shameerpet towards Keesara. The front portion of the car was completely mangled in the impact, and the driver …",
+      "excerpt": "Moderate rain likely on Sept. 14; rainfall intensity is expected to ease thereafter across the State",
       "corroboration": []
     },
     {
       "rank": 3,
+      "class": "C",
+      "score": 76,
+      "region": "india",
+      "region_confidence": 1.0,
+      "suggested_headline": "📰 LATEST NEWS — INDIA",
+      "title": "Man killed by falling boulders near Cheerbasa Helipad as Kedarnath Yatra suspended temporarily",
+      "url": "https://www.thehindu.com/news/national/uttarakhand/kedarnath-yatra-suspended-temporarily-man-killed/article71464684.ece",
+      "source": "The Hindu",
+      "source_preferred": true,
+      "published_at": "2026-09-14T04:19:34+05:30",
+      "age_hours": 0.86,
+      "categories": [
+        "accident_casualty"
+      ],
+      "excerpt": "Officials said travellers heading to Kedarnath have been advised to halt at Sonprayag and Gaurikund, while those returning have been told to stop at Jangalchatti",
+      "corroboration": []
+    },
+    {
+      "rank": 4,
       "class": "C",
       "score": 76,
       "region": "hyderabad",
@@ -62,7 +81,7 @@
       "source": "Munsif Daily",
       "source_preferred": true,
       "published_at": "2026-09-13T20:01:18+05:30",
-      "age_hours": 7.86,
+      "age_hours": 9.17,
       "categories": [
         "security_terror",
         "police_operation"
@@ -71,7 +90,26 @@
       "corroboration": []
     },
     {
-      "rank": 4,
+      "rank": 5,
+      "class": "C",
+      "score": 76,
+      "region": "hyderabad",
+      "region_confidence": 1.0,
+      "suggested_headline": "📰 LATEST NEWS — HYDERABAD",
+      "title": "Man killed in accident in Hyderabad as car hits lorry",
+      "url": "https://www.siasat.com/man-killed-in-accident-in-hyderabad-as-car-hits-lorry-3541422/",
+      "source": "Munsif Daily",
+      "source_preferred": true,
+      "published_at": "2026-09-13T16:26:33+05:30",
+      "age_hours": 12.75,
+      "categories": [
+        "accident_casualty"
+      ],
+      "excerpt": "Hyderabad: A man was killed after his car rammed a lorry from behind on the Keesara Outer Ring Road in Hyderabad on Sunday, September 13. The accident occurred at 12 noon when the car was travelling from Shameerpet towards Keesara. The front portion of the car was completely mangled in the impact, and the driver …",
+      "corroboration": []
+    },
+    {
+      "rank": 6,
       "class": "C",
       "score": 74,
       "region": "hyderabad",
@@ -82,7 +120,7 @@
       "source": "Munsif Daily",
       "source_preferred": true,
       "published_at": "2026-09-13T15:27:07+05:30",
-      "age_hours": 12.43,
+      "age_hours": 13.74,
       "categories": [
         "security_terror",
         "police_operation"
@@ -91,103 +129,26 @@
       "corroboration": []
     },
     {
-      "rank": 5,
-      "class": "C",
-      "score": 72,
-      "region": "telangana",
-      "region_confidence": 1.0,
-      "suggested_headline": "📰 LATEST NEWS — TELANGANA",
-      "title": "Russell’s viper found at government residential school in Siddipet",
-      "url": "https://telanganatoday.com/russells-viper-found-at-government-residential-school-in-siddipet",
-      "source": "Telangana Today",
-      "source_preferred": false,
-      "published_at": "2026-09-13T23:06:36+05:30",
-      "age_hours": 4.78,
-      "categories": [
-        "accident_casualty"
-      ],
-      "excerpt": "A Russell's viper was found at a government girls' residential school at Ensanpally near Siddipet on Sunday, triggering panic among students. Locals killed the snake before a snake catcher arrived, while students alleged inadequate protection allowed snakes and dogs to enter",
-      "corroboration": []
-    },
-    {
-      "rank": 6,
-      "class": "C",
-      "score": 72,
-      "region": "india",
-      "region_confidence": 1.0,
-      "suggested_headline": "📰 LATEST NEWS — INDIA",
-      "title": "Man found dead in Kannur",
-      "url": "https://www.thehindu.com/news/national/kerala/man-found-dead-in-kannur/article71463016.ece",
-      "source": "The Hindu",
-      "source_preferred": true,
-      "published_at": "2026-09-13T22:16:21+05:30",
-      "age_hours": 5.61,
-      "categories": [
-        "accident_casualty"
-      ],
-      "excerpt": "",
-      "corroboration": []
-    },
-    {
       "rank": 7,
       "class": "C",
-      "score": 72,
+      "score": 70,
       "region": "india",
       "region_confidence": 1.0,
       "suggested_headline": "📰 LATEST NEWS — INDIA",
-      "title": "Migrant worker found dead in Perumbavoor, colleague in custody",
-      "url": "https://www.thehindu.com/news/national/kerala/migrant-worker-found-dead-in-perumbavoor-colleague-in-custody/article71464128.ece",
+      "title": "High ranges of Kottayam mobilise against Centre’s proposed ESA tag",
+      "url": "https://www.thehindu.com/news/national/kerala/high-ranges-of-kottayam-mobilise-against-proposed-esa-tag/article71463292.ece",
       "source": "The Hindu",
       "source_preferred": true,
-      "published_at": "2026-09-13T22:08:06+05:30",
-      "age_hours": 5.75,
+      "published_at": "2026-09-14T04:25:08+05:30",
+      "age_hours": 0.77,
       "categories": [
-        "accident_casualty",
-        "police_operation"
+        "govt_announcement"
       ],
-      "excerpt": "",
+      "excerpt": "Centre’s seventh draft notification on Ecologically Sensitive Areas (ESAs) in the Western Ghats is estimated to affect around 70,000 people",
       "corroboration": []
     },
     {
       "rank": 8,
-      "class": "C",
-      "score": 70,
-      "region": "india",
-      "region_confidence": 1.0,
-      "suggested_headline": "📰 LATEST NEWS — INDIA",
-      "title": "Farmer on the run after using slain naxal’s name to extort ₹5 lakh",
-      "url": "https://www.thehindu.com/news/national/karnataka/farmer-on-the-run-after-using-slain-naxals-name-to-extort-5-lakh/article71463795.ece",
-      "source": "The Hindu",
-      "source_preferred": true,
-      "published_at": "2026-09-13T22:42:00+05:30",
-      "age_hours": 5.19,
-      "categories": [
-        "security_terror"
-      ],
-      "excerpt": "",
-      "corroboration": []
-    },
-    {
-      "rank": 9,
-      "class": "C",
-      "score": 70,
-      "region": "india",
-      "region_confidence": 1.0,
-      "suggested_headline": "📰 LATEST NEWS — INDIA",
-      "title": "Minor girl abducted, sexually assaulted in Coimbatore; police shoot in the leg of one accused",
-      "url": "https://www.thehindu.com/news/national/tamil-nadu/minor-girl-abducted-sexually-assaulted-by-two-in-coimbatore-police-shoot-in-the-leg-of-one-accused/article71464040.ece",
-      "source": "The Hindu",
-      "source_preferred": true,
-      "published_at": "2026-09-13T22:15:18+05:30",
-      "age_hours": 5.63,
-      "categories": [
-        "security_terror"
-      ],
-      "excerpt": "All Woman Police Station Inspector I. Sornavalli is undergoing treatment for an injury on her shoulder after being attacked by one of the accused with a sickle during the recovery of the weapon.",
-      "corroboration": []
-    },
-    {
-      "rank": 10,
       "class": "C",
       "score": 70,
       "region": "telangana",
@@ -198,7 +159,7 @@
       "source": "Munsif Daily",
       "source_preferred": true,
       "published_at": "2026-09-13T20:35:58+05:30",
-      "age_hours": 7.29,
+      "age_hours": 8.59,
       "categories": [
         "political_major"
       ],
@@ -206,7 +167,7 @@
       "corroboration": []
     },
     {
-      "rank": 11,
+      "rank": 9,
       "class": "C",
       "score": 70,
       "region": "telangana",
@@ -217,7 +178,7 @@
       "source": "Munsif Daily",
       "source_preferred": true,
       "published_at": "2026-09-13T18:05:25+05:30",
-      "age_hours": 9.8,
+      "age_hours": 11.1,
       "categories": [
         "political_major"
       ],
@@ -225,7 +186,7 @@
       "corroboration": []
     },
     {
-      "rank": 12,
+      "rank": 10,
       "class": "C",
       "score": 70,
       "region": "hyderabad",
@@ -236,12 +197,51 @@
       "source": "Munsif Daily",
       "source_preferred": true,
       "published_at": "2026-09-13T17:25:02+05:30",
-      "age_hours": 10.47,
+      "age_hours": 11.77,
       "categories": [
         "major_crime",
         "police_operation"
       ],
       "excerpt": "Hyderabad: The State Task Force (STF) personnel of the Prohibition and Excise Department on Sunday, September 13, arrested a 38-year-old man for allegedly selling ganja near the Annapurna Temple on Karwan Road. The accused, identified as 38-year-old Rajender Singh, was apprehended while allegedly engaged in the sale of ganja. STF personnel seized 580 grams of …",
+      "corroboration": []
+    },
+    {
+      "rank": 11,
+      "class": "C",
+      "score": 70,
+      "region": "hyderabad",
+      "region_confidence": 1.0,
+      "suggested_headline": "📰 LATEST NEWS — HYDERABAD",
+      "title": "Yakutpura SIR row: 47,200 voters reclassified as dead, shifted or untraceable",
+      "url": "https://newsmeter.in/hyderabad/yakutpura-sir-row-47200-voters-reclassified-as-dead-shifted-or-untraceable-775443",
+      "source": "Newsmeter",
+      "source_preferred": false,
+      "published_at": "2026-09-13T13:29:20+05:30",
+      "age_hours": 15.7,
+      "categories": [
+        "accident_casualty",
+        "missing_person"
+      ],
+      "excerpt": "26.61% of mapped Yakutpura voters later categorised as dead, shifted or untraceable",
+      "corroboration": []
+    },
+    {
+      "rank": 12,
+      "class": "C",
+      "score": 70,
+      "region": "world",
+      "region_confidence": 1.0,
+      "suggested_headline": "🌍 LATEST — WORLD",
+      "title": "Iranian commercial ship struck near Strait of Hormuz with 1 dead, Iranian media say",
+      "url": "https://www.thehindu.com/news/international/casualties-reported-as-an-iranian-commercial-ship-was-struck-near-the-strait-of-hormuz/article71462672.ece",
+      "source": "The Hindu",
+      "source_preferred": true,
+      "published_at": "2026-09-13T13:16:15+05:30",
+      "age_hours": 15.92,
+      "categories": [
+        "accident_casualty"
+      ],
+      "excerpt": "The United Kingdom Maritime Trade Operations separately reported that a vessel was hit by a projectile while transiting the strait, with no details",
       "corroboration": []
     }
   ]
