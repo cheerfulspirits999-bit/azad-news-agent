@@ -1,0 +1,43 @@
+# Watchdog: if the news cycle has not run for >45 minutes (GitHub scheduler
+# can skip cron slots under load), wake it up via repository dispatch.
+name: watchdog
+on:
+  schedule:
+    - cron: "25,55 * * * *"
+  workflow_dispatch: {}
+permissions:
+  contents: read
+  actions: write
+concurrency:
+  group: watchdog
+  cancel-in-progress: false
+jobs:
+  check:
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    steps:
+      - uses: actions/checkout@v4
+      - name: trigger cycle if stale
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          AGE=$(python3 - <<'PY'
+          import json, datetime
+          try:
+              d = json.load(open('news_agent/state/last_cycle.json'))
+              t = datetime.datetime.fromisoformat(d['at'])
+              print(int((datetime.datetime.now(t.tzinfo) - t).total_seconds() // 60))
+          except Exception:
+              print(999)
+          PY
+          )
+          echo "last cycle ${AGE} min ago"
+          if [ "$AGE" -gt 45 ]; then
+            curl -s -o /dev/null -w "wake dispatch http %{http_code}\n" -X POST \
+              -H "Authorization: Bearer $GH_TOKEN" \
+              -H "Accept: application/vnd.github+json" \
+              "https://api.github.com/repos/$GITHUB_REPOSITORY/actions/workflows/news-cycle.yml/dispatches" \
+              -d '{"ref":"main"}'
+          else
+            echo "cycle fresh - nothing to do"
+          fi
