@@ -35,6 +35,7 @@ import publish  # noqa: E402
 import writer  # noqa: E402
 
 CYCLE_SECONDS = 90 * 60
+POST_SPACING_SECONDS = 75  # pause between posts in one burst (FB rate limits)
 MAX_POSTS_PER_CYCLE = 2
 STATE = os.path.join(BASE, "state")
 STORIES = os.path.join(BASE, "stories")
@@ -172,6 +173,7 @@ def one_cycle():
         if rc == 0:
             n += 1
             log("published:", story["slug"])
+            time.sleep(POST_SPACING_SECONDS)  # avoid FB Page rate-limit errors
         elif rc == 3:
             log("duplicate suppressed:", story["slug"])
         elif rc == 4:
@@ -203,6 +205,7 @@ def one_cycle():
             n += 1
             log("published from inbox:", story.get("slug"))
             os.remove(fp)
+            time.sleep(POST_SPACING_SECONDS)
         elif rc == 3:
             log("inbox duplicate suppressed:", story.get("slug"))
             os.remove(fp)
