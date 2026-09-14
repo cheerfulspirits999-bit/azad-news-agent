@@ -1,19 +1,19 @@
 {
-  "cycle_id": "20260914-1644",
-  "generated_at": "2026-09-14T16:44:08.035312+05:30",
+  "cycle_id": "20260914-1944",
+  "generated_at": "2026-09-14T19:44:59.971129+05:30",
   "feeds_ok": 4,
   "errors": [],
   "counts": {
-    "fetched": 791,
-    "fresh": 302,
+    "fetched": 772,
+    "fresh": 288,
     "candidates": 12,
-    "duplicates_suppressed": 2
+    "duplicates_suppressed": 0
   },
   "candidates": [
     {
       "rank": 1,
       "class": "A",
-      "score": 90,
+      "score": 86,
       "region": "hyderabad",
       "region_confidence": 1.0,
       "suggested_headline": "📰 LATEST NEWS — HYDERABAD",
@@ -22,7 +22,7 @@
       "source": "Munsif Daily",
       "source_preferred": true,
       "published_at": "2026-09-14T12:35:15+05:30",
-      "age_hours": 4.15,
+      "age_hours": 7.16,
       "categories": [
         "accident_casualty"
       ],
@@ -32,7 +32,7 @@
     {
       "rank": 2,
       "class": "A",
-      "score": 86,
+      "score": 82,
       "region": "hyderabad",
       "region_confidence": 1.0,
       "suggested_headline": "📰 LATEST NEWS — HYDERABAD",
@@ -41,7 +41,7 @@
       "source": "Munsif Daily",
       "source_preferred": true,
       "published_at": "2026-09-14T15:23:29+05:30",
-      "age_hours": 1.34,
+      "age_hours": 4.36,
       "categories": [
         "accident_casualty"
       ],
@@ -50,8 +50,27 @@
     },
     {
       "rank": 3,
+      "class": "B",
+      "score": 78,
+      "region": "telangana",
+      "region_confidence": 1.0,
+      "suggested_headline": "📰 LATEST NEWS — TELANGANA",
+      "title": "Backward Classes group raises concern over challenges to caste census",
+      "url": "https://www.thehindu.com/news/national/telangana/backward-classes-group-raises-concern-over-challenges-to-caste-census/article71466161.ece",
+      "source": "The Hindu",
+      "source_preferred": true,
+      "published_at": "2026-09-14T19:42:01+05:30",
+      "age_hours": 0.05,
+      "categories": [
+        "political_major"
+      ],
+      "excerpt": "National BC Dal president Dundra Kumaraswamy said variations arising from regional nomenclature, sub-caste identities, local usage, pronunciation and spelling could result in multiple entries for what may, in social terms, represent the same community",
+      "corroboration": []
+    },
+    {
+      "rank": 4,
       "class": "A",
-      "score": 82,
+      "score": 78,
       "region": "telangana",
       "region_confidence": 1.0,
       "suggested_headline": "📰 LATEST NEWS — TELANGANA",
@@ -60,7 +79,7 @@
       "source": "Munsif Daily",
       "source_preferred": true,
       "published_at": "2026-09-14T15:46:17+05:30",
-      "age_hours": 0.96,
+      "age_hours": 3.98,
       "categories": [
         "accident_casualty"
       ],
@@ -68,84 +87,61 @@
       "corroboration": []
     },
     {
-      "rank": 4,
-      "class": "A",
-      "score": 82,
-      "region": "hyderabad",
-      "region_confidence": 1.0,
-      "suggested_headline": "📰 LATEST NEWS — HYDERABAD",
-      "title": "Pregnant woman strangled to death by husband in Hyderabad",
-      "url": "https://www.siasat.com/pregnant-woman-strangled-to-death-by-husband-in-hyderabad-3541846/",
-      "source": "Munsif Daily",
-      "source_preferred": true,
-      "published_at": "2026-09-14T14:24:25+05:30",
-      "age_hours": 2.33,
-      "categories": [
-        "accident_casualty"
-      ],
-      "excerpt": "Hyderabad: A pregnant woman was allegedly strangled to death by her husband at Suryanagar in Alwal, reportedly following his suspicion over her fidelity. The deceased, identified as Shivani, had married Parashuram around six months ago. According to preliminary information obtained by police, Parashuram reportedly became suspicious of her after she became pregnant. The suspicion is …",
-      "corroboration": [
-        "Telangana Today"
-      ]
-    },
-    {
       "rank": 5,
-      "class": "A",
-      "score": 82,
-      "region": "hyderabad",
+      "class": "C",
+      "score": 76,
+      "region": "india",
       "region_confidence": 1.0,
-      "suggested_headline": "📰 LATEST NEWS — HYDERABAD",
-      "title": "Man dies after clash with Ganesh idol vendors in Hyderabad",
-      "url": "https://www.siasat.com/man-dies-after-clash-with-ganesh-idol-vendors-in-hyderabad-3541752/",
-      "source": "Munsif Daily",
+      "suggested_headline": "📰 LATEST NEWS — INDIA",
+      "title": "India approves expedited export of electricity to flood-hit Nepal",
+      "url": "https://www.thehindu.com/business/Economy/india-approves-expedited-export-of-electricity-to-flood-hit-nepal/article71466141.ece",
+      "source": "The Hindu",
       "source_preferred": true,
-      "published_at": "2026-09-14T12:41:07+05:30",
-      "age_hours": 4.05,
+      "published_at": "2026-09-14T19:35:44+05:30",
+      "age_hours": 0.15,
       "categories": [
-        "accident_casualty"
+        "disaster_weather",
+        "economic_major"
       ],
-      "excerpt": "Hyderabad: A 34-year-old man died following a clash over the purchase of a Ganesh idol near Jodimetla under the Pocharam IT Corridor police station limits on Sunday, September 13. According to reports, Kiran, a resident of Chowdariguda, had gone to Jodimetla along with some others to purchase a Ganesh idol. An argument reportedly broke out …",
-      "corroboration": [
-        "Telangana Today"
-      ]
+      "excerpt": "“The approval will help Nepal meet its power requirements during this difficult period and further strengthen the close and longstanding energy cooperation between India and Nepal,” stated India’s Power Ministry.",
+      "corroboration": []
     },
     {
       "rank": 6,
-      "class": "B",
-      "score": 78,
-      "region": "hyderabad",
+      "class": "C",
+      "score": 76,
+      "region": "india",
       "region_confidence": 1.0,
-      "suggested_headline": "📰 LATEST NEWS — HYDERABAD",
-      "title": "4 held with Rs 24 lakh worth of Alprazolam in Hyderabad",
-      "url": "https://www.siasat.com/4-held-with-rs-24-lakh-worth-of-alprazolam-in-hyderabad-3541900/",
+      "suggested_headline": "📰 LATEST NEWS — INDIA",
+      "title": "Karnataka: Python rescued while attempting to swallow dog",
+      "url": "https://www.siasat.com/karnataka-python-rescued-while-attempting-to-swallow-dog-3542163/",
       "source": "Munsif Daily",
       "source_preferred": true,
-      "published_at": "2026-09-14T16:18:00+05:30",
-      "age_hours": 0.44,
+      "published_at": "2026-09-14T19:34:48+05:30",
+      "age_hours": 0.17,
       "categories": [
-        "major_crime",
-        "police_operation"
+        "accident_casualty"
       ],
-      "excerpt": "Hyderabad: As many as four alleged drug peddlers were arrested by the Cyberabad excise team on Monday, September 14, in two separate cases, and a cumulative 1.931 kg of Alprazolam worth Rs 24 lakh was seized from them. Alprazolam is a prescription medicine used to treat anxiety and panic disorders. It slows down the central …",
+      "excerpt": "Mangaluru: A 12-foot-long python was rescued after it was found near a house in Ujire village of Belthangady taluk, Dakshina Kannada district, while attempting to swallow a pet dog it had killed. The incident occurred around noon on Sunday, September 13, near the residence of advocate Naveen BK. Residents were startled after spotting the large …",
       "corroboration": []
     },
     {
       "rank": 7,
-      "class": "B",
-      "score": 78,
-      "region": "telangana",
+      "class": "C",
+      "score": 76,
+      "region": "india",
       "region_confidence": 1.0,
-      "suggested_headline": "📰 LATEST NEWS — TELANGANA",
-      "title": "Ashok Gehlot may likely be the next Telangana in-charge",
-      "url": "https://www.siasat.com/ashok-gehlot-may-likely-be-the-next-telangana-in-charge-3541947/",
-      "source": "Munsif Daily",
+      "suggested_headline": "📰 LATEST NEWS — INDIA",
+      "title": "Central team to visit Bihar on September 16 to assess flood damage",
+      "url": "https://www.thehindu.com/news/national/bihar/central-team-to-visit-bihar-on-september-16-to-assess-flood-damage/article71465989.ece",
+      "source": "The Hindu",
       "source_preferred": true,
-      "published_at": "2026-09-14T15:49:26+05:30",
-      "age_hours": 0.91,
+      "published_at": "2026-09-14T18:25:48+05:30",
+      "age_hours": 1.32,
       "categories": [
-        "political_major"
+        "disaster_weather"
       ],
-      "excerpt": "Hyderabad: Former Rajasthan chief minister Ashok Gehlot may be appointed as the next Congress in-charge for Telangana, according to reports on Monday, September 14. The post would fall vacant with the incumbent, S. Meenakshi Natarajan, likely to take a 10-month leave to travel abroad for higher education. The Congress high command is also considering some …",
+      "excerpt": "According to the latest figures from the Bihar Disaster Management Department (DMD), the floods affected over 49.36 lakh people in 88 blocks across 15 districts",
       "corroboration": []
     },
     {
@@ -155,96 +151,93 @@
       "region": "india",
       "region_confidence": 1.0,
       "suggested_headline": "📰 LATEST NEWS — INDIA",
-      "title": "Gurugram woman biker injured in hit-and-run; accused identified, police launch suo motu probe",
-      "url": "https://www.thehindu.com/news/national/haryana/gurugram-woman-biker-thrown-off-sports-bike-after-car-hits-her-on-golf-course-road-police-launch-suo-motu-probe/article71465459.ece",
-      "source": "The Hindu",
+      "title": "India assures full support to nationals injured in Saudi Arabia",
+      "url": "https://www.siasat.com/india-assures-full-support-to-nationals-injured-in-saudi-arabia-3542105/",
+      "source": "Munsif Daily",
       "source_preferred": true,
-      "published_at": "2026-09-14T15:46:27+05:30",
-      "age_hours": 0.96,
+      "published_at": "2026-09-14T18:12:00+05:30",
+      "age_hours": 1.55,
       "categories": [
         "accident_casualty"
       ],
-      "excerpt": "The rider alleged that the car had been chasing her before hitting her Aprilia RS 457 and fleeing the spot; the collision was captured on her motorcycle-mounted camera and the bike was sent sliding",
-      "corroboration": [
-        "Munsif Daily"
-      ]
+      "excerpt": "Jeddah: The Consulate General of India in Jeddah on Monday, September 14, assured its “full support and assistance” to Indian nationals undergoing treatment at a hospital in the coastal city after suffering injuries in the recent incidents in Jazan. In a post on X, the Consulate said it “remains in close touch with the hospital …",
+      "corroboration": []
     },
     {
       "rank": 9,
       "class": "C",
       "score": 76,
-      "region": "telangana",
+      "region": "hyderabad",
       "region_confidence": 1.0,
-      "suggested_headline": "📰 LATEST NEWS — TELANGANA",
-      "title": "Muslim man’s 2nd marriage not automatically bigamy: Telangana HC",
-      "url": "https://www.siasat.com/muslim-mans-2nd-marriage-not-automatically-bigamy-telangana-hc-3541927/",
-      "source": "Munsif Daily",
-      "source_preferred": true,
-      "published_at": "2026-09-14T15:19:27+05:30",
-      "age_hours": 1.41,
+      "suggested_headline": "📰 LATEST NEWS — HYDERABAD",
+      "title": "Hyderabad: Pregnant woman allegedly strangled to death by husband in Alwal",
+      "url": "https://telanganatoday.com/hyderabad-pregnant-woman-allegedly-strangled-to-death-by-husband-in-alwal",
+      "source": "Telangana Today",
+      "source_preferred": false,
+      "published_at": "2026-09-14T15:30:15+05:30",
+      "age_hours": 4.25,
       "categories": [
-        "court_judgment"
+        "accident_casualty"
       ],
-      "excerpt": "Hyderabad: The Telangana High Court has ruled that a Muslim man’s second marriage cannot be treated as void under Section 494 of the Indian Penal Code (IPC) just because his first marriage was still in existence. Justice N Tukaramji passed the order and quashed bigamy proceedings against the man. The court found that the required …",
+      "excerpt": "A six-month-pregnant woman was allegedly strangled to death by her husband following a dispute at Suryanagar in Alwal. Police said the man, allegedly under the influence of alcohol, initially claimed she had slipped in the bathroom before reportedly confessing.",
       "corroboration": []
     },
     {
       "rank": 10,
       "class": "C",
       "score": 76,
-      "region": "india",
+      "region": "hyderabad",
       "region_confidence": 1.0,
-      "suggested_headline": "📰 LATEST NEWS — INDIA",
-      "title": "Three main accused in Goa nightclub fire surrender before Mapusa court two weeks after SC order",
-      "url": "https://www.thehindu.com/news/national/three-main-accused-in-goa-nightclub-fire-surrender-before-mapusa-court-two-weeks-after-sc-order/article71465808.ece",
-      "source": "The Hindu",
-      "source_preferred": true,
-      "published_at": "2026-09-14T15:12:46+05:30",
-      "age_hours": 1.52,
+      "suggested_headline": "📰 LATEST NEWS — HYDERABAD",
+      "title": "Hyderabad: Man dies after clash over Ganesh idol purchase in Pocharam",
+      "url": "https://telanganatoday.com/hyderabad-man-dies-after-clash-over-ganesh-idol-purchase-in-pocharam",
+      "source": "Telangana Today",
+      "source_preferred": false,
+      "published_at": "2026-09-14T14:15:46+05:30",
+      "age_hours": 5.49,
       "categories": [
-        "fire_explosion",
         "accident_casualty"
       ],
-      "excerpt": "The fatal fire at the Birch by Romeo Lane nightclub in Arpora, North Goa, on December 6, 2025, claimed 25 lives and left several others injured",
+      "excerpt": "A 34-year-old man died allegedly after a clash between Ganesh idol buyers and sellers in Pocharam IT Corridor police limits. His relatives and friends later protested on the Warangal-Hyderabad National Highway, demanding stringent action against five alleged attackers.",
       "corroboration": []
     },
     {
       "rank": 11,
       "class": "C",
-      "score": 76,
-      "region": "india",
+      "score": 74,
+      "region": "telangana",
       "region_confidence": 1.0,
-      "suggested_headline": "📰 LATEST NEWS — INDIA",
-      "title": "Bihari youth arrested for alleged murder of colleague from the State in Kochi plywood factory",
-      "url": "https://www.thehindu.com/news/cities/Kochi/bihari-youth-arrested-for-alleged-murder-of-colleague-from-the-state-in-kochi-plywood-factory/article71465539.ece",
-      "source": "The Hindu",
+      "suggested_headline": "📰 LATEST NEWS — TELANGANA",
+      "title": "Telangana Assembly chaos: KTR’s PA appears before police",
+      "url": "https://www.siasat.com/telangana-assembly-chaos-ktrs-pa-appears-before-police-3541960/",
+      "source": "Munsif Daily",
       "source_preferred": true,
-      "published_at": "2026-09-14T14:55:52+05:30",
-      "age_hours": 1.8,
+      "published_at": "2026-09-14T17:17:17+05:30",
+      "age_hours": 2.46,
       "categories": [
-        "accident_casualty",
-        "police_operation"
+        "political_major"
       ],
-      "excerpt": "The arrested person is Mohammed Sahil, 23, of Muzaffarpur in Bihar; he has been charged with murder",
+      "excerpt": "Hyderabad: Responding to the Saifabad Police’s notice, Mahender Reddy, personal assistant to Bharat Rashtra Samithi (BRS) working president KT Rama Rao (KTR), appeared before the investigating officer on Monday, September 14. The notice was issued based on a complaint by Busaramoni Jangaiah, a Reserve Inspector at the City Armed Reserve Headquarters. Reddy, along with KTR’s …",
       "corroboration": []
     },
     {
       "rank": 12,
       "class": "C",
-      "score": 76,
+      "score": 74,
       "region": "hyderabad",
       "region_confidence": 1.0,
       "suggested_headline": "📰 LATEST NEWS — HYDERABAD",
-      "title": "Hyderabad: Heavy downpour results in underpass near Bible House submerged",
-      "url": "https://telanganatoday.com/hyderabad-heavy-downpour-results-in-underpass-near-bible-house-submerged",
-      "source": "Telangana Today",
-      "source_preferred": false,
-      "published_at": "2026-09-14T12:53:10+05:30",
-      "age_hours": 3.85,
+      "title": "4 held with Rs 24 lakh worth of Alprazolam in Hyderabad",
+      "url": "https://www.siasat.com/4-held-with-rs-24-lakh-worth-of-alprazolam-in-hyderabad-3541900/",
+      "source": "Munsif Daily",
+      "source_preferred": true,
+      "published_at": "2026-09-14T16:18:00+05:30",
+      "age_hours": 3.45,
       "categories": [
-        "disaster_weather"
+        "major_crime",
+        "police_operation"
       ],
-      "excerpt": "Heavy rain since Monday night submerged the underpass near Bible House in Secunderabad, bringing traffic to a halt. Waterlogging disrupted movement towards Tank Bund and other parts of Hyderabad, while HYDRAA DRF teams worked to clear stagnant water.",
+      "excerpt": "Hyderabad: As many as four alleged drug peddlers were arrested by the Cyberabad excise team on Monday, September 14, in two separate cases, and a cumulative 1.931 kg of Alprazolam worth Rs 24 lakh was seized from them. Alprazolam is a prescription medicine used to treat anxiety and panic disorders. It slows down the central …",
       "corroboration": []
     }
   ]
