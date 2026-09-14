@@ -571,6 +571,32 @@ BUILDERS = [
 ]
 
 
+GARBLE_RX = re.compile(r"\b(from|by|at|to|against|upon) them\b", re.I)
+
+
+def _drop_bad_pairs(en, ur):
+    """Drop bullet pairs (same index in EN+UR) that are template garbage
+    ('Police seized from them ...') or near-duplicates repeating one number."""
+    keep, seen = [], []
+    for i, b in enumerate(en):
+        u = ur[i] if i < len(ur) else ""
+        if GARBLE_RX.search(b) or GARBLE_RX.search(u):
+            continue
+        dig = set(re.findall(r"\d+(?:\.\d+)?", b))
+        words = set(re.findall(r"\w+", b.lower()))
+        dup = False
+        for w2, d2 in seen:
+            if dig and dig == d2 and words & w2 and \
+               len(words & w2) / max(1, len(words | w2)) > 0.45:
+                dup = True
+                break
+        if dup:
+            continue
+        seen.append((words, dig))
+        keep.append(i)
+    return [en[i] for i in keep], [ur[i] for i in keep if i < len(ur)]
+
+
 def build(candidate):
     """Return {'bullets_en':[3], 'bullets_ur':[3], 'frame':cat} or None."""
     cats = set(candidate.get("categories", []))
@@ -583,11 +609,14 @@ def build(candidate):
             if not res:
                 continue
             en_r, ur_r = _extend(candidate, list(res[0]), list(res[1]))
-            en = _sanitize(en_r)
-            ur = _sanitize(ur_r)
+            en, ur = _drop_bad_pairs(_sanitize(en_r), _sanitize(ur_r))
             src_txt = candidate["title"] + " " + _dedateline(candidate["excerpt"])
             if cats & {"fire_explosion", "accident_casualty"} and not _has_loc(src_txt):
                 continue  # casualty/fire stories must say WHERE
+            key = max((t for t in re.findall(r"[A-Za-z]+", candidate["title"].lower())
+                       if len(t) >= 8), key=len, default="")
+            if key and not any(key in b.lower() for b in en):
+                continue  # bullets must carry the story's key noun
             min_subst = 3 if cats & {"fire_explosion", "accident_casualty"} else 2
             if len([b for b in en if b not in FILLER_EN]) < min_subst:
                 continue  # thin filler-only posts are refused
