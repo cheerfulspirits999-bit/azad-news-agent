@@ -106,6 +106,26 @@ def try_publish(story):
     return publish.run(path, True), path
 
 
+def retracted_slugs():
+    """Slugs the owner retracted - they must never publish or re-queue."""
+    rp = os.path.join(STATE, "retracted.json")
+    if not os.path.exists(rp):
+        return set()
+    try:
+        data = json.load(open(rp, encoding="utf-8"))
+    except Exception:
+        return set()
+    out = set()
+    for r in data if isinstance(data, list) else [data]:
+        if isinstance(r, dict):
+            for k in ("slug", "topic"):
+                if r.get(k):
+                    out.add(r[k])
+        elif isinstance(r, str):
+            out.add(r)
+    return out
+
+
 def retry_pending():
     """Once credentials exist, pending packages publish themselves."""
     pp = os.path.join(STATE, "pending_publish.json")
@@ -120,6 +140,7 @@ def retry_pending():
     if not connected:
         return 0
     done = 0
+    blocked = retracted_slugs()
     for item in list(pend):
         if done >= MAX_POSTS_PER_CYCLE:
             break
@@ -127,11 +148,22 @@ def retry_pending():
         if not sf or not os.path.exists(sf):
             pend.remove(item)
             continue
+        ids = {item.get("story")}
+        try:
+            sd = json.load(open(sf, encoding="utf-8"))
+            ids |= {sd.get("slug"), sd.get("topic")}
+        except Exception:
+            pass
+        if ids & blocked:
+            log("pending item is owner-retracted, dropped forever:", item["story"])
+            pend.remove(item)
+            continue
         log("retrying pending story:", item["story"])
         rc = publish.run(sf, True)
         if rc == 0:
             pend.remove(item)
             done += 1
+            time.sleep(POST_SPACING_SECONDS)
         elif rc == 3:  # duplicate of an already-published story: drop from queue
             log("pending item now duplicate, dropped:", item["story"])
             pend.remove(item)
@@ -167,6 +199,9 @@ def one_cycle():
             log("queued for editorial pass (no safe auto frame):", c["title"][:70])
             continue
         story = story_from(c, framed)
+        if {story.get("slug"), story.get("topic")} & retracted_slugs():
+            log("BLOCKED owner-retracted story:", story["slug"])
+            continue
         log(f"AUTO POST candidate [{c['class']}|{c['score']}|{c['region']}]:",
             c["title"][:70])
         rc, path = try_publish(story)
