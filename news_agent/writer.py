@@ -241,9 +241,14 @@ def _frame_casualty(c):
             event_en, event_ur = f"a {k} incident", ur
             break
     died = verb in ("killed", "dead", "died")
-    en1 = (f"{n} people {'died' if died else 'were ' + verb} in {event_en} at {place}, reports suggest.")
-    ur1 = (f"Reports ke mutabiq {place} mein {event_ur} mein {n} log "
-           + ("mare gaye." if died else f"{verb} hain."))
+    if n == "1":
+        en1 = (f"1 person {'died' if died else 'was ' + verb} in {event_en} at {place}, reports suggest.")
+        ur1 = (f"Reports ke mutabiq {place} mein {event_ur} mein ek shakhs "
+               + ("ki maut ho gayi." if died else f"{verb} hai."))
+    else:
+        en1 = (f"{n} people {'died' if died else 'were ' + verb} in {event_en} at {place}, reports suggest.")
+        ur1 = (f"Reports ke mutabiq {place} mein {event_ur} mein {n} log "
+               + ("mare gaye." if died else f"{verb} hain."))
     n2 = None
     if died:
         m2 = re.search(r"(\d[\d,]{0,6})\s+(?:people|persons)?\s*(?:were\s+)?injured",
@@ -583,7 +588,8 @@ def build(candidate):
             src_txt = candidate["title"] + " " + _dedateline(candidate["excerpt"])
             if cats & {"fire_explosion", "accident_casualty"} and not _has_loc(src_txt):
                 continue  # casualty/fire stories must say WHERE
-            if len([b for b in en if b not in FILLER_EN]) < 2:
+            min_subst = 3 if cats & {"fire_explosion", "accident_casualty"} else 2
+            if len([b for b in en if b not in FILLER_EN]) < min_subst:
                 continue  # thin filler-only posts are refused
             if en and ur and len(en) == len(ur) and \
                _grounded(en + ur, candidate["title"] + " " +
