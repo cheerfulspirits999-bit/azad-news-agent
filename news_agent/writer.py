@@ -261,11 +261,25 @@ def _frame_casualty(c):
     return [en1, en2, AWAIT_EN], [ur1, ur2, AWAIT_UR]
 
 
+FILLER_EN = {AWAIT_EN, "More updates on this development will follow."}
+LOC_RX = re.compile(r"\b(?:in|at|near)\s+[A-Z][A-Za-z]{2,}(?:\s[A-Z][A-Za-z]+)?")
+
+
+def _has_loc(text):
+    return bool(_m(PLACE, text) or LOC_RX.search(text))
+
+
 def _frame_fire(c):
     text = c["title"] + " " + _dedateline(c["excerpt"])
     venue = _m(VENUE, text)
     place = _m(PLACE, c["title"]) or _m(PLACE, c["excerpt"])
-    loc = " ".join(x for x in (place, venue) if x) or "a premises"
+    if not place:
+        mloc = LOC_RX.search(c["title"]) or LOC_RX.search(_dedateline(c["excerpt"]))
+        if mloc:
+            place = mloc.group(0).split(None, 1)[1].strip()
+    if not place and not venue:
+        return None  # never publish a fire without a location
+    loc = " ".join(x for x in (place, venue) if x)
     en1 = f"Fire broke out at {loc}, officials said."
     ur1 = f"Officials ke mutabiq {loc} mein aag lag gayi."
     cause = next((ur for k, ur in CAUSE_MAP if re.search(r"\b" + k, text, re.I)), None)
@@ -566,6 +580,11 @@ def build(candidate):
             en_r, ur_r = _extend(candidate, list(res[0]), list(res[1]))
             en = _sanitize(en_r)
             ur = _sanitize(ur_r)
+            src_txt = candidate["title"] + " " + _dedateline(candidate["excerpt"])
+            if cats & {"fire_explosion", "accident_casualty"} and not _has_loc(src_txt):
+                continue  # casualty/fire stories must say WHERE
+            if len([b for b in en if b not in FILLER_EN]) < 2:
+                continue  # thin filler-only posts are refused
             if en and ur and len(en) == len(ur) and \
                _grounded(en + ur, candidate["title"] + " " +
                          _dedateline(candidate["excerpt"])):

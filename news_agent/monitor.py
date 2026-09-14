@@ -268,6 +268,11 @@ def detect_region(item):
     return "world"
 
 
+FIRE_METAPHOR = re.compile(r"(fires?\s+back|under\s+fire|opening\s+fire|"
+                           r"opened\s+fire|fired\s+shots|ceasefire|crossfire|"
+                           r"line\s+of\s+fire|fire\s+brands)")
+
+
 def detect_categories(item):
     """Category is decided from the TITLE. Excerpt is only used to corroborate,
     never to invent a category -- this is what keeps celebrity fluff from
@@ -280,6 +285,8 @@ def detect_categories(item):
             if kw_hit(title, k) or kw_hit(excerpt, k):
                 hits.append(cat)
                 break
+    if "fire_explosion" in hits and FIRE_METAPHOR.search(title):
+        hits.remove("fire_explosion")
     return hits or ["routine"]
 
 
