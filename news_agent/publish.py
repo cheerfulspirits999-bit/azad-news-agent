@@ -109,6 +109,13 @@ def graph_post_photo(page_id, token, caption, image_path, api_version):
         body += f"--{boundary}\r\nContent-Disposition: form-data; name=\"{k}\"\r\n\r\n{v}\r\n".encode()
     with open(image_path, "rb") as f:
         data = f.read()
+    if len(data) > 8_000_000:  # FB rejects photos >= 10 MB - re-encode smaller
+        import io as _io
+        from PIL import Image as _Im
+        buf = _io.BytesIO()
+        _Im.open(image_path).convert("RGB").save(buf, "JPEG", quality=88, optimize=True)
+        data = buf.getvalue()
+        image_path = image_path + ".jpg"
     body += (f"--{boundary}\r\nContent-Disposition: form-data; name=\"source\"; "
              f"filename=\"{os.path.basename(image_path)}\"\r\n"
              f"Content-Type: image/png\r\n\r\n").encode() + data + b"\r\n"
@@ -201,7 +208,11 @@ def run(story_path, do_publish):
         print("\nDRY RUN - nothing was posted. Re-run with --publish to post.")
         return 0
 
-    pg = CFG["page"]
+    pg = dict(CFG["page"])
+    if os.environ.get("FB_PAGE_TOKEN"):
+        pg["page_access_token"] = os.environ["FB_PAGE_TOKEN"]
+    if os.environ.get("FB_PAGE_ID"):
+        pg["facebook_page_id"] = os.environ["FB_PAGE_ID"]
     pub_cfg = CFG.get("publish", {})
     route = pub_cfg.get("route", "graph")
     zap = (route == "zapier" and pub_cfg.get("zapier_webhook")
@@ -232,7 +243,7 @@ def run(story_path, do_publish):
             print(f"\nHanded to Zapier webhook: {pub_cfg['zapier_webhook'][:48]}...")
         else:
             res = graph_post_photo(pg["facebook_page_id"], pg["page_access_token"],
-                                   caption, png, pg["api_version"])
+                                   caption, png, pg.get("api_version", "v21.0"))
             post_id = res.get("post_id") or res.get("id")
     except urllib.error.HTTPError as e:
         print(f"\nPUBLISH ERROR {e.code}: {e.read().decode()[:600]}")

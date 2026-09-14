@@ -21,6 +21,9 @@ jobs:
         with: { python-version: "3.11" }
       - run: pip install -r requirements.txt
       - name: run one monitor + publish cycle
+        env:
+          FB_PAGE_TOKEN: ${{ secrets.FB_PAGE_TOKEN }}
+          FB_PAGE_ID: ${{ secrets.FB_PAGE_ID }}
         run: python3 news_agent/autod.py --once
       - name: commit agent memory
         if: always()
