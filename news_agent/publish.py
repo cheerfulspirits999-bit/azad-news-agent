@@ -273,11 +273,43 @@ def run(story_path, do_publish):
     return 0
 
 
+def check_fb():
+    """Read-only Facebook connection test (no posting). Exit 0 = healthy."""
+    pg = dict(CFG["page"])
+    if os.environ.get("FB_PAGE_TOKEN"):
+        pg["page_access_token"] = os.environ["FB_PAGE_TOKEN"]
+    if os.environ.get("FB_PAGE_ID"):
+        pg["facebook_page_id"] = os.environ["FB_PAGE_ID"]
+    tok, pid = pg.get("page_access_token"), pg.get("facebook_page_id")
+    if not (tok and pid):
+        print("FB CHECK: not connected - page token / page id missing.")
+        return 4
+    url = (f"https://graph.facebook.com/{pg.get('api_version', 'v21.0')}/{pid}"
+           f"?fields=name,link,fan_count&access_token={tok}")
+    try:
+        with urllib.request.urlopen(url, timeout=60) as r:
+            d = json.load(r)
+    except urllib.error.HTTPError as e:
+        print(f"FB CHECK FAILED {e.code}: {e.read().decode()[:300]}")
+        return 5
+    except Exception as e:
+        print(f"FB CHECK FAILED: {e}")
+        return 5
+    print(f"FB CHECK OK: page={d.get('name')} id={d.get('id')} "
+          f"fans={d.get('fan_count')} link={d.get('link')}")
+    return 0
+
+
 def main():
     ap = argparse.ArgumentParser()
-    ap.add_argument("story")
+    ap.add_argument("story", nargs="?")
     ap.add_argument("--publish", action="store_true")
+    ap.add_argument("--check-fb", action="store_true")
     a = ap.parse_args()
+    if a.check_fb:
+        raise SystemExit(check_fb())
+    if not a.story:
+        ap.error("a story file is required unless --check-fb is given")
     raise SystemExit(run(a.story, a.publish))
 
 
