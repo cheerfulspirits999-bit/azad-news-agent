@@ -40,7 +40,7 @@ F_BOLD = os.path.join(FONT_DIR, "DejaVuSans-Bold.ttf")
 F_REG = os.path.join(FONT_DIR, "DejaVuSans.ttf")
 
 PAD = 52
-BULLET_SIZES = (46, 44, 42, 40, 38, 36, 34, 32, 30)   # largest-first, floor 30px
+BULLET_SIZES = (46, 44, 42, 40, 38, 36)   # largest-first, floor 36px (owner readability spec)
 
 
 def font(size, bold=True):
@@ -123,6 +123,9 @@ def load_logo(target_h):
     return out_img, path, orig_bg
 
 
+COMPACT = {"on": False}
+
+
 def measure_blocks(d, items, f_size, content_w):
     """Height of one bullet block at font size f_size, plus its wrapped lines."""
     f = font(f_size)
@@ -130,13 +133,17 @@ def measure_blocks(d, items, f_size, content_w):
     for b in items:
         lines = wrap(d, b, f, content_w - 52)
         rows.append(lines)
-        h += len(lines) * int(f_size * 1.28) + 18
+        if COMPACT["on"]:
+            h += len(lines) * int(f_size * 1.20) + 8
+        else:
+            h += len(lines) * int(f_size * 1.28) + 18
     return h, rows
 
 
 def render(story, out_path):
     bullets_en = enforce_three(story["bullets_en"], "ENGLISH")
     bullets_ur = enforce_three(story["bullets_ur"], "ROMAN URDU")
+    COMPACT["on"] = len(bullets_en) >= 5  # tight leading keeps 36px+ on 5-card
     headline_png = strip_emoji(story["headline"].strip())
     source = (story.get("source") or "").strip()
     stamp = story.get("timestamp") or datetime.now().strftime("%d %b %Y, %I:%M %p") + " IST"
