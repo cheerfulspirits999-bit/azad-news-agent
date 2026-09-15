@@ -210,7 +210,8 @@ def retry_pending():
     return done
 
 
-DIGEST_HOUR = 12  # IST hour from which the daily 3-in-1 card may go out
+DIGEST_HOUR = 12  # IST hour from which the daily digest card may go out
+DIGEST_SIZE = 5   # owner policy: 5 news in 5 bullets, politics first
 DIGEST_REGIONS = ("hyderabad", "telangana", "india")
 
 
@@ -253,31 +254,33 @@ def build_digest(cands):
         if topic in done or topic in blocked:
             continue
         pool.append((c, lead, lead_ur, topic))
+    def rank(x):  # politics first, then Class A, then score
+        c = x[0]
+        return (0 if "political_major" in c.get("categories", []) else 1,
+                0 if c["class"] == "A" else 1, -(c.get("score") or 0))
     picks = []
     for reg in DIGEST_REGIONS:
         best = sorted((x for x in pool if x[0]["region"] == reg
-                       and x not in picks),
-                      key=lambda x: (0 if x[0]["class"] == "A" else 1,
-                                     -(x[0].get("score") or 0)))
+                       and x not in picks), key=rank)
         for b in best:
             if b not in picks:
                 picks.append(b)
                 break
-    if len(picks) < 3:  # fill leftovers from any region except world-last
-        for x in sorted(pool, key=lambda x: (0 if x[0]["class"] == "A" else 1,
-                                             -(x[0].get("score") or 0))):
-            if len(picks) >= 3:
-                break
-            if x not in picks:
-                picks.append(x)
+    for x in sorted(pool, key=rank):  # fill to 5, politics leading
+        if len(picks) >= DIGEST_SIZE:
+            break
+        if x not in picks:
+            picks.append(x)
     if len(picks) < 3:  # fallback: full headline bullets with Urdu news tags
         TAG = {"hyderabad": "Hyderabad ki khabar",
                "telangana": "Telangana ki khabar",
                "india": "India ki khabar",
                "world": "Duniya ki khabar"}
-        for c in sorted(cands, key=lambda x: (0 if x["class"] == "A" else 1,
-                                              -(x.get("score") or 0))):
-            if len(picks) >= 3:
+        def rank2(c):
+            return (0 if "political_major" in c.get("categories", []) else 1,
+                    0 if c["class"] == "A" else 1, -(c.get("score") or 0))
+        for c in sorted(cands, key=rank2):
+            if len(picks) >= DIGEST_SIZE:
                 break
             age = c.get("age_hours") or 99
             if age > 12 or (c.get("score") or 0) < 60:
