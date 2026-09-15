@@ -508,6 +508,20 @@ def _extend(c, en, ur):
             continue
         en.append(line_en)
         ur.append(line_ur)
+    # fill towards the owner's 5-bullet card with grounded excerpt sentences
+    for sent in re.split(r"(?<=[.!?])\s+", _dedateline(c.get("excerpt", ""))):
+        if len(en) >= 5:
+            break
+        s2 = sent.strip()
+        if not (40 <= len(s2) <= 95):
+            continue
+        if any(s2 == x for x in en):
+            continue
+        if re.search(r"^(He|She|They|It|His|Her|Their|This|That|There|The same)\b", s2):
+            continue
+        s2 = s2 if s2.endswith(".") else s2 + "."
+        en.append(s2)
+        ur.append(f"Zarai ke mutabiq {s2}")
     return en, ur
 
 
@@ -524,15 +538,24 @@ POLI_VERBS = [
     ("offers", "kaha"), ("offered", "kaha"),
     ("assures", "kaha"), ("assured", "kaha"),
     ("warns", "kaha"), ("warned", "kaha"),
+    ("announces", "elaan"), ("announced", "elaan"),
+    ("approves", "elaan"), ("approved", "elaan"),
+    ("bars", "elaan"), ("barred", "elaan"),
+    ("launches", "elaan"), ("launched", "elaan"),
+    ("releases", "elaan"), ("released", "elaan"),
 ]
 POLI_ACTOR = re.compile(r"^([A-Z][A-Za-z().,'& ]{2,40}?)\s+(?:seeks|demands|urges|"
                         r"calls for|wants|asks for|opposes|objects to|questions|"
                         r"slams|criticises|supports|backs|says|said|claims|claimed|"
                         r"alleges|alleged|accuses|accused|raises|raised|offers|"
-                        r"offered|assures|assured|warns|warned)\b")
+                        r"offered|assures|assured|warns|warned|announces|announced|"
+                        r"approves|approved|bars|barred|launches|launched|"
+                        r"releases|released)\b")
 
 
 def _frame_politics(c):
+    if len(c["title"].strip()) < 70:
+        return None  # truncated feed titles twist meanings - refuse
     title = c["title"].strip()
     title = re.sub(r"^[A-Za-z0-9'\-\. ,]{3,40}:\s*", "", title)  # drop "Tag:" prefix
     m = POLI_ACTOR.match(title)
@@ -548,18 +571,34 @@ def _frame_politics(c):
     if not verb:
         return None
     what = rest[len(verb[0]):].strip().rstrip(".")
-    if len(what) < 8 or len(what) > 90:
+    if len(what) < 16 or len(what) > 90:
+        return None  # stub "what" phrases twist the meaning - refuse
+    if verb[1] in ("maang", "virodh") and len(what) < 20:
         return None
     kind = verb[1]
     if kind == "kaha":
-        return ([f"{actor} {verb[0]} {what}.", AWAIT_EN],
-                [f"{actor} ne kaha ke {what}.", AWAIT_UR])
+        en1 = f"{actor} {verb[0]} {what}."
+        if len(en1) > 95 and "," in what:  # split long claims at the comma
+            i = what.rindex(",")
+            p1, p2 = what[:i].strip(), what[i + 1:].strip()
+            if len(p1) >= 20 and 12 <= len(p2) <= 90:
+                return ([f"{actor} {verb[0]} {p1}.",
+                         f"{actor} also {p2}.", AWAIT_EN],
+                        [f"{actor} ne kaha ke {p1}.",
+                         f"{actor} ne kaha ke woh {p2}.", AWAIT_UR])
+            return None
+        if len(en1) > 95:
+            return None  # never overflow the card bullet limit
+        return ([en1, AWAIT_EN], [f"{actor} ne kaha ke {what}.", AWAIT_UR])
     if kind == "ilzaam":
         return ([f"{actor} {verb[0]} that {what}.", AWAIT_EN],
                 [f"{actor} ne ilzaam lagaya ke {what}.", AWAIT_UR])
     if kind == "uthaya":
         return ([f"{actor} {verb[0]} {what}.", AWAIT_EN],
                 [f"{actor} ne {what} ka masla uthaya hai.", AWAIT_UR])
+    if kind == "elaan":
+        return ([f"{actor} {verb[0]} {what}.", AWAIT_EN],
+                [f"{actor} ne {what} ka elaan kiya hai.", AWAIT_UR])
     if kind == "maang":
         en1 = f"{actor} has sought {what}."
         ur1 = f"{actor} ne {what} ki maang ki hai."

@@ -64,6 +64,9 @@ def slugify(t):
 
 
 MAX_AGE_HOURS = 6.0  # owner policy: never post old news
+MAIN_CATS = {"political_major", "govt_announcement", "economic_major",
+             "court_judgment"}  # politics + main news always get a look-in
+MIN_GAP_HOURS = 2.0  # owner policy: the 3 daily posts sit 2h apart
 
 
 def eligible(c):
@@ -73,6 +76,8 @@ def eligible(c):
         return False  # stale news is refused outright
     if cls in ("A", "B"):
         return True
+    if set(c.get("categories", [])) & MAIN_CATS and score >= 60:
+        return True  # politics / main news: lower bar, still verified+fresh
     if cls == "C" and pref and score >= 72:
         return True
     return False
@@ -209,6 +214,11 @@ def one_cycle():
     cfg = json.load(open(os.path.join(BASE, "config.json"), encoding="utf-8"))
     log("=== cycle start ===")
     cyc = monitor.run_cycle(cfg["rules"]["max_post_age_hours"], 12)
+
+    def _prio(c):  # politics & main news first, then by score
+        main = bool(set(c.get("categories", [])) & MAIN_CATS) or c.get("class") == "A"
+        return (0 if main else 1, -(c.get("score") or 0))
+    cyc["candidates"].sort(key=_prio)
     if cyc["errors"] and cyc["feeds_ok"] == 0:
         alert("All monitored feeds failed", "\n".join(cyc["errors"]))
         raise SystemExit(9)
@@ -251,6 +261,12 @@ def one_cycle():
         elif q.get("regular", 0) >= DAILY_REGULAR_LIMIT:
             log("daily regular limit (3) reached, holding:", story["slug"])
             continue
+        elif q.get("last_at"):
+            gap = (datetime.now(IST) -
+                   datetime.fromisoformat(q["last_at"])).total_seconds() / 3600
+            if gap < MIN_GAP_HOURS:
+                log("2h spacing rule, holding till next slot:", story["slug"])
+                continue
         log(f"AUTO POST candidate [{c['class']}|{c['score']}|{c['region']}"
             f"{'|EMERGENCY' if emerg else ''}]:", c["title"][:70])
         rc, path = try_publish(story)
@@ -261,6 +277,7 @@ def one_cycle():
                 q["emerg_month"][month] = q["emerg_month"].get(month, 0) + 1
             else:
                 q["regular"] = q.get("regular", 0) + 1
+                q["last_at"] = datetime.now(IST).isoformat()
             save_quota(q)
             log("published:", story["slug"])
             time.sleep(POST_SPACING_SECONDS)  # avoid FB Page rate-limit errors
