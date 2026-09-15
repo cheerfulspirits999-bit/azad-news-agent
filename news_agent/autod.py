@@ -296,8 +296,15 @@ def build_digest(cands):
                 continue
             if any(lead == x[1] for x in picks):
                 continue
-            picks.append((c, lead,
-                          f"{TAG.get(c['region'], 'Khabar')} — {lead}", topic))
+            tag = TAG.get(c["region"], "Khabar")
+            ur_line = f"{tag} — {lead}"
+            if len(ur_line) > 95:  # keep the Urdu mirror inside the card spec
+                room = 95 - len(tag) - 4
+                cut = lead[:room].rsplit(" ", 1)[0].rstrip(",.;:")
+                if len(cut) < 30:
+                    continue
+                lead, ur_line = cut + "…", f"{tag} — {cut}."
+            picks.append((c, lead, ur_line, topic))
     if len(picks) < 3:
         return None
     now = datetime.now(IST)
