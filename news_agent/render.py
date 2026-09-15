@@ -182,7 +182,7 @@ def render(story, out_path):
         h_ur, r_ur = measure_blocks(probe, bullets_ur, BULLET_SIZES[-1], content_w)
         chosen = BULLET_SIZES[-1]
         rows_en, rows_ur = r_en, r_ur
-        H = fixed_h + h_en + h_ur + 20
+        H = fixed_h + h_en + h_ur + 40
         print(f"[render] content tall -> canvas stretched to {W}x{H}", file=sys.stderr)
 
     canvas = Image.new("RGBA", (W, H), rgb(BLACK) + (255,))
@@ -260,14 +260,15 @@ def render(story, out_path):
         d.text((PAD + 24, y), label, font=f_lab, fill=rgb(GOLD_BRIGHT))
         y += 58
         f = font(chosen)
-        lead = int(chosen * 1.28)
+        lead = int(chosen * (1.20 if COMPACT["on"] else 1.28))
+        gap = 8 if COMPACT["on"] else 18
         for lines in rows:
             d.ellipse([PAD + 4, y + 16, PAD + 20, y + 32], fill=rgb(GOLD))
             ly = y
             for ln in lines:
                 d.text((PAD + 46, ly), ln, font=f, fill=rgb(WHITE))
                 ly += lead
-            y = ly + 18
+            y = ly + gap
         return y
 
     y = block("ENGLISH", rows_en, y)
