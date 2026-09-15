@@ -210,6 +210,84 @@ def retry_pending():
     return done
 
 
+DIGEST_HOUR = 12  # IST hour from which the daily 3-in-1 card may go out
+DIGEST_REGIONS = ("hyderabad", "telangana", "india")
+
+
+def _lead_ok(b):
+    if len(b) <= 95:
+        return b
+    if "," in b:  # compress at the last comma, keep it a full sentence
+        cut = b[:b.rindex(",")].rstrip()
+        if len(cut) >= 40:
+            return cut + "."
+    return None
+
+
+def build_digest(cands):
+    """One card, three full headlines: Hyderabad + Telangana + India."""
+    pub = os.path.join(STATE, "published.json")
+    done = set()
+    if os.path.exists(pub):
+        try:
+            done = {r.get("topic") for r in json.load(open(pub, encoding="utf-8"))}
+        except Exception:
+            pass
+    blocked = retracted_slugs()
+    today = datetime.now(IST).strftime("%Y-%m-%d")
+    pool = []
+    for c in cands:
+        age = c.get("age_hours") or 99
+        if age > 12 or (c.get("score") or 0) < 60:
+            continue
+        if c.get("class") not in ("A", "B") and not set(c.get("categories", [])) & MAIN_CATS:
+            continue
+        fr = writer.build(c)
+        if not fr or len(fr["bullets_en"]) < 3:
+            continue
+        lead = _lead_ok(fr["bullets_en"][0])
+        lead_ur = _lead_ok(fr["bullets_ur"][0])
+        if not lead or not lead_ur:
+            continue
+        topic = c["region"] + "-" + slugify(c["title"])[:40]
+        if topic in done or topic in blocked:
+            continue
+        pool.append((c, lead, lead_ur, topic))
+    picks = []
+    for reg in DIGEST_REGIONS:
+        best = sorted((x for x in pool if x[0]["region"] == reg
+                       and x not in picks),
+                      key=lambda x: (0 if x[0]["class"] == "A" else 1,
+                                     -(x[0].get("score") or 0)))
+        for b in best:
+            if b not in picks:
+                picks.append(b)
+                break
+    if len(picks) < 3:  # fill leftovers from any region except world-last
+        for x in sorted(pool, key=lambda x: (0 if x[0]["class"] == "A" else 1,
+                                             -(x[0].get("score") or 0))):
+            if len(picks) >= 3:
+                break
+            if x not in picks:
+                picks.append(x)
+    if len(picks) < 3:
+        return None
+    now = datetime.now(IST)
+    return {
+        "slug": f"auto-digest-{today}", "topic": f"digest-{today}",
+        "title": "Daily digest: " + " | ".join(p[0]["title"][:40] for p in picks),
+        "headline": "📰 LATEST NEWS — TOP 3 TODAY",
+        "region": "india", "classification": "B",
+        "timestamp": now.strftime("%d %b %Y, %I:%M %p IST"),
+        "source": " / ".join(dict.fromkeys(p[0]["source"] for p in picks)),
+        "source_urls": [p[0]["url"] for p in picks],
+        "verified_by": "automated pipeline (multi-feed cross-check)",
+        "key_facts": [],
+        "bullets_en": [p[1] for p in picks],
+        "bullets_ur": [p[2] for p in picks],
+    }
+
+
 def one_cycle():
     cfg = json.load(open(os.path.join(BASE, "config.json"), encoding="utf-8"))
     log("=== cycle start ===")
@@ -224,6 +302,30 @@ def one_cycle():
         raise SystemExit(9)
 
     posted = retry_pending()
+    q0 = load_quota()
+    today0 = datetime.now(IST).strftime("%Y-%m-%d")
+    if q0.get("day") != today0:
+        q0 = {"day": today0, "regular": 0, "day_total": 0,
+              "emerg_month": q0.get("emerg_month", {})}
+    if (datetime.now(IST).hour >= DIGEST_HOUR
+            and q0.get("digest_day") != today0 and posted != 5):
+        dg = build_digest(cyc["candidates"])
+        if dg:
+            log("DIGEST ready: 3 fresh stories, one card")
+            rc, _ = try_publish(dg)
+            if rc == 0:
+                q0["digest_day"] = today0
+                q0["day_total"] = q0.get("day_total", 0) + 1
+                save_quota(q0)
+                n0 = 1
+                log("published daily digest:", dg["slug"])
+                time.sleep(POST_SPACING_SECONDS)
+            elif rc == 3:
+                log("digest already published today, skipping")
+                q0["digest_day"] = today0
+                save_quota(q0)
+            else:
+                log(f"digest refused (rc={rc}), will retry next cycle")
     if posted == 5:
         alert("Facebook publish failed while retrying pending posts",
               "Check Page token permissions (pages_manage_posts).")
@@ -245,6 +347,9 @@ def one_cycle():
             log("BLOCKED owner-retracted story:", story["slug"])
             continue
         emerg = is_emergency(c)
+        if not emerg:
+            log("held for the daily 3-in-1 digest:", story["slug"])
+            continue
         q = load_quota()
         today = datetime.now(IST).strftime("%Y-%m-%d")
         month = today[:7]
