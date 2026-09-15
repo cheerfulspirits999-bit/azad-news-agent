@@ -270,6 +270,31 @@ def build_digest(cands):
                 break
             if x not in picks:
                 picks.append(x)
+    if len(picks) < 3:  # fallback: full headline bullets with Urdu news tags
+        TAG = {"hyderabad": "Hyderabad ki khabar",
+               "telangana": "Telangana ki khabar",
+               "india": "India ki khabar",
+               "world": "Duniya ki khabar"}
+        for c in sorted(cands, key=lambda x: (0 if x["class"] == "A" else 1,
+                                              -(x.get("score") or 0))):
+            if len(picks) >= 3:
+                break
+            age = c.get("age_hours") or 99
+            if age > 12 or (c.get("score") or 0) < 60:
+                continue
+            if c.get("class") not in ("A", "B") and \
+               not set(c.get("categories", [])) & MAIN_CATS:
+                continue
+            topic = c["region"] + "-" + slugify(c["title"])[:40]
+            if topic in done or topic in blocked:
+                continue
+            lead = _lead_ok(c["title"].strip())
+            if not lead:
+                continue
+            if any(lead == x[1] for x in picks):
+                continue
+            picks.append((c, lead,
+                          f"{TAG.get(c['region'], 'Khabar')} — {lead}", topic))
     if len(picks) < 3:
         return None
     now = datetime.now(IST)
