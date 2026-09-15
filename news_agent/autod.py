@@ -211,7 +211,7 @@ def retry_pending():
 
 
 DIGEST_HOUR = 12  # IST hour from which the daily digest card may go out
-DIGEST_SIZE = 5   # owner policy: 5 news in 5 bullets, politics first
+DIGEST_SIZE = 3   # owner 15 Sep: 3-bullet digest from tomorrow, politics first
 DIGEST_REGIONS = ("hyderabad", "telangana", "india")
 
 
