@@ -129,19 +129,28 @@ def _strip_money(text):
     return MONEY.sub(" ", text or "")
 
 
+DEAD_ADJ = re.compile(
+    r"\b(one|two|three|four|five|six|seven|eight|nine|ten|eleven|twelve|"
+    r"\d[\d,]{0,6})\s*(?:people?|persons?|passengers?|pilgrims?|workers?|"
+    r"men|women|children|youths?)?\s*(?:killed|dead|died)\b", re.I)
+DEAD_AFTER = re.compile(r"\b(?:killed|dead|died)\s*[:\-]?\s*"
+                        r"(one|two|three|four|five|six|seven|eight|nine|ten|"
+                        r"\d[\d,]{0,6})", re.I)
+
+
 def _people_count(text):
+    """Death toll ONLY from a number adjacent to killed/dead/died.
+    Never from an injured/rescued count (that caused a 50-dead error)."""
     t = _strip_money(_dedateline(text))
-    for rx in PEOPLE_COUNT:
+    for rx in (DEAD_ADJ, DEAD_AFTER):
         m = rx.search(t)
         if not m:
             continue
-        vals = [g for g in m.groups() if g]
-        for v in vals:
-            v = v.strip(" ,.")
-            if v.lower() in WORD_NUM:
-                return WORD_NUM[v.lower()]
-            if re.fullmatch(r"\d[\d,]{0,6}", v) and v != "0":
-                return v
+        v = m.group(1).strip(" ,.")
+        if v.lower() in WORD_NUM:
+            return WORD_NUM[v.lower()]
+        if re.fullmatch(r"\d[\d,]{0,6}", v) and v != "0":
+            return v
     return None
 
 
@@ -186,7 +195,7 @@ def _sanitize(bullets):
         if not b.endswith("."):
             b += "."
         out.append(b)
-    return out if 3 <= len(out) <= 5 else None
+    return out if 2 <= len(out) <= 5 else None
 
 
 # --------------------------------------------------------------------------
@@ -508,14 +517,24 @@ POLI_VERBS = [
     ("opposes", "virodh"), ("objects to", "virodh"),
     ("questions", "sawal"), ("slams", "tankeed"), ("criticises", "tankeed"),
     ("supports", "taid"), ("backs", "taid"),
+    ("says", "kaha"), ("said", "kaha"), ("claims", "kaha"), ("claimed", "kaha"),
+    ("alleges", "ilzaam"), ("alleged", "ilzaam"),
+    ("accuses", "ilzaam"), ("accused", "ilzaam"),
+    ("raises", "uthaya"), ("raised", "uthaya"),
+    ("offers", "kaha"), ("offered", "kaha"),
+    ("assures", "kaha"), ("assured", "kaha"),
+    ("warns", "kaha"), ("warned", "kaha"),
 ]
 POLI_ACTOR = re.compile(r"^([A-Z][A-Za-z().,'& ]{2,40}?)\s+(?:seeks|demands|urges|"
                         r"calls for|wants|asks for|opposes|objects to|questions|"
-                        r"slams|criticises|supports|backs)\b")
+                        r"slams|criticises|supports|backs|says|said|claims|claimed|"
+                        r"alleges|alleged|accuses|accused|raises|raised|offers|"
+                        r"offered|assures|assured|warns|warned)\b")
 
 
 def _frame_politics(c):
     title = c["title"].strip()
+    title = re.sub(r"^[A-Za-z0-9'\-\. ,]{3,40}:\s*", "", title)  # drop "Tag:" prefix
     m = POLI_ACTOR.match(title)
     if not m:
         return None
@@ -532,6 +551,15 @@ def _frame_politics(c):
     if len(what) < 8 or len(what) > 90:
         return None
     kind = verb[1]
+    if kind == "kaha":
+        return ([f"{actor} {verb[0]} {what}.", AWAIT_EN],
+                [f"{actor} ne kaha ke {what}.", AWAIT_UR])
+    if kind == "ilzaam":
+        return ([f"{actor} {verb[0]} that {what}.", AWAIT_EN],
+                [f"{actor} ne ilzaam lagaya ke {what}.", AWAIT_UR])
+    if kind == "uthaya":
+        return ([f"{actor} {verb[0]} {what}.", AWAIT_EN],
+                [f"{actor} ne {what} ka masla uthaya hai.", AWAIT_UR])
     if kind == "maang":
         en1 = f"{actor} has sought {what}."
         ur1 = f"{actor} ne {what} ki maang ki hai."
@@ -609,16 +637,23 @@ def build(candidate):
             if not res:
                 continue
             en_r, ur_r = _extend(candidate, list(res[0]), list(res[1]))
-            en, ur = _drop_bad_pairs(_sanitize(en_r), _sanitize(ur_r))
+            en_s, ur_s = _sanitize(en_r), _sanitize(ur_r)
+            if en_s is None or ur_s is None:
+                continue  # a bullet failed safety sanitisation - refuse frame
+            en, ur = _drop_bad_pairs(en_s, ur_s)
             src_txt = candidate["title"] + " " + _dedateline(candidate["excerpt"])
             if cats & {"fire_explosion", "accident_casualty"} and not _has_loc(src_txt):
                 continue  # casualty/fire stories must say WHERE
-            key = max((t for t in re.findall(r"[A-Za-z]+", candidate["title"].lower())
-                       if len(t) >= 8), key=len, default="")
-            if key and not any(key in b.lower() for b in en):
-                continue  # bullets must carry the story's key noun
-            min_subst = 3 if cats & {"fire_explosion", "accident_casualty"} else 2
-            if len([b for b in en if b not in FILLER_EN]) < min_subst:
+            ex_txt = _dedateline(candidate.get("excerpt", ""))
+            if len(ex_txt) < 100:  # thin excerpt: bullets must carry key noun
+                key = max((t for t in re.findall(r"[A-Za-z]+",
+                           candidate["title"].lower()) if len(t) >= 8),
+                          key=len, default="")
+                if key and not any(key in b.lower() for b in en):
+                    continue
+            subst = len([b for b in en if b not in FILLER_EN])
+            statement = bool(cats & {"political_major"}) and len(en[0]) >= 45
+            if subst < (1 if statement else 2):
                 continue  # thin filler-only posts are refused
             if en and ur and len(en) == len(ur) and \
                _grounded(en + ur, candidate["title"] + " " +

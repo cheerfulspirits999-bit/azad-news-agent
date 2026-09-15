@@ -63,14 +63,45 @@ def slugify(t):
     return t[:60]
 
 
+MAX_AGE_HOURS = 6.0  # owner policy: never post old news
+
+
 def eligible(c):
     cls, score, pref = c["class"], c["score"], c["source_preferred"]
     age = c.get("age_hours") or 99
+    if age > MAX_AGE_HOURS:
+        return False  # stale news is refused outright
     if cls in ("A", "B"):
         return True
-    if cls == "C" and pref and score >= 72 and age <= 12:
+    if cls == "C" and pref and score >= 72:
         return True
     return False
+
+
+DAILY_REGULAR_LIMIT = 3     # owner policy: 3 regular posts a day (IST)
+MONTHLY_EMERGENCY_LIMIT = 10  # plus up to 10 emergency breaking posts a month
+DAILY_TOTAL_LIMIT = 5       # hard flood guard
+EMERG_CATS = {"fire_explosion", "accident_casualty", "major_crime"}
+
+
+def load_quota():
+    qp = os.path.join(STATE, "quota.json")
+    if os.path.exists(qp):
+        try:
+            return json.load(open(qp, encoding="utf-8"))
+        except Exception:
+            pass
+    return {}
+
+
+def save_quota(q):
+    json.dump(q, open(os.path.join(STATE, "quota.json"), "w", encoding="utf-8"),
+              indent=1)
+
+
+def is_emergency(c):
+    return (bool(set(c.get("categories", [])) & EMERG_CATS)
+            and c.get("class") == "A" and (c.get("age_hours") or 99) <= 3)
 
 
 def story_from(c, framed):
@@ -193,6 +224,7 @@ def one_cycle():
         if n >= MAX_POSTS_PER_CYCLE:
             break
         if not eligible(c):
+            log("stale or low-score, skipped:", c["title"][:60])
             continue
         framed = writer.build(c)
         if not framed:
@@ -202,11 +234,34 @@ def one_cycle():
         if {story.get("slug"), story.get("topic")} & retracted_slugs():
             log("BLOCKED owner-retracted story:", story["slug"])
             continue
-        log(f"AUTO POST candidate [{c['class']}|{c['score']}|{c['region']}]:",
-            c["title"][:70])
+        emerg = is_emergency(c)
+        q = load_quota()
+        today = datetime.now(IST).strftime("%Y-%m-%d")
+        month = today[:7]
+        if q.get("day") != today:
+            q = {"day": today, "regular": 0, "day_total": 0,
+                 "emerg_month": q.get("emerg_month", {})}
+        if q.get("day_total", 0) >= DAILY_TOTAL_LIMIT:
+            log("daily total limit reached, holding:", story["slug"])
+            continue
+        if emerg:
+            if q["emerg_month"].get(month, 0) >= MONTHLY_EMERGENCY_LIMIT:
+                log("monthly emergency limit (10) reached, holding:", story["slug"])
+                continue
+        elif q.get("regular", 0) >= DAILY_REGULAR_LIMIT:
+            log("daily regular limit (3) reached, holding:", story["slug"])
+            continue
+        log(f"AUTO POST candidate [{c['class']}|{c['score']}|{c['region']}"
+            f"{'|EMERGENCY' if emerg else ''}]:", c["title"][:70])
         rc, path = try_publish(story)
         if rc == 0:
             n += 1
+            q["day_total"] = q.get("day_total", 0) + 1
+            if emerg:
+                q["emerg_month"][month] = q["emerg_month"].get(month, 0) + 1
+            else:
+                q["regular"] = q.get("regular", 0) + 1
+            save_quota(q)
             log("published:", story["slug"])
             time.sleep(POST_SPACING_SECONDS)  # avoid FB Page rate-limit errors
         elif rc == 3:
