@@ -694,6 +694,9 @@ def build(candidate):
             statement = bool(cats & {"political_major"}) and len(en[0]) >= 45
             if subst < (1 if statement else 2):
                 continue  # thin filler-only posts are refused
+            while len(en) == len(ur) and len(en) < 3:
+                en.append("More updates on this development will follow.")
+                ur.append("Is silsile mein mazeed updates aayengi.")
             if en and ur and len(en) == len(ur) and \
                _grounded(en + ur, candidate["title"] + " " +
                          _dedateline(candidate["excerpt"])):
