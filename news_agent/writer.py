@@ -554,8 +554,8 @@ POLI_ACTOR = re.compile(r"^([A-Z][A-Za-z().,'& ]{2,40}?)\s+(?:seeks|demands|urge
 
 
 def _frame_politics(c):
-    if len(c["title"].strip()) < 70:
-        return None  # truncated feed titles twist meanings - refuse
+    if len(c["title"].strip()) < 55:
+        return None  # stub feed titles twist meanings - refuse
     title = c["title"].strip()
     title = re.sub(r"^[A-Za-z0-9'\-\. ,]{3,40}:\s*", "", title)  # drop "Tag:" prefix
     m = POLI_ACTOR.match(title)
