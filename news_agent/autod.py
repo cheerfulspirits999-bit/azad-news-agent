@@ -236,6 +236,10 @@ def build_digest(cands):
             pass
     blocked = retracted_slugs()
     today = datetime.now(IST).strftime("%Y-%m-%d")
+    TAG = {"hyderabad": "Hyderabad ki khabar",
+           "telangana": "Telangana ki khabar",
+           "india": "India ki khabar",
+           "world": "Duniya ki khabar"}
     pool = []
     for c in cands:
         age = c.get("age_hours") or 99
@@ -250,6 +254,19 @@ def build_digest(cands):
         lead_ur = _lead_ok(fr["bullets_ur"][0])
         if not lead or not lead_ur:
             continue
+        tw = {w.lower() for w in re.findall(r"[A-Za-z]{7,}", c["title"])}
+        if not tw & {w.lower() for w in re.findall(r"[A-Za-z]{7,}", lead)}:
+            lead = _lead_ok(c["title"].strip())  # frame lost the substance
+            if not lead:
+                continue
+            tag = TAG.get(c["region"], "Khabar")
+            lead_ur = f"{tag} — {lead}"
+            if len(lead_ur) > 95:
+                room = 95 - len(tag) - 4
+                cut = lead[:room].rsplit(" ", 1)[0].rstrip(",.;:")
+                if len(cut) < 30:
+                    continue
+                lead, lead_ur = cut + "…", f"{tag} — {cut}."
         topic = c["region"] + "-" + slugify(c["title"])[:40]
         if topic in done or topic in blocked:
             continue
@@ -271,11 +288,7 @@ def build_digest(cands):
             break
         if x not in picks:
             picks.append(x)
-    if len(picks) < 3:  # fallback: full headline bullets with Urdu news tags
-        TAG = {"hyderabad": "Hyderabad ki khabar",
-               "telangana": "Telangana ki khabar",
-               "india": "India ki khabar",
-               "world": "Duniya ki khabar"}
+    if len(picks) < DIGEST_SIZE:  # fallback: full headline bullets with Urdu tags
         def rank2(c):
             return (0 if "political_major" in c.get("categories", []) else 1,
                     0 if c["class"] == "A" else 1, -(c.get("score") or 0))
