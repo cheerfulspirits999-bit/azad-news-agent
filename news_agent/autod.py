@@ -216,13 +216,29 @@ DIGEST_SIZE = 5   # owner 16 Sep: every card carries 5 important news items
 DIGEST_REGIONS = ("hyderabad", "telangana", "india")
 
 
+TAIL_STOP = {"and", "or", "of", "to", "in", "for", "with", "as", "is", "at",
+             "by", "on", "the", "a", "an", "from", "that", "which", "over",
+             "after", "before", "against", "between", "into", "during",
+             "despite", "unless", "until", "while", "though", "but", "so"}
+
+
+def _tidy_lead(b):
+    b = b.strip()
+    if not b.endswith("."):
+        b += "."
+    words = b.rstrip(".").split(" ")
+    while len(words) > 6 and words[-1].lower().strip(",;:") in TAIL_STOP:
+        words = words[:-1]  # never end a headline on a dangling connector
+    return " ".join(words) + "."
+
+
 def _lead_ok(b):
     if len(b) <= 95:
-        return b
+        return _tidy_lead(b)
     if "," in b:  # compress at the last comma, keep it a full sentence
         cut = b[:b.rindex(",")].rstrip()
         if len(cut) >= 40:
-            return cut + "."
+            return _tidy_lead(cut)
     return None
 
 
@@ -269,7 +285,8 @@ def build_digest(cands):
                 cut = lead[:room].rsplit(" ", 1)[0].rstrip(",.;:")
                 if len(cut) < 30:
                     continue
-                lead, lead_ur = cut + "…", f"{tag} — {cut}."
+                cut = _tidy_lead(cut)
+                lead, lead_ur = cut, f"{tag} — {cut}"
         topic = c["region"] + "-" + slugify(c["title"])[:40]
         if topic in done or topic in blocked:
             continue
@@ -319,7 +336,8 @@ def build_digest(cands):
                 cut = lead[:room].rsplit(" ", 1)[0].rstrip(",.;:")
                 if len(cut) < 30:
                     continue
-                lead, ur_line = cut + "…", f"{tag} — {cut}."
+                cut = _tidy_lead(cut)
+                lead, ur_line = cut, f"{tag} — {cut}"
             picks.append((c, lead, ur_line, topic))
     if len(picks) < 3:
         return None
