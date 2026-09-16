@@ -214,6 +214,11 @@ DIGEST_SLOTS = (9, 14, 19)  # IST hours: morning / afternoon / evening cards
 CARDS_PER_DAY = 3           # owner 16 Sep: 3 cards a day, 5 news each
 DIGEST_SIZE = 5   # owner 16 Sep: every card carries 5 important news items
 DIGEST_REGIONS = ("hyderabad", "telangana", "india")
+# owner 16 Sep: NO murder/accident/casualty/fire news in cards - one small
+# mistake fills the comment section. Politics/govt/economy/court only.
+NO_CARD_CATS = {"accident_casualty", "fire_explosion", "major_crime"}
+NO_CARD_RX = re.compile(r"\b(killed|murder|murdered|died|death|accident|crash|"
+                        r"crashes|collision|drowned|suicide|rape|raped)\b", re.I)
 
 
 TAIL_STOP = {"and", "or", "of", "to", "in", "for", "with", "as", "is", "at",
@@ -264,6 +269,10 @@ def build_digest(cands):
         age = c.get("age_hours") or 99
         if age > 12 or (c.get("score") or 0) < 60:
             continue
+        if set(c.get("categories", [])) & NO_CARD_CATS:
+            continue  # casualty/crime/fire news never rides the cards
+        if NO_CARD_RX.search(c["title"]):
+            continue
         if c.get("class") not in ("A", "B") and not set(c.get("categories", [])) & MAIN_CATS:
             continue
         fr = writer.build(c)
@@ -311,6 +320,10 @@ def build_digest(cands):
                 break
             age = c.get("age_hours") or 99
             if age > 12 or (c.get("score") or 0) < 60:
+                continue
+            if set(c.get("categories", [])) & NO_CARD_CATS:
+                continue
+            if NO_CARD_RX.search(c["title"]):
                 continue
             if c.get("class") not in ("A", "B") and \
                not set(c.get("categories", [])) & MAIN_CATS:

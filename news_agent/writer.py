@@ -748,6 +748,14 @@ def urdu_headline(title):
     m = UR_DEATH.search(t)
     if m:
         s = _ur_clean_s(t[:m.start()])
+        PERSON = {"woman": "ek khatoon", "man": "ek shakhs", "person": "ek shakhs",
+                  "people": "log", "persons": "log", "child": "ek bachcha",
+                  "children": "bacche", "youth": "ek naujawan", "elderly": "ek buzugr"}
+        low = s.lower()
+        for k, v in PERSON.items():
+            if low == k or low.startswith(k + " "):
+                s = v + s[len(k):]
+                break
         loc = re.search(r"\b(in|at|near)\s+(.{3,40})$", t, re.I)
         if len(s) >= 3:
             return f"{s} ki maut ho gayi" + (f" {loc.group(2).strip()} mein." if loc else ".")
