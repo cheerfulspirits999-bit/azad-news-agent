@@ -1,8 +1,6 @@
 name: facebook-check
 on:
-  workflow_dispatch:
-  schedule:
-    - cron: '5 3,15 * * *'   # 08:35 & 20:35 IST heartbeat of the FB connection
+  workflow_dispatch:   # cron paused while Zapier bridge carries publishing (avoids noise emails)
 jobs:
   check:
     runs-on: ubuntu-latest
