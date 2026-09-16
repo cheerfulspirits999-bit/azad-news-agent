@@ -271,22 +271,16 @@ def build_digest(cands):
             continue
         lead = _lead_ok(fr["bullets_en"][0])
         lead_ur = _lead_ok(fr["bullets_ur"][0])
-        if not lead or not lead_ur:
+        if lead_ur and len(lead_ur) > 95:
+            lead_ur = writer.urdu_headline(c["title"]) or lead_ur
+        if not lead or not lead_ur or len(lead_ur) > 95:
             continue
         tw = {w.lower() for w in re.findall(r"[A-Za-z]{7,}", c["title"])}
         if not tw & {w.lower() for w in re.findall(r"[A-Za-z]{7,}", lead)}:
             lead = _lead_ok(c["title"].strip())  # frame lost the substance
-            if not lead:
+            lead_ur = writer.urdu_headline(c["title"]) if lead else None
+            if not lead or not lead_ur or len(lead_ur) > 95:
                 continue
-            tag = TAG.get(c["region"], "Khabar")
-            lead_ur = f"{tag} — {lead}"
-            if len(lead_ur) > 95:
-                room = 95 - len(tag) - 4
-                cut = lead[:room].rsplit(" ", 1)[0].rstrip(",.;:")
-                if len(cut) < 30:
-                    continue
-                cut = _tidy_lead(cut)
-                lead, lead_ur = cut, f"{tag} — {cut}"
         topic = c["region"] + "-" + slugify(c["title"])[:40]
         if topic in done or topic in blocked:
             continue
@@ -329,15 +323,9 @@ def build_digest(cands):
                 continue
             if any(lead == x[1] for x in picks):
                 continue
-            tag = TAG.get(c["region"], "Khabar")
-            ur_line = f"{tag} — {lead}"
-            if len(ur_line) > 95:  # keep the Urdu mirror inside the card spec
-                room = 95 - len(tag) - 4
-                cut = lead[:room].rsplit(" ", 1)[0].rstrip(",.;:")
-                if len(cut) < 30:
-                    continue
-                cut = _tidy_lead(cut)
-                lead, ur_line = cut, f"{tag} — {cut}"
+            ur_line = writer.urdu_headline(c["title"])
+            if not ur_line or len(ur_line) > 95:
+                continue  # never publish a confusing Urdu mirror
             picks.append((c, lead, ur_line, topic))
     if len(picks) < 3:
         return None
@@ -346,9 +334,7 @@ def build_digest(cands):
         "slug": f"auto-digest-{today}-s{now.strftime('%H%M')}",
         "topic": f"digest-{today}-{now.strftime('%H%M')}",
         "title": "Daily digest: " + " | ".join(p[0]["title"][:40] for p in picks),
-        "headline": ("📰 LATEST NEWS — MORNING TOP 5" if now.hour < 12
-                     else "📰 LATEST NEWS — AFTERNOON TOP 5" if now.hour < 17
-                     else "📰 LATEST NEWS — EVENING TOP 5"),
+        "headline": "📰 LATEST NEWS",
         "region": "india", "classification": "B",
         "timestamp": now.strftime("%d %b %Y, %I:%M %p IST"),
         "source": " / ".join(dict.fromkeys(p[0]["source"] for p in picks)),

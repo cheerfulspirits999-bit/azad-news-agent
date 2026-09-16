@@ -664,6 +664,115 @@ def _drop_bad_pairs(en, ur):
     return [en[i] for i in keep], [ur[i] for i in keep if i < len(ur)]
 
 
+# ---------------- Roman-Urdu headline converter -------------------------
+UR_SAY = re.compile(r"\b(says?|said|claims?|claimed|alleges?|alleged|warns?|warned)\b", re.I)
+UR_DEATH = re.compile(r"\b(killed|died|dead|drowned)\b", re.I)
+UR_TO = re.compile(r"\bto\s+(set\s+up|establish|create|build|visit|meet|launch|open|"
+                   r"inaugurate|start|begin|hold|organise|organize|discuss|review|ban|bar|"
+                   r"approve|postpone|seek|demand|urge|release|arrest|seize|lead)\b", re.I)
+TO_FUT = {"set up": "qaim karenge", "establish": "qaim karenge", "create": "qaim karenge",
+          "build": "qaim karenge", "visit": "ka daura karenge", "meet": "se mulaqat karenge",
+          "launch": "ka elan karenge", "open": "ka iftitah karenge",
+          "inaugurate": "ka iftitah karenge", "start": "shuru karenge",
+          "begin": "shuru karenge", "hold": "ka inqiad karenge",
+          "organise": "ke intezam karenge", "organize": "ke intezam karenge",
+          "discuss": "par guftugu karenge", "review": "ka jaiza lenge",
+          "ban": "par pabandi lagayenge", "bar": "par pabandi lagayenge",
+          "approve": "ki manzuri denge", "postpone": "ko moakhir karenge",
+          "seek": "ki maang karenge", "demand": "ki maang karenge",
+          "urge": "par zoor denge", "release": "ko riha karenge",
+          "arrest": "ko giraftar karenge", "seize": "zabt karenge",
+          "lead": "ki qayadat karenge"}
+UR_PAST = [
+    (re.compile(r"\b(arrested|arrests|arrest)\b", re.I),
+     lambda s, o: f"{s} ne {o} ko giraftar kar liya."),
+    (re.compile(r"\b(seized|seizes)\b", re.I),
+     lambda s, o: f"{s} ne {o} zabt kar liya."),
+    (re.compile(r"\b(won|wins)\b", re.I),
+     lambda s, o: f"{s} ne {o or 'muqable'} mein kamyabi hasil ki."),
+    (re.compile(r"\b(postponed|postpones)\b", re.I),
+     lambda s, o: f"{s} ne {o} moakhir kar diya."),
+    (re.compile(r"\b(discussed|discusses)\b", re.I),
+     lambda s, o: f"{s} par guftugu hui." if not o else f"{s} ne {o} par guftugu ki."),
+    (re.compile(r"\b(protested|protests|protest)\b", re.I),
+     lambda s, o: f"{s} ne {o} ke khilaf ehhtejaj kiya."),
+    (re.compile(r"\b(announced|announces|launched|launches|unveiled|unveils)\b", re.I),
+     lambda s, o: f"{s} ne {o} ka elan kiya."),
+    (re.compile(r"\b(approved|approves|cleared|clears|passed|passes)\b", re.I),
+     lambda s, o: f"{s} ne {o} ki manzuri de di."),
+    (re.compile(r"\b(banned|bans|barred|bars)\b", re.I),
+     lambda s, o: f"{s} ne {o} par pabandi laga di."),
+    (re.compile(r"\b(sought|seeks|demanded|demands)\b", re.I),
+     lambda s, o: f"{s} ne {o} ki maang ki."),
+    (re.compile(r"\b(opposed|opposes)\b", re.I),
+     lambda s, o: f"{s} ne {o} ki mukhalifat ki."),
+    (re.compile(r"\b(supported|supports|backed|backs)\b", re.I),
+     lambda s, o: f"{s} ne {o} ki taid ki."),
+    (re.compile(r"\b(visited|visits)\b", re.I),
+     lambda s, o: f"{s} ne {o} ka daura kiya."),
+    (re.compile(r"\b(met|meets)\b", re.I),
+     lambda s, o: f"{s} ne {o} se mulaqat ki."),
+    (re.compile(r"\b(resigned|resigns)\b", re.I),
+     lambda s, o: f"{s} ne istifa de diya."),
+    (re.compile(r"\b(released|releases)\b", re.I),
+     lambda s, o: f"{s} ne {o} ko riha kar diya."),
+]
+
+
+CITY_TAG = re.compile(r"^(Hyderabad|Secunderabad|Delhi|Chennai|Mumbai|Bengaluru|"
+                      r"Telangana|India|World|New Delhi)\s*:\s*", re.I)
+
+
+def _ur_clean_s(s):
+    s = CITY_TAG.sub("", s.strip()).strip().rstrip(",")
+    return s
+
+
+def _ur_clean_o(o):
+    o = o.strip().lstrip(",:")
+    o = o.split(", to ")[0]
+    o = re.sub(r"\s+soon\b", "", o, flags=re.I)
+    o = re.sub(r"\s*:\s*(report|reports|sources?|says?|study)\s*$", "", o, flags=re.I)
+    o = re.sub(r"^(in|at|near)\s+", "", o, flags=re.I)
+    return o.strip().rstrip(",")
+
+
+def urdu_headline(title):
+    """Rule-based Roman-Urdu rendering of a headline; None when unsure."""
+    t = title.strip().rstrip(".")
+    m = UR_SAY.search(t)
+    if m:
+        s, clause = _ur_clean_s(t[:m.start()]), _ur_clean_o(t[m.end():])
+        if len(s) >= 3 and len(clause) >= 12:
+            return f"{s} ne kaha ke {clause}."
+    m = UR_DEATH.search(t)
+    if m:
+        s = _ur_clean_s(t[:m.start()])
+        loc = re.search(r"\b(in|at|near)\s+(.{3,40})$", t, re.I)
+        if len(s) >= 3:
+            return f"{s} ki maut ho gayi" + (f" {loc.group(2).strip()} mein." if loc else ".")
+    m = UR_TO.search(t)
+    if m:
+        s = _ur_clean_s(t[:m.start()])
+        s = re.sub(r"\s+(likely|planning|plans|agrees|set|ready)$", "", s, flags=re.I)
+        o = _ur_clean_o(t[m.end():])
+        o = re.sub(r"\s+(today|tomorrow|this week|next week|amid [^,]*)$",
+                   "", o, flags=re.I)
+        key = m.group(1).lower()
+        if len(s) >= 3 and len(o) >= 6:
+            return f"{s} {o} {TO_FUT[key]}."
+    for rx, fn in UR_PAST:
+        m = rx.search(t)
+        if not m:
+            continue
+        s = _ur_clean_s(t[:m.start()])
+        o = _ur_clean_o(t[m.end():])
+        if len(s) < 3 or len(o) < 4:
+            continue
+        return fn(s, o)
+    return None
+
+
 def build(candidate):
     """Return {'bullets_en':[3], 'bullets_ur':[3], 'frame':cat} or None."""
     cats = set(candidate.get("categories", []))
