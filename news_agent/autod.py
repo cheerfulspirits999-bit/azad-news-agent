@@ -210,8 +210,9 @@ def retry_pending():
     return done
 
 
-DIGEST_HOUR = 12  # IST hour from which the daily digest card may go out
-DIGEST_SIZE = 3   # owner 15 Sep: 3-bullet digest from tomorrow, politics first
+DIGEST_SLOTS = (9, 14, 19)  # IST hours: morning / afternoon / evening cards
+CARDS_PER_DAY = 3           # owner 16 Sep: 3 cards a day, 5 news each
+DIGEST_SIZE = 5   # owner 16 Sep: every card carries 5 important news items
 DIGEST_REGIONS = ("hyderabad", "telangana", "india")
 
 
@@ -231,7 +232,9 @@ def build_digest(cands):
     done = set()
     if os.path.exists(pub):
         try:
-            done = {r.get("topic") for r in json.load(open(pub, encoding="utf-8"))}
+            for r in json.load(open(pub, encoding="utf-8")):
+                done.add(r.get("topic"))
+                done |= set(r.get("story_topics", []))  # no story repeats across cards
         except Exception:
             pass
     blocked = retracted_slugs()
@@ -322,15 +325,19 @@ def build_digest(cands):
         return None
     now = datetime.now(IST)
     return {
-        "slug": f"auto-digest-{today}", "topic": f"digest-{today}",
+        "slug": f"auto-digest-{today}-s{now.strftime('%H%M')}",
+        "topic": f"digest-{today}-{now.strftime('%H%M')}",
         "title": "Daily digest: " + " | ".join(p[0]["title"][:40] for p in picks),
-        "headline": "📰 LATEST NEWS — TOP 3 TODAY",
+        "headline": ("📰 LATEST NEWS — MORNING TOP 5" if now.hour < 12
+                     else "📰 LATEST NEWS — AFTERNOON TOP 5" if now.hour < 17
+                     else "📰 LATEST NEWS — EVENING TOP 5"),
         "region": "india", "classification": "B",
         "timestamp": now.strftime("%d %b %Y, %I:%M %p IST"),
         "source": " / ".join(dict.fromkeys(p[0]["source"] for p in picks)),
         "source_urls": [p[0]["url"] for p in picks],
         "verified_by": "automated pipeline (multi-feed cross-check)",
         "key_facts": [],
+        "story_topics": [p[3] for p in picks],
         "bullets_en": [p[1] for p in picks],
         "bullets_ur": [p[2] for p in picks],
     }
@@ -355,22 +362,29 @@ def one_cycle():
     if q0.get("day") != today0:
         q0 = {"day": today0, "regular": 0, "day_total": 0,
               "emerg_month": q0.get("emerg_month", {})}
-    if (datetime.now(IST).hour >= DIGEST_HOUR
-            and q0.get("digest_day") != today0 and posted != 5):
+    ncards = q0.get("digests", {}).get(today0, 0)
+    card_gap_ok = True
+    if q0.get("last_card_at"):
+        card_gap_ok = (datetime.now(IST) -
+                       datetime.fromisoformat(q0["last_card_at"])
+                       ).total_seconds() >= 2 * 3600  # cards sit 2h+ apart
+    if (ncards < CARDS_PER_DAY
+            and datetime.now(IST).hour >= DIGEST_SLOTS[ncards]
+            and card_gap_ok and posted != 5):
         dg = build_digest(cyc["candidates"])
         if dg:
             log("DIGEST ready: 3 fresh stories, one card")
             rc, _ = try_publish(dg)
             if rc == 0:
-                q0["digest_day"] = today0
+                q0["digests"] = {today0: ncards + 1}
+                q0["last_card_at"] = datetime.now(IST).isoformat()
                 q0["day_total"] = q0.get("day_total", 0) + 1
                 save_quota(q0)
-                n0 = 1
-                log("published daily digest:", dg["slug"])
+                log("published daily card:", dg["slug"])
                 time.sleep(POST_SPACING_SECONDS)
             elif rc == 3:
-                log("digest already published today, skipping")
-                q0["digest_day"] = today0
+                log("digest duplicate, skipping this slot")
+                q0["digests"] = {today0: ncards + 1}
                 save_quota(q0)
             else:
                 log(f"digest refused (rc={rc}), will retry next cycle")
@@ -394,10 +408,8 @@ def one_cycle():
         if {story.get("slug"), story.get("topic")} & retracted_slugs():
             log("BLOCKED owner-retracted story:", story["slug"])
             continue
-        emerg = is_emergency(c)
-        if not emerg:
-            log("held for the daily 3-in-1 digest:", story["slug"])
-            continue
+        log("held for the next 5-news card:", story["slug"])
+        continue  # owner 16 Sep: all news rides the 3 daily cards, no solo posts
         q = load_quota()
         today = datetime.now(IST).strftime("%Y-%m-%d")
         month = today[:7]
