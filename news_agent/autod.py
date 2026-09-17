@@ -305,6 +305,8 @@ def build_digest(cands):
             continue
         if any(topic == x[3] for x in pool):
             continue  # same story from another feed - one bullet only
+        if writer.bullet_quality(lead, lead_ur):
+            continue  # 17 Sep gate: no vague EN / English-fragment Urdu bullets
         pool.append((c, lead, lead_ur, topic))
     def rank(x):  # politics first, then Class A, then score
         c = x[0]
@@ -353,7 +355,11 @@ def build_digest(cands):
             ur_line = writer.urdu_headline(c["title"])
             if not ur_line or len(ur_line) > 95:
                 continue  # never publish a confusing Urdu mirror
+            if writer.bullet_quality(lead, ur_line):
+                continue  # 17 Sep gate: no vague EN / English-fragment Urdu bullets
             picks.append((c, lead, ur_line, topic))
+    # final safety net: drop any surviving unsafe pair; a card needs >=3 clean
+    picks = [p for p in picks if not writer.bullet_quality(p[1], p[2])]
     if len(picks) < 3:
         return None
     now = datetime.now(IST)

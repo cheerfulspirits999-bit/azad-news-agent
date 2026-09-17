@@ -872,3 +872,38 @@ def build(candidate):
                 return {"bullets_en": en, "bullets_ur": ur,
                         "frame": sorted(cats & set(cat_set))[0]}
     return None
+
+
+# --------------------------------------------------------------------------
+# Bullet-pair quality gate (17 Sep, owner-flagged card): never let a vague
+# English bullet ("Supreme Court issued stay.") or a Roman-Urdu bullet that
+# still carries English fragments ("youth to drive ...", "hands over ...",
+# "'monitoring developments' of Russia") reach a card.
+UR_EN_FUNC = re.compile(
+    r"\b(to|of|and|the|for|from|by|in|at|on|over|with|after|before|is|are|"
+    r"was|were|has|have|had|will|their|its|this|that)\b")
+UR_EN_VERB = re.compile(
+    r"\b(hands over|monitoring|to drive|to launch|to start|to boost|seeks|"
+    r"urges|says|meets|held|holds|announces|launches|visits|expresses)\b")
+VAGUE_EN = re.compile(
+    r"(issued (a )?stay|gave (a )?statement|took action|expressed "
+    r"(shock|concern|grief)|issued (an )?order|made (an )?announcement)\.?$")
+
+
+def bullet_quality(en, ur):
+    """Return list of reasons the EN/UR bullet pair is NOT publishable."""
+    if not en or not ur:
+        return ["empty-pair"]
+    bad = []
+    if len(en) > 95 or len(ur) > 95:
+        bad.append("over-95-chars")
+    if VAGUE_EN.search(en.strip()):
+        bad.append("vague-english")
+    if len(en.strip()) < 50 and not re.search(r"\d", en):
+        bad.append("thin-english")
+    funcs = {m.group(1) for m in UR_EN_FUNC.finditer(ur)}
+    if len(funcs) >= 2:
+        bad.append("ur-english-fragments")
+    if UR_EN_VERB.search(ur):
+        bad.append("ur-english-verb-leftover")
+    return bad
