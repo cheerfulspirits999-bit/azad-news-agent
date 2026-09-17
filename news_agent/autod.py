@@ -65,7 +65,8 @@ def slugify(t):
 
 MAX_AGE_HOURS = 6.0  # owner policy: never post old news
 MAIN_CATS = {"political_major", "govt_announcement", "economic_major",
-             "court_judgment"}  # politics + main news always get a look-in
+             "court_judgment", "protest_major", "police_operation",
+             "disaster_weather", "international_conflict"}
 MIN_GAP_HOURS = 2.0  # owner policy: the 3 daily posts sit 2h apart
 
 
@@ -267,13 +268,15 @@ def build_digest(cands):
     pool = []
     for c in cands:
         age = c.get("age_hours") or 99
-        if age > 12 or (c.get("score") or 0) < 60:
+        if age > 12 or (c.get("score") or 0) < 55:
             continue
         if set(c.get("categories", [])) & NO_CARD_CATS:
             continue  # casualty/crime/fire news never rides the cards
         if NO_CARD_RX.search(c["title"]):
             continue
-        if c.get("class") not in ("A", "B") and not set(c.get("categories", [])) & MAIN_CATS:
+        if c.get("class") not in ("A", "B") and \
+           not set(c.get("categories", [])) & MAIN_CATS and \
+           not (c.get("source_preferred") and (c.get("score") or 0) >= 65):
             continue
         fr = writer.build(c)
         if not fr or len(fr["bullets_en"]) < 3:
@@ -288,11 +291,20 @@ def build_digest(cands):
         if not tw & {w.lower() for w in re.findall(r"[A-Za-z]{7,}", lead)}:
             lead = _lead_ok(c["title"].strip())  # frame lost the substance
             lead_ur = writer.urdu_headline(c["title"]) if lead else None
+            if (not lead_ur or len(lead_ur) > 95) and lead:
+                # tier 3: keep the frame pair if its lead still shares substance
+                tw7 = {w.lower() for w in re.findall(r"[A-Za-z]{6,}", c["title"])}
+                fr7 = {w.lower() for w in re.findall(r"[A-Za-z]{6,}", fr["bullets_en"][0])}
+                if len(fr["bullets_en"][0]) >= 50 and len(tw7 & fr7) >= 2:
+                    lead, lead_ur = fr["bullets_en"][0], fr["bullets_ur"][0]
+                    lead, lead_ur = _lead_ok(lead), _lead_ok(lead_ur)
             if not lead or not lead_ur or len(lead_ur) > 95:
                 continue
         topic = c["region"] + "-" + slugify(c["title"])[:40]
         if topic in done or topic in blocked:
             continue
+        if any(topic == x[3] for x in pool):
+            continue  # same story from another feed - one bullet only
         pool.append((c, lead, lead_ur, topic))
     def rank(x):  # politics first, then Class A, then score
         c = x[0]
@@ -319,14 +331,15 @@ def build_digest(cands):
             if len(picks) >= DIGEST_SIZE:
                 break
             age = c.get("age_hours") or 99
-            if age > 12 or (c.get("score") or 0) < 60:
+            if age > 12 or (c.get("score") or 0) < 55:
                 continue
             if set(c.get("categories", [])) & NO_CARD_CATS:
                 continue
             if NO_CARD_RX.search(c["title"]):
                 continue
             if c.get("class") not in ("A", "B") and \
-               not set(c.get("categories", [])) & MAIN_CATS:
+               not set(c.get("categories", [])) & MAIN_CATS and \
+               not (c.get("source_preferred") and (c.get("score") or 0) >= 65):
                 continue
             topic = c["region"] + "-" + slugify(c["title"])[:40]
             if topic in done or topic in blocked:
@@ -334,7 +347,8 @@ def build_digest(cands):
             lead = _lead_ok(c["title"].strip())
             if not lead:
                 continue
-            if any(lead == x[1] for x in picks):
+            if any(lead == x[1] for x in picks) or \
+               any(topic == x[3] for x in picks):
                 continue
             ur_line = writer.urdu_headline(c["title"])
             if not ur_line or len(ur_line) > 95:

@@ -716,6 +716,56 @@ UR_PAST = [
      lambda s, o: f"{s} ne istifa de diya."),
     (re.compile(r"\b(released|releases)\b", re.I),
      lambda s, o: f"{s} ne {o} ko riha kar diya."),
+    (re.compile(r"\b(held|holds)\b", re.I),
+     lambda s, o: f"{s} ne {o} ka inqiad kiya."),
+    (re.compile(r"\b(inspected|inspects)\b", re.I),
+     lambda s, o: f"{s} ne {o} ka muaina kiya."),
+    (re.compile(r"\b(tackled|tackles)\b", re.I),
+     lambda s, o: f"{s} ne {o} par karwai ki."),
+    (re.compile(r"\b(offered|offers)\b", re.I),
+     lambda s, o: f"{s} ne {o} ki peshkash ki."),
+    (re.compile(r"\b(joined|joins)\b", re.I),
+     lambda s, o: f"{s} {o} mein shamil ho gaye."),
+    (re.compile(r"\b(flagged|flags)\b", re.I),
+     lambda s, o: f"{s} ne {o} ko ujagar kiya."),
+    (re.compile(r"\b(rejected|rejects)\b", re.I),
+     lambda s, o: f"{s} ne {o} rad kar di."),
+    (re.compile(r"\b(welcomed|welcomes)\b", re.I),
+     lambda s, o: f"{s} ne {o} ka khairmaqdam kiya."),
+    (re.compile(r"\b(congratulated|congratulates)\b", re.I),
+     lambda s, o: f"{s} ne {o} ko mubarakbad di."),
+    (re.compile(r"\b(signed|signs)\b", re.I),
+     lambda s, o: f"{s} ne {o} par dastakhat kiye."),
+    (re.compile(r"\b(allocated|allocates|sanctioned|sanctions)\b", re.I),
+     lambda s, o: f"{s} ne {o} mukhtas kiye."),
+    (re.compile(r"\b(transferred|transfers)\b", re.I),
+     lambda s, o: f"{s} ne {o} ka tabadla kiya."),
+    (re.compile(r"\b(assured|assures|promised|promises)\b", re.I),
+     lambda s, o: f"{s} ne {o} ka yaqeen dilaya."),
+    (re.compile(r"\b(criticised|criticises|slammed|slams|targeted|targets)\b", re.I),
+     lambda s, o: f"{s} ne {o} par tankeed ki."),
+    (re.compile(r"\b(questioned|questions)\b", re.I),
+     lambda s, o: f"{s} ne {o} par sawal uthaye."),
+    (re.compile(r"\b(celebrated|celebrates|marked|marks|honoured|honours)\b", re.I),
+     lambda s, o: f"{s} ko {o} par manaya gaya."),
+    (re.compile(r"\b(inaugurated|inaugurates|opened|opens)\b", re.I),
+     lambda s, o: f"{s} ne {o} ka iftitah kiya."),
+    (re.compile(r"\b(completed|completes)\b", re.I),
+     lambda s, o: f"{s} ne {o} mukammal kiya."),
+    (re.compile(r"\b(discussed|discusses)\b", re.I),
+     lambda s, o: f"{s} par guftugu hui."),
+    (re.compile(r"\b(urged|urges)\b", re.I),
+     lambda s, o: f"{s} ne {o} par zoor diya."),
+    (re.compile(r"\b(cut|cuts)\b", re.I),
+     lambda s, o: f"{s} ab {o} tak mehdood hai."),
+    (re.compile(r"\b(cancelled|canceled|cancels|cancel)\b", re.I),
+     lambda s, o: f"{s} ne {o} rad kar di."),
+    (re.compile(r"\b(unites|united)\b", re.I),
+     lambda s, o: f"{s} ne {o} ko milaya."),
+    (re.compile(r"\b(suspended|suspends)\b", re.I),
+     lambda s, o: f"{s} ne {o} muattal kar di."),
+    (re.compile(r"\b(escaped|escapes)\b", re.I),
+     lambda s, o: f"{s} {o} se bal-bal bache."),
 ]
 
 
@@ -733,7 +783,7 @@ def _ur_clean_o(o):
     o = o.split(", to ")[0]
     o = re.sub(r"\s+soon\b", "", o, flags=re.I)
     o = re.sub(r"\s*:\s*(report|reports|sources?|says?|study)\s*$", "", o, flags=re.I)
-    o = re.sub(r"^(in|at|near)\s+", "", o, flags=re.I)
+    o = re.sub(r"^(in|at|near|to)\s+", "", o, flags=re.I)
     return o.strip().rstrip(",")
 
 
@@ -775,7 +825,9 @@ def urdu_headline(title):
             continue
         s = _ur_clean_s(t[:m.start()])
         o = _ur_clean_o(t[m.end():])
-        if len(s) < 3 or len(o) < 4:
+        if len(s) < 3:
+            continue
+        if len(o) < 4 and rx.pattern.find("discussed") == -1:
             continue
         return fn(s, o)
     return None
