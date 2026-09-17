@@ -377,7 +377,7 @@ def build_digest(cands):
 def one_cycle():
     cfg = json.load(open(os.path.join(BASE, "config.json"), encoding="utf-8"))
     log("=== cycle start ===")
-    cyc = monitor.run_cycle(cfg["rules"]["max_post_age_hours"], 12)
+    cyc = monitor.run_cycle(cfg["rules"]["max_post_age_hours"], 40)
 
     def _prio(c):  # politics & main news first, then by score
         main = bool(set(c.get("categories", [])) & MAIN_CATS) or c.get("class") == "A"
