@@ -1,17 +1,37 @@
 {
-  "cycle_id": "20260919-0410",
-  "generated_at": "2026-09-19T04:10:22.914003+05:30",
+  "cycle_id": "20260919-0507",
+  "generated_at": "2026-09-19T05:07:38.541065+05:30",
   "feeds_ok": 4,
   "errors": [],
   "counts": {
     "fetched": 800,
-    "fresh": 85,
+    "fresh": 60,
     "candidates": 40,
     "duplicates_suppressed": 0
   },
   "candidates": [
     {
       "rank": 1,
+      "class": "A",
+      "score": 80,
+      "region": "world",
+      "region_confidence": 1.0,
+      "suggested_headline": "🌍 LATEST — WORLD",
+      "title": "21 killed in car bomb blast in northwestern Pakistan",
+      "url": "https://www.thehindu.com/news/international/blast-rips-through-mosque-during-friday-prayers-in-northwest-pakistan-16-killed-dozens-injured/article71480235.ece",
+      "source": "The Hindu",
+      "source_preferred": true,
+      "published_at": "2026-09-19T04:09:49+05:30",
+      "age_hours": 0.96,
+      "categories": [
+        "fire_explosion",
+        "accident_casualty"
+      ],
+      "excerpt": "No group or individual has claimed responsibility for the attack",
+      "corroboration": []
+    },
+    {
+      "rank": 2,
       "class": "A",
       "score": 80,
       "region": "telangana",
@@ -22,31 +42,11 @@
       "source": "Telangana Today",
       "source_preferred": false,
       "published_at": "2026-09-19T00:50:12+05:30",
-      "age_hours": 3.34,
+      "age_hours": 4.29,
       "categories": [
         "accident_casualty"
       ],
       "excerpt": "At least 30 persons were injured when an RTC bus collided with a tractor at Timmareddipally in Kondapak mandal. Around 20 migrant workers travelling on the tractor sustained serious injuries",
-      "corroboration": []
-    },
-    {
-      "rank": 2,
-      "class": "A",
-      "score": 79,
-      "region": "india",
-      "region_confidence": 1.0,
-      "suggested_headline": "📰 LATEST NEWS — INDIA",
-      "title": "Jhiram Valley Maoist attack case ‘rarest of rare': court order",
-      "url": "https://www.thehindu.com/news/national/chhattisgarh/jhiram-valley-maoist-attack-case-rarest-of-rare-court-order/article71481943.ece",
-      "source": "The Hindu",
-      "source_preferred": true,
-      "published_at": "2026-09-19T02:56:33+05:30",
-      "age_hours": 1.23,
-      "categories": [
-        "security_terror",
-        "court_judgment"
-      ],
-      "excerpt": "According to the September 16 verdict, the conspiracy behind the attack was finalised during a meeting of the South Regional Unified Command [of the Communist Party of India (Maoist)] held between February 16-25 in 2013",
       "corroboration": []
     },
     {
@@ -61,7 +61,7 @@
       "source": "The Hindu",
       "source_preferred": true,
       "published_at": "2026-09-19T03:20:35+05:30",
-      "age_hours": 0.83,
+      "age_hours": 1.78,
       "categories": [
         "disaster_weather",
         "political_major"
@@ -72,44 +72,25 @@
     {
       "rank": 4,
       "class": "C",
-      "score": 76,
+      "score": 75,
       "region": "india",
       "region_confidence": 1.0,
       "suggested_headline": "📰 LATEST NEWS — INDIA",
-      "title": "Meghalaya IPS officer injured in ‘deliberate’ hit by two-wheeler",
-      "url": "https://www.thehindu.com/news/national/meghalaya/meghalaya-ips-officer-injured-in-deliberate-hit-by-two-wheeler/article71480783.ece",
+      "title": "Jhiram Valley Maoist attack case ‘rarest of rare': court order",
+      "url": "https://www.thehindu.com/news/national/chhattisgarh/jhiram-valley-maoist-attack-case-rarest-of-rare-court-order/article71481943.ece",
       "source": "The Hindu",
       "source_preferred": true,
-      "published_at": "2026-09-19T03:02:10+05:30",
-      "age_hours": 1.14,
+      "published_at": "2026-09-19T02:56:33+05:30",
+      "age_hours": 2.18,
       "categories": [
-        "accident_casualty"
+        "security_terror",
+        "court_judgment"
       ],
-      "excerpt": "Police suspect members of the Khasi Students’ Union targeted Additional Superintendent of Police (Traffic) during a routine road check",
+      "excerpt": "According to the September 16 verdict, the conspiracy behind the attack was finalised during a meeting of the South Regional Unified Command [of the Communist Party of India (Maoist)] held between February 16-25 in 2013",
       "corroboration": []
     },
     {
       "rank": 5,
-      "class": "C",
-      "score": 76,
-      "region": "world",
-      "region_confidence": 1.0,
-      "suggested_headline": "🌍 LATEST — WORLD",
-      "title": "At least 21 killed in bomb blast at mosque near Pakistan police offices",
-      "url": "https://www.thehindu.com/news/international/blast-rips-through-mosque-during-friday-prayers-in-northwest-pakistan-16-killed-dozens-injured/article71480235.ece",
-      "source": "The Hindu",
-      "source_preferred": true,
-      "published_at": "2026-09-19T00:55:07+05:30",
-      "age_hours": 3.25,
-      "categories": [
-        "fire_explosion",
-        "accident_casualty"
-      ],
-      "excerpt": "No group or individual has claimed responsibility for the attack",
-      "corroboration": []
-    },
-    {
-      "rank": 6,
       "class": "C",
       "score": 74,
       "region": "telangana",
@@ -120,7 +101,7 @@
       "source": "The Hindu",
       "source_preferred": true,
       "published_at": "2026-09-18T23:40:45+05:30",
-      "age_hours": 4.49,
+      "age_hours": 5.45,
       "categories": [
         "political_major",
         "economic_major"
@@ -129,27 +110,26 @@
       "corroboration": []
     },
     {
-      "rank": 7,
+      "rank": 6,
       "class": "C",
       "score": 72,
       "region": "india",
       "region_confidence": 1.0,
       "suggested_headline": "📰 LATEST NEWS — INDIA",
-      "title": "Odisha revises schedule for ward delimitation, seat reservation ahead of urban local body polls",
-      "url": "https://www.thehindu.com/news/national/odisha/odisha-revises-schedule-for-ward-delimitation-seat-reservation-ahead-of-urban-local-body-polls/article71480589.ece",
+      "title": "Meghalaya IPS officer injured in ‘deliberate’ hit by two-wheeler",
+      "url": "https://www.thehindu.com/news/national/meghalaya/meghalaya-ips-officer-injured-in-deliberate-hit-by-two-wheeler/article71480783.ece",
       "source": "The Hindu",
       "source_preferred": true,
-      "published_at": "2026-09-19T02:46:09+05:30",
-      "age_hours": 1.4,
+      "published_at": "2026-09-19T03:02:10+05:30",
+      "age_hours": 2.09,
       "categories": [
-        "govt_announcement",
-        "political_major"
+        "accident_casualty"
       ],
-      "excerpt": "Appeals against the provisional notification may be filed before the Housing and Urban Development Department between October 7 and October 21, 2026. The State government will hear and dispose of appeals between October 26-28.",
+      "excerpt": "Police suspect members of the Khasi Students’ Union targeted Additional Superintendent of Police (Traffic) during a routine road check",
       "corroboration": []
     },
     {
-      "rank": 8,
+      "rank": 7,
       "class": "C",
       "score": 72,
       "region": "hyderabad",
@@ -160,12 +140,31 @@
       "source": "Telangana Today",
       "source_preferred": false,
       "published_at": "2026-09-19T01:05:41+05:30",
-      "age_hours": 3.08,
+      "age_hours": 4.03,
       "categories": [
         "court_judgment",
         "political_major"
       ],
       "excerpt": "High Court on Friday disqualified Khairatabad MLA Danam Nagendar. It also declared the Khairatabad Assembly seat vacant, paving the way for a by-election",
+      "corroboration": []
+    },
+    {
+      "rank": 8,
+      "class": "C",
+      "score": 68,
+      "region": "world",
+      "region_confidence": 1.0,
+      "suggested_headline": "🌍 LATEST — WORLD",
+      "title": "Trump to meet with Venezuela's interim President Rodriguez in New York on Sept. 22",
+      "url": "https://www.thehindu.com/news/international/trump-to-meet-with-venezuelas-interim-president-rodriguez-in-new-york-on-sept-22/article71482618.ece",
+      "source": "The Hindu",
+      "source_preferred": true,
+      "published_at": "2026-09-19T04:59:02+05:30",
+      "age_hours": 0.14,
+      "categories": [
+        "political_major"
+      ],
+      "excerpt": "This will be the first in-person meeting between the two leaders since Washington ousted ‌former Venezuelan President Nicolas Maduro in January",
       "corroboration": []
     },
     {
@@ -179,17 +178,56 @@
       "url": "https://www.thehindu.com/news/international/trump-signs-russia-sanctions-bill-into-law/article71482578.ece",
       "source": "The Hindu",
       "source_preferred": true,
-      "published_at": "2026-09-19T03:40:12+05:30",
-      "age_hours": 0.5,
+      "published_at": "2026-09-19T04:39:09+05:30",
+      "age_hours": 0.47,
       "categories": [
         "political_major",
         "international_conflict"
       ],
-      "excerpt": "The bill authorises the U.S. President to impose tariffs of up to 100% on major buyers of Russian oil and gas, covering India",
+      "excerpt": "Lindsey O. Graham Sanctioning Russia and Iran Act of 2026 authorises the U.S. President to impose tariffs of up to 100% on major buyers of Russian oil and gas, covering India",
       "corroboration": []
     },
     {
       "rank": 10,
+      "class": "C",
+      "score": 68,
+      "region": "world",
+      "region_confidence": 1.0,
+      "suggested_headline": "🌍 LATEST — WORLD",
+      "title": "U.S. and Denmark reach deal on Greenland: Trump",
+      "url": "https://www.thehindu.com/news/international/us-and-denmark-reach-deal-on-greenland-trump/article71482588.ece",
+      "source": "The Hindu",
+      "source_preferred": true,
+      "published_at": "2026-09-19T04:35:09+05:30",
+      "age_hours": 0.54,
+      "categories": [
+        "political_major"
+      ],
+      "excerpt": "The office of Danish Prime Minister said the Greenland deal will be signed by three governments next week during the UNGA; however parliamentary action is still needed by the Danish and Greenland governments",
+      "corroboration": []
+    },
+    {
+      "rank": 11,
+      "class": "C",
+      "score": 68,
+      "region": "india",
+      "region_confidence": 1.0,
+      "suggested_headline": "📰 LATEST NEWS — INDIA",
+      "title": "Odisha revises schedule for ward delimitation, seat reservation ahead of urban local body polls",
+      "url": "https://www.thehindu.com/news/national/odisha/odisha-revises-schedule-for-ward-delimitation-seat-reservation-ahead-of-urban-local-body-polls/article71480589.ece",
+      "source": "The Hindu",
+      "source_preferred": true,
+      "published_at": "2026-09-19T02:46:09+05:30",
+      "age_hours": 2.36,
+      "categories": [
+        "govt_announcement",
+        "political_major"
+      ],
+      "excerpt": "Appeals against the provisional notification may be filed before the Housing and Urban Development Department between October 7 and October 21, 2026. The State government will hear and dispose of appeals between October 26-28.",
+      "corroboration": []
+    },
+    {
+      "rank": 12,
       "class": "C",
       "score": 68,
       "region": "india",
@@ -200,7 +238,7 @@
       "source": "The Hindu",
       "source_preferred": true,
       "published_at": "2026-09-19T01:31:37+05:30",
-      "age_hours": 2.65,
+      "age_hours": 3.6,
       "categories": [
         "court_judgment",
         "political_major"
@@ -209,7 +247,7 @@
       "corroboration": []
     },
     {
-      "rank": 11,
+      "rank": 13,
       "class": "C",
       "score": 68,
       "region": "india",
@@ -220,7 +258,7 @@
       "source": "The Hindu",
       "source_preferred": true,
       "published_at": "2026-09-19T01:01:26+05:30",
-      "age_hours": 3.15,
+      "age_hours": 4.1,
       "categories": [
         "disaster_weather",
         "political_major"
@@ -229,7 +267,7 @@
       "corroboration": []
     },
     {
-      "rank": 12,
+      "rank": 14,
       "class": "C",
       "score": 68,
       "region": "india",
@@ -240,7 +278,7 @@
       "source": "The Hindu",
       "source_preferred": true,
       "published_at": "2026-09-19T00:45:25+05:30",
-      "age_hours": 3.42,
+      "age_hours": 4.37,
       "categories": [
         "accident_casualty"
       ],
@@ -248,7 +286,7 @@
       "corroboration": []
     },
     {
-      "rank": 13,
+      "rank": 15,
       "class": "C",
       "score": 68,
       "region": "telangana",
@@ -259,49 +297,11 @@
       "source": "Telangana Today",
       "source_preferred": false,
       "published_at": "2026-09-19T00:20:49+05:30",
-      "age_hours": 3.83,
+      "age_hours": 4.78,
       "categories": [
         "political_major"
       ],
       "excerpt": "BRS working president KT Rama Rao challenged Chief Minister A Revanth Reddy to deposit Rs 1 lakh crore into the accounts of Telangana’s poor in exchange for the K Chandrashekhar Rao family transferring all its land assets to the government",
-      "corroboration": []
-    },
-    {
-      "rank": 14,
-      "class": "C",
-      "score": 68,
-      "region": "india",
-      "region_confidence": 1.0,
-      "suggested_headline": "📰 LATEST NEWS — INDIA",
-      "title": "Power outage complaints pour in from across State",
-      "url": "https://www.thehindu.com/news/national/karnataka/power-outage-complaints-pour-in-from-across-state/article71481155.ece",
-      "source": "The Hindu",
-      "source_preferred": true,
-      "published_at": "2026-09-18T23:03:45+05:30",
-      "age_hours": 5.11,
-      "categories": [
-        "public_safety_warning"
-      ],
-      "excerpt": "",
-      "corroboration": []
-    },
-    {
-      "rank": 15,
-      "class": "C",
-      "score": 68,
-      "region": "india",
-      "region_confidence": 0.4,
-      "suggested_headline": "📰 LATEST NEWS — INDIA",
-      "title": "Tiger that killed two people in O’Valley in Gudalur captured after 29-day search",
-      "url": "https://www.thehindu.com/news/national/tamil-nadu/tiger-that-killed-two-people-in-ovalley-in-gudalur-captured/article71480122.ece",
-      "source": "The Hindu",
-      "source_preferred": true,
-      "published_at": "2026-09-18T22:52:29+05:30",
-      "age_hours": 5.3,
-      "categories": [
-        "accident_casualty"
-      ],
-      "excerpt": "The male tiger has been transported to the Vandalur zoo in Chennai, where it is to live out the rest of its life in captivity",
       "corroboration": []
     },
     {
@@ -316,7 +316,7 @@
       "source": "The Hindu",
       "source_preferred": true,
       "published_at": "2026-09-19T00:41:22+05:30",
-      "age_hours": 3.48,
+      "age_hours": 4.44,
       "categories": [
         "fire_explosion",
         "police_operation"
@@ -327,27 +327,6 @@
     {
       "rank": 17,
       "class": "C",
-      "score": 65,
-      "region": "world",
-      "region_confidence": 1.0,
-      "suggested_headline": "🌍 LATEST — WORLD",
-      "title": "Hundreds of thousands attend Iran’s biggest government-organised rally since the war began",
-      "url": "https://www.thehindu.com/news/international/hundreds-of-thousands-attend-irans-biggest-government-organised-rally-since-the-war-began/article71482094.ece",
-      "source": "The Hindu",
-      "source_preferred": true,
-      "published_at": "2026-09-18T22:15:17+05:30",
-      "age_hours": 5.92,
-      "categories": [
-        "traffic_disruption",
-        "protest_major",
-        "international_conflict"
-      ],
-      "excerpt": "The volunteers would be an additional layer of security for the paramilitary Revolutionary Guard and the Basij militia, which has played a key role in quashing anti-government protests",
-      "corroboration": []
-    },
-    {
-      "rank": 18,
-      "class": "C",
       "score": 64,
       "region": "world",
       "region_confidence": 1.0,
@@ -357,7 +336,7 @@
       "source": "The Hindu",
       "source_preferred": true,
       "published_at": "2026-09-19T01:53:19+05:30",
-      "age_hours": 2.28,
+      "age_hours": 3.24,
       "categories": [
         "political_major"
       ],
@@ -365,7 +344,7 @@
       "corroboration": []
     },
     {
-      "rank": 19,
+      "rank": 18,
       "class": "C",
       "score": 64,
       "region": "india",
@@ -376,7 +355,7 @@
       "source": "The Hindu",
       "source_preferred": true,
       "published_at": "2026-09-19T00:56:21+05:30",
-      "age_hours": 3.23,
+      "age_hours": 4.19,
       "categories": [
         "political_major"
       ],
@@ -384,7 +363,7 @@
       "corroboration": []
     },
     {
-      "rank": 20,
+      "rank": 19,
       "class": "C",
       "score": 64,
       "region": "world",
@@ -395,7 +374,7 @@
       "source": "The Hindu",
       "source_preferred": true,
       "published_at": "2026-09-19T00:47:51+05:30",
-      "age_hours": 3.38,
+      "age_hours": 4.33,
       "categories": [
         "political_major"
       ],
@@ -403,7 +382,7 @@
       "corroboration": []
     },
     {
-      "rank": 21,
+      "rank": 20,
       "class": "C",
       "score": 64,
       "region": "india",
@@ -414,7 +393,7 @@
       "source": "The Hindu",
       "source_preferred": true,
       "published_at": "2026-09-19T00:32:04+05:30",
-      "age_hours": 3.64,
+      "age_hours": 4.59,
       "categories": [
         "political_major"
       ],
@@ -422,7 +401,7 @@
       "corroboration": []
     },
     {
-      "rank": 22,
+      "rank": 21,
       "class": "C",
       "score": 64,
       "region": "india",
@@ -433,7 +412,7 @@
       "source": "The Hindu",
       "source_preferred": true,
       "published_at": "2026-09-18T23:38:38+05:30",
-      "age_hours": 4.53,
+      "age_hours": 5.48,
       "categories": [
         "political_major"
       ],
@@ -441,26 +420,7 @@
       "corroboration": []
     },
     {
-      "rank": 23,
-      "class": "C",
-      "score": 64,
-      "region": "india",
-      "region_confidence": 0.4,
-      "suggested_headline": "📰 LATEST NEWS — INDIA",
-      "title": "Former School Education Minister Anbil Mahesh questioned by CCB Police",
-      "url": "https://www.thehindu.com/news/national/tamil-nadu/former-school-education-minister-anbil-mahesh-questioned-by-ccb-police/article71481046.ece",
-      "source": "The Hindu",
-      "source_preferred": true,
-      "published_at": "2026-09-18T22:27:36+05:30",
-      "age_hours": 5.71,
-      "categories": [
-        "political_major"
-      ],
-      "excerpt": "The case is about alleged collection of money from private school managements on the promise of securing government approvals from the School Education Department",
-      "corroboration": []
-    },
-    {
-      "rank": 24,
+      "rank": 22,
       "class": "C",
       "score": 62,
       "region": "telangana",
@@ -471,7 +431,7 @@
       "source": "Telangana Today",
       "source_preferred": false,
       "published_at": "2026-09-19T00:41:30+05:30",
-      "age_hours": 3.48,
+      "age_hours": 4.44,
       "categories": [
         "accident_casualty"
       ],
@@ -479,7 +439,7 @@
       "corroboration": []
     },
     {
-      "rank": 25,
+      "rank": 23,
       "class": "C",
       "score": 62,
       "region": "world",
@@ -490,7 +450,7 @@
       "source": "The Hindu",
       "source_preferred": true,
       "published_at": "2026-09-18T23:18:10+05:30",
-      "age_hours": 4.87,
+      "age_hours": 5.82,
       "categories": [
         "court_judgment",
         "protest_major"
@@ -499,7 +459,7 @@
       "corroboration": []
     },
     {
-      "rank": 26,
+      "rank": 24,
       "class": "C",
       "score": 62,
       "region": "india",
@@ -510,7 +470,7 @@
       "source": "The Hindu",
       "source_preferred": true,
       "published_at": "2026-09-18T23:10:06+05:30",
-      "age_hours": 5.0,
+      "age_hours": 5.96,
       "categories": [
         "police_operation"
       ],
@@ -518,45 +478,26 @@
       "corroboration": []
     },
     {
-      "rank": 27,
-      "class": "C",
-      "score": 62,
-      "region": "india",
-      "region_confidence": 1.0,
-      "suggested_headline": "📰 LATEST NEWS — INDIA",
-      "title": "Traders’ forum in Keralam to boycott UPI transactions on October 15",
-      "url": "https://www.thehindu.com/news/national/kerala/traders-forum-in-keralam-to-boycott-upi-transactions-on-october-15/article71481574.ece",
-      "source": "The Hindu",
-      "source_preferred": true,
-      "published_at": "2026-09-18T23:01:46+05:30",
-      "age_hours": 5.14,
-      "categories": [
-        "traffic_disruption"
-      ],
-      "excerpt": "",
-      "corroboration": []
-    },
-    {
-      "rank": 28,
+      "rank": 25,
       "class": "C",
       "score": 60,
-      "region": "india",
+      "region": "world",
       "region_confidence": 1.0,
-      "suggested_headline": "📰 LATEST NEWS — INDIA",
-      "title": "CSL lays keel for Navy’s next-gen missile vessels",
-      "url": "https://www.thehindu.com/news/national/kerala/csl-lays-keel-for-navys-next-gen-missile-vessels/article71481236.ece",
+      "suggested_headline": "🌍 LATEST — WORLD",
+      "title": "U.S. troop deaths during Iran war exceed Pentagon count by at least four: report",
+      "url": "https://www.thehindu.com/news/international/us-troop-deaths-during-iran-war-exceed-pentagon-count-by-at-least-four-report/article71482590.ece",
       "source": "The Hindu",
       "source_preferred": true,
-      "published_at": "2026-09-18T22:22:30+05:30",
-      "age_hours": 5.8,
+      "published_at": "2026-09-19T04:53:14+05:30",
+      "age_hours": 0.24,
       "categories": [
         "international_conflict"
       ],
-      "excerpt": "The ships are envisaged as high-speed vessels with an array of weapons and sensors, including a surface-to-surface missile system, anti-missile defence system, and air surveillance and fire control radars",
+      "excerpt": "Defence Secretary Pete Hegseth ‌denied the report, calling it a “complete lie”",
       "corroboration": []
     },
     {
-      "rank": 29,
+      "rank": 26,
       "class": "C",
       "score": 58,
       "region": "telangana",
@@ -567,7 +508,7 @@
       "source": "Telangana Today",
       "source_preferred": false,
       "published_at": "2026-09-19T00:31:48+05:30",
-      "age_hours": 3.64,
+      "age_hours": 4.6,
       "categories": [
         "political_major"
       ],
@@ -575,7 +516,7 @@
       "corroboration": []
     },
     {
-      "rank": 30,
+      "rank": 27,
       "class": "C",
       "score": 58,
       "region": "india",
@@ -586,7 +527,7 @@
       "source": "The Hindu",
       "source_preferred": true,
       "published_at": "2026-09-18T23:59:33+05:30",
-      "age_hours": 4.18,
+      "age_hours": 5.13,
       "categories": [
         "police_operation"
       ],
@@ -594,7 +535,7 @@
       "corroboration": []
     },
     {
-      "rank": 31,
+      "rank": 28,
       "class": "C",
       "score": 58,
       "region": "telangana",
@@ -605,7 +546,7 @@
       "source": "Telangana Today",
       "source_preferred": false,
       "published_at": "2026-09-18T23:27:08+05:30",
-      "age_hours": 4.72,
+      "age_hours": 5.68,
       "categories": [
         "political_major"
       ],
@@ -613,45 +554,7 @@
       "corroboration": []
     },
     {
-      "rank": 32,
-      "class": "C",
-      "score": 56,
-      "region": "world",
-      "region_confidence": 1.0,
-      "suggested_headline": "🌍 LATEST — WORLD",
-      "title": "Yemen conflict displaces 1,12,000 people inside country, thousands flee to Djibouti, UN migration agency says",
-      "url": "https://www.thehindu.com/news/international/yemen-conflict-displaces-112000-people-inside-country-thousands-flee-to-djibouti-un-migration-agency-says/article71482214.ece",
-      "source": "The Hindu",
-      "source_preferred": true,
-      "published_at": "2026-09-18T22:46:05+05:30",
-      "age_hours": 5.4,
-      "categories": [
-        "international_conflict"
-      ],
-      "excerpt": "The Houthi advance ⁠along Yemen’s c coast is bolstering Tehran’s hand in its conflict ⁠with the U.S., as the group tightens its control of the Bab el-Mandeb Strait, more than six months after U.S. and Israeli attacks on Iran",
-      "corroboration": []
-    },
-    {
-      "rank": 33,
-      "class": "C",
-      "score": 56,
-      "region": "world",
-      "region_confidence": 1.0,
-      "suggested_headline": "🌍 LATEST — WORLD",
-      "title": "Hundreds of civilians, POWs suffer sexual abuse in Ukraine war: UN",
-      "url": "https://www.thehindu.com/news/international/hundreds-of-civilians-pows-suffer-sexual-abuse-in-ukraine-war-un/article71482169.ece",
-      "source": "The Hindu",
-      "source_preferred": true,
-      "published_at": "2026-09-18T22:28:03+05:30",
-      "age_hours": 5.71,
-      "categories": [
-        "international_conflict"
-      ],
-      "excerpt": "The 20-page report is based on confidential interviews \"with hundreds of victims and survivors of sexual violence committed by both parties\", as well as court documents and official records",
-      "corroboration": []
-    },
-    {
-      "rank": 34,
+      "rank": 29,
       "class": "D",
       "score": 52,
       "region": "hyderabad",
@@ -662,7 +565,7 @@
       "source": "The Hindu",
       "source_preferred": true,
       "published_at": "2026-09-19T01:01:43+05:30",
-      "age_hours": 3.14,
+      "age_hours": 4.1,
       "categories": [
         "routine"
       ],
@@ -670,7 +573,7 @@
       "corroboration": []
     },
     {
-      "rank": 35,
+      "rank": 30,
       "class": "D",
       "score": 52,
       "region": "hyderabad",
@@ -681,7 +584,7 @@
       "source": "The Hindu",
       "source_preferred": true,
       "published_at": "2026-09-19T00:06:34+05:30",
-      "age_hours": 4.06,
+      "age_hours": 5.02,
       "categories": [
         "routine"
       ],
@@ -689,7 +592,7 @@
       "corroboration": []
     },
     {
-      "rank": 36,
+      "rank": 31,
       "class": "D",
       "score": 48,
       "region": "telangana",
@@ -700,7 +603,7 @@
       "source": "The Hindu",
       "source_preferred": true,
       "published_at": "2026-09-19T00:14:08+05:30",
-      "age_hours": 3.94,
+      "age_hours": 4.89,
       "categories": [
         "routine"
       ],
@@ -708,7 +611,7 @@
       "corroboration": []
     },
     {
-      "rank": 37,
+      "rank": 32,
       "class": "D",
       "score": 48,
       "region": "telangana",
@@ -719,7 +622,7 @@
       "source": "The Hindu",
       "source_preferred": true,
       "published_at": "2026-09-19T00:04:58+05:30",
-      "age_hours": 4.09,
+      "age_hours": 5.04,
       "categories": [
         "routine"
       ],
@@ -727,7 +630,7 @@
       "corroboration": []
     },
     {
-      "rank": 38,
+      "rank": 33,
       "class": "D",
       "score": 48,
       "region": "telangana",
@@ -738,7 +641,7 @@
       "source": "The Hindu",
       "source_preferred": true,
       "published_at": "2026-09-18T23:26:21+05:30",
-      "age_hours": 4.73,
+      "age_hours": 5.69,
       "categories": [
         "routine"
       ],
@@ -746,26 +649,7 @@
       "corroboration": []
     },
     {
-      "rank": 39,
-      "class": "D",
-      "score": 46,
-      "region": "india",
-      "region_confidence": 1.0,
-      "suggested_headline": "📰 LATEST NEWS — INDIA",
-      "title": "Every police station in Bihar to have a Child Help Desk from Oct. 2",
-      "url": "https://www.thehindu.com/news/national/bihar/every-police-station-in-bihar-to-have-a-child-help-desk-from-oct-2/article71481323.ece",
-      "source": "The Hindu",
-      "source_preferred": true,
-      "published_at": "2026-09-19T02:41:01+05:30",
-      "age_hours": 1.49,
-      "categories": [
-        "routine"
-      ],
-      "excerpt": "The objective is not only to curb the increasing number of crimes against children, but also to provide them with a dedicated space where they can openly discuss any problems at the police station",
-      "corroboration": []
-    },
-    {
-      "rank": 40,
+      "rank": 34,
       "class": "D",
       "score": 46,
       "region": "hyderabad",
@@ -776,11 +660,125 @@
       "source": "Telangana Today",
       "source_preferred": false,
       "published_at": "2026-09-19T00:05:38+05:30",
-      "age_hours": 4.08,
+      "age_hours": 5.03,
       "categories": [
         "routine"
       ],
       "excerpt": "Cyberabad Municipal Corporation teams demolished 14 unauthorised structures and served two notices during inspections across Kukatpally, Serilingampally and Quthbullapur zones. CMC Commissioner directed officials to maintain continuous field monitoring and take timely action against unauthorised constructions in accordance with building regulations",
+      "corroboration": []
+    },
+    {
+      "rank": 35,
+      "class": "D",
+      "score": 43,
+      "region": "world",
+      "region_confidence": 1.0,
+      "suggested_headline": "🌍 LATEST — WORLD",
+      "title": "U.S. Treasury's Bessent plans to discuss AI and rare earths with China's He: report",
+      "url": "https://www.thehindu.com/news/international/us-treasurys-bessent-plans-to-discuss-ai-and-rare-earths-with-chinas-he-report/article71482408.ece",
+      "source": "The Hindu",
+      "source_preferred": true,
+      "published_at": "2026-09-19T01:50:09+05:30",
+      "age_hours": 3.29,
+      "categories": [
+        "routine"
+      ],
+      "excerpt": "Chinese open-weight models are becoming more popular with U.S. companies because they can be cheaper than so-called closed-weight AI tools, such as those developed ‌by Anthropic, OpenAI and other U.S. companies.",
+      "corroboration": []
+    },
+    {
+      "rank": 36,
+      "class": "D",
+      "score": 42,
+      "region": "india",
+      "region_confidence": 0.4,
+      "suggested_headline": "📰 LATEST NEWS — INDIA",
+      "title": "Waste of public money amid economic crisis: U.P. Congress on PM’s birthday celebrations",
+      "url": "https://www.thehindu.com/news/national/uttar-pradesh/waste-of-public-money-amid-economic-crisis-up-congress-on-pms-birthday-celebrations/article71481573.ece",
+      "source": "The Hindu",
+      "source_preferred": true,
+      "published_at": "2026-09-19T04:49:51+05:30",
+      "age_hours": 0.3,
+      "categories": [
+        "routine"
+      ],
+      "excerpt": "State unit chief Ajay Rai alleged that 500 bikes were given in Varanasi with a deal that the people who ride them will have to pay ₹700 per day",
+      "corroboration": []
+    },
+    {
+      "rank": 37,
+      "class": "D",
+      "score": 42,
+      "region": "world",
+      "region_confidence": 1.0,
+      "suggested_headline": "🌍 LATEST — WORLD",
+      "title": "Pakistan will go to 'any extent' to defend Saudi Arabia: Army spokesperson",
+      "url": "https://www.thehindu.com/news/international/pakistan-will-go-to-any-extent-to-defend-saudi-arabia-army-spokesperson/article71482595.ece",
+      "source": "The Hindu",
+      "source_preferred": true,
+      "published_at": "2026-09-19T04:03:07+05:30",
+      "age_hours": 1.08,
+      "categories": [
+        "routine"
+      ],
+      "excerpt": "The remarks came amid an ongoing escalation involving Saudi Arabia and Yemen's Houthis, who carried out attacks on Saudi territory in recent days and established control over the strategic Bab el-Mandeb Strait in the Red Sea",
+      "corroboration": []
+    },
+    {
+      "rank": 38,
+      "class": "D",
+      "score": 42,
+      "region": "world",
+      "region_confidence": 1.0,
+      "suggested_headline": "🌍 LATEST — WORLD",
+      "title": "Zelenskyy hosts leaders from seven countries for regional summit",
+      "url": "https://www.thehindu.com/news/international/zelenskyy-hosts-leaders-from-seven-countries-for-regional-summit/article71482591.ece",
+      "source": "The Hindu",
+      "source_preferred": true,
+      "published_at": "2026-09-19T03:56:13+05:30",
+      "age_hours": 1.19,
+      "categories": [
+        "routine"
+      ],
+      "excerpt": "The inaugural summit of the so-called “Carpathian Eight” brings together Ukraine, Romania, Serbia, Poland, Slovakia, the Czech Republic, Austria and Hungary, with the European Union also involved",
+      "corroboration": []
+    },
+    {
+      "rank": 39,
+      "class": "D",
+      "score": 42,
+      "region": "india",
+      "region_confidence": 1.0,
+      "suggested_headline": "📰 LATEST NEWS — INDIA",
+      "title": "Every police station in Bihar to have a Child Help Desk from Oct. 2",
+      "url": "https://www.thehindu.com/news/national/bihar/every-police-station-in-bihar-to-have-a-child-help-desk-from-oct-2/article71481323.ece",
+      "source": "The Hindu",
+      "source_preferred": true,
+      "published_at": "2026-09-19T02:41:01+05:30",
+      "age_hours": 2.44,
+      "categories": [
+        "routine"
+      ],
+      "excerpt": "The objective is not only to curb the increasing number of crimes against children, but also to provide them with a dedicated space where they can openly discuss any problems at the police station",
+      "corroboration": []
+    },
+    {
+      "rank": 40,
+      "class": "D",
+      "score": 42,
+      "region": "india",
+      "region_confidence": 1.0,
+      "suggested_headline": "📰 LATEST NEWS — INDIA",
+      "title": "Taps run dry in Kolkata colony for 50 days; residents allege bias",
+      "url": "https://www.thehindu.com/news/national/west-bengal/taps-run-dry-inkolkata-colony-for-50-days-residents-allege-bias/article71479642.ece",
+      "source": "The Hindu",
+      "source_preferred": true,
+      "published_at": "2026-09-19T01:35:13+05:30",
+      "age_hours": 3.54,
+      "categories": [
+        "routine"
+      ],
+      "excerpt": "Residents allege the water connection was cut off deliberately to evict them from the land",
       "corroboration": []
     }
   ]
