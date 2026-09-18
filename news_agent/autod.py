@@ -266,18 +266,25 @@ def build_digest(cands):
            "india": "India ki khabar",
            "world": "Duniya ki khabar"}
     pool = []
+    _skip = {"stale": 0, "casualty": 0, "class": 0, "conv": 0, "qual": 0, "dup": 0}
     for c in cands:
         age = c.get("age_hours") or 99
         if age > 12 or (c.get("score") or 0) < 55:
+            _skip["stale"] += 1
             continue
         if set(c.get("categories", [])) & NO_CARD_CATS:
+            _skip["casualty"] += 1
             continue  # casualty/crime/fire news never rides the cards
         if NO_CARD_RX.search(c["title"]):
+            _skip["casualty"] += 1
             continue
+        _sc = c.get("score") or 0
         if c.get("class") not in ("A", "B") and \
            not set(c.get("categories", [])) & MAIN_CATS and \
-           not (c.get("source_preferred") and (c.get("score") or 0) >= 65):
-            continue
+           not (c.get("source_preferred") and _sc >= 65) and \
+           not _sc >= 60:
+            _skip["class"] += 1
+            continue  # 18 Sep: class C with score >=60 now rides cards
         fr = writer.build(c)
         if not fr or len(fr["bullets_en"]) < 3:
             continue
@@ -286,6 +293,7 @@ def build_digest(cands):
         if lead_ur and len(lead_ur) > 95:
             lead_ur = writer.urdu_headline(c["title"]) or lead_ur
         if not lead or not lead_ur or len(lead_ur) > 95:
+            _skip["conv"] += 1
             continue
         tw = {w.lower() for w in re.findall(r"[A-Za-z]{7,}", c["title"])}
         if not tw & {w.lower() for w in re.findall(r"[A-Za-z]{7,}", lead)}:
@@ -299,15 +307,23 @@ def build_digest(cands):
                     lead, lead_ur = fr["bullets_en"][0], fr["bullets_ur"][0]
                     lead, lead_ur = _lead_ok(lead), _lead_ok(lead_ur)
             if not lead or not lead_ur or len(lead_ur) > 95:
+                _skip["conv"] += 1
                 continue
         topic = c["region"] + "-" + slugify(c["title"])[:40]
         if topic in done or topic in blocked:
             continue
         if any(topic == x[3] for x in pool):
+            _skip["dup"] += 1
             continue  # same story from another feed - one bullet only
         if writer.bullet_quality(lead, lead_ur):
-            continue  # 17 Sep gate: no vague EN / English-fragment Urdu bullets
+            alt = writer.urdu_headline(c["title"])  # converter repair before skip
+            if alt and len(alt) <= 95 and not writer.bullet_quality(lead, alt):
+                lead_ur = alt
+            else:
+                _skip["qual"] += 1
+                continue  # 17 Sep gate: no vague EN / English-fragment Urdu bullets
         pool.append((c, lead, lead_ur, topic))
+    log(f"[digest] pool={len(pool)} skips={_skip}")
     def rank(x):  # politics first, then Class A, then score
         c = x[0]
         return (0 if "political_major" in c.get("categories", []) else 1,
@@ -339,9 +355,11 @@ def build_digest(cands):
                 continue
             if NO_CARD_RX.search(c["title"]):
                 continue
+            _sc2 = c.get("score") or 0
             if c.get("class") not in ("A", "B") and \
                not set(c.get("categories", [])) & MAIN_CATS and \
-               not (c.get("source_preferred") and (c.get("score") or 0) >= 65):
+               not (c.get("source_preferred") and _sc2 >= 65) and \
+               not _sc2 >= 60:
                 continue
             topic = c["region"] + "-" + slugify(c["title"])[:40]
             if topic in done or topic in blocked:

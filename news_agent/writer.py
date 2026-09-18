@@ -683,6 +683,13 @@ TO_FUT = {"set up": "qaim karenge", "establish": "qaim karenge", "create": "qaim
           "urge": "par zoor denge", "release": "ko riha karenge",
           "arrest": "ko giraftar karenge", "seize": "zabt karenge",
           "lead": "ki qayadat karenge"}
+CAN_RX = re.compile(r"\b(can|could|may)\s+(submit|apply|file|register|vote|work|"
+                    r"travel|attend|send|claim)\b", re.I)
+CAN_V = {"submit": "jama", "apply": "darakhwast", "file": "dakhil", "register": "darj",
+         "vote": "vote", "work": "kaam", "travel": "safar", "attend": "shirkat",
+         "send": "bhej", "claim": "dawa"}
+BEGIN_RX = re.compile(r"\b(begins|began|commences|commenced)\b", re.I)
+
 UR_PAST = [
     (re.compile(r"\b(arrested|arrests|arrest)\b", re.I),
      lambda s, o: f"{s} ne {o} ko giraftar kar liya."),
@@ -736,8 +743,10 @@ UR_PAST = [
      lambda s, o: f"{s} ne {o} ko mubarakbad di."),
     (re.compile(r"\b(signed|signs)\b", re.I),
      lambda s, o: f"{s} ne {o} par dastakhat kiye."),
-    (re.compile(r"\b(allocated|allocates|sanctioned|sanctions)\b", re.I),
-     lambda s, o: f"{s} ne {o} mukhtas kiye."),
+    (re.compile(r"\b(allocated|allocates)\b", re.I),
+     lambda s, o: f"{s} ne {o} allot kar di."),
+    # NOTE: "sanctions/sanctioned" removed 18 Sep - noun-modifier trap
+    # ("Russia sanctions bill") produced factually inverted Urdu.
     (re.compile(r"\b(transferred|transfers)\b", re.I),
      lambda s, o: f"{s} ne {o} ka tabadla kiya."),
     (re.compile(r"\b(assured|assures|promised|promises)\b", re.I),
@@ -766,6 +775,27 @@ UR_PAST = [
      lambda s, o: f"{s} ne {o} muattal kar di."),
     (re.compile(r"\b(escaped|escapes)\b", re.I),
      lambda s, o: f"{s} {o} se bal-bal bache."),
+    # ---- v4 templates (18 Sep, pool-starvation fix) ----
+    (re.compile(r"\b(probed|probes|probe)\b", re.I),
+     lambda s, o: f"{s} ne {o} ki janchn shuru ki."),
+    (re.compile(r"\b(raided|raids|raid)\b", re.I),
+     lambda s, o: f"{s} ne {o} par chhape maare."),
+    (re.compile(r"\b(vetoes|vetoed|veto)\b", re.I),
+     lambda s, o: f"{s} ne {o} veto kar diya."),
+    (re.compile(r"\b(wished|wishes)\b", re.I),
+     lambda s, o: f"{s} ne {o} ko badhai di."),
+    (re.compile(r"\b(allows|allowed|lets|let|permits|permitted)\b", re.I),
+     lambda s, o: _ijazat(s, o)),
+    (re.compile(r"\b(participated|participates)\b", re.I),
+     lambda s, o: f"{s} ne {o} mein shirkat ki."),
+    (re.compile(r"\b(recalled|recalls)\b", re.I),
+     lambda s, o: f"{s} ne {o} ko yad kiya."),
+    (re.compile(r"\b(rises|gains|climbs)\b", re.I),
+     lambda s, o: f"{s} {o} barha." if o else f"{s} barha."),
+    (re.compile(r"\b(falls|drops)\b", re.I),
+     lambda s, o: f"{s} {o} gira." if o else f"{s} gira."),
+    (re.compile(r"\bcaught\b", re.I),
+     lambda s, o: f"{s} ko {_ger(o)} pakda gaya."),
 ]
 
 
@@ -773,9 +803,19 @@ CITY_TAG = re.compile(r"^(Hyderabad|Secunderabad|Delhi|Chennai|Mumbai|Bengaluru|
                       r"Telangana|India|World|New Delhi)\s*:\s*", re.I)
 
 
+_TAGWORD = (r"(SIR|case|scam|row|probe|investigation|issue|matter|update|budget|"
+            r"session|assembly|polls|election|scheme|mission|yatra|utsav)")
+
+
 def _ur_clean_s(s):
     s = CITY_TAG.sub("", s.strip()).strip().rstrip(",")
+    # drop leading "Tag:" prefixes (e.g. "Telangana SIR: ...") - owner bans tags
+    s = re.sub(r"^[A-Za-z0-9 .'\-]{2,26}\s" + _TAGWORD + r":\s*(?=[A-Za-z0-9].{12,})",
+               "", s, flags=re.I)
     return s
+
+
+ATTRIB = r"\s*:\s*(CM|PM|BJP|BRS|TRS|AAP|EC|CBI|NIA|MEA|ED|SP|WHO|UN|officials?)\s*$"
 
 
 def _ur_clean_o(o):
@@ -783,13 +823,84 @@ def _ur_clean_o(o):
     o = o.split(", to ")[0]
     o = re.sub(r"\s+soon\b", "", o, flags=re.I)
     o = re.sub(r"\s*:\s*(report|reports|sources?|says?|study)\s*$", "", o, flags=re.I)
-    o = re.sub(r"^(in|at|near|to)\s+", "", o, flags=re.I)
+    o = re.sub(ATTRIB, "", o, flags=re.I)          # trailing ": CM" attribution
+    o = re.sub(r",\s*(calls?|calling|says?|saying|adding|adds|claims?)\s+.*$",
+               "", o, flags=re.I)                  # trailing ", calls him ..." clause
+    o = re.sub(r"^(in|at|near|to|into|from|around)\s+", "", o, flags=re.I)
+    o = re.sub(r"\s+(in|during)\s+(early|morning|evening|late)\s+trade\s*$", "", o, flags=re.I)
+    if len(o) > 45:
+        o = o.split(", ")[0]                        # keep objects tight
     return o.strip().rstrip(",")
+
+
+# --- v4: English prepositions left inside converter output become Urdu
+# postpositions placed AFTER their phrase ("for Telangana" -> "Telangana ke
+# liye"). Quoted spans ('Made in India') are masked so names stay intact.
+_UR_STOP = ("mein", "par", "ko", "ke", "ki", "ka", "se", "ne", "aur", "hai", "hain",
+            "tha", "thi", "gaya", "gayi", "diya", "kiya", "karenge", "karega", "kar",
+            "sakte", "sakti", "tak", "ab", "phir", "baad", "tehat", "liye", "saath",
+            "zariye", "barha", "gira", "shuru", "manzoor", "pabandi", "elan", "jaiza",
+            "zabt", "giraftar", "riha", "inqiad", "muaina", "karwai", "peshkash",
+            "maang", "mukhalifat", "taid", "daura", "istifa", "mulaqat", "guftugu",
+            "veto", "pakda", "ijazat", "shirkat", "jama", "darj", "dakhil", "vote",
+            "kaam", "safar", "bhej", "dawa", "yad", "janchn", "chappe", "badhai",
+            "denge", "di", "hui", "hua")
+_PREP_MAP = [("in", "mein"), ("at", "par"), ("for", "ke liye"), ("under", "ke tehat"),
+             ("from", "se"), ("after", "ke baad"), ("before", "se pehle"),
+             ("with", "ke saath"), ("by", "ke zariye"), ("across", "mein"),
+             ("during", "ke dauran"), ("over", "par")]
+_PREP_TERMS = r"|".join(p for p, _ in _PREP_MAP) + r"|of|to|and|or|that|which|who|as"
+
+
+def _ur_postpo(line):
+    quotes = []
+
+    def _mask(m):
+        quotes.append(m.group(0))
+        return f"\x00{len(quotes) - 1}\x00"
+
+    masked = re.sub(r"['‘][^'’]{2,40}['’]", _mask, line)
+    stop = "|".join(_UR_STOP)
+    for prep, ur in _PREP_MAP:
+        rx = re.compile(r"\b" + prep + r"\s+([A-Za-z0-9₹][A-Za-z0-9₹.'\-]*?(?:\s+[A-Za-z0-9₹.'\-]+)*?)"
+                        r"(?=\s+(?:" + stop + r"|" + _PREP_TERMS + r")|\s*,|$)")
+        masked = rx.sub(lambda m: f" {m.group(1).strip()} {ur}", masked)
+    masked = re.sub(r"\s+\band\b\s+", " aur ", masked)
+    for i, q in enumerate(quotes):
+        masked = masked.replace(f"\x00{i}\x00", q)
+    return re.sub(r"\s{2,}", " ", masked).strip()
+
+
+def _fin(line):
+    return _ur_postpo(line)
+
+
+def _ger(o):
+    G = {"taking": "lete", "accepting": "lete", "receiving": "lete",
+         "holding": "rakhte", "selling": "bechte", "buying": "kharidte"}
+    w = o.split(" ", 1)
+    if w and w[0].lower() in G:
+        return G[w[0].lower()] + (" " + w[1] if len(w) > 1 else "")
+    return o
+
+
+_PP_END = ("ke baad", "ke liye", "se", "mein", "par", "ke saath", "ke tehat",
+           "ke zariye")
+
+
+def _ijazat(s, o):
+    op = _ur_postpo(o)
+    if op.endswith(_PP_END):
+        return f"{s} ne {op} ijazat di."
+    return f"{s} ne {op} ko ijazat di."
 
 
 def urdu_headline(title):
     """Rule-based Roman-Urdu rendering of a headline; None when unsure."""
     t = title.strip().rstrip(".")
+    # drop trailing person attribution (": South Korean President") so the
+    # Urdu sentence never misattributes the action
+    t = re.sub(r":\s*[A-Z][a-z]+(?: [A-Z][A-Za-z'\-]+){1,4}$", "", t).strip()
     m = UR_SAY.search(t)
     if m:
         s, clause = _ur_clean_s(t[:m.start()]), _ur_clean_o(t[m.end():])
@@ -818,7 +929,30 @@ def urdu_headline(title):
                    "", o, flags=re.I)
         key = m.group(1).lower()
         if len(s) >= 3 and len(o) >= 6:
-            return f"{s} {o} {TO_FUT[key]}."
+            return _fin(f"{s} {o} {TO_FUT[key]}.")
+    m = CAN_RX.search(t)
+    if m:
+        s = _ur_clean_s(t[:m.start()])
+        o = _ur_postpo(_ur_clean_o(t[m.end():]))
+        # Urdu order: indirect object (postposition phrase) before direct object
+        mm = re.match(r"^(?P<head>[A-Za-z0-9₹][A-Za-z0-9₹.'\-]*(?:\s+[A-Za-z0-9₹.'\-]+)*?)\s+"
+                      r"(?P<pp>[A-Za-z0-9][A-Za-z0-9.'\-]*\s+(?:ke liye|ke tehat|ke baad|ke saath|ke zariye))$", o)
+        if mm:
+            o = f"{mm.group('pp')} {mm.group('head')}"
+        if len(s) >= 3 and len(o) >= 6:
+            return _fin(f"{s} {o} {CAN_V[m.group(2).lower()]} kar sakte hain.")
+    m = BEGIN_RX.search(t)
+    if m:
+        s = _ur_clean_s(t[:m.start()])
+        o = _ur_clean_o(t[m.end():])
+        if len(s) >= 3:
+            return _fin(f"{s} {o} shuru hui." if o else f"{s} shuru hui.")
+    m = re.search(r"\b(sought|seeks)\b", t, re.I)
+    if m and re.search(r"\b(dialogue|talks|truce|peace)\b", t[m.end():], re.I):
+        s = _ur_clean_s(t[:m.start()])
+        o = _ur_clean_o(t[m.end():])
+        if len(s) >= 3 and len(o) >= 6:
+            return _fin(f"{s} ne {o} ki khwahish zahir ki.")  # wanted talks, not demanded
     for rx, fn in UR_PAST:
         m = rx.search(t)
         if not m:
@@ -829,7 +963,7 @@ def urdu_headline(title):
             continue
         if len(o) < 4 and rx.pattern.find("discussed") == -1:
             continue
-        return fn(s, o)
+        return _fin(fn(s, o))
     return None
 
 
@@ -906,4 +1040,14 @@ def bullet_quality(en, ur):
         bad.append("ur-english-fragments")
     if UR_EN_VERB.search(ur):
         bad.append("ur-english-verb-leftover")
+    if re.search(r"\b(to|that|which|who|could|would|should|might|will|can|may|"
+                 r"using|recalls|monitors|tracks|flips|after|before|with|under|"
+                 r"across|during)\s+[a-z]{3,}", ur):
+        bad.append("ur-english-clause")
+    if re.search(r":\s+\S", ur) or ur.strip().endswith(":"):
+        bad.append("ur-attribution-colon")
+    for tok in ("mein", "ke liye", "par ", " ko "):
+        if ur.count(tok) >= 3:
+            bad.append("ur-particle-repeat")
+            break
     return bad
