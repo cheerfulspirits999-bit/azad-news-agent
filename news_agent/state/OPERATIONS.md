@@ -106,3 +106,24 @@ RETURNING-OWNER / RETURNING-AGENT BRIEF:
   / thin <50 chars w/o digits) and UR bullets with >=2 English function words
   or leftover English verbs (hands over, monitoring, to drive, seeks, ...).
   Unit-tested: all 4 defective pairs flagged, all 6 good pairs pass.
+
+== 18 Sep 2026 — "ONLY ONE POST YESTERDAY" INCIDENT ====================
+- Owner: yesterday delivered 1 visible card (defective 16:54 deleted by owner;
+  17:15 corrected card remained; 19:00 slot NEVER fired).
+- Root causes: (1) GitHub cron throttle left NO run 17:40-20:48 IST on 17 Sep,
+  so the 19:00 slot had no cycle until 20:48; (2) the 20:48 cycle found pool<3
+  because casualty ban + narrow converter left <3 convertible headlines.
+- FIXES PUSHED 18 Sep 12:26: converter v4 (Urdu postposition layer: "for X"->
+  "X ke liye" etc., quote-masked; 12 new verb templates incl. can-V, begins,
+  probes/raids/veto/wishes/allows/participates/recalls/rises/falls/caught;
+  tag-prefix + person-attribution stripping; "sanctions" noun-trap removed;
+  dialogue-khwahish template), autod pool widened (class C score>=60),
+  converter-repair before quality-skip, digest telemetry line
+  "[digest] pool=N skips={...}", cron densified to 5,20,35,50 UTC.
+- Offline proof: live 40-candidate pool now yields 5 clean EN/UR pairs.
+- MAKEUP CARD 13:00 IST published manually (post 01a0b34f-b4a5-4b70-95f0-
+  d09430918cef): SIR family documents / Cyberabad WFH / Harvard Hyd / 22-A fee
+  route / UNGA Abbas - all 2-4 outlet verified. quota synced (digests=2,
+  last_card_at 13:00) so auto slots shift: ~15:10 and ~19:10 cards today.
+- STANDING CHECK: after any pipeline change read next 2-3 run logs for the
+  "[digest] pool=" line; pool<3 two cycles in a row = widen or hand-build.
