@@ -1,17 +1,36 @@
 {
-  "cycle_id": "20260919-1900",
-  "generated_at": "2026-09-19T19:00:28.864755+05:30",
+  "cycle_id": "20260919-2020",
+  "generated_at": "2026-09-19T20:20:15.938545+05:30",
   "feeds_ok": 4,
   "errors": [],
   "counts": {
-    "fetched": 797,
-    "fresh": 185,
+    "fetched": 789,
+    "fresh": 188,
     "candidates": 40,
-    "duplicates_suppressed": 0
+    "duplicates_suppressed": 1
   },
   "candidates": [
     {
       "rank": 1,
+      "class": "A",
+      "score": 86,
+      "region": "hyderabad",
+      "region_confidence": 1.0,
+      "suggested_headline": "📰 LATEST NEWS — HYDERABAD",
+      "title": "Seven killed in two early-morning road accidents on highways in Hyderabad",
+      "url": "https://www.thehindu.com/news/cities/Hyderabad/four-of-a-family-returning-from-ganesh-immersion-killed-in-road-accident-on-nh-44-near-shamshabad/article71483497.ece",
+      "source": "The Hindu",
+      "source_preferred": true,
+      "published_at": "2026-09-19T19:16:23+05:30",
+      "age_hours": 1.06,
+      "categories": [
+        "accident_casualty"
+      ],
+      "excerpt": "Four of family returning after Ganesh immersion die on NH-44; three workers killed while changing a flat tyre on ORR",
+      "corroboration": []
+    },
+    {
+      "rank": 2,
       "class": "A",
       "score": 86,
       "region": "hyderabad",
@@ -22,7 +41,7 @@
       "source": "Munsif Daily",
       "source_preferred": true,
       "published_at": "2026-09-19T18:40:20+05:30",
-      "age_hours": 0.34,
+      "age_hours": 1.67,
       "categories": [
         "disaster_weather"
       ],
@@ -30,7 +49,26 @@
       "corroboration": []
     },
     {
-      "rank": 2,
+      "rank": 3,
+      "class": "A",
+      "score": 84,
+      "region": "india",
+      "region_confidence": 1.0,
+      "suggested_headline": "📰 LATEST NEWS — INDIA",
+      "title": "Karnataka: Tractor runs over them at Ganesh immersion, 2 dead",
+      "url": "https://www.siasat.com/karnataka-tractor-runs-over-them-at-ganesh-immersion-2-dead-3544934/",
+      "source": "Munsif Daily",
+      "source_preferred": true,
+      "published_at": "2026-09-19T19:56:53+05:30",
+      "age_hours": 0.39,
+      "categories": [
+        "accident_casualty"
+      ],
+      "excerpt": "Raichur: Two boys were killed and another person was critically injured after they fell from a tractor carrying a Ganesh idol and came under its wheels during an immersion procession in Raichur city on Friday, September 18. The deceased have been identified as Sujith Kumar, 16, and Charan, 14. Vijay Kumar, 32, who also fell …",
+      "corroboration": []
+    },
+    {
+      "rank": 4,
       "class": "A",
       "score": 82,
       "region": "hyderabad",
@@ -41,7 +79,7 @@
       "source": "Munsif Daily",
       "source_preferred": true,
       "published_at": "2026-09-19T15:42:55+05:30",
-      "age_hours": 3.29,
+      "age_hours": 4.62,
       "categories": [
         "accident_casualty"
       ],
@@ -49,7 +87,7 @@
       "corroboration": []
     },
     {
-      "rank": 3,
+      "rank": 5,
       "class": "A",
       "score": 82,
       "region": "hyderabad",
@@ -60,49 +98,11 @@
       "source": "Munsif Daily",
       "source_preferred": true,
       "published_at": "2026-09-19T14:53:15+05:30",
-      "age_hours": 4.12,
+      "age_hours": 5.45,
       "categories": [
         "accident_casualty"
       ],
       "excerpt": "Hyderabad: A Class 4 student died while undergoing treatment on Friday, September 18, a day after she sustained injuries in a fall from a staircase at a school in Shadnagar. The student reportedly fell face-first while descending the staircase on Thursday, September 17, and was admitted to a hospital for treatment. The deceased has been …",
-      "corroboration": []
-    },
-    {
-      "rank": 4,
-      "class": "A",
-      "score": 80,
-      "region": "hyderabad",
-      "region_confidence": 1.0,
-      "suggested_headline": "📰 LATEST NEWS — HYDERABAD",
-      "title": "Hyderabad: Jubilee Hills woman fined Rs 20,000 for wasting water",
-      "url": "https://www.siasat.com/hyderabad-jubilee-hills-woman-fined-rs-20000-for-wasting-water-3544845/",
-      "source": "Munsif Daily",
-      "source_preferred": true,
-      "published_at": "2026-09-19T17:17:15+05:30",
-      "age_hours": 1.72,
-      "categories": [
-        "infrastructure_failure"
-      ],
-      "excerpt": "Hyderabad: The Hyderabad Metropolitan Water Supply and Sewerage Board (HMWSSB) on Friday fined a woman Rs 20,000 for wasting water in Jubilee Hills. According to the HMWSSB, the woman wasted water while cleaning her residence. Videos shared on social media showed the water flowing on the streets. The Hyderabad Metropolitan Water Supply and Sewerage Board …",
-      "corroboration": []
-    },
-    {
-      "rank": 5,
-      "class": "C",
-      "score": 76,
-      "region": "india",
-      "region_confidence": 1.0,
-      "suggested_headline": "📰 LATEST NEWS — INDIA",
-      "title": "Two minors killed, one injured in Raichur Ganesh procession accident",
-      "url": "https://www.thehindu.com/news/national/karnataka/two-minors-killed-one-injured-in-raichur-ganesh-procession-accident/article71484702.ece",
-      "source": "The Hindu",
-      "source_preferred": true,
-      "published_at": "2026-09-19T18:18:02+05:30",
-      "age_hours": 0.71,
-      "categories": [
-        "accident_casualty"
-      ],
-      "excerpt": "​The deceased have been identified as 12-year-old Suchit Kumar and 13-year-old Charan Kumar. The injured person, identified as Vijay (35), is currently undergoing treatment",
       "corroboration": []
     },
     {
@@ -112,58 +112,405 @@
       "region": "india",
       "region_confidence": 1.0,
       "suggested_headline": "📰 LATEST NEWS — INDIA",
-      "title": "Doddaballapur lodge murder: accused husband found dead in village lake",
-      "url": "https://www.thehindu.com/news/national/karnataka/doddaballapur-lodge-murder-accused-husband-found-dead-in-village-lake/article71484079.ece",
+      "title": "Youth, teen girl from Kollam found dead on rail track in Angamaly",
+      "url": "https://www.thehindu.com/news/national/kerala/youth-teen-girl-from-kollam-found-dead-on-rail-track-in-angamaly/article71484439.ece",
       "source": "The Hindu",
       "source_preferred": true,
-      "published_at": "2026-09-19T17:47:20+05:30",
-      "age_hours": 1.22,
+      "published_at": "2026-09-19T19:27:39+05:30",
+      "age_hours": 0.88,
       "categories": [
         "accident_casualty"
       ],
-      "excerpt": "According to the police, Anand had allegedly strangled Vidya to death using an ID-card lanyard at the lodge before fleeing the scene. The murder came to light on September 16, following which police launched a search for him",
+      "excerpt": "",
       "corroboration": []
     },
     {
       "rank": 7,
       "class": "C",
       "score": 76,
-      "region": "world",
+      "region": "hyderabad",
       "region_confidence": 1.0,
-      "suggested_headline": "🌍 LATEST — WORLD",
-      "title": "31 dead in attack at police headquarters in Pakistan",
-      "url": "https://www.thehindu.com/news/international/many-dead-in-attack-at-police-headquarters-in-pakistan/article71483705.ece",
-      "source": "The Hindu",
+      "suggested_headline": "📰 LATEST NEWS — HYDERABAD",
+      "title": "Interstate cattle, mobile theft gang arrested in Hyderabad",
+      "url": "https://www.siasat.com/interstate-cattle-mobile-theft-gang-arrested-in-hyderabad-3544857/",
+      "source": "Munsif Daily",
       "source_preferred": true,
-      "published_at": "2026-09-19T13:31:17+05:30",
-      "age_hours": 5.49,
+      "published_at": "2026-09-19T19:26:07+05:30",
+      "age_hours": 0.9,
       "categories": [
-        "accident_casualty"
+        "police_operation"
       ],
-      "excerpt": "Attackers stormed the Old Police Lines complex at Kohat, a town of around 2,20,000 people in Pakistan’s Khyber Pakhtunkhwa (KP) province, on September 18",
+      "excerpt": "Hyderabad: The Hyderabad Police has arrested members of an interstate gang involved in mobile phone and cattle theft in Telangana and seized 15 mobile phones, cars and a number plate, along with Rs 22 lakh in cash. With the arrests of nine members on Thursday, September 17, the Hyderabad police claimed to have solved 17 …",
       "corroboration": []
     },
     {
       "rank": 8,
       "class": "C",
-      "score": 74,
-      "region": "telangana",
+      "score": 76,
+      "region": "india",
       "region_confidence": 1.0,
-      "suggested_headline": "📰 LATEST NEWS — TELANGANA",
-      "title": "Adilabad to get joint-use airport for defence, civilian needs",
-      "url": "https://www.siasat.com/adilabad-to-get-joint-use-airport-for-defence-civilian-needs-3544728/",
-      "source": "Munsif Daily",
+      "suggested_headline": "📰 LATEST NEWS — INDIA",
+      "title": "Dismembered parts of a woman’s body found in canal on Vijayawada outskirts",
+      "url": "https://www.thehindu.com/news/national/andhra-pradesh/dismembered-parts-of-a-womans-body-found-in-canal-on-vijayawada-outskirts/article71484077.ece",
+      "source": "The Hindu",
       "source_preferred": true,
-      "published_at": "2026-09-19T13:12:19+05:30",
-      "age_hours": 5.8,
+      "published_at": "2026-09-19T19:24:10+05:30",
+      "age_hours": 0.93,
       "categories": [
-        "political_major"
+        "accident_casualty"
       ],
-      "excerpt": "Hyderabad: Union Minister G Kishan Reddy on Saturday said a joint-use airport would come up at Adilabad in Telangana for both defence and civilian purposes. He said an Air Force base, a training facility, offices, townships and residential complexes would also come up in Adilabad. The facility would serve as a civilian airport as well, …",
+      "excerpt": "",
       "corroboration": []
     },
     {
       "rank": 9,
+      "class": "C",
+      "score": 76,
+      "region": "india",
+      "region_confidence": 1.0,
+      "suggested_headline": "📰 LATEST NEWS — INDIA",
+      "title": "Two engineering students killed as bike crashes into shop wall at Yelahanka",
+      "url": "https://www.thehindu.com/news/national/karnataka/two-engineering-students-killed-as-bike-crashes-into-shop-wall-at-yelahanka/article71484544.ece",
+      "source": "The Hindu",
+      "source_preferred": true,
+      "published_at": "2026-09-19T19:07:05+05:30",
+      "age_hours": 1.22,
+      "categories": [
+        "accident_casualty"
+      ],
+      "excerpt": "An investigation is under way to determine the exact circumstances leading to the accident.",
+      "corroboration": []
+    },
+    {
+      "rank": 10,
+      "class": "C",
+      "score": 76,
+      "region": "hyderabad",
+      "region_confidence": 1.0,
+      "suggested_headline": "📰 LATEST NEWS — HYDERABAD",
+      "title": "Hyderabad: Jubilee Hills woman fined Rs 20,000 for wasting water",
+      "url": "https://www.siasat.com/hyderabad-jubilee-hills-woman-fined-rs-20000-for-wasting-water-3544845/",
+      "source": "Munsif Daily",
+      "source_preferred": true,
+      "published_at": "2026-09-19T17:17:15+05:30",
+      "age_hours": 3.05,
+      "categories": [
+        "infrastructure_failure"
+      ],
+      "excerpt": "Hyderabad: The Hyderabad Metropolitan Water Supply and Sewerage Board (HMWSSB) on Friday fined a woman Rs 20,000 for wasting water in Jubilee Hills. According to the HMWSSB, the woman wasted water while cleaning her residence. Videos shared on social media showed the water flowing on the streets. The Hyderabad Metropolitan Water Supply and Sewerage Board …",
+      "corroboration": []
+    },
+    {
+      "rank": 11,
+      "class": "C",
+      "score": 74,
+      "region": "telangana",
+      "region_confidence": 1.0,
+      "suggested_headline": "📰 LATEST NEWS — TELANGANA",
+      "title": "Three wanted in Telangana drug cases tracked down in Rajasthan",
+      "url": "https://www.thehindu.com/news/national/telangana/three-wanted-in-telangana-drug-cases-tracked-down-in-rajasthan/article71484857.ece",
+      "source": "The Hindu",
+      "source_preferred": true,
+      "published_at": "2026-09-19T19:43:03+05:30",
+      "age_hours": 0.62,
+      "categories": [
+        "major_crime"
+      ],
+      "excerpt": "During one attempt, personnel reportedly encountered resistance involving live electric wires, while another team was allegedly confronted by a large group of villagers",
+      "corroboration": []
+    },
+    {
+      "rank": 12,
+      "class": "C",
+      "score": 72,
+      "region": "india",
+      "region_confidence": 1.0,
+      "suggested_headline": "📰 LATEST NEWS — INDIA",
+      "title": "Congress PAC discusses strategy for local body elections in Andhra Pradesh",
+      "url": "https://www.thehindu.com/news/national/andhra-pradesh/congress-pac-discusses-strategy-for-local-body-elections-in-andhra-pradesh/article71484962.ece",
+      "source": "The Hindu",
+      "source_preferred": true,
+      "published_at": "2026-09-19T20:14:31+05:30",
+      "age_hours": 0.1,
+      "categories": [
+        "political_major"
+      ],
+      "excerpt": "APCC president Sharmila stresses need for identifying strong candidates and putting an end to group politics",
+      "corroboration": []
+    },
+    {
+      "rank": 13,
+      "class": "C",
+      "score": 72,
+      "region": "india",
+      "region_confidence": 1.0,
+      "suggested_headline": "📰 LATEST NEWS — INDIA",
+      "title": "Keralam MLA Unniyadan says he was hurt over not being considered for ministerial berth",
+      "url": "https://www.thehindu.com/news/national/kerala/keralam-mla-unniyadan-says-he-was-hurt-over-not-being-considered-for-ministerial-berth/article71485293.ece",
+      "source": "The Hindu",
+      "source_preferred": true,
+      "published_at": "2026-09-19T20:13:24+05:30",
+      "age_hours": 0.11,
+      "categories": [
+        "political_major"
+      ],
+      "excerpt": "The Kerala Congress leader, who is the Irinjalakuda MLA, asserts that he remains a Kerala Congress member and will continue to stand with the Congress-led United Democratic Front",
+      "corroboration": []
+    },
+    {
+      "rank": 14,
+      "class": "C",
+      "score": 72,
+      "region": "india",
+      "region_confidence": 1.0,
+      "suggested_headline": "📰 LATEST NEWS — INDIA",
+      "title": "Setting up of Type 1 diabetes registry proposed",
+      "url": "https://www.thehindu.com/news/national/kerala/setting-up-of-type-1-diabetes-registry-proposed/article71484333.ece",
+      "source": "The Hindu",
+      "source_preferred": true,
+      "published_at": "2026-09-19T20:13:21+05:30",
+      "age_hours": 0.12,
+      "categories": [
+        "political_major"
+      ],
+      "excerpt": "Type One Diabetic Welfare Society submits proposal for strengthening Type 1 Diabetes care and support to Health Minister K. Muraleedharan",
+      "corroboration": []
+    },
+    {
+      "rank": 15,
+      "class": "C",
+      "score": 72,
+      "region": "india",
+      "region_confidence": 1.0,
+      "suggested_headline": "📰 LATEST NEWS — INDIA",
+      "title": "Praja Seva: Ballari city MLA says grievances will be resolved on the spot or within 15 days",
+      "url": "https://www.thehindu.com/news/national/karnataka/praja-seva-ballari-city-mla-says-grievances-will-be-resolved-on-the-spot-or-within-15-days/article71484693.ece",
+      "source": "The Hindu",
+      "source_preferred": true,
+      "published_at": "2026-09-19T20:08:28+05:30",
+      "age_hours": 0.2,
+      "categories": [
+        "political_major"
+      ],
+      "excerpt": "",
+      "corroboration": []
+    },
+    {
+      "rank": 16,
+      "class": "C",
+      "score": 72,
+      "region": "hyderabad",
+      "region_confidence": 0.4,
+      "suggested_headline": "📰 LATEST NEWS — HYDERABAD",
+      "title": "Gaza Health Ministry Director’s son killed in Israeli strike",
+      "url": "https://www.siasat.com/gaza-health-ministry-directors-son-killed-in-israeli-strike-3544922/",
+      "source": "Munsif Daily",
+      "source_preferred": true,
+      "published_at": "2026-09-19T20:08:14+05:30",
+      "age_hours": 0.2,
+      "categories": [
+        "accident_casualty",
+        "traffic_disruption",
+        "international_conflict"
+      ],
+      "excerpt": "Gaza Strip: The son of Gaza Health Ministry Director-General Munir al-Bursh was among two Palestinians killed in Israeli strikes in the Gaza Strip on Saturday, September 19, amid continued violations of the ceasefire agreement in effect since October 2025. Basir al-Bursh was killed in an Israeli drone strike west of the Jabalia refugee camp in …",
+      "corroboration": []
+    },
+    {
+      "rank": 17,
+      "class": "C",
+      "score": 72,
+      "region": "india",
+      "region_confidence": 1.0,
+      "suggested_headline": "📰 LATEST NEWS — INDIA",
+      "title": "Kasturirangan report: Karnataka CM instructs Forest Department not to issue eviction notices to traditional cultivators",
+      "url": "https://www.thehindu.com/news/national/karnataka/karnataka-cm-dk-shivakumar-promises-to-stand-by-farmers-on-kasturirangan-report-on-western-ghats-directs-forest-department-not-to-issue-notices-to-traditional-cultivators-over-encroachments/article71484350.ece",
+      "source": "The Hindu",
+      "source_preferred": true,
+      "published_at": "2026-09-19T20:07:27+05:30",
+      "age_hours": 0.21,
+      "categories": [
+        "political_major"
+      ],
+      "excerpt": "Participating in a public consultation in Tirthahalli, the Chief Minister promised to stand by farmers on the Kasturirangan report on the Western Ghats",
+      "corroboration": []
+    },
+    {
+      "rank": 18,
+      "class": "C",
+      "score": 72,
+      "region": "india",
+      "region_confidence": 1.0,
+      "suggested_headline": "📰 LATEST NEWS — INDIA",
+      "title": "1,000 appointment letters distributed at Rozgar Mela in the country: V. Somanna",
+      "url": "https://www.thehindu.com/news/national/karnataka/1000-appointment-letters-distributed-at-rozgar-mela-in-the-country-v-somanna/article71485167.ece",
+      "source": "The Hindu",
+      "source_preferred": true,
+      "published_at": "2026-09-19T20:07:08+05:30",
+      "age_hours": 0.22,
+      "categories": [
+        "political_major"
+      ],
+      "excerpt": "Rozgar Mela reflects Centre’s focus on youth employment, says Union Minister",
+      "corroboration": []
+    },
+    {
+      "rank": 19,
+      "class": "C",
+      "score": 72,
+      "region": "india",
+      "region_confidence": 1.0,
+      "suggested_headline": "📰 LATEST NEWS — INDIA",
+      "title": "BJP councillors protest with lanterns against power cuts at Kozhikode Corporation Council meeting",
+      "url": "https://www.thehindu.com/news/national/kerala/bjp-councillors-protest-with-lanterns-against-power-cuts-at-kozhikode-corporation-council-meeting/article71485119.ece",
+      "source": "The Hindu",
+      "source_preferred": true,
+      "published_at": "2026-09-19T20:04:36+05:30",
+      "age_hours": 0.26,
+      "categories": [
+        "political_major",
+        "protest_major"
+      ],
+      "excerpt": "Mayor O. Sadasivan rejects an adjournment motion moved by the BJP against power cuts in the State. BJP councillors stage a protest with lanterns and later walk out of the council hall.",
+      "corroboration": []
+    },
+    {
+      "rank": 20,
+      "class": "C",
+      "score": 72,
+      "region": "india",
+      "region_confidence": 1.0,
+      "suggested_headline": "📰 LATEST NEWS — INDIA",
+      "title": "Expeditious resolution to public issues is goal of Praja Seva Abhiyan: MLA",
+      "url": "https://www.thehindu.com/news/national/karnataka/expeditious-resolution-to-public-issues-is-goal-of-praja-seva-abhiyan-mla/article71484996.ece",
+      "source": "The Hindu",
+      "source_preferred": true,
+      "published_at": "2026-09-19T20:03:20+05:30",
+      "age_hours": 0.28,
+      "categories": [
+        "political_major"
+      ],
+      "excerpt": "",
+      "corroboration": []
+    },
+    {
+      "rank": 21,
+      "class": "C",
+      "score": 72,
+      "region": "india",
+      "region_confidence": 1.0,
+      "suggested_headline": "📰 LATEST NEWS — INDIA",
+      "title": "Over 28,000 families get land ownership rights after decades of wait in Visakhapatnam",
+      "url": "https://www.thehindu.com/news/national/andhra-pradesh/over-28000-families-get-land-ownership-rights-after-decades-of-wait-in-visakhapatnam/article71484639.ece",
+      "source": "The Hindu",
+      "source_preferred": true,
+      "published_at": "2026-09-19T19:52:48+05:30",
+      "age_hours": 0.46,
+      "categories": [
+        "political_major"
+      ],
+      "excerpt": "The title deeds will now enable the beneficiaries to use their properties for obtaining loan, observes Chief Minister Chandrababu Naidu, while promising to address the concerns of another 22,000 families awaiting regularisation pattas soon",
+      "corroboration": []
+    },
+    {
+      "rank": 22,
+      "class": "C",
+      "score": 72,
+      "region": "india",
+      "region_confidence": 1.0,
+      "suggested_headline": "📰 LATEST NEWS — INDIA",
+      "title": "MLA launches Praja Seva Abhiyan in Gillesugur",
+      "url": "https://www.thehindu.com/news/national/karnataka/mla-launches-praja-seva-abhiyan-in-gillesugur/article71484977.ece",
+      "source": "The Hindu",
+      "source_preferred": true,
+      "published_at": "2026-09-19T19:46:41+05:30",
+      "age_hours": 0.56,
+      "categories": [
+        "political_major"
+      ],
+      "excerpt": "",
+      "corroboration": []
+    },
+    {
+      "rank": 23,
+      "class": "C",
+      "score": 72,
+      "region": "hyderabad",
+      "region_confidence": 0.4,
+      "suggested_headline": "📰 LATEST NEWS — HYDERABAD",
+      "title": "Suicide at IITB: UoH students express solidarity with peers",
+      "url": "https://www.siasat.com/suicide-at-iitb-uoh-students-express-solidarity-with-peers-3544900/",
+      "source": "Munsif Daily",
+      "source_preferred": true,
+      "published_at": "2026-09-19T19:31:55+05:30",
+      "age_hours": 0.81,
+      "categories": [
+        "accident_casualty",
+        "political_major"
+      ],
+      "excerpt": "Hyderabad: University of Hyderabad students on Saturday, September 19, extended solidarity to their IIT Bombay counterparts protesting the death of a Dalit BTech student, demanding accountability from the administration and the resignation of IITB Director Shireesh Kedare. Hailing from Maharashtra’s Yavatmal district, 19-year-old Sahil Wakode was allegedly caught using his phone during the midterm exam …",
+      "corroboration": []
+    },
+    {
+      "rank": 24,
+      "class": "C",
+      "score": 72,
+      "region": "india",
+      "region_confidence": 1.0,
+      "suggested_headline": "📰 LATEST NEWS — INDIA",
+      "title": "Victory in college, school polls a reply to KSU, says SFI",
+      "url": "https://www.thehindu.com/news/national/kerala/victory-in-college-school-polls-a-reply-to-ksu-says-sfi/article71485033.ece",
+      "source": "The Hindu",
+      "source_preferred": true,
+      "published_at": "2026-09-19T19:27:40+05:30",
+      "age_hours": 0.88,
+      "categories": [
+        "political_major"
+      ],
+      "excerpt": "",
+      "corroboration": []
+    },
+    {
+      "rank": 25,
+      "class": "C",
+      "score": 72,
+      "region": "india",
+      "region_confidence": 1.0,
+      "suggested_headline": "📰 LATEST NEWS — INDIA",
+      "title": "Praja Seva campaign: Minister directs officials to resolve grievances within 15 days",
+      "url": "https://www.thehindu.com/news/national/karnataka/minister-directs-officials-to-resolve-grievances-within-15-days-and-warns-of-strict-action-if-negligence-found/article71484755.ece",
+      "source": "The Hindu",
+      "source_preferred": true,
+      "published_at": "2026-09-19T19:27:21+05:30",
+      "age_hours": 0.88,
+      "categories": [
+        "political_major"
+      ],
+      "excerpt": "",
+      "corroboration": []
+    },
+    {
+      "rank": 26,
+      "class": "C",
+      "score": 72,
+      "region": "india",
+      "region_confidence": 1.0,
+      "suggested_headline": "📰 LATEST NEWS — INDIA",
+      "title": "Mamata moves Supreme Court against EC’s freeze on Trinamool Congress symbol",
+      "url": "https://www.thehindu.com/news/national/west-bengal/mamata-banerjee-moves-supreme-court-against-freeze-on-tmc-symbol/article71482413.ece",
+      "source": "The Hindu",
+      "source_preferred": true,
+      "published_at": "2026-09-19T19:18:36+05:30",
+      "age_hours": 1.03,
+      "categories": [
+        "court_judgment",
+        "political_major"
+      ],
+      "excerpt": "The petition said the Election Commission had banked on the statements of rebel legislators who were facing disqualification proceedings under the Tenth Schedule (anti-defection law) of the Constitution",
+      "corroboration": []
+    },
+    {
+      "rank": 27,
       "class": "C",
       "score": 72,
       "region": "telangana",
@@ -174,7 +521,7 @@
       "source": "The Hindu",
       "source_preferred": true,
       "published_at": "2026-09-19T18:58:08+05:30",
-      "age_hours": 0.04,
+      "age_hours": 1.37,
       "categories": [
         "police_operation"
       ],
@@ -182,45 +529,7 @@
       "corroboration": []
     },
     {
-      "rank": 10,
-      "class": "C",
-      "score": 72,
-      "region": "india",
-      "region_confidence": 1.0,
-      "suggested_headline": "📰 LATEST NEWS — INDIA",
-      "title": "Kollam to be developed as Vizhinjam’s satellite port: Minister",
-      "url": "https://www.thehindu.com/news/national/kerala/kollam-to-be-developed-as-vizhinjams-satellite-port-minister/article71484519.ece",
-      "source": "The Hindu",
-      "source_preferred": true,
-      "published_at": "2026-09-19T18:54:58+05:30",
-      "age_hours": 0.09,
-      "categories": [
-        "political_major"
-      ],
-      "excerpt": "",
-      "corroboration": []
-    },
-    {
-      "rank": 11,
-      "class": "C",
-      "score": 72,
-      "region": "india",
-      "region_confidence": 1.0,
-      "suggested_headline": "📰 LATEST NEWS — INDIA",
-      "title": "Delhi  Election Commission publishes names excluded from Delhi electoral roll",
-      "url": "https://www.thehindu.com/news/cities/Delhi/delhi-election-commission-publishes-names-excluded-from-delhi-electoral-roll/article71484653.ece",
-      "source": "The Hindu",
-      "source_preferred": true,
-      "published_at": "2026-09-19T18:47:23+05:30",
-      "age_hours": 0.22,
-      "categories": [
-        "political_major"
-      ],
-      "excerpt": "The draft roll removed one in every three Delhi voters as part of the Special Intensive Revision (SIR) of the voter list",
-      "corroboration": []
-    },
-    {
-      "rank": 12,
+      "rank": 28,
       "class": "C",
       "score": 72,
       "region": "india",
@@ -231,7 +540,7 @@
       "source": "Munsif Daily",
       "source_preferred": true,
       "published_at": "2026-09-19T18:32:07+05:30",
-      "age_hours": 0.47,
+      "age_hours": 1.8,
       "categories": [
         "political_major"
       ],
@@ -239,104 +548,7 @@
       "corroboration": []
     },
     {
-      "rank": 13,
-      "class": "C",
-      "score": 72,
-      "region": "india",
-      "region_confidence": 1.0,
-      "suggested_headline": "📰 LATEST NEWS — INDIA",
-      "title": "Chief Minister Chandrababu Naidu asks officials to declare drought-hit mandals in Andhra Pradesh on October 1",
-      "url": "https://www.thehindu.com/news/national/andhra-pradesh/chief-minister-chandrababu-naidu-asks-officials-to-declare-drought-hit-mandals-in-andhra-pradesh-on-october-1/article71484605.ece",
-      "source": "The Hindu",
-      "source_preferred": true,
-      "published_at": "2026-09-19T18:17:46+05:30",
-      "age_hours": 0.71,
-      "categories": [
-        "political_major"
-      ],
-      "excerpt": "Calling for a scientific assessment of deficit rainfall conditions under the influence of El Nino, the Chief Minister bats for micro-irrigation to safeguard crops and insists that there be no drinking water shortage anywhere in the State; preliminary estimates for 2026-Kharif season indicate the impact of El Nino on 513 mandals with situation in 268 being severe",
-      "corroboration": []
-    },
-    {
-      "rank": 14,
-      "class": "C",
-      "score": 72,
-      "region": "india",
-      "region_confidence": 1.0,
-      "suggested_headline": "📰 LATEST NEWS — INDIA",
-      "title": "Citing ‘dry’ Gujarat, Supreme Court says prohibition does not end alcoholism, hooch tragedies",
-      "url": "https://www.thehindu.com/news/national/citing-dry-gujarat-supreme-court-says-prohibition-does-not-end-alcoholism-hooch-tragedies/article71484453.ece",
-      "source": "The Hindu",
-      "source_preferred": true,
-      "published_at": "2026-09-19T18:08:04+05:30",
-      "age_hours": 0.87,
-      "categories": [
-        "court_judgment",
-        "public_safety_warning"
-      ],
-      "excerpt": "A total ban on alcohol only succeeds in sending the liquor trade underground, increasing the prevalence of unregulated, lethal brews, says the top court",
-      "corroboration": []
-    },
-    {
-      "rank": 15,
-      "class": "C",
-      "score": 72,
-      "region": "hyderabad",
-      "region_confidence": 0.4,
-      "suggested_headline": "📰 LATEST NEWS — HYDERABAD",
-      "title": "Nandigram bypoll: Congress candidate in 14-day judicial custody",
-      "url": "https://www.siasat.com/nandigram-bypoll-congress-candidate-in-14-day-judicial-custody-3544861/",
-      "source": "Munsif Daily",
-      "source_preferred": true,
-      "published_at": "2026-09-19T17:31:37+05:30",
-      "age_hours": 1.48,
-      "categories": [
-        "accident_casualty",
-        "police_operation"
-      ],
-      "excerpt": "Haldia (West Bengal): The Congress’ Nandigram bypoll candidate Milan Pradhan was on Saturday, September 19, sent to judicial custody till October 3 by a local court, a day after his arrest on multiple charges, including murder, that dates back 19 years. Pradhan was produced before the Haldia Subdivisional Court following his arrest on Friday. The …",
-      "corroboration": []
-    },
-    {
-      "rank": 16,
-      "class": "C",
-      "score": 72,
-      "region": "india",
-      "region_confidence": 1.0,
-      "suggested_headline": "📰 LATEST NEWS — INDIA",
-      "title": "IIT Bombay student found dead in hostel; institute says had been caught using mobile phone during exam",
-      "url": "https://www.thehindu.com/news/national/maharashtra/iit-bombay-student-found-dead-in-hostel-institute-says-had-been-caught-using-mobile-phone-during-exam/article71483750.ece",
-      "source": "The Hindu",
-      "source_preferred": true,
-      "published_at": "2026-09-19T14:58:37+05:30",
-      "age_hours": 4.03,
-      "categories": [
-        "accident_casualty"
-      ],
-      "excerpt": "Further investigation is underway to ascertain the motive behind the extreme step, police said",
-      "corroboration": []
-    },
-    {
-      "rank": 17,
-      "class": "C",
-      "score": 72,
-      "region": "india",
-      "region_confidence": 1.0,
-      "suggested_headline": "📰 LATEST NEWS — INDIA",
-      "title": "Five BSF personnel injured after vehicle overturns on Jammu-Srinagar highway",
-      "url": "https://www.thehindu.com/news/national/jammu-and-kashmir/five-bsf-personnel-injured-as-vehicle-overturns-on-jammu-srinagar-highway/article71484056.ece",
-      "source": "The Hindu",
-      "source_preferred": true,
-      "published_at": "2026-09-19T14:47:54+05:30",
-      "age_hours": 4.21,
-      "categories": [
-        "accident_casualty"
-      ],
-      "excerpt": "The injured were identified as Sub-Inspector Ghar Singh, driver Shamim Ahmed, and Constables Sunil Kumar, Parshtum Kumar and Chandan Yadhav",
-      "corroboration": []
-    },
-    {
-      "rank": 18,
+      "rank": 29,
       "class": "C",
       "score": 72,
       "region": "india",
@@ -347,7 +559,7 @@
       "source": "Munsif Daily",
       "source_preferred": true,
       "published_at": "2026-09-19T14:27:44+05:30",
-      "age_hours": 4.55,
+      "age_hours": 5.88,
       "categories": [
         "accident_casualty"
       ],
@@ -355,163 +567,162 @@
       "corroboration": []
     },
     {
-      "rank": 19,
-      "class": "C",
-      "score": 72,
-      "region": "india",
-      "region_confidence": 1.0,
-      "suggested_headline": "📰 LATEST NEWS — INDIA",
-      "title": "Delhi-NCR likely to stay mostly dry; air quality remains in satisfactory category",
-      "url": "https://munsifdaily.com/delhi-ncr-likely-to-stay-mostly-dry-air-quality/",
-      "source": "Munsif Daily",
-      "source_preferred": true,
-      "published_at": "2026-09-19T14:05:54+05:30",
-      "age_hours": 4.91,
-      "categories": [
-        "disaster_weather"
-      ],
-      "excerpt": "Delhi and most parts of the National Capital Region (NCR) are likely to experience predominantly dry weather on Saturday, with no major spell of heavy rain forecast for New Delhi, Noida, Ghaziabad, Faridabad and several other areas, according to the India Meteorological Department (IMD).",
-      "corroboration": []
-    },
-    {
-      "rank": 20,
+      "rank": 30,
       "class": "C",
       "score": 70,
       "region": "india",
       "region_confidence": 1.0,
       "suggested_headline": "📰 LATEST NEWS — INDIA",
-      "title": "ED takes IAS officer, intermediary into custody in KPSC recruitment scam probe",
-      "url": "https://www.thehindu.com/news/national/karnataka/ed-takes-ias-officer-intermediary-into-custody-in-kpsc-recruitment-scam-probe/article71484508.ece",
+      "title": "Fraternity must be India’s foremost goal, says former Supreme Court judge",
+      "url": "https://www.thehindu.com/news/national/andhra-pradesh/fraternity-must-be-indias-foremost-goal-says-former-supreme-court-judge/article71485034.ece",
       "source": "The Hindu",
       "source_preferred": true,
-      "published_at": "2026-09-19T18:41:04+05:30",
-      "age_hours": 0.32,
-      "categories": [
-        "major_crime",
-        "police_operation",
-        "govt_announcement"
-      ],
-      "excerpt": "ED had earlier sought their custody after the CID arrested them and produced them before a court. The two had reportedly been questioned by the CID for three days",
-      "corroboration": []
-    },
-    {
-      "rank": 21,
-      "class": "C",
-      "score": 70,
-      "region": "india",
-      "region_confidence": 1.0,
-      "suggested_headline": "📰 LATEST NEWS — INDIA",
-      "title": "Why the Supreme Court struck down Maharashtra’s methanol rules? | Explained",
-      "url": "https://www.thehindu.com/news/national/why-the-supreme-court-struck-down-maharashtras-methanol-rules-explained/article71484515.ece",
-      "source": "The Hindu",
-      "source_preferred": true,
-      "published_at": "2026-09-19T18:06:19+05:30",
-      "age_hours": 0.9,
+      "published_at": "2026-09-19T20:05:24+05:30",
+      "age_hours": 0.25,
       "categories": [
         "court_judgment"
       ],
-      "excerpt": "The court passes guidelines regarding important aspects and steps to prevent hooch tragedies and for effective implementation of the policies",
+      "excerpt": "Justice Lavu Nageswara Rao says caste and religion continue to divide society and stresses the need for social independence alongside political independence",
       "corroboration": []
     },
     {
-      "rank": 22,
+      "rank": 31,
       "class": "C",
       "score": 70,
       "region": "india",
       "region_confidence": 1.0,
       "suggested_headline": "📰 LATEST NEWS — INDIA",
-      "title": "Bengaluru: 5 held for alleged Rs 1 crore land deal scam",
-      "url": "https://www.siasat.com/bengaluru-5-held-for-alleged-rs-1-crore-land-deal-scam-3544867/",
-      "source": "Munsif Daily",
+      "title": "Four High Courts get 14 judges, including Delhi",
+      "url": "https://www.thehindu.com/news/national/four-high-courts-get-14-judges-including-delhi/article71485239.ece",
+      "source": "The Hindu",
       "source_preferred": true,
-      "published_at": "2026-09-19T17:51:45+05:30",
-      "age_hours": 1.15,
+      "published_at": "2026-09-19T20:02:52+05:30",
+      "age_hours": 0.29,
       "categories": [
-        "major_crime",
-        "police_operation",
-        "economic_major"
+        "court_judgment"
       ],
-      "excerpt": "Bengaluru: The Hoskote police has arrested five people for allegedly cheating members of the public by offering properties claimed to be worth Rs 1 crore for an investment of Rs 10 lakh. Police suspect that the accused had been running the operation by exploiting the trust of locals and investors. The arrested persons are Shashikumar, …",
+      "excerpt": "Three judges have been appointed to the Jharkhand High Court and three additional judges to the Karnataka High Court",
       "corroboration": []
     },
     {
-      "rank": 23,
+      "rank": 32,
       "class": "C",
-      "score": 68,
+      "score": 70,
       "region": "india",
-      "region_confidence": 0.4,
+      "region_confidence": 1.0,
       "suggested_headline": "📰 LATEST NEWS — INDIA",
-      "title": "Parvatipuram MLA condemns sudden transfer of official PA, calls for inquiry",
-      "url": "https://www.thehindu.com/news/national/andhra-pradesh/parvatipuram-mla-condemns-sudden-transfer-of-official-pa-calls-for-inquiry/article71484539.ece",
+      "title": "CPI(M) protests over NICE land issue, seeks implementation of High Court order",
+      "url": "https://www.thehindu.com/news/national/karnataka/cpim-protests-over-nice-land-issue-seeks-implementation-of-high-court-order/article71484604.ece",
       "source": "The Hindu",
       "source_preferred": true,
-      "published_at": "2026-09-19T18:53:22+05:30",
-      "age_hours": 0.12,
+      "published_at": "2026-09-19T19:48:20+05:30",
+      "age_hours": 0.53,
       "categories": [
-        "political_major"
+        "court_judgment"
       ],
       "excerpt": "",
       "corroboration": []
     },
     {
-      "rank": 24,
+      "rank": 33,
       "class": "C",
-      "score": 68,
-      "region": "world",
-      "region_confidence": 1.0,
-      "suggested_headline": "🌍 LATEST — WORLD",
-      "title": "Entire Bannerghatta Road to be white-topped: Krishna Byre Gowda",
-      "url": "https://www.thehindu.com/news/cities/bangalore/entire-bannerghatta-road-to-be-white-topped-krishna-byre-gowda/article71484357.ece",
-      "source": "The Hindu",
-      "source_preferred": true,
-      "published_at": "2026-09-19T18:52:16+05:30",
-      "age_hours": 0.14,
-      "categories": [
-        "political_major"
-      ],
-      "excerpt": "The Minister said the Namma Metro and BWSSB works had affected the stretch badly, and temporary asphalt repairs had failed to withstand the traffic volume on the road. Thus, he said, a decision had been made to take up white-topping of the entire stretch.",
-      "corroboration": []
-    },
-    {
-      "rank": 25,
-      "class": "C",
-      "score": 68,
-      "region": "world",
-      "region_confidence": 1.0,
-      "suggested_headline": "🌍 LATEST — WORLD",
-      "title": "Namma BMTC 2.0 app now available for iPhone users",
-      "url": "https://www.thehindu.com/news/cities/bangalore/namma-bmtc-20-app-now-available-for-iphone-users/article71484360.ece",
-      "source": "The Hindu",
-      "source_preferred": true,
-      "published_at": "2026-09-19T18:41:20+05:30",
-      "age_hours": 0.32,
-      "categories": [
-        "political_major"
-      ],
-      "excerpt": "The “Namma BMTC 2.0” app was unveiled by Chief Minister D.K. Shivakumar during an event marking 100 days of the Congress government in Karnataka recently",
-      "corroboration": []
-    },
-    {
-      "rank": 26,
-      "class": "C",
-      "score": 68,
+      "score": 70,
       "region": "india",
       "region_confidence": 1.0,
       "suggested_headline": "📰 LATEST NEWS — INDIA",
-      "title": "Delhi CM flays AAP government in Punjab for failing to curb drug menace",
-      "url": "https://www.thehindu.com/news/national/punjab/delhi-cm-flays-aap-government-in-punjab-for-failing-to-curb-drug-menace/article71484627.ece",
+      "title": "Anto Augustine to remain in custody as Kerala High Court denies him bail in alcohol possession case",
+      "url": "https://www.thehindu.com/news/national/kerala/anto-augustine-to-remain-in-custody-as-kerala-high-court-denies-him-bail-in-alcohol-possession-case/article71481289.ece",
       "source": "The Hindu",
       "source_preferred": true,
-      "published_at": "2026-09-19T18:20:08+05:30",
-      "age_hours": 0.67,
+      "published_at": "2026-09-19T19:35:41+05:30",
+      "age_hours": 0.74,
       "categories": [
-        "major_crime"
+        "police_operation",
+        "court_judgment",
+        "protest_major"
       ],
-      "excerpt": "‘A government that keeps giving new deadlines cannot be expected to eradicate drugs,’ Rekha Gupta says, ahead of the BJP’s Punjab unit flagging off the second ‘Nasha Mukt Punjab Yatra’",
+      "excerpt": "Though his counsel contended that Anto was no longer in possession of the building from where the liquor was seized, DGP informs the court that Anto had paid tax for the building in March 2026",
       "corroboration": []
     },
     {
-      "rank": 27,
+      "rank": 34,
+      "class": "C",
+      "score": 70,
+      "region": "india",
+      "region_confidence": 1.0,
+      "suggested_headline": "📰 LATEST NEWS — INDIA",
+      "title": "Farmers, elected representatives urge State govt. to oppose ESA draft notification, make suggestions",
+      "url": "https://www.thehindu.com/news/national/karnataka/farmers-elected-representatives-urge-state-govt-to-oppose-esa-draft-notification-make-suggestions/article71484747.ece",
+      "source": "The Hindu",
+      "source_preferred": true,
+      "published_at": "2026-09-19T19:23:22+05:30",
+      "age_hours": 0.95,
+      "categories": [
+        "govt_announcement"
+      ],
+      "excerpt": "",
+      "corroboration": []
+    },
+    {
+      "rank": 35,
+      "class": "C",
+      "score": 70,
+      "region": "india",
+      "region_confidence": 1.0,
+      "suggested_headline": "📰 LATEST NEWS — INDIA",
+      "title": "Talks held with more than 20 companies at SEMICON India for investments in State, says M.B. Patil",
+      "url": "https://www.thehindu.com/news/national/karnataka/talks-held-with-more-than-20-companies-at-semicon-india-for-investments-in-state-says-mb-patil/article71484629.ece",
+      "source": "The Hindu",
+      "source_preferred": true,
+      "published_at": "2026-09-19T19:03:34+05:30",
+      "age_hours": 1.28,
+      "categories": [
+        "economic_major"
+      ],
+      "excerpt": "‘While Lam Research announced an investment of ₹9,298 crore in the State, Applied Materials shared plans for an investment of ₹3,600 crore over the next 10 years’",
+      "corroboration": []
+    },
+    {
+      "rank": 36,
+      "class": "C",
+      "score": 68,
+      "region": "hyderabad",
+      "region_confidence": 0.4,
+      "suggested_headline": "📰 LATEST NEWS — HYDERABAD",
+      "title": "Mamata Banerjee moves SC against EC party symbol freeze",
+      "url": "https://www.siasat.com/mamata-banerjee-moves-sc-against-ec-party-symbol-freeze-3544952/",
+      "source": "Munsif Daily",
+      "source_preferred": true,
+      "published_at": "2026-09-19T20:18:33+05:30",
+      "age_hours": 0.03,
+      "categories": [
+        "court_judgment",
+        "political_major"
+      ],
+      "excerpt": "New Delhi: Former West Bengal chief minister Mamata Banerjee has moved the Supreme Court challenging the Election Commission’s decision to freeze the Trinamool Congress’ name and party symbol amid a dispute between two rival factions of the TMC. The Election Commission on Friday allotted separate names and symbols to the two rival factions following its …",
+      "corroboration": []
+    },
+    {
+      "rank": 37,
+      "class": "C",
+      "score": 68,
+      "region": "india",
+      "region_confidence": 0.4,
+      "suggested_headline": "📰 LATEST NEWS — INDIA",
+      "title": "Government prioritising modern waste management initiatives at Owk, says Minister",
+      "url": "https://www.thehindu.com/news/national/andhra-pradesh/government-prioritising-modern-waste-management-initiatives-at-owk-says-minister/article71484714.ece",
+      "source": "The Hindu",
+      "source_preferred": true,
+      "published_at": "2026-09-19T20:00:14+05:30",
+      "age_hours": 0.33,
+      "categories": [
+        "political_major"
+      ],
+      "excerpt": "Participating in a cleanliness drive, Janardhan Reddy highlights that cleanliness is not merely a government initiative, as it succeeds only through the active participation of the public",
+      "corroboration": []
+    },
+    {
+      "rank": 38,
       "class": "C",
       "score": 68,
       "region": "world",
@@ -521,263 +732,52 @@
       "url": "https://www.thehindu.com/news/cities/Delhi/delhi-university-students-union-election-result-counting-on-september-19-2026/article71483753.ece",
       "source": "The Hindu",
       "source_preferred": true,
-      "published_at": "2026-09-19T18:13:14+05:30",
-      "age_hours": 0.79,
+      "published_at": "2026-09-19T19:56:00+05:30",
+      "age_hours": 0.4,
       "categories": [
         "political_major"
       ],
-      "excerpt": "The Congress-backed NSUI failed to secure any of the four central panel posts, with the ABVP winning the president, secretary and joint secretary positions",
-      "corroboration": []
-    },
-    {
-      "rank": 28,
-      "class": "C",
-      "score": 68,
-      "region": "india",
-      "region_confidence": 0.4,
-      "suggested_headline": "📰 LATEST NEWS — INDIA",
-      "title": "Political, religious leaders protest against ‘Tantra in Silence’ event in Kashmir’s Gurez valley",
-      "url": "https://www.thehindu.com/news/national/jammu-and-kashmir/political-religious-leaders-protest-against-event-in-kashmirs-gurez/article71484395.ece",
-      "source": "The Hindu",
-      "source_preferred": true,
-      "published_at": "2026-09-19T17:18:33+05:30",
-      "age_hours": 1.7,
-      "categories": [
-        "political_major",
-        "protest_major"
-      ],
-      "excerpt": "A poster showed that Swami Dhyan Sumit, who heads the Shree Rajneesh Foundation, is scheduled to attend the event titled ‘Tantra in Silence’ from September 24 to 27 in Gurez valley in northern Kashmir",
-      "corroboration": []
-    },
-    {
-      "rank": 29,
-      "class": "C",
-      "score": 68,
-      "region": "india",
-      "region_confidence": 0.4,
-      "suggested_headline": "📰 LATEST NEWS — INDIA",
-      "title": "Mamata’s Rejinagar bypoll candidate announces withdrawal from contest, retracts later",
-      "url": "https://www.thehindu.com/news/national/west-bengal/mamatas-rejinagar-bypoll-candidate-rabiul-alam-chowdhury/article71484466.ece",
-      "source": "The Hindu",
-      "source_preferred": true,
-      "published_at": "2026-09-19T17:08:57+05:30",
-      "age_hours": 1.86,
-      "categories": [
-        "political_major"
-      ],
-      "excerpt": "Rabiul Alam Chowdhury, a former TMC MLA, told reporters in his Murshidabad home earlier in the day, “It is becoming difficult for me to motivate grassroots workers who have been facing regular harassment.”",
-      "corroboration": []
-    },
-    {
-      "rank": 30,
-      "class": "C",
-      "score": 68,
-      "region": "india",
-      "region_confidence": 0.4,
-      "suggested_headline": "📰 LATEST NEWS — INDIA",
-      "title": "1965 Indo-Pak war hero Flight Lieutenant A.T. Cooke dies, IAF pays tribute",
-      "url": "https://www.thehindu.com/news/national/1965-indo-pak-war-hero-flight-lieutenant-at-cooke-dies-iaf-pays-tribute/article71484325.ece",
-      "source": "The Hindu",
-      "source_preferred": true,
-      "published_at": "2026-09-19T16:52:04+05:30",
-      "age_hours": 2.14,
-      "categories": [
-        "accident_casualty",
-        "international_conflict"
-      ],
-      "excerpt": "The Vir Chakra awardee passed away in Delhi on September 18, a senior official said",
-      "corroboration": []
-    },
-    {
-      "rank": 31,
-      "class": "C",
-      "score": 68,
-      "region": "india",
-      "region_confidence": 1.0,
-      "suggested_headline": "📰 LATEST NEWS — INDIA",
-      "title": "T.N. government writes to PM Modi seeking to change the operator of Chennai airport",
-      "url": "https://www.thehindu.com/news/cities/chennai/tn-government-writes-to-pm-modi-seeking-to-change-the-operator-of-chennai-airport/article71481590.ece",
-      "source": "The Hindu",
-      "source_preferred": true,
-      "published_at": "2026-09-19T15:38:40+05:30",
-      "age_hours": 3.36,
-      "categories": [
-        "political_major",
-        "economic_major"
-      ],
-      "excerpt": "In the letter sent in August, Chief Minister C. Joseph Vijay has said Tamil Nadu has been industry-friendly, making consistent efforts to attract business and investment; hence, better management of the airport is of paramount importance",
-      "corroboration": []
-    },
-    {
-      "rank": 32,
-      "class": "C",
-      "score": 68,
-      "region": "india",
-      "region_confidence": 0.4,
-      "suggested_headline": "📰 LATEST NEWS — INDIA",
-      "title": "Youth dies of electric shock during Vinayaka idol immersion",
-      "url": "https://www.thehindu.com/news/national/andhra-pradesh/youth-dies-of-electric-shock-during-vinayaka-idol-immersion/article71484032.ece",
-      "source": "The Hindu",
-      "source_preferred": true,
-      "published_at": "2026-09-19T15:08:07+05:30",
-      "age_hours": 3.87,
-      "categories": [
-        "accident_casualty"
-      ],
-      "excerpt": "K. Bharat Kumar collapsed while giving connection to the sound system to the DJ machine on September 18",
-      "corroboration": []
-    },
-    {
-      "rank": 33,
-      "class": "C",
-      "score": 68,
-      "region": "india",
-      "region_confidence": 1.0,
-      "suggested_headline": "📰 LATEST NEWS — INDIA",
-      "title": "Union Home Minister Amit Shah falls ill in Hubballi, skips inauguration of college",
-      "url": "https://www.thehindu.com/news/national/karnataka/union-home-minister-amitshah-falls-ill-inhubballi/article71483956.ece",
-      "source": "The Hindu",
-      "source_preferred": true,
-      "published_at": "2026-09-19T15:07:02+05:30",
-      "age_hours": 3.89,
-      "categories": [
-        "political_major"
-      ],
-      "excerpt": "Union Home Minister Amit Shah skipped the September 19 programme due to ill health",
-      "corroboration": []
-    },
-    {
-      "rank": 34,
-      "class": "C",
-      "score": 68,
-      "region": "india",
-      "region_confidence": 0.4,
-      "suggested_headline": "📰 LATEST NEWS — INDIA",
-      "title": "Nandigram bypoll: Congress candidate facing 19-year-old murder, rioting cases to be produced in court",
-      "url": "https://www.thehindu.com/news/national/west-bengal/nandigram-bypoll-congress-candidate-facing-19-year-old-murder-rioting-cases-to-be-produced-in-court/article71484133.ece",
-      "source": "The Hindu",
-      "source_preferred": true,
-      "published_at": "2026-09-19T14:25:44+05:30",
-      "age_hours": 4.58,
-      "categories": [
-        "accident_casualty",
-        "police_operation"
-      ],
-      "excerpt": "Milan Pradhan was arrested at a hotel in Chandipur in West Bengal’s Purba Medinipur district along with another party leader, Subhasish Bhattacharya",
-      "corroboration": []
-    },
-    {
-      "rank": 35,
-      "class": "C",
-      "score": 68,
-      "region": "india",
-      "region_confidence": 1.0,
-      "suggested_headline": "📰 LATEST NEWS — INDIA",
-      "title": "DK Shivakumar makes surprise visit to Mangaluru fishing harbour",
-      "url": "https://www.siasat.com/dk-shivakumar-makes-surprise-visit-to-mangaluru-fishing-harbour-3544772/",
-      "source": "Munsif Daily",
-      "source_preferred": true,
-      "published_at": "2026-09-19T14:19:23+05:30",
-      "age_hours": 4.68,
-      "categories": [
-        "political_major"
-      ],
-      "excerpt": "Mangaluru: Chief Minister DK Shivakumar on Saturday, September 19, made a surprise early-morning inspection of the Mangaluru fishing harbour and the estuary, arriving around 6 am along with Minister UT Khader and senior officials. He travelled by boat to the sea mouth and inspected the location where a boat had recently sunk amid heavy silt …",
-      "corroboration": []
-    },
-    {
-      "rank": 36,
-      "class": "C",
-      "score": 66,
-      "region": "hyderabad",
-      "region_confidence": 0.4,
-      "suggested_headline": "📰 LATEST NEWS — HYDERABAD",
-      "title": "Free police job coaching for Nirmal youth from Sept 28",
-      "url": "https://munsifdaily.com/free-police-job-coaching-for-nirmal-youth-from/",
-      "source": "Munsif Daily",
-      "source_preferred": true,
-      "published_at": "2026-09-19T17:58:31+05:30",
-      "age_hours": 1.03,
-      "categories": [
-        "govt_announcement"
-      ],
-      "excerpt": "The Nirmal district police, with the support of District Collector Bhavesh Mishra, IAS, will launch a free pre-recruitment training programme for unemployed youth aspiring to join the police department.",
-      "corroboration": []
-    },
-    {
-      "rank": 37,
-      "class": "C",
-      "score": 66,
-      "region": "telangana",
-      "region_confidence": 1.0,
-      "suggested_headline": "📰 LATEST NEWS — TELANGANA",
-      "title": "Adilabad: Recovery agents arrested for illegally pledging motorcycle",
-      "url": "https://telanganatoday.com/adilabad-recovery-agents-arrested-for-illegally-pledging-motorcycle",
-      "source": "Telangana Today",
-      "source_preferred": false,
-      "published_at": "2026-09-19T17:29:43+05:30",
-      "age_hours": 1.51,
-      "categories": [
-        "police_operation"
-      ],
-      "excerpt": "Two recovery agency agents were arrested in Adilabad for allegedly pledging a motorcycle recovered from a loan defaulter for Rs 30,000. Police said the accused, Shaik Ubaid Ullah and Shaik Abdul Nayeem, used the money for personal expenses and luxuries",
-      "corroboration": []
-    },
-    {
-      "rank": 38,
-      "class": "C",
-      "score": 66,
-      "region": "telangana",
-      "region_confidence": 1.0,
-      "suggested_headline": "📰 LATEST NEWS — TELANGANA",
-      "title": "Gang involved in cattle theft, mobile shop burglaries held in Telangana",
-      "url": "https://telanganatoday.com/gang-involved-in-cattle-theft-mobile-shop-burglaries-held-in-telangana",
-      "source": "Telangana Today",
-      "source_preferred": false,
-      "published_at": "2026-09-19T17:20:57+05:30",
-      "age_hours": 1.66,
-      "categories": [
-        "police_operation"
-      ],
-      "excerpt": "Hyderabad Task Force and Khammam police apprehended a gang allegedly involved in cattle thefts and mobile shop burglaries across Telangana and Madhya Pradesh. Police seized mobile phones, vehicles and Rs 22 lakh in cash and are tracing other suspects linked to the network.",
+      "excerpt": "ABVPs total winning margin came down from 23,873 last year to 9,671 this year; the voter turnout increased from 39.5% last year to 40.46% this year.",
       "corroboration": []
     },
     {
       "rank": 39,
       "class": "C",
-      "score": 66,
-      "region": "telangana",
+      "score": 68,
+      "region": "india",
       "region_confidence": 0.4,
-      "suggested_headline": "📰 LATEST NEWS — TELANGANA",
-      "title": "Rohit Sharma’s future became flashpoint in Ajit Agarkar-BCCI rift",
-      "url": "https://telanganatoday.com/rohit-sharmas-future-became-flashpoint-in-ajit-agarkar-bcci-rift",
-      "source": "Telangana Today",
-      "source_preferred": false,
-      "published_at": "2026-09-19T17:13:54+05:30",
-      "age_hours": 1.78,
+      "suggested_headline": "📰 LATEST NEWS — INDIA",
+      "title": "Nandigram Congress candidate sent to judicial custody till Oct. 3; no time to canvass for Oct. 6 bypoll",
+      "url": "https://www.thehindu.com/news/national/west-bengal/arrest-of-nandigram-congress-candidate-lawful-step-west-bengal-police/article71483957.ece",
+      "source": "The Hindu",
+      "source_preferred": true,
+      "published_at": "2026-09-19T19:52:23+05:30",
+      "age_hours": 0.46,
       "categories": [
-        "accident_casualty"
+        "police_operation",
+        "political_major",
+        "protest_major"
       ],
-      "excerpt": "Rohit Sharma’s future and differences with VVS Laxman over injured players and India A scheduling emerged as key factors behind Ajit Agarkar’s exit as chairman of selectors, with his absence from a crucial BCCI review meeting further widening the rift",
+      "excerpt": "West Bengal Police say the action was only a lawful step to comply with a standing instruction of the Election Commission. Congress holds protest march against ‘the BJP’s attempt to steal the election’",
       "corroboration": []
     },
     {
       "rank": 40,
       "class": "C",
-      "score": 66,
-      "region": "hyderabad",
-      "region_confidence": 0.4,
-      "suggested_headline": "📰 LATEST NEWS — HYDERABAD",
-      "title": "Satish Salian issues Rs 500 crore defamation notice to Aaditya Thackeray outside ‘Matoshree’",
-      "url": "https://munsifdaily.com/satish-salian-issues-rs-500-crore-defamation-notice-to/",
-      "source": "Munsif Daily",
-      "source_preferred": true,
-      "published_at": "2026-09-19T17:03:49+05:30",
-      "age_hours": 1.94,
+      "score": 68,
+      "region": "telangana",
+      "region_confidence": 1.0,
+      "suggested_headline": "📰 LATEST NEWS — TELANGANA",
+      "title": "Telangana EAGLE Force traces 60 alleged hydroponic ganja transporters",
+      "url": "https://telanganatoday.com/telangana-eagle-force-traces-60-alleged-hydroponic-ganja-transporters",
+      "source": "Telangana Today",
+      "source_preferred": false,
+      "published_at": "2026-09-19T19:50:17+05:30",
+      "age_hours": 0.5,
       "categories": [
-        "court_judgment"
+        "major_crime"
       ],
-      "excerpt": "Disha Salian's father, Satish Salian, on Saturday slapped a Rs 500 defamation notice to Shiv Sena-UBT leader Aaditya Thackeray outside the latter's Matoshree residence, over remarks made against the former as he is pursuing a fresh probe into his daughter's death case.",
+      "excerpt": "Telangana EAGLE Force has traced 60 persons in Maharashtra and Gujarat allegedly linked to a Thailand-India hydroponic ganja supply chain. Officials served them notices under the NDPS Act while investigating suppliers, transporters, distributors, recipients and financial transactions connected to the network.",
       "corroboration": []
     }
   ]
