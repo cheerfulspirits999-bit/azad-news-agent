@@ -434,8 +434,10 @@ def build_digest(cands):
             if writer.bullet_quality(lead, ur_line):
                 continue  # 17 Sep gate: no vague EN / English-fragment Urdu bullets
             picks.append((c, lead, ur_line, topic))
-    # final safety net: drop any surviving unsafe pair; a card needs >=3 clean
+    # final safety nets: unsafe pairs AND cross-card repeats (23 Sep)
     picks = [p for p in picks if not writer.bullet_quality(p[1], p[2])]
+    picks = [p for p in picks
+             if not any(_same_story(p[0]["title"], dt) for dt in done_heads if dt)]
     if len(picks) < 3:
         return None
     now = datetime.now(IST)
