@@ -1030,8 +1030,16 @@ def urdu_headline(title):
         s = _ur_clean_s(t[:m.start()])
         dat = re.search(r"\b((?:Jan|Feb|Mar|Apr|May|Jun|Jul|Aug|Sep|Oct|Nov|Dec)[a-z]*\s+\d{1,2})", t)
         when = f" {dat.group(1)} ko" if dat else ""
+        col = m.group(2).lower()
         if len(s) >= 3:
-            return _fin(f"{s} mein{when} {m.group(2).lower()} alert jaari kiya gaya.")
+            between = t[m.start(1):m.start(2)].strip()
+            if m.group(1).lower() in ("issued", "issues") and \
+               re.match(r"^(a|an|the)?\s*$", between, re.I):
+                loc = re.search(r"alert\s+(?:in|for|across)\s+([^,]+)", t[m.start(2):])
+                if loc:
+                    return _fin(f"{s} ne {_lex(loc.group(1).strip())} mein{when} "
+                                f"{col} alert jaari kiya.")
+            return _fin(f"{s} mein{when} {col} alert jaari kiya gaya.")
     m = CAN_RX.search(t)
     if m:
         s = _ur_clean_s(t[:m.start()])
