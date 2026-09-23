@@ -305,7 +305,8 @@ def build_digest(cands):
            "india": "India ki khabar",
            "world": "Duniya ki khabar"}
     pool = []
-    _skip = {"stale": 0, "casualty": 0, "class": 0, "conv": 0, "qual": 0, "dup": 0}
+    _skip = {"stale": 0, "casualty": 0, "class": 0, "conv": 0,
+             "qual": 0, "dup": 0, "fr": 0}
 
     def _collect(minscore, maxage, minC):
             for c in cands:
@@ -327,12 +328,19 @@ def build_digest(cands):
                     _skip["class"] += 1
                     continue  # 18 Sep: class C with score >=60 now rides cards
                 fr = writer.build(c)
-                if not fr or len(fr["bullets_en"]) < 3:
-                    continue
-                lead = _lead_ok(fr["bullets_en"][0])
-                lead_ur = _lead_ok(fr["bullets_ur"][0])
-                if lead_ur and len(lead_ur) > 95:
-                    lead_ur = writer.urdu_headline(c["title"]) or lead_ur
+                if fr and len(fr["bullets_en"]) >= 3:
+                    lead = _lead_ok(fr["bullets_en"][0])
+                    lead_ur = _lead_ok(fr["bullets_ur"][0])
+                    alt = writer.urdu_headline(c["title"])
+                    if alt and len(alt) <= 95 and lead and \
+                       not writer.bullet_quality(lead, alt):
+                        lead_ur = alt          # converter-first: cleaner Urdu
+                    elif lead_ur and len(lead_ur) > 95:
+                        lead_ur = alt or lead_ur
+                else:
+                    _skip["fr"] += 1   # no frame: title + converter pair is enough
+                    lead = _lead_ok(c["title"].strip())
+                    lead_ur = writer.urdu_headline(c["title"]) if lead else None
                 if not lead or not lead_ur or len(lead_ur) > 95:
                     _skip["conv"] += 1
                     continue
@@ -340,7 +348,7 @@ def build_digest(cands):
                 if not tw & {w.lower() for w in re.findall(r"[A-Za-z]{7,}", lead)}:
                     lead = _lead_ok(c["title"].strip())  # frame lost the substance
                     lead_ur = writer.urdu_headline(c["title"]) if lead else None
-                    if (not lead_ur or len(lead_ur) > 95) and lead:
+                    if (not lead_ur or len(lead_ur) > 95) and lead and fr:
                         # tier 3: keep the frame pair if its lead still shares substance
                         tw7 = {w.lower() for w in re.findall(r"[A-Za-z]{6,}", c["title"])}
                         fr7 = {w.lower() for w in re.findall(r"[A-Za-z]{6,}", fr["bullets_en"][0])}
@@ -365,79 +373,96 @@ def build_digest(cands):
                         continue  # 17 Sep gate: no vague EN / English-fragment Urdu bullets
                 pool.append((c, lead, lead_ur, topic))
 
-    # never-silent stages: relax freshness/score only if pool too small
-    for _stage, (_ms, _ma, _mc) in enumerate([(55, 12, 60), (50, 16, 55), (45, 20, 50)]):
+    # never-silent stages (owner 23 Sep): the FULL pipeline runs per stage -
+    # pool -> picks -> quality/cross-card nets - and a card ships the moment a
+    # stage yields >= 3 clean bullets. Previously the nets could drop picks
+    # below 3 AFTER the stage loop and the run went silent with pool=3.
+    def _build_picks():
+        def rank(x):  # politics first, then Class A, then score
+            c = x[0]
+            return (0 if "political_major" in c.get("categories", []) else 1,
+                    0 if c["class"] == "A" else 1, -(c.get("score") or 0))
+        picks = []
+        for reg in DIGEST_REGIONS:
+            best = sorted((x for x in pool if x[0]["region"] == reg
+                           and x not in picks), key=rank)
+            for b in best:
+                if b not in picks and \
+                   not any(_same_story(b[0]["title"], x[0]["title"]) for x in picks):
+                    picks.append(b)
+                    break
+        for x in sorted(pool, key=rank):  # fill to 5, politics leading
+            if len(picks) >= DIGEST_SIZE:
+                break
+            if x not in picks and \
+               not any(_same_story(x[0]["title"], p[0]["title"]) for p in picks):
+                picks.append(x)
+        if len(picks) < DIGEST_SIZE:  # fallback: full headline bullets with Urdu tags
+            def rank2(c):
+                return (0 if "political_major" in c.get("categories", []) else 1,
+                        0 if c["class"] == "A" else 1, -(c.get("score") or 0))
+            for c in sorted(cands, key=rank2):
+                if len(picks) >= DIGEST_SIZE:
+                    break
+                age = c.get("age_hours") or 99
+                if age > 12 or (c.get("score") or 0) < 55:
+                    continue
+                if set(c.get("categories", [])) & NO_CARD_CATS:
+                    continue
+                if NO_CARD_RX.search(c["title"]):
+                    continue
+                if re.search(r"\b(must|should)\s+[a-z]", c["title"]) and not \
+                   re.search(r"\b(says?|said|urges?|urgest?|demands?|calls?|warns?)\b",
+                             c["title"], re.I):
+                    continue
+                if any(_same_story(c["title"], dt) for dt in done_heads if dt):
+                    continue  # already rode an earlier card
+                _sc2 = c.get("score") or 0
+                if c.get("class") not in ("A", "B") and \
+                   not set(c.get("categories", [])) & MAIN_CATS and \
+                   not (c.get("source_preferred") and _sc2 >= 65) and \
+                   not _sc2 >= 60:
+                    continue
+                topic = c["region"] + "-" + slugify(c["title"])[:40]
+                if topic in done or topic in blocked:
+                    continue
+                lead = _lead_ok(c["title"].strip())
+                if not lead:
+                    continue
+                if any(lead == x[1] for x in picks) or \
+                   any(topic == x[3] for x in picks) or \
+                   any(_same_story(c["title"], x[0]["title"]) for x in picks):
+                    continue
+                ur_line = writer.urdu_headline(c["title"])
+                if not ur_line or len(ur_line) > 95:
+                    continue  # never publish a confusing Urdu mirror
+                if writer.bullet_quality(lead, ur_line):
+                    continue  # 17 Sep gate: no vague EN / English-fragment Urdu bullets
+                picks.append((c, lead, ur_line, topic))
+        # final safety nets: unsafe pairs AND cross-card repeats (23 Sep)
+        _pre = list(picks)
+        picks = [p for p in picks if not writer.bullet_quality(p[1], p[2])]
+        for p in _pre:
+            if p not in picks:
+                log(f"[digest] net-dropped(qual): {p[1][:55]} :: {p[2][:45]}")
+        _pre = list(picks)
+        picks = [p for p in picks
+                 if not any(_same_story(p[0]["title"], dt) for dt in done_heads if dt)]
+        for p in _pre:
+            if p not in picks:
+                log(f"[digest] net-dropped(repeat): {p[1][:55]}")
+        return picks
+
+    picks = []
+    for _stage, (_ms, _ma, _mc) in enumerate([(55, 12, 60), (50, 16, 55),
+                                              (45, 20, 50)]):
         _collect(_ms, _ma, _mc)
-        if len(pool) >= 3:
+        log(f"[digest] stage-{_stage}: pool={len(pool)} skips={_skip}")
+        picks = _build_picks()
+        if len(picks) >= 3:
             if _stage:
                 log(f"[digest] stage-{_stage} relaxation used (pool={len(pool)})")
             break
-    log(f"[digest] pool={len(pool)} skips={_skip}")
-    def rank(x):  # politics first, then Class A, then score
-        c = x[0]
-        return (0 if "political_major" in c.get("categories", []) else 1,
-                0 if c["class"] == "A" else 1, -(c.get("score") or 0))
-    picks = []
-    for reg in DIGEST_REGIONS:
-        best = sorted((x for x in pool if x[0]["region"] == reg
-                       and x not in picks), key=rank)
-        for b in best:
-            if b not in picks and \
-               not any(_same_story(b[0]["title"], x[0]["title"]) for x in picks):
-                picks.append(b)
-                break
-    for x in sorted(pool, key=rank):  # fill to 5, politics leading
-        if len(picks) >= DIGEST_SIZE:
-            break
-        if x not in picks and \
-           not any(_same_story(x[0]["title"], p[0]["title"]) for p in picks):
-            picks.append(x)
-    if len(picks) < DIGEST_SIZE:  # fallback: full headline bullets with Urdu tags
-        def rank2(c):
-            return (0 if "political_major" in c.get("categories", []) else 1,
-                    0 if c["class"] == "A" else 1, -(c.get("score") or 0))
-        for c in sorted(cands, key=rank2):
-            if len(picks) >= DIGEST_SIZE:
-                break
-            age = c.get("age_hours") or 99
-            if age > 12 or (c.get("score") or 0) < 55:
-                continue
-            if set(c.get("categories", [])) & NO_CARD_CATS:
-                continue
-            if NO_CARD_RX.search(c["title"]):
-                continue
-            if re.search(r"\b(must|should)\s+[a-z]", c["title"]) and not \
-               re.search(r"\b(says?|said|urges?|urgest?|demands?|calls?|warns?)\b",
-                         c["title"], re.I):
-                continue
-            if any(_same_story(c["title"], dt) for dt in done_heads if dt):
-                continue  # already rode an earlier card
-            _sc2 = c.get("score") or 0
-            if c.get("class") not in ("A", "B") and \
-               not set(c.get("categories", [])) & MAIN_CATS and \
-               not (c.get("source_preferred") and _sc2 >= 65) and \
-               not _sc2 >= 60:
-                continue
-            topic = c["region"] + "-" + slugify(c["title"])[:40]
-            if topic in done or topic in blocked:
-                continue
-            lead = _lead_ok(c["title"].strip())
-            if not lead:
-                continue
-            if any(lead == x[1] for x in picks) or \
-               any(topic == x[3] for x in picks) or \
-               any(_same_story(c["title"], x[0]["title"]) for x in picks):
-                continue
-            ur_line = writer.urdu_headline(c["title"])
-            if not ur_line or len(ur_line) > 95:
-                continue  # never publish a confusing Urdu mirror
-            if writer.bullet_quality(lead, ur_line):
-                continue  # 17 Sep gate: no vague EN / English-fragment Urdu bullets
-            picks.append((c, lead, ur_line, topic))
-    # final safety nets: unsafe pairs AND cross-card repeats (23 Sep)
-    picks = [p for p in picks if not writer.bullet_quality(p[1], p[2])]
-    picks = [p for p in picks
-             if not any(_same_story(p[0]["title"], dt) for dt in done_heads if dt)]
     if len(picks) < 3:
         return None
     now = datetime.now(IST)

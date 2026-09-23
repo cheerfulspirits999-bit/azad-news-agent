@@ -842,7 +842,9 @@ def _ur_clean_o(o):
     o = re.sub(r"\s*:\s*(report|reports|sources?|says?|study)\s*$", "", o, flags=re.I)
     o = re.sub(ATTRIB, "", o, flags=re.I)          # trailing ": CM" attribution
     o = re.sub(r",\s*(calls?|calling|says?|saying|adding|adds|claims?)\s+.*$",
-               "", o, flags=re.I)                  # trailing ", calls him ..." clause
+               "", o, flags=re.I)
+    o = re.split(r",?\s*(?:seize|seizes|seized|recover|recovers|arrest|arrests|"
+                 r"held|holds)\b", o, maxsplit=1)[0]   # cut at second verb cluster                  # trailing ", calls him ..." clause
     o = re.sub(r"^(in|at|near|to|into|from|around)\s+", "", o, flags=re.I)
     o = re.sub(r"\s+(in|during)\s+(early|morning|evening|late)\s+trade\s*$", "", o, flags=re.I)
     if len(o) > 45:
@@ -945,6 +947,9 @@ NOUN_UR = [
     ("talks", "guftugu"), ("agreement", "muahida"), ("scheme", "skim"),
     ("roads", "sadkein"), ("road", "sadak"), ("water", "paani"), ("rains", "barish"),
     ("rain", "barish"), ("floods", "seelab"), ("flood", "seelab"),
+    ("victims", "mutasireen"), ("victim", "mutasir"),
+    ("workers", "karkunon"), ("worker", "karkun"),
+    ("prayers", "duayen"), ("prayer", "dua"),
     ("warning", "intiba"), ("farmers", "kisan"), ("farmer", "kisan"),
     ("students", "talba"), ("jobs", "nokriyan"), ("job", "nokri"),
     ("prices", "qeematein"), ("price", "qeemat"), ("elections", "intekhabat"),
@@ -979,7 +984,9 @@ UR_END_OK = ("diya.", "di.", "kiya.", "ki.", "liya.", "kiye.", "kiye.", "hue.",
              "jayega.", "jayegi.", "hoga.", "hogi.", "raha.", "rahi.", "chuka.",
              "chuki.", "li.", "le.", "denge.", "chhoda.", "chhodenge.", "jeeta.",
              "jeeti.", "baar.", "shuru.", "mehdood.", "gaya.", "bache.", "pakda.",
-             "munaqid.", "mila.", "mili.", "hua.", "hui.", "kahi.", "kaha.")
+             "munaqid.", "mila.", "mili.", "hua.", "hui.", "kahi.", "kaha.",
+             "maare.", "maari.", "huye.", "huyi.", "gaye.", "karengi.",
+             "pareshan.", "barqarar.")
 
 
 _AGENT_RX = re.compile(r"\b(police|cops?|force|agency|agencies|CBI|NIA|ED|EOW|"
@@ -1126,6 +1133,17 @@ def urdu_headline(title):
         o = _reorder(_ur_postpo(_ur_clean_o(t[m.end():])))
         if len(s) >= 3 and len(o) >= 6:
             return _fin(f"{s} ne {o} ki khwahish zahir ki.")  # wanted talks, not demanded
+    m = re.search(r"\b(offers?|offered)\s+(prayers?|duas?)\b", t, re.I)
+    if m:  # "KTR offers prayers at X pandal in Hyderabad" -> proper single clause
+        s = _ur_clean_s(t[:m.start()])
+        o = _reorder(_ur_postpo(_ur_clean_o(t[m.end():])))
+        o = re.sub(r"^(?:duayen|prayers?)\s+", "", o)
+        o = re.sub(r"\s+par\b", "", o)
+        o = re.sub(r"\s+\S+ mein$", "", o)      # drop trailing "<City> mein"
+        o = o.strip(" ,")
+        if len(s) >= 3:
+            return _fin(f"{s} ne {o} mein duayen ki." if o
+                        else f"{s} ne duayen ki.")
     for rx, fn in UR_PAST:
         m = rx.search(t)
         if not m:
@@ -1244,6 +1262,8 @@ def bullet_quality(en, ur):
     # "Police arrested one accused in connection with a case."
     caps = [t for i, t in enumerate(en.replace("'", "").split())
             if i > 0 and t[:1].isupper() and t[1:2].islower()]
-    if not caps and not re.search(r"\d", en) and "'" not in en:
-        bad.append("en-no-specifics")
+    if not caps and not re.search(r"\d", en) and "'" not in en and \
+       not re.search(r"\b(two|three|four|five|six|seven|eight|nine|ten|eleven|"
+                     r"twelve|dozen|crore|lakh|percent|Rs|km)\b", en, re.I):
+        bad.append("en-no-specifics")   # number-words count as specifics
     return bad
