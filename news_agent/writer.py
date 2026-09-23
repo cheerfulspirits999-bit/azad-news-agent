@@ -721,10 +721,16 @@ UR_PAST = [
      lambda s, o: f"{s} ne {o} se mulaqat ki."),
     (re.compile(r"\b(resigned|resigns)\b", re.I),
      lambda s, o: f"{s} ne istifa de diya."),
+    (re.compile(r"\b(released|releases)\b(?=\s+(?:water|funds|payments?|money)\b)", re.I),
+     lambda s, o: f"{s} ne {o} chhoda."),
     (re.compile(r"\b(released|releases)\b", re.I),
      lambda s, o: f"{s} ne {o} ko riha kar diya."),
+    (re.compile(r"\b(held|holds)\b(?=.*\b(for|over|in connection with)\b)", re.I),
+     lambda s, o: f"{s} ko {o} ke silsile mein giraftar kiya gaya."),
     (re.compile(r"\b(held|holds)\b", re.I),
      lambda s, o: f"{s} ne {o} ka inqiad kiya."),
+    (re.compile(r"\b(released|releases)\b(?=.*\b(water|funds|payments?|money)\b)", re.I),
+     lambda s, o: f"{s} ne {o} chhoda."),
     (re.compile(r"\b(inspected|inspects)\b", re.I),
      lambda s, o: f"{s} ne {o} ka muaina kiya."),
     (re.compile(r"\b(tackled|tackles)\b", re.I),
@@ -812,7 +818,7 @@ def _ur_clean_s(s):
     # drop leading "Tag:" prefixes (e.g. "Telangana SIR: ...") - owner bans tags
     s = re.sub(r"^[A-Za-z0-9 .'\-]{2,26}\s" + _TAGWORD + r":\s*(?=[A-Za-z0-9].{12,})",
                "", s, flags=re.I)
-    return s
+    return _lex(s)
 
 
 ATTRIB = r"\s*:\s*(CM|PM|BJP|BRS|TRS|AAP|EC|CBI|NIA|MEA|ED|SP|WHO|UN|officials?)\s*$"
@@ -830,7 +836,7 @@ def _ur_clean_o(o):
     o = re.sub(r"\s+(in|during)\s+(early|morning|evening|late)\s+trade\s*$", "", o, flags=re.I)
     if len(o) > 45:
         o = o.split(", ")[0]                        # keep objects tight
-    return o.strip().rstrip(",")
+    return _lex(o.strip().rstrip(","))
 
 
 # --- v4: English prepositions left inside converter output become Urdu
@@ -845,7 +851,8 @@ _UR_STOP = ("mein", "par", "ko", "ke", "ki", "ka", "se", "ne", "aur", "hai", "ha
             "veto", "pakda", "ijazat", "shirkat", "jama", "darj", "dakhil", "vote",
             "kaam", "safar", "bhej", "dawa", "yad", "janchn", "chappe", "badhai",
             "denge", "di", "hui", "hua")
-_PREP_MAP = [("in", "mein"), ("at", "par"), ("for", "ke liye"), ("under", "ke tehat"),
+_PREP_MAP = [("in", "mein"), ("into", "mein"), ("at", "par"), ("on", "par"),
+             ("for", "ke liye"), ("under", "ke tehat"),
              ("from", "se"), ("after", "ke baad"), ("before", "se pehle"),
              ("with", "ke saath"), ("by", "ke zariye"), ("across", "mein"),
              ("during", "ke dauran"), ("over", "par")]
@@ -853,26 +860,106 @@ _PREP_TERMS = r"|".join(p for p, _ in _PREP_MAP) + r"|of|to|and|or|that|which|wh
 
 
 def _ur_postpo(line):
+    """Token-scanner: English prep + its phrase -> phrase + Urdu postposition.
+    O(n), no regex backtracking. Quoted spans masked ('Made in India')."""
     quotes = []
 
     def _mask(m):
         quotes.append(m.group(0))
-        return f"\x00{len(quotes) - 1}\x00"
+        return f"\x00%d\x00" % (len(quotes) - 1)
 
-    masked = re.sub(r"['‘][^'’]{2,40}['’]", _mask, line)
-    stop = "|".join(_UR_STOP)
-    for prep, ur in _PREP_MAP:
-        rx = re.compile(r"\b" + prep + r"\s+([A-Za-z0-9₹][A-Za-z0-9₹.'\-]*?(?:\s+[A-Za-z0-9₹.'\-]+)*?)"
-                        r"(?=\s+(?:" + stop + r"|" + _PREP_TERMS + r")|\s*,|$)")
-        masked = rx.sub(lambda m: f" {m.group(1).strip()} {ur}", masked)
-    masked = re.sub(r"\s+\band\b\s+", " aur ", masked)
-    for i, q in enumerate(quotes):
-        masked = masked.replace(f"\x00{i}\x00", q)
-    return re.sub(r"\s{2,}", " ", masked).strip()
+    masked = re.sub(r"['\u2018][^'\u2019]{2,40}['\u2019]", _mask, line)
+    stop = set(_UR_STOP)
+    preps = {p for p, _ in _PREP_MAP}
+    terms = stop | preps | {"of", "to", "and", "or", "that", "which", "who", "as"}
+    toks = masked.split()
+    out, i = [], 0
+    pmap = dict(_PREP_MAP)
+    while i < len(toks):
+        low = toks[i].lower().strip(",.;:")
+        if low in pmap and i + 1 < len(toks):
+            j = i + 1
+            phrase = []
+            while j < len(toks):
+                tl = toks[j].lower().strip(",.;:")
+                if tl in terms or toks[j].endswith(","):
+                    break
+                phrase.append(toks[j])
+                j += 1
+            if phrase:
+                out.append(" ".join(phrase))
+                out.append(pmap[low])
+                i = j
+                continue
+        out.append(toks[i])
+        i += 1
+    res = " ".join(out)
+    res = re.sub(r"\s+and\s+", " aur ", res)
+    res = re.sub(r"((?:Jan|Feb|Mar|Apr|May|Jun|Jul|Aug|Sep|Oct|Nov|Dec)[a-z]*\s+\d{1,2}) par",
+                 r"\1 ko", res)
+    for i2, q in enumerate(quotes):
+        res = res.replace("\x00%d\x00" % i2, q)
+    return re.sub(r"\s{2,}", " ", res).strip()
+
+
+NOUN_UR = [
+    ("family members", "ghar wale"), ("documents", "kagazat"), ("officials", "ohdedar"),
+    ("official", "ohdedar"), ("houses", "ghar"), ("house", "ghar"), ("adult", "baligh"),
+    ("hearings", "sunwai"), ("hearing", "sunwai"), ("petition", "darkhwast"),
+    ("plea", "darkhwast"), ("investigation", "janchn"), ("inquiry", "janchn"),
+    ("probe", "janchn"), ("raids", "chhape"), ("raid", "chhapa"), ("meeting", "baithak"),
+    ("talks", "guftugu"), ("agreement", "muahida"), ("scheme", "skim"),
+    ("roads", "sadkein"), ("road", "sadak"), ("water", "paani"), ("rains", "barish"),
+    ("rain", "barish"), ("floods", "seelab"), ("flood", "seelab"),
+    ("warning", "intiba"), ("farmers", "kisan"), ("farmer", "kisan"),
+    ("students", "talba"), ("jobs", "nokriyan"), ("job", "nokri"),
+    ("prices", "qeematein"), ("price", "qeemat"), ("elections", "intekhabat"),
+    ("election", "intekhab"), ("constituencies", "halqe"), ("constituency", "halqa"),
+    ("opposition", "appozishan"), ("weather", "mausam"), ("Government", "Sarkar"),
+    ("government", "sarkar"), ("Govt", "Sarkar"), ("govt", "sarkar"),
+    ("heavy", "bhaari"), ("light", "halki"), ("morning", "subah"),
+    ("evening", "shaam"), ("night", "raat"), ("bail", "zamanat"),
+]
+_LOAN_MASK = ["work from home", "red alert", "press meet", "chief minister",
+              "prime minister", "high court", "supreme court", "train protection"]
+
+
+def _lex(text):
+    for en, ur in _LOAN_MASK and NOUN_UR:
+        text = re.sub(r"\b" + en.replace(" ", r"\s+") + r"\b", ur, text)
+    text = re.sub(r"\b(\d+)L\b", r"\1 lakh", text)
+    text = re.sub(r"\b(\d+(?:\.\d+)?)\s*cr\b", r"\1 crore", text)
+    return text
+
+
+def _alert_tmpl(s, o):
+    col = re.search(r"\b(red|orange|yellow)\s+alert\b", o, re.I)
+    dat = re.search(r"\b((?:Jan|Feb|Mar|Apr|May|Jun|Jul|Aug|Sep|Oct|Nov|Dec)[a-z]*\s+\d{1,2})", o)
+    when = f" {dat.group(1)} ko" if dat else ""
+    return f"{s} mein{when} {col.group(1).lower()} alert jaari kiya gaya."
+
+
+_PP_TOK = {"ke", "liye", "tehat", "baad", "saath", "zariye", "mein", "par", "ko", "se"}
+
+
+def _reorder(o):
+    """Move head noun after its postposition phrase(s): Urdu word order.
+    'paani Jurala mein X ke baad' -> 'Jurala mein X ke baad paani'."""
+    toks = o.split()
+    if toks and toks[0].lower().endswith("ing"):
+        return o  # gerund-led object (caught taking...): keep as-is
+    idx = next((i for i in range(len(toks) - 1)
+                if toks[i + 1].lower() in _PP_TOK and toks[i].lower() not in _PP_TOK),
+               None)
+    if idx and idx <= 2 and len(toks) - idx >= 2:
+        return " ".join(toks[idx:] + toks[:idx])
+    return o
 
 
 def _fin(line):
-    return _ur_postpo(line)
+    line = _ur_postpo(line)
+    return re.sub(r"(ke baad|ke liye|ke saath|ke tehat|ke zariye|mein|par|se) ko ",
+                  r"\1 ", line)
 
 
 def _ger(o):
@@ -898,9 +985,16 @@ def _ijazat(s, o):
 def urdu_headline(title):
     """Rule-based Roman-Urdu rendering of a headline; None when unsure."""
     t = title.strip().rstrip(".")
+    if re.search(r"\b(must|should|could|would)\s+be\b", t, re.I):
+        return None  # modal-passive headlines: converter cannot render safely
     # drop trailing person attribution (": South Korean President") so the
     # Urdu sentence never misattributes the action
     t = re.sub(r":\s*[A-Z][a-z]+(?: [A-Z][A-Za-z'\-]+){1,4}$", "", t).strip()
+    m = re.match(r"^(?P<s>.+?)\s+(?P<v>deployed|commissioned|installed|positioned)"
+                 r"\s+(?:on|at|in|near|across)?\s*(?P<loc>.+)$", t, re.I)
+    if m and len(m.group("s")) >= 3 and len(m.group("loc")) >= 6:
+        loc = _reorder(_ur_postpo(_ur_clean_o(m.group("loc"))))
+        return _fin(f"{_ur_clean_s(m.group('s'))} {loc} par tainat kiya gaya.")
     m = UR_SAY.search(t)
     if m:
         s, clause = _ur_clean_s(t[:m.start()]), _ur_clean_o(t[m.end():])
@@ -924,12 +1018,20 @@ def urdu_headline(title):
     if m:
         s = _ur_clean_s(t[:m.start()])
         s = re.sub(r"\s+(likely|planning|plans|agrees|set|ready)$", "", s, flags=re.I)
-        o = _ur_clean_o(t[m.end():])
+        o = _reorder(_ur_postpo(_ur_clean_o(t[m.end():])))
         o = re.sub(r"\s+(today|tomorrow|this week|next week|amid [^,]*)$",
                    "", o, flags=re.I)
         key = m.group(1).lower()
         if len(s) >= 3 and len(o) >= 6:
             return _fin(f"{s} {o} {TO_FUT[key]}.")
+    m = re.search(r"\b(placed|put|puts|issued|issues)\b[^,]*?\b(red|orange|yellow)\s+alert\b",
+                  t, re.I)
+    if m:
+        s = _ur_clean_s(t[:m.start()])
+        dat = re.search(r"\b((?:Jan|Feb|Mar|Apr|May|Jun|Jul|Aug|Sep|Oct|Nov|Dec)[a-z]*\s+\d{1,2})", t)
+        when = f" {dat.group(1)} ko" if dat else ""
+        if len(s) >= 3:
+            return _fin(f"{s} mein{when} {m.group(2).lower()} alert jaari kiya gaya.")
     m = CAN_RX.search(t)
     if m:
         s = _ur_clean_s(t[:m.start()])
@@ -950,7 +1052,7 @@ def urdu_headline(title):
     m = re.search(r"\b(sought|seeks)\b", t, re.I)
     if m and re.search(r"\b(dialogue|talks|truce|peace)\b", t[m.end():], re.I):
         s = _ur_clean_s(t[:m.start()])
-        o = _ur_clean_o(t[m.end():])
+        o = _reorder(_ur_postpo(_ur_clean_o(t[m.end():])))
         if len(s) >= 3 and len(o) >= 6:
             return _fin(f"{s} ne {o} ki khwahish zahir ki.")  # wanted talks, not demanded
     for rx, fn in UR_PAST:
@@ -958,7 +1060,7 @@ def urdu_headline(title):
         if not m:
             continue
         s = _ur_clean_s(t[:m.start()])
-        o = _ur_clean_o(t[m.end():])
+        o = _reorder(_ur_postpo(_ur_clean_o(t[m.end():])))
         if len(s) < 3:
             continue
         if len(o) < 4 and rx.pattern.find("discussed") == -1:
@@ -1019,6 +1121,15 @@ UR_EN_FUNC = re.compile(
 UR_EN_VERB = re.compile(
     r"\b(hands over|monitoring|to drive|to launch|to start|to boost|seeks|"
     r"urges|says|meets|held|holds|announces|launches|visits|expresses)\b")
+UR_EN_BLACK = re.compile(
+    r"\b(into|after|before|during|while|unless|until|although|though|despite|"
+    r"allegedly|reportedly|apparently|must|been|being|within|without|against|"
+    r"across|under|over|according)\b", re.I)
+UR_ING_RX = re.compile(
+    r"\b[a-z]{2,}ing\b(?!\s*(?:kar|ke|ki|ko|se|mein|par|ne)\b)")
+UR_ING_OK = {"nothing", "something", "anything", "evening", "morning", "meeting",
+             "hearing", "building", "painting", "reading", "writing", "drawing",
+             "singing", "spring", "thing", "working"}
 VAGUE_EN = re.compile(
     r"(issued (a )?stay|gave (a )?statement|took action|expressed "
     r"(shock|concern|grief)|issued (an )?order|made (an )?announcement)\.?$")
@@ -1040,6 +1151,11 @@ def bullet_quality(en, ur):
         bad.append("ur-english-fragments")
     if UR_EN_VERB.search(ur):
         bad.append("ur-english-verb-leftover")
+    if UR_EN_BLACK.search(ur):
+        bad.append("ur-english-blacklist")
+    ings = [w for w in UR_ING_RX.findall(ur) if w.lower() not in UR_ING_OK]
+    if ings:
+        bad.append("ur-ing-leftover:" + ings[0])
     if re.search(r"\b(to|that|which|who|could|would|should|might|will|can|may|"
                  r"using|recalls|monitors|tracks|flips|after|before|with|under|"
                  r"across|during)\s+[a-z]{3,}", ur):

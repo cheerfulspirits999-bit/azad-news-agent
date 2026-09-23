@@ -86,7 +86,7 @@ def eligible(c):
 
 DAILY_REGULAR_LIMIT = 3     # owner policy: 3 regular posts a day (IST)
 MONTHLY_EMERGENCY_LIMIT = 10  # plus up to 10 emergency breaking posts a month
-DAILY_TOTAL_LIMIT = 5       # hard flood guard
+DAILY_TOTAL_LIMIT = 9       # hard flood guard (owner 23 Sep: card every 2h)
 EMERG_CATS = {"fire_explosion", "accident_casualty", "major_crime"}
 
 
@@ -211,8 +211,8 @@ def retry_pending():
     return done
 
 
-DIGEST_SLOTS = (9, 14, 19)  # IST hours: morning / afternoon / evening cards
-CARDS_PER_DAY = 3           # owner 16 Sep: 3 cards a day, 5 news each
+DIGEST_SLOTS = (8, 10, 12, 14, 16, 18, 20, 22)  # owner 23 Sep: card EVERY 2 HOURS
+CARDS_PER_DAY = 8           # 8 slots/day, 3-5 verified stories each
 DIGEST_SIZE = 5   # owner 16 Sep: every card carries 5 important news items
 DIGEST_REGIONS = ("hyderabad", "telangana", "india")
 # owner 16 Sep: NO murder/accident/casualty/fire news in cards - one small
@@ -267,62 +267,72 @@ def build_digest(cands):
            "world": "Duniya ki khabar"}
     pool = []
     _skip = {"stale": 0, "casualty": 0, "class": 0, "conv": 0, "qual": 0, "dup": 0}
-    for c in cands:
-        age = c.get("age_hours") or 99
-        if age > 12 or (c.get("score") or 0) < 55:
-            _skip["stale"] += 1
-            continue
-        if set(c.get("categories", [])) & NO_CARD_CATS:
-            _skip["casualty"] += 1
-            continue  # casualty/crime/fire news never rides the cards
-        if NO_CARD_RX.search(c["title"]):
-            _skip["casualty"] += 1
-            continue
-        _sc = c.get("score") or 0
-        if c.get("class") not in ("A", "B") and \
-           not set(c.get("categories", [])) & MAIN_CATS and \
-           not (c.get("source_preferred") and _sc >= 65) and \
-           not _sc >= 60:
-            _skip["class"] += 1
-            continue  # 18 Sep: class C with score >=60 now rides cards
-        fr = writer.build(c)
-        if not fr or len(fr["bullets_en"]) < 3:
-            continue
-        lead = _lead_ok(fr["bullets_en"][0])
-        lead_ur = _lead_ok(fr["bullets_ur"][0])
-        if lead_ur and len(lead_ur) > 95:
-            lead_ur = writer.urdu_headline(c["title"]) or lead_ur
-        if not lead or not lead_ur or len(lead_ur) > 95:
-            _skip["conv"] += 1
-            continue
-        tw = {w.lower() for w in re.findall(r"[A-Za-z]{7,}", c["title"])}
-        if not tw & {w.lower() for w in re.findall(r"[A-Za-z]{7,}", lead)}:
-            lead = _lead_ok(c["title"].strip())  # frame lost the substance
-            lead_ur = writer.urdu_headline(c["title"]) if lead else None
-            if (not lead_ur or len(lead_ur) > 95) and lead:
-                # tier 3: keep the frame pair if its lead still shares substance
-                tw7 = {w.lower() for w in re.findall(r"[A-Za-z]{6,}", c["title"])}
-                fr7 = {w.lower() for w in re.findall(r"[A-Za-z]{6,}", fr["bullets_en"][0])}
-                if len(fr["bullets_en"][0]) >= 50 and len(tw7 & fr7) >= 2:
-                    lead, lead_ur = fr["bullets_en"][0], fr["bullets_ur"][0]
-                    lead, lead_ur = _lead_ok(lead), _lead_ok(lead_ur)
-            if not lead or not lead_ur or len(lead_ur) > 95:
-                _skip["conv"] += 1
-                continue
-        topic = c["region"] + "-" + slugify(c["title"])[:40]
-        if topic in done or topic in blocked:
-            continue
-        if any(topic == x[3] for x in pool):
-            _skip["dup"] += 1
-            continue  # same story from another feed - one bullet only
-        if writer.bullet_quality(lead, lead_ur):
-            alt = writer.urdu_headline(c["title"])  # converter repair before skip
-            if alt and len(alt) <= 95 and not writer.bullet_quality(lead, alt):
-                lead_ur = alt
-            else:
-                _skip["qual"] += 1
-                continue  # 17 Sep gate: no vague EN / English-fragment Urdu bullets
-        pool.append((c, lead, lead_ur, topic))
+
+    def _collect(minscore, maxage, minC):
+            for c in cands:
+                age = c.get("age_hours") or 99
+                if age > maxage or (c.get("score") or 0) < minscore:
+                    _skip["stale"] += 1
+                    continue
+                if set(c.get("categories", [])) & NO_CARD_CATS:
+                    _skip["casualty"] += 1
+                    continue  # casualty/crime/fire news never rides the cards
+                if NO_CARD_RX.search(c["title"]):
+                    _skip["casualty"] += 1
+                    continue
+                _sc = c.get("score") or 0
+                if c.get("class") not in ("A", "B") and \
+                   not set(c.get("categories", [])) & MAIN_CATS and \
+                   not (c.get("source_preferred") and _sc >= 65) and \
+                   not _sc >= minC:
+                    _skip["class"] += 1
+                    continue  # 18 Sep: class C with score >=60 now rides cards
+                fr = writer.build(c)
+                if not fr or len(fr["bullets_en"]) < 3:
+                    continue
+                lead = _lead_ok(fr["bullets_en"][0])
+                lead_ur = _lead_ok(fr["bullets_ur"][0])
+                if lead_ur and len(lead_ur) > 95:
+                    lead_ur = writer.urdu_headline(c["title"]) or lead_ur
+                if not lead or not lead_ur or len(lead_ur) > 95:
+                    _skip["conv"] += 1
+                    continue
+                tw = {w.lower() for w in re.findall(r"[A-Za-z]{7,}", c["title"])}
+                if not tw & {w.lower() for w in re.findall(r"[A-Za-z]{7,}", lead)}:
+                    lead = _lead_ok(c["title"].strip())  # frame lost the substance
+                    lead_ur = writer.urdu_headline(c["title"]) if lead else None
+                    if (not lead_ur or len(lead_ur) > 95) and lead:
+                        # tier 3: keep the frame pair if its lead still shares substance
+                        tw7 = {w.lower() for w in re.findall(r"[A-Za-z]{6,}", c["title"])}
+                        fr7 = {w.lower() for w in re.findall(r"[A-Za-z]{6,}", fr["bullets_en"][0])}
+                        if len(fr["bullets_en"][0]) >= 50 and len(tw7 & fr7) >= 2:
+                            lead, lead_ur = fr["bullets_en"][0], fr["bullets_ur"][0]
+                            lead, lead_ur = _lead_ok(lead), _lead_ok(lead_ur)
+                    if not lead or not lead_ur or len(lead_ur) > 95:
+                        _skip["conv"] += 1
+                        continue
+                topic = c["region"] + "-" + slugify(c["title"])[:40]
+                if topic in done or topic in blocked:
+                    continue
+                if any(topic == x[3] for x in pool):
+                    _skip["dup"] += 1
+                    continue  # same story from another feed - one bullet only
+                if writer.bullet_quality(lead, lead_ur):
+                    alt = writer.urdu_headline(c["title"])  # converter repair before skip
+                    if alt and len(alt) <= 95 and not writer.bullet_quality(lead, alt):
+                        lead_ur = alt
+                    else:
+                        _skip["qual"] += 1
+                        continue  # 17 Sep gate: no vague EN / English-fragment Urdu bullets
+                pool.append((c, lead, lead_ur, topic))
+
+    # never-silent stages: relax freshness/score only if pool too small
+    for _stage, (_ms, _ma, _mc) in enumerate([(55, 12, 60), (50, 16, 55), (45, 20, 50)]):
+        _collect(_ms, _ma, _mc)
+        if len(pool) >= 3:
+            if _stage:
+                log(f"[digest] stage-{_stage} relaxation used (pool={len(pool)})")
+            break
     log(f"[digest] pool={len(pool)} skips={_skip}")
     def rank(x):  # politics first, then Class A, then score
         c = x[0]
@@ -426,7 +436,12 @@ def one_cycle():
     if (ncards < CARDS_PER_DAY
             and datetime.now(IST).hour >= DIGEST_SLOTS[ncards]
             and card_gap_ok and posted != 5):
-        dg = build_digest(cyc["candidates"])
+        try:
+            dg = build_digest(cyc["candidates"])
+        except Exception as ex:
+            import traceback
+            log("DIGEST BUILD CRASH:", ex, traceback.format_exc()[-400:])
+            dg = None
         if dg:
             log("DIGEST ready: 3 fresh stories, one card")
             rc, _ = try_publish(dg)
