@@ -731,6 +731,11 @@ UR_PAST = [
      lambda s, o: f"{s} ne {o} ko riha kar diya."),
     (re.compile(r"\b(held|holds)\b(?=.*\b(for|over|in connection with)\b)", re.I),
      lambda s, o: f"{s} ko {o} ke silsile mein giraftar kiya gaya."),
+    (re.compile(r"\b(held|holds)\b(?=.*\bin\b)", re.I),
+     lambda s, o: (f"{s} ne {o} ka inqiad kiya." if _AGENT_RX.search(s)
+                   else (f"{s} ko {o} giraftar kiya gaya." if o.rstrip().endswith(
+                       ("mein", "par", "se", "ko", "ke baad", "ke liye"))
+                         else f"{s} ko {o} ke silsile mein giraftar kiya gaya."))),
     (re.compile(r"\b(held|holds)\b", re.I),
      lambda s, o: f"{s} ne {o} ka inqiad kiya."),
     (re.compile(r"\b(released|releases)\b(?=.*\b(water|funds|payments?|money)\b)", re.I),
@@ -976,8 +981,8 @@ UR_END_OK = ("diya.", "di.", "kiya.", "ki.", "karenge.", "karega.", "kar.",
              "munaqid.", "mila.", "mili.", "hua.", "hui.", "kahi.", "kaha.")
 
 
-_AGENT_RX = re.compile(r"(police|cops?|force|agency|agencies|CBI|NIA|ED|EOW|"
-                       r"officials?|court|government|govt|department|cell|team)",
+_AGENT_RX = re.compile(r"\b(police|cops?|force|agency|agencies|CBI|NIA|ED|EOW|"
+                       r"officials?|court|government|govt|department|cell|team)\b",
                        re.I)
 
 
