@@ -1032,7 +1032,7 @@ def urdu_headline(title):
         when = f" {dat.group(1)} ko" if dat else ""
         col = m.group(2).lower()
         if len(s) >= 3:
-            between = t[m.start(1):m.start(2)].strip()
+            between = t[m.end(1):m.start(2)].strip()
             if m.group(1).lower() in ("issued", "issues") and \
                re.match(r"^(a|an|the)?\s*$", between, re.I):
                 loc = re.search(r"alert\s+(?:in|for|across)\s+([^,]+)", t[m.start(2):])
