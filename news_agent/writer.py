@@ -815,6 +815,7 @@ _TAGWORD = (r"(SIR|case|scam|row|probe|investigation|issue|matter|update|budget|
 
 def _ur_clean_s(s):
     s = CITY_TAG.sub("", s.strip()).strip().rstrip(",")
+    s = re.sub(r"\s+(to be|being|will be|would be|is|are|was|were)$", "", s, flags=re.I)
     # drop leading "Tag:" prefixes (e.g. "Telangana SIR: ...") - owner bans tags
     s = re.sub(r"^[A-Za-z0-9 .'\-]{2,26}\s" + _TAGWORD + r":\s*(?=[A-Za-z0-9].{12,})",
                "", s, flags=re.I)
@@ -877,6 +878,9 @@ def _ur_postpo(line):
     pmap = dict(_PREP_MAP)
     while i < len(toks):
         low = toks[i].lower().strip(",.;:")
+        if low == "to" and i + 1 < len(toks) and toks[i + 1][:1].isupper():
+            low = "to"
+            pmap = dict(pmap, to="ko")
         if low in pmap and i + 1 < len(toks):
             j = i + 1
             phrase = []
@@ -951,7 +955,7 @@ def _reorder(o):
     idx = next((i for i in range(len(toks) - 1)
                 if toks[i + 1].lower() in _PP_TOK and toks[i].lower() not in _PP_TOK),
                None)
-    if idx and idx <= 2 and len(toks) - idx >= 2:
+    if idx and len(toks[:idx]) <= 2 and len(toks) - idx >= 2:
         return " ".join(toks[idx:] + toks[:idx])
     return o
 
@@ -1023,6 +1027,9 @@ def urdu_headline(title):
                    "", o, flags=re.I)
         key = m.group(1).lower()
         if len(s) >= 3 and len(o) >= 6:
+            if key == "release" and \
+               re.search(r"\b(water|funds|payments?|money)\b", t[m.end():], re.I):
+                return _fin(f"{s} ne {o} chhodenge.")
             return _fin(f"{s} {o} {TO_FUT[key]}.")
     m = re.search(r"\b(placed|put|puts|issued|issues)\b[^,]*?\b(red|orange|yellow)\s+alert\b",
                   t, re.I)
@@ -1040,6 +1047,15 @@ def urdu_headline(title):
                     return _fin(f"{s} ne {_lex(loc.group(1).strip())} mein{when} "
                                 f"{col} alert jaari kiya.")
             return _fin(f"{s} mein{when} {col} alert jaari kiya gaya.")
+    m = re.search(r"\b(to be|will be|was|were|is|are)\s+held\b", t, re.I)
+    if m:
+        s = _ur_clean_s(t[:m.start()])
+        rest = t[m.end():]
+        loc = re.search(r"\b(in|at|near|across)\s+([^,]+?)(?:\s+on\s+|\s*$)", rest)
+        dat = re.search(r"\bon\s+((?:Jan|Feb|Mar|Apr|May|Jun|Jul|Aug|Sep|Oct|Nov|Dec)[a-z]*\s+\d{1,2})", rest)
+        if len(s) >= 3 and loc:
+            when = f" {dat.group(1)} ko" if dat else ""
+            return _fin(f"{s} {_lex(loc.group(2).strip())} mein{when} munaqid hoga.")
     m = CAN_RX.search(t)
     if m:
         s = _ur_clean_s(t[:m.start()])
@@ -1174,4 +1190,11 @@ def bullet_quality(en, ur):
         if ur.count(tok) >= 3:
             bad.append("ur-particle-repeat")
             break
+    # specifics rule 23 Sep: a bullet MUST name someone/something (capital
+    # beyond the first word) or carry a number - kills filler like
+    # "Police arrested one accused in connection with a case."
+    caps = [t for i, t in enumerate(en.replace("'", "").split())
+            if i > 0 and t[:1].isupper() and t[1:2].islower()]
+    if not caps and not re.search(r"\d", en) and "'" not in en:
+        bad.append("en-no-specifics")
     return bad

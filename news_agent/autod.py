@@ -178,6 +178,14 @@ def retry_pending():
         return 0
     done = 0
     blocked = retracted_slugs()
+    try:
+        _pub = json.load(open(pub, encoding="utf-8")) if os.path.exists(pub) else []
+    except Exception:
+        _pub = []
+    done_heads = []
+    for r in _pub[-40:]:
+        done_heads.append(r.get("title") or "")
+        done_heads += list(r.get("bullets_en") or [])[:2]
     for item in list(pend):
         if done >= MAX_POSTS_PER_CYCLE:
             break
@@ -279,6 +287,14 @@ def build_digest(cands):
         except Exception:
             pass
     blocked = retracted_slugs()
+    try:
+        _pub = json.load(open(pub, encoding="utf-8")) if os.path.exists(pub) else []
+    except Exception:
+        _pub = []
+    done_heads = []
+    for r in _pub[-40:]:
+        done_heads.append(r.get("title") or "")
+        done_heads += list(r.get("bullets_en") or [])[:2]
     today = datetime.now(IST).strftime("%Y-%m-%d")
     TAG = {"hyderabad": "Hyderabad ki khabar",
            "telangana": "Telangana ki khabar",
