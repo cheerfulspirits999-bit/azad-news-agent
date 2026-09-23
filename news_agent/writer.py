@@ -815,7 +815,8 @@ _TAGWORD = (r"(SIR|case|scam|row|probe|investigation|issue|matter|update|budget|
 
 def _ur_clean_s(s):
     s = CITY_TAG.sub("", s.strip()).strip().rstrip(",")
-    s = re.sub(r"\s+(to be|being|will be|would be|is|are|was|were)$", "", s, flags=re.I)
+    s = re.sub(r"\s+(to be|being|will be|would be|is|are|was|were|has|have|had)$",
+               "", s, flags=re.I)
     # drop leading "Tag:" prefixes (e.g. "Telangana SIR: ...") - owner bans tags
     s = re.sub(r"^[A-Za-z0-9 .'\-]{2,26}\s" + _TAGWORD + r":\s*(?=[A-Za-z0-9].{12,})",
                "", s, flags=re.I)
@@ -881,6 +882,20 @@ def _ur_postpo(line):
         if low == "to" and i + 1 < len(toks) and toks[i + 1][:1].isupper():
             low = "to"
             pmap = dict(pmap, to="ko")
+        if low == "of" and i + 1 < len(toks) and toks[i + 1][:1].isupper():
+            j = i + 1
+            phrase = []
+            while j < len(toks):
+                tl = toks[j].lower().strip(",.;:")
+                if tl in terms or toks[j].endswith(","):
+                    break
+                phrase.append(toks[j])
+                j += 1
+            if phrase:
+                out.append(" ".join(phrase))
+                out.append("ke")
+                i = j
+                continue
         if low in pmap and i + 1 < len(toks):
             j = i + 1
             phrase = []
@@ -943,6 +958,14 @@ def _alert_tmpl(s, o):
     return f"{s} mein{when} {col.group(1).lower()} alert jaari kiya gaya."
 
 
+UR_END_OK = ("diya.", "di.", "kiya.", "ki.", "karenge.", "karega.", "kar.",
+             "gaya.", "gayi.", "hua.", "hui.", "hai.", "hain.", "sakte.", "sakti.",
+             "jayega.", "jayegi.", "hoga.", "hogi.", "raha.", "rahi.", "chuka.",
+             "chuki.", "li.", "le.", "denge.", "chhoda.", "chhodenge.", "jeeta.",
+             "jeeti.", "baar.", "shuru.", "mehdood.", "gaya.", "bache.", "pakda.",
+             "munaqid.", "mila.", "mili.", "hua.", "hui.", "kahi.", "kaha.")
+
+
 _PP_TOK = {"ke", "liye", "tehat", "baad", "saath", "zariye", "mein", "par", "ko", "se"}
 
 
@@ -991,6 +1014,9 @@ def urdu_headline(title):
     t = title.strip().rstrip(".")
     if re.search(r"\b(must|should|could|would)\s+be\b", t, re.I):
         return None  # modal-passive headlines: converter cannot render safely
+    if re.search(r"\b(complains|complained|writes|wrote|objects|objected|"
+                 r"appeals|appealed)\s+(to|against|before)\b", t, re.I):
+        return None  # multi-verb complaint chain: unsafe to render
     # drop trailing person attribution (": South Korean President") so the
     # Urdu sentence never misattributes the action
     t = re.sub(r":\s*[A-Z][a-z]+(?: [A-Z][A-Za-z'\-]+){1,4}$", "", t).strip()
@@ -1147,7 +1173,7 @@ UR_EN_VERB = re.compile(
     r"urges|says|meets|held|holds|announces|launches|visits|expresses)\b")
 UR_EN_BLACK = re.compile(
     r"\b(into|after|before|during|while|unless|until|although|though|despite|"
-    r"allegedly|reportedly|apparently|must|been|being|within|without|against|"
+    r"allegedly|reportedly|apparently|must|been|being|within|without|against|has|have|had|of|"
     r"across|under|over|according)\b", re.I)
 UR_ING_RX = re.compile(
     r"\b[a-z]{2,}ing\b(?!\s*(?:kar|ke|ki|ko|se|mein|par|ne)\b)")
@@ -1190,6 +1216,8 @@ def bullet_quality(en, ur):
         if ur.count(tok) >= 3:
             bad.append("ur-particle-repeat")
             break
+    if not ur.strip().endswith(UR_END_OK):
+        bad.append("ur-incomplete-sentence")
     # specifics rule 23 Sep: a bullet MUST name someone/something (capital
     # beyond the first word) or carry a number - kills filler like
     # "Police arrested one accused in connection with a case."

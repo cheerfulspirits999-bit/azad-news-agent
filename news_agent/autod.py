@@ -185,7 +185,7 @@ def retry_pending():
     done_heads = []
     for r in _pub[-40:]:
         done_heads.append(r.get("title") or "")
-        done_heads += list(r.get("bullets_en") or [])[:2]
+        done_heads += list(r.get("bullets_en") or [])[:5]
     for item in list(pend):
         if done >= MAX_POSTS_PER_CYCLE:
             break
@@ -265,6 +265,10 @@ def _same_story(t1, t2):
         return False
     j = len(a & b) / len(a | b)
     long_shared = any(w in b for w in a if len(w) >= 9)
+    if re.search(r"\b(red|orange|yellow|weather)\s+alert\b", t1, re.I) and \
+       re.search(r"\b(red|orange|yellow|weather)\s+alert\b", t2, re.I) and \
+       long_shared:
+        return True  # same weather-alert event, different wording
     g1 = t1.lower().split()[0] if t1.split() else ""
     g2 = t2.lower().split()[0] if t2.split() else ""
     GENERIC = {"govt", "government", "police", "centre", "center", "court", "sc",
@@ -294,7 +298,7 @@ def build_digest(cands):
     done_heads = []
     for r in _pub[-40:]:
         done_heads.append(r.get("title") or "")
-        done_heads += list(r.get("bullets_en") or [])[:2]
+        done_heads += list(r.get("bullets_en") or [])[:5]
     today = datetime.now(IST).strftime("%Y-%m-%d")
     TAG = {"hyderabad": "Hyderabad ki khabar",
            "telangana": "Telangana ki khabar",
@@ -402,6 +406,12 @@ def build_digest(cands):
                 continue
             if NO_CARD_RX.search(c["title"]):
                 continue
+            if re.search(r"\b(must|should)\s+[a-z]", c["title"]) and not \
+               re.search(r"\b(says?|said|urges?|urgest?|demands?|calls?|warns?)\b",
+                         c["title"], re.I):
+                continue
+            if any(_same_story(c["title"], dt) for dt in done_heads if dt):
+                continue  # already rode an earlier card
             _sc2 = c.get("score") or 0
             if c.get("class") not in ("A", "B") and \
                not set(c.get("categories", [])) & MAIN_CATS and \
