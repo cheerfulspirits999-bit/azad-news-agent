@@ -113,7 +113,7 @@ def graph_post_photo(page_id, token, caption, image_path, api_version):
         body += f"--{boundary}\r\nContent-Disposition: form-data; name=\"{k}\"\r\n\r\n{v}\r\n".encode()
     with open(image_path, "rb") as f:
         data = f.read()
-    if len(data) > 8_000_000:  # FB rejects photos >= 10 MB - re-encode smaller
+    if len(data) > 2_000_000:  # keep transfers small; Zapier/FB cap is 10 MB
         import io as _io
         from PIL import Image as _Im
         buf = _io.BytesIO()
@@ -131,6 +131,26 @@ def graph_post_photo(page_id, token, caption, image_path, api_version):
         method="POST")
     with urllib.request.urlopen(req, timeout=120) as r:
         return json.load(r)
+
+
+
+def ensure_under_10mb(image_path):
+    """Owner rule 23 Sep: post ONLY if graphic < 10 MB. Downscale first."""
+    import os as _os
+    sz = _os.path.getsize(image_path)
+    if sz < 2_000_000:
+        return image_path, sz
+    import io as _io
+    from PIL import Image as _Im
+    for q in (88, 80, 72):
+        buf = _io.BytesIO()
+        _Im.open(image_path).convert("RGB").save(buf, "JPEG", quality=q, optimize=True)
+        jpg = image_path.rsplit(".", 1)[0] + f"_q{q}.jpg"
+        with open(jpg, "wb") as f:
+            f.write(buf.getvalue())
+        if buf.tell() < 2_000_000:
+            return jpg, buf.tell()
+    return jpg, buf.tell()
 
 
 def zapier_post(webhook, caption, image_path, meta):
@@ -196,6 +216,10 @@ def run(story_path, do_publish):
     os.makedirs(OUT, exist_ok=True)
     png = os.path.join(OUT, f"{slug}.png")
     path, meta = R.render(story, png)
+    path, _sz = ensure_under_10mb(path)   # owner 23 Sep: post ONLY if < 10 MB
+    if _sz >= 10_000_000:
+        print(f"REFUSED - graphic is {_sz // 1_000_000} MB (>= 10 MB). Not posted.")
+        return 6
     caption = R.caption_from(story)
     cap_path = os.path.join(OUT, f"{slug}-caption.txt")
     with open(cap_path, "w", encoding="utf-8") as f:
@@ -207,6 +231,7 @@ def run(story_path, do_publish):
     print(f"graphic : {path}  ({meta['size'][0]}x{meta['size'][1]}, "
           f"bullet font {meta['bullet_font_px']}px, logo={'yes' if meta['logo_found'] else 'MISSING'})")
     print(f"caption : {cap_path}")
+    print(f"image   : {_sz // 1024} KB - under 10 MB, cleared for Zapier/Facebook")
 
     if not do_publish:
         print("\nDRY RUN - nothing was posted. Re-run with --publish to post.")

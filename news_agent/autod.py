@@ -248,6 +248,25 @@ def _lead_ok(b):
     return None
 
 
+
+def _same_story(t1, t2):
+    """Cross-feed duplicates: same story, different headline wording."""
+    a = {w for w in re.findall(r"[a-z0-9]{5,}", t1.lower())}
+    b = {w for w in re.findall(r"[a-z0-9]{5,}", t2.lower())}
+    if not a or not b:
+        return False
+    j = len(a & b) / len(a | b)
+    long_shared = any(w in b for w in a if len(w) >= 9)
+    g1 = t1.lower().split()[0] if t1.split() else ""
+    g2 = t2.lower().split()[0] if t2.split() else ""
+    GENERIC = {"govt", "government", "police", "centre", "center", "court", "sc",
+               "supreme", "hc", "high", "imd", "eci", "ec", "union", "india", "pm",
+               "cm", "minister", "officials", "reports", "watch", "rupee", "sensex"}
+    if g1 != g2 and g1 not in GENERIC and g2 not in GENERIC:
+        return j >= 0.60  # different leading actors: same story only if near-identical
+    return j >= 0.40 or (long_shared and j >= 0.25)
+
+
 def build_digest(cands):
     """One card, three full headlines: Hyderabad + Telangana + India."""
     pub = os.path.join(STATE, "published.json")
@@ -343,13 +362,15 @@ def build_digest(cands):
         best = sorted((x for x in pool if x[0]["region"] == reg
                        and x not in picks), key=rank)
         for b in best:
-            if b not in picks:
+            if b not in picks and \
+               not any(_same_story(b[0]["title"], x[0]["title"]) for x in picks):
                 picks.append(b)
                 break
     for x in sorted(pool, key=rank):  # fill to 5, politics leading
         if len(picks) >= DIGEST_SIZE:
             break
-        if x not in picks:
+        if x not in picks and \
+           not any(_same_story(x[0]["title"], p[0]["title"]) for p in picks):
             picks.append(x)
     if len(picks) < DIGEST_SIZE:  # fallback: full headline bullets with Urdu tags
         def rank2(c):
@@ -378,7 +399,8 @@ def build_digest(cands):
             if not lead:
                 continue
             if any(lead == x[1] for x in picks) or \
-               any(topic == x[3] for x in picks):
+               any(topic == x[3] for x in picks) or \
+               any(_same_story(c["title"], x[0]["title"]) for x in picks):
                 continue
             ur_line = writer.urdu_headline(c["title"])
             if not ur_line or len(ur_line) > 95:
