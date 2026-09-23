@@ -973,7 +973,8 @@ def _alert_tmpl(s, o):
     return f"{s} mein{when} {col.group(1).lower()} alert jaari kiya gaya."
 
 
-UR_END_OK = ("diya.", "di.", "kiya.", "ki.", "karenge.", "karega.", "kar.",
+UR_END_OK = ("diya.", "di.", "kiya.", "ki.", "liya.", "kiye.", "kiye.", "hue.",
+             "karenge.", "karega.", "kar.",
              "gaya.", "gayi.", "hua.", "hui.", "hai.", "hain.", "sakte.", "sakti.",
              "jayega.", "jayegi.", "hoga.", "hogi.", "raha.", "rahi.", "chuka.",
              "chuki.", "li.", "le.", "denge.", "chhoda.", "chhodenge.", "jeeta.",
