@@ -692,9 +692,13 @@ BEGIN_RX = re.compile(r"\b(begins|began|commences|commenced)\b", re.I)
 
 UR_PAST = [
     (re.compile(r"\b(arrested|arrests|arrest)\b", re.I),
-     lambda s, o: f"{s} ne {o} ko giraftar kar liya."),
+     lambda s, o: (f"{s} ne {o} ko giraftar kar liya." if _AGENT_RX.search(s)
+                   else (f"{s} ko {o} ke silsile mein giraftar kiya gaya." if o
+                         else f"{s} ko giraftar kiya gaya."))),
     (re.compile(r"\b(seized|seizes)\b", re.I),
-     lambda s, o: f"{s} ne {o} zabt kar liya."),
+     lambda s, o: (f"{s} ne {o} zabt kar liya." if _AGENT_RX.search(s)
+                   else (f"{o} mein {s} zabt kiya gaya." if o
+                         else f"{s} zabt kiya gaya."))),
     (re.compile(r"\b(won|wins)\b", re.I),
      lambda s, o: f"{s} ne {o or 'muqable'} mein kamyabi hasil ki."),
     (re.compile(r"\b(postponed|postpones)\b", re.I),
@@ -837,7 +841,13 @@ def _ur_clean_o(o):
     o = re.sub(r"^(in|at|near|to|into|from|around)\s+", "", o, flags=re.I)
     o = re.sub(r"\s+(in|during)\s+(early|morning|evening|late)\s+trade\s*$", "", o, flags=re.I)
     if len(o) > 45:
-        o = o.split(", ")[0]                        # keep objects tight
+        parts, acc = [], ""
+        for p in o.split(", "):
+            if acc and len(acc) + 2 + len(p) > 60:
+                break
+            acc = p if not acc else acc + ", " + p
+            parts.append(p)
+        o = ", ".join(parts)
     return _lex(o.strip().rstrip(","))
 
 
@@ -964,6 +974,11 @@ UR_END_OK = ("diya.", "di.", "kiya.", "ki.", "karenge.", "karega.", "kar.",
              "chuki.", "li.", "le.", "denge.", "chhoda.", "chhodenge.", "jeeta.",
              "jeeti.", "baar.", "shuru.", "mehdood.", "gaya.", "bache.", "pakda.",
              "munaqid.", "mila.", "mili.", "hua.", "hui.", "kahi.", "kaha.")
+
+
+_AGENT_RX = re.compile(r"(police|cops?|force|agency|agencies|CBI|NIA|ED|EOW|"
+                       r"officials?|court|government|govt|department|cell|team)",
+                       re.I)
 
 
 _PP_TOK = {"ke", "liye", "tehat", "baad", "saath", "zariye", "mein", "par", "ko", "se"}
