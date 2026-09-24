@@ -180,3 +180,7 @@ RETURNING-OWNER / RETURNING-AGENT BRIEF:
   ends with the public card-PNG URL (raw.githubusercontent image/png) -> Facebook
   link-previews it as a large image under the post = themed card shows WITHOUT touching Zap.
   image_url field still sent for a future photo-action upgrade. Verified via runner logs next slot.
+- 18:2x: caption-URL fix VERIFIED via isolated /tmp/payload test of the REAL publish.run
+  path (zapier_post monkeypatched): last caption line = live card PNG URL, meta.image_url
+  set. First themed post = next card with >=3 fresh clean stories (evening slot).
+  Runner gate + dedupe confirmed working same window (18:20 run refused 1-item pool).
