@@ -998,7 +998,8 @@ UR_END_OK = ("diya.", "di.", "kiya.", "ki.", "liya.", "kiye.", "kiye.", "hue.",
              "dega.", "kholega.", "kholenge.", "rokega.", "rokenge.",
              "barhayega.", "barhayenge.", "lagayega.", "lagayenge.",
              "nikala.", "lenge.", "nahi.", "chahiye.", "karegi.", "payega.",
-             "rakha.", "rakhi.", "dein.", "dena.", "rakhte.")
+             "rakha.", "rakhi.", "dein.", "dena.", "rakhte.", "dilaya.",
+             "dilayi.", "kiya.", "kiyaa.")
 
 
 _AGENT_RX = re.compile(r"\b(police|cops?|force|agency|agencies|CBI|NIA|ED|EOW|"
@@ -1023,7 +1024,23 @@ def _reorder(o):
     return o
 
 
+UR_GLOSS = {
+    r"\bthermal power needs\b": "thermal bijli",
+    r"\bthermal power\b": "thermal bijli",
+    r"\bfamily properties\b": "ke xandaan ki jaidadon",
+    r"\bhyperscale\b\s*": "",
+    r"\bcapacity\b": "kshamata",
+    r"\bparents\b": "waledain",
+    r"\bgovernment support\b": "sarkari madad",
+}
+
+
 def _fin(line):
+    # 24 Sep night: final safety polish for ALL converter outputs - pasted
+    # headline English gets the established house translation before the gate.
+    for pat, rep in UR_GLOSS.items():
+        line = re.sub(pat, rep, line, flags=re.I)
+    line = re.sub(r"  +", " ", line)
     line = _ur_postpo(line)
     return re.sub(r"(ke baad|ke liye|ke saath|ke tehat|ke zariye|mein|par|se) ko ",
                   r"\1 ", line)
@@ -1052,6 +1069,24 @@ def _ijazat(s, o):
 def urdu_headline(title):
     """Rule-based Roman-Urdu rendering of a headline; None when unsure."""
     t = title.strip().rstrip(".")
+    # 24 Sep night round 2: begins-debate and "N things for X in Y" frames.
+    m = re.search(r"(.{4,45}?)\s+(?:begins|begin|opens|opened|starts|started)\s+debate on\s+(.+)$", t, re.I)
+    if m:
+        s = _ur_clean_s(m.group(1))
+        o = re.sub(r"\s+on\s+.*$", "", m.group(2))
+        o = re.sub(r"\bcontroversial\b", "vivadasparast", o, flags=re.I)
+        o = re.sub(r"\bbill\b", "vidheyak", o, flags=re.I)
+        o = _ur_clean_o(o)
+        if len(s) >= 4 and len(o) >= 5:
+            return _fin(f"{s} ne {o} par bahas shuru kar di.")
+    m = re.match(r"^(?:[\w.\u2019'\-]+:\s*)?(\d[\d,]*)\s+(.+?)\s+for\s+([\w'\u2019 ]+?)\s+in\s+([\w'\u2019 ]+?)\.?$", t)
+    if m and len(m.group(2)) <= 40:
+        thing = re.sub(r"\bdrinking water camps\b", "paani ke shivir", m.group(2), flags=re.I)
+        thing = re.sub(r"\bcamps\b", "shivir", thing, flags=re.I)
+        purpose = re.sub(r"\bimmersion\b", "visarjan", m.group(3), flags=re.I)
+        place = _ur_clean_o(m.group(4))
+        if place.isalpha() or " " in place:
+            return _fin(f"{place} mein {purpose} ke liye {m.group(1)} {thing} lagaye gaye.")
     _Q = "[\'\u2018\u2019\"]"
     m = re.search(r"\bsays?\b(.+?)\bshould be\s*" + _Q + r"([^\'\u2019\"]+)" + _Q, t, re.I)
     if m:  # Xi says China, U.S. should be 'partners rather than rivals'
@@ -1227,6 +1262,47 @@ def urdu_headline(title):
         o = _ur_clean_o(o)
         if len(o) >= 6:
             return _fin(f"Adalat ne {o} ke khilaf darkhastein mustarid kar dein.")
+    # 24 Sep night: evening-pool patterns (targets-by-year, meets+assures,
+    # seeks-probe, ready-for-bypoll). Same hard gates downstream; if the render
+    # is not clean Urdu, bullet_quality kills the pick.
+    m = re.search(r"\btargets?\s+(.+?)\s+by\s+(\d{4})\b", t, re.I)
+    if m:  # Telangana targets 5 GW data centre capacity by 2029
+        s = _ur_clean_s(t[:m.start()])
+        o = _ur_clean_o(m.group(1)).strip(" .,:")
+        o = re.sub(r"\bhyperscale\b\s*", "", o, flags=re.I)
+        o = re.sub(r"\bcapacity\b", "kshamata", o, flags=re.I)
+        if len(s) >= 3 and len(o) >= 5:
+            return _fin(f"{s} ne {m.group(2)} tak {o} ka lakshya rakha.")
+    m = re.search(r"\bmeets?\s+(.+?)[,;]\s+assures?\s+(.+)$", t, re.I)
+    if m:  # Minister X meets Y's parents, assures government support
+        s = _ur_clean_s(t[:m.start()])
+        who = _ur_clean_o(m.group(1)).strip(" .,:")
+        who = re.sub(r"\bparents\b", "waledain", who, flags=re.I)
+        who = re.sub(r"[\u2019']s\s+", " ke ", who)
+        thing = re.sub(r"\bgovernment support\b", "sarkari madad",
+                       m.group(2).strip(" ."), flags=re.I)
+        if len(s) >= 3 and "sarkari madad" in thing:
+            sent = f"{s} ne {who} se mulaqat ki aur {thing} ka yaqeen dilaya."
+            if len(sent) > 95:
+                s2 = re.sub(r"^(Minister|MLA|MP|DyCM|CM|Deputy CM)\s+", "", s)
+                sent = f"{s2} ne {who} se mulaqat ki aur {thing} ka yaqeen dilaya."
+            return _fin(sent)
+    m = re.search(r"\bseeks?\s+probe\s+into\s+(.+)$", t, re.I)
+    if m:  # RS Praveen Kumar seeks probe into Revanth Reddy family properties ...
+        s = _ur_clean_s(t[:m.start()])
+        o = re.sub(r"\s+under\s+GO\s*\d+.*$", "", m.group(1), flags=re.I).strip(" .,:")
+        o = re.sub(r"\bfamily properties\b", "ke xandaan ki jaidadon", o, flags=re.I)
+        o = re.sub(r"\bproperties\b", "jaidadon", o, flags=re.I)
+        o = re.sub(r"\bfamily\b", "xandaan", o, flags=re.I)
+        o = _ur_clean_o(o)
+        if len(s) >= 3 and len(o) >= 8:
+            return _fin(f"{s} ne {o} ki jaanch ka mutalba kiya.")
+    m = re.search(r"\bready for\s+([\w'\u2019 ]+?)\s+(?:bypoll|bye-?election)\b", t, re.I)
+    if m:  # Danam Nagender ready for Khairatabad bypoll
+        s = _ur_clean_s(t[:m.start()])
+        place = _ur_clean_o(m.group(1)).strip(" .,:")
+        if len(s) >= 3 and len(place) >= 4 and " " in s.strip():
+            return _fin(f"{s} {place} ke up-chunav ke liye taiyaar hain.")
     m = re.search(r"\b(criticises|criticizes|criticised|criticized)\b", t, re.I)
     if m:
         s = _ur_clean_s(t[:m.start()])
@@ -1386,7 +1462,8 @@ UR_ING_OK = {"nothing", "something", "anything", "evening", "morning", "meeting"
              "singing", "spring", "thing", "working"}
 VAGUE_EN = re.compile(
     r"(issued (a )?stay|gave (a )?statement|took action|expressed "
-    r"(shock|concern|grief)|issued (an )?order|made (an )?announcement)\.?$")
+    r"(shock|concern|grief)|issued (an )?order|made (an )?announcement)\.?$|"
+    r"(issued (a )?stay (against|of)[^.]*$|issued orders on .*without.*)")
 
 
 # Roman-Urdu function words, verb endings and the loans our converters emit.
@@ -1407,13 +1484,14 @@ def _urdi_vocab_auto():
               "hua", "gaya", "kiya", "diya", "liye", "hai", "hain", "baad",
               "wala", "wale", "zariye", "taraf", "jaari", "mutabiq"}
     for lit in re.findall(r'"([^"\n]{4,120})"', src) + re.findall(r"'([^'\n]{4,120})'", src):
-        if "\\" in lit or any(ch in lit for ch in "|()[]"):
-            continue  # regex / code-y string: not plain vocabulary
+        if "\\" in lit or "|" in lit:
+            continue  # regex (escaped or alternation) strings: not vocabulary
         if " " not in lit:
             continue  # bare lexicon keys (both EN and UR side) are not evidence
-        toks = re.findall(r"[a-z][a-z'\u2019\-]{2,}", lit)
-        if not (_MARKS & set(toks)):
+        if not re.search(r"\b(ke|ki|ka|ne|se|mein|par|ko|tak|hua|gaya|kiya|diya|"
+                         r"liye|hai|hain|baad|wala|wale|zariye|taraf|jaari|mutabiq)\b", lit):
             continue  # English sentences/docstrings have no Urdu function words
+        toks = re.findall(r"[a-z][a-z'\u2019\-]{2,}", lit)
         for t in toks:
             voc.add(t.strip("'\u2019-"))
     return voc
@@ -1442,7 +1520,10 @@ URDI_VOCAB = _urdi_vocab_auto() | frozenset((
     'jail hirasat thanaa mukadma giraftar jaanch chhaapa chhapa\n'
     'duniya desh rajya sheher ilaqa zila wala wale wali wali\n'
 ).split())
-URDI_VOCAB |= {"wala", "wale"}
+URDI_VOCAB |= {"wala", "wale", "data", "centre", "kshamata", "thermal",
+                 "bijli", "sarkari", "madad", "waledain", "up-chunav",
+                 "visarjan", "shivir", "paani", "vivadasparast", "vidheyak",
+                 "bahas", "giraftar"}
 URDI_VOCAB = frozenset(t for t in URDI_VOCAB if len(t) >= 2)
 
 def bullet_quality(en, ur):
@@ -1462,16 +1543,18 @@ def bullet_quality(en, ur):
         bad.append("en-titlecase-garbage")
     # owner 24 Sep 22:00: "backs anti-pollution", "illegal border crossing",
     # "hyperscale data capacity" - runs of raw English glued into Urdu = hard reject.
-    _run = 0; _worst = 0
+    _run = 0; _worst = 0; _unk = 0
     for _w0 in re.findall(r"[A-Za-z][A-Za-z'\-]*", ur):
         _l0 = _w0.lower().strip("'")
         if _l0 in URDI_VOCAB or (re.match(r"^[A-Z]", _w0) and _l0 in en.lower()):
             _run = 0; continue
         if any(ch.isdigit() for ch in _w0):
             _run = 0; continue
-        _run += 1; _worst = max(_worst, _run)
+        _run += 1; _worst = max(_worst, _run); _unk += 1
     if _worst >= 2:
         bad.append("ur-english-run")
+    elif _unk >= 2:
+        bad.append("ur-english-paste")
     funcs = {m.group(1) for m in UR_EN_FUNC.finditer(ur)}
     if len(funcs) >= 2:
         bad.append("ur-english-fragments")

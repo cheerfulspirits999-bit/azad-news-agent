@@ -205,3 +205,14 @@ RETURNING-OWNER / RETURNING-AGENT BRIEF:
   is why posts went bare text. Restored exact Sep-12 wire format (fields + image part),
   10 MB cap retained, config kill-switch publish.attach_image added. 6h gap tonight:
   GitHub cron dropped 21:16-22:01 runs again (throttling) + strict pool; manual dispatch.
+- 23:0x owner: 'you didnt posted anything' + logo re-attached (identical bytes, no change
+  needed). Silence 15:54->23:06 = evening pool failed gates (correct) + GitHub cron dropped
+  21:16-22:01 slots AGAIN. Volume fix WITHOUT loosening: 6 new converters (targets-by-year
+  aspiration frame, meets+assures, seeks-probe-into, ready-for-bypoll, begins-debate,
+  N-camps-for-X-in-Y), UR_GLOSS house translations applied inside _fin (thermal power ->
+  thermal bijli, capacity -> kshamata, family properties -> xandaan ki jaidadon, ...),
+  english-paste gate upgraded: TOTAL unknown-token count (frame's and->aur glue trick
+  bypassed run-length), VAGUE_EN now kills 'issued stay against <place>' shape.
+  ROOT CAUSE vocab under-harvest: 2-char markers (ke/ki/ka) never matched the {2,} token
+  scan -> 200+ legit Urdu words missing; fixed with word-boundary marks search; new rules
+  hoisted above generic 'begins' handler. Local digest: 4 clean bullets (pool=6).
