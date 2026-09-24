@@ -175,3 +175,8 @@ RETURNING-OWNER / RETURNING-AGENT BRIEF:
   court converters: "upholds X's disqualification", "rejects pleas challenging/against".
   UR_END_OK +rakha./rakhi./dein./dena./rakhte. Feeds 4->7 (Deccan/TOI/IndiaToday),
   candidate window 40->60. Local: 3 clean bullets, no dupes, no junk.
+- 16:30 owner: 'posted without logo/black theme card' -> the Zap is still text-action,
+  and Zap-side photo mapping is unreliable on owner's phone. Fix in OUR code: caption now
+  ends with the public card-PNG URL (raw.githubusercontent image/png) -> Facebook
+  link-previews it as a large image under the post = themed card shows WITHOUT touching Zap.
+  image_url field still sent for a future photo-action upgrade. Verified via runner logs next slot.

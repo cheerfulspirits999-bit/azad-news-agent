@@ -273,8 +273,8 @@ def run(story_path, do_publish):
     print(f"graphic : {path}  ({meta['size'][0]}x{meta['size'][1]}, "
           f"bullet font {meta['bullet_font_px']}px, logo={'yes' if meta['logo_found'] else 'MISSING'})")
     print(f"caption : {cap_path}")
-    print(f"image   : {_sz // 1024} KB built but NOT attached - text-only "
-          f"per owner (Zapier image error)")
+    print(f"image   : {_sz // 1024} KB built; Zapier photo step stays unused - "
+          f"card rides in caption as public image URL (FB renders preview)")
 
     if not do_publish:
         print("\nDRY RUN - nothing was posted. Re-run with --publish to post.")
@@ -304,9 +304,15 @@ def run(story_path, do_publish):
         return 4
 
     image_url = upload_card_public(png, slug) if zap else None
+    # owner 24 Sep 16:30: post must ALWAYS show the branded theme card. Zapier's
+    # photo action is flaky/unset on the owner's side, so the card image URL rides
+    # inside the message itself: Facebook link-previews the image/png directly and
+    # renders our 1200x1500 card as a big photo under the text. Works with the
+    # plain text action - no Zap edit needed by the owner.
+    cap_zap = caption + (("\n" + image_url) if image_url else "")
     try:
         if zap:
-            res = zapier_post(pub_cfg["zapier_webhook"], caption, png,
+            res = zapier_post(pub_cfg["zapier_webhook"], cap_zap, png,
                               {"slug": slug, "headline": story["headline"],
                                "region": story["region"],
                                "timestamp": story.get("timestamp", ""),
