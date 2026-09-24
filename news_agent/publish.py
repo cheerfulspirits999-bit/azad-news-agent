@@ -156,7 +156,7 @@ def ensure_under_10mb(image_path):
 def zapier_post(webhook, caption, image_path, meta):
     """Hand a finished post to Zapier (Catch Hook). Zapier holds the Facebook
     authorization for the Page; we send caption + branded PNG as multipart so
-    the Zap can attach the image file directly."""
+    text-only since 24 Sep (owner): image attachments broke the Zap."""
     boundary = "----arenaZapBoundary9x81b"
     body = b""
     fields = {"caption": caption, "slug": meta.get("slug", ""),
@@ -166,11 +166,8 @@ def zapier_post(webhook, caption, image_path, meta):
               "bullets_ur": json.dumps(meta.get("bullets_ur", []), ensure_ascii=False)}
     for k, v in fields.items():
         body += f"--{boundary}\r\nContent-Disposition: form-data; name=\"{k}\"\r\n\r\n{v}\r\n".encode()
-    with open(image_path, "rb") as f:
-        data = f.read()
-    body += (f"--{boundary}\r\nContent-Disposition: form-data; name=\"image\"; "
-             f"filename=\"{os.path.basename(image_path)}\"\r\n"
-             f"Content-Type: image/png\r\n\r\n").encode() + data + b"\r\n"
+    # owner 24 Sep: "dont try to post pic as it is causing zapier error" -
+    # the image part is no longer attached; Zapier receives text fields only.
     body += f"--{boundary}--\r\n".encode()
     req = urllib.request.Request(
         webhook, data=body,
@@ -231,7 +228,8 @@ def run(story_path, do_publish):
     print(f"graphic : {path}  ({meta['size'][0]}x{meta['size'][1]}, "
           f"bullet font {meta['bullet_font_px']}px, logo={'yes' if meta['logo_found'] else 'MISSING'})")
     print(f"caption : {cap_path}")
-    print(f"image   : {_sz // 1024} KB - under 10 MB, cleared for Zapier/Facebook")
+    print(f"image   : {_sz // 1024} KB built but NOT attached - text-only "
+          f"per owner (Zapier image error)")
 
     if not do_publish:
         print("\nDRY RUN - nothing was posted. Re-run with --publish to post.")

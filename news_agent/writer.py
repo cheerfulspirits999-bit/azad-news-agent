@@ -1262,6 +1262,34 @@ def bullet_quality(en, ur):
     # "Police arrested one accused in connection with a case."
     caps = [t for i, t in enumerate(en.replace("'", "").split())
             if i > 0 and t[:1].isupper() and t[1:2].islower()]
+    # owner 24 Sep: "ne" and "mein" used in the wrong places - hard gate.
+    # 1) "ne" glued after a quoted English word:  "Trump 'clearly' ne ..."
+    if re.search(r"['\u2018\u2019\"]\s+ne\b", ur) or \
+       re.search(r",[\s]*ne\b", ur):
+        bad.append("ur-ne-after-quote-or-comma")
+    # 2) inanimate subject + agentive "ne": "Barish ne ..." / "Report ne ..."
+    m = re.search(r"^(.+?)\s+ne\b", ur)
+    if m:
+        # only the words right before "ne" (last comma segment, last 3 tokens):
+        # "...gir gaya, ohdedaron ne" must NOT flag on the earlier "barish".
+        _subj = " ".join(re.split(r"[,;]", m.group(1))[-1].strip().lower().split()[-3:])
+        if re.search(r"\b(barish|toofan|aandhi|report|mamla|waqia|qanoon|bill|"
+                     r"faisla|faisle|deal|agreement|video|film|movie|meeting|"
+                     r"baithak|conference|scheme|yojana|plan|notice|circular|"
+                     r"document|file|website|app|phone|machine|system|train|"
+                     r"gaadi|bus|building|bayan|hukm|order)\b", _subj):
+            bad.append("ur-ne-inanimate")
+    # 3) agentive verb inside a "mein/me" clause with no passive marker:
+    #    "Court mein kaha" must be "Court ne kaha" or "mein kaha gaya".
+    for _sent in re.split(r"[.!?]", ur):
+        if re.search(r"\b(mein|me)\b", _sent) and \
+           re.search(r"\b(kaha|bataya|sunaya|elaan kiya?|manzuri di|"
+                     r"ijazat di|hidaayat di|dawa kiya|maang ki|waada kiya)\b",
+                     _sent) and \
+           not re.search(r"\b(gaya|gayi|gaye|giya|kiya gaya|gaye|jaari|hui|hua)\b",
+                         _sent):
+            bad.append("ur-mein-agentive")
+            break
     if not caps and not re.search(r"\d", en) and "'" not in en and \
        not re.search(r"\b(two|three|four|five|six|seven|eight|nine|ten|eleven|"
                      r"twelve|dozen|crore|lakh|percent|Rs|km)\b", en, re.I):
