@@ -293,6 +293,25 @@ def _same_story(t1, t2):
     A2 = set(re.findall(r"[a-z]{5,}", t2.lower()))
     if (C1 & C2) - GENERIC_CAP and (A1 & A2 & ACTION):
         return True
+    # owner 23 Sep "same news 2 bullets": two headlines about the SAME person
+    # (shared 2-word full name) inside the same legal saga are one story even
+    # when the verbs differ ("SC upholds X's disqualification" +
+    # "BRS welcomes SC order on X, dares him...").
+    LEGAL = ("court", "supreme", "judgment", "verdict", "order", "bench",
+             "judge", "plea", "pleas", "disqualification", "hearing", "ruling")
+    bg1 = set(map(str.lower, re.findall(
+        r"\b[A-Z][a-z]{2,} [A-Z][a-z]{2,}\b", t1)))
+    bg2 = set(map(str.lower, re.findall(
+        r"\b[A-Z][a-z]{2,} [A-Z][a-z]{2,}\b", t2)))
+    _GEN_BIG = {"high court", "supreme court", "new delhi", "central gov",
+                "state gov", "andhra pradesh", "madhya pradesh", "chief min",
+                "prime min", "press conf", "social med"}
+    _distinct_bg = {b for b in (bg1 & bg2)
+                    if b not in _GEN_BIG and
+                    not all(w in {g.lower() for g in GENERIC_CAP}
+                            for w in b.split())}
+    if _distinct_bg and (A1 & set(LEGAL)) and (A2 & set(LEGAL)):
+        return True
     g1 = t1.lower().split()[0] if t1.split() else ""
     g2 = t2.lower().split()[0] if t2.split() else ""
     GENERIC = {"govt", "government", "police", "centre", "center", "court", "sc",

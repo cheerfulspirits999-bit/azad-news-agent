@@ -994,7 +994,8 @@ UR_END_OK = ("diya.", "di.", "kiya.", "ki.", "liya.", "kiye.", "kiye.", "hue.",
              "hongi.", "muntaqid.", "iftetah.", "kharidega.", "kharidenge.",
              "dega.", "kholega.", "kholenge.", "rokega.", "rokenge.",
              "barhayega.", "barhayenge.", "lagayega.", "lagayenge.",
-             "nikala.", "lenge.", "nahi.", "chahiye.", "karegi.", "payega.")
+             "nikala.", "lenge.", "nahi.", "chahiye.", "karegi.", "payega.",
+             "rakha.", "rakhi.", "dein.", "dena.", "rakhte.")
 
 
 _AGENT_RX = re.compile(r"\b(police|cops?|force|agency|agencies|CBI|NIA|ED|EOW|"
@@ -1210,6 +1211,19 @@ def urdu_headline(title):
             if re.search(r"\b(mein|par|se|tak)$", o):
                 return _fin(f"{s} ne {o} daura kiya.")
             return _fin(f"{s} ne {o} ka daura kiya.")
+# 24 Sep: court-cluster patterns (SC upholds X's disqualification / rejects pleas)
+    _QQ = "[\\'\u2019]"
+    m = re.search("\\b(?:upholds|upheld)\\s+(.+?)" + _QQ + "s\\s+disqualification", t, re.I)
+    if m and re.search("\\b(SC|Supreme Court|High Court|HC)\\b", t[:m.start()], re.I):
+        who = _ur_clean_s(m.group(1))
+        if len(who) >= 4 and " " in who.strip():
+            return _fin(f"Adalat ne {who} ki ahliyat khatm karne ka faisla barkarar rakha.")
+    m = re.search("\\brejects?\\s+pleas?\\s+(?:challenging|against)\\s+(.+)$", t, re.I)
+    if m and re.search("\\b(SC|Supreme Court|High Court|HC)\\b", t[:m.start()], re.I):
+        o = re.sub("([\\w\\-\\.]+)" + _QQ + "s\\s+", "\\1 ke ", m.group(1)).strip(" .,:;")
+        o = _ur_clean_o(o)
+        if len(o) >= 6:
+            return _fin(f"Adalat ne {o} ke khilaf darkhastein mustarid kar dein.")
     m = re.search(r"\b(criticises|criticizes|criticised|criticized)\b", t, re.I)
     if m:
         s = _ur_clean_s(t[:m.start()])
@@ -1357,7 +1371,8 @@ UR_EN_VERB = re.compile(
 UR_EN_BLACK = re.compile(
     r"\b(into|after|before|during|while|unless|until|although|though|despite|"
     r"allegedly|reportedly|apparently|must|been|being|within|without|against|has|have|had|of|"
-    r"across|under|over|according|between|among|amid)\b", re.I)
+    r"across|under|over|according|between|among|amid|flood|suspected"
+    r"|adulterated|paste|catchment|waterlogged|adulteration|diverted)\b", re.I)
 UR_ING_RX = re.compile(
     r"\b[a-z]{2,}ing\b(?!\s*(?:kar|ke|ki|ko|se|mein|par|ne)\b)")
 UR_ING_OK = {"nothing", "something", "anything", "evening", "morning", "meeting",
@@ -1379,6 +1394,10 @@ def bullet_quality(en, ur):
         bad.append("vague-english")
     if len(en.strip()) < 50 and not re.search(r"\d", en):
         bad.append("thin-english")
+    _tk = [t for t in en.split() if re.fullmatch(r"[A-Za-z][A-Za-z'\-]*", t)]
+    _tc = sum(1 for t in _tk[1:] if t[0].isupper())
+    if len(_tk) >= 6 and _tc / max(1, len(_tk) - 1) > 0.65:
+        bad.append("en-titlecase-garbage")
     funcs = {m.group(1) for m in UR_EN_FUNC.finditer(ur)}
     if len(funcs) >= 2:
         bad.append("ur-english-fragments")
@@ -1415,7 +1434,7 @@ def bullet_quality(en, ur):
         bad.append("ur-passive-mismatch")
     # postposition pile-up: "se ka elan", "mein ka", "par ka" - broken grammar
     if re.search(r"\b(se|mein|me|par|ko)\s+ka\s+(elan|elann|matlab|zikr)\b", ur) or \
-       re.search(r"\b(se|mein|par)\s+ka\b", ur):
+       re.search(r"\b(se|mein|me|par|ko|tak)\s+(ka|ki|ke)\b", ur):
         bad.append("ur-postposition-stack")
     # date order mangling: "16 ko December par" / "16 December par ko"
     if re.search(r"\b\d{1,2}\s+ko\s+[A-Z][a-z]+\b", ur):

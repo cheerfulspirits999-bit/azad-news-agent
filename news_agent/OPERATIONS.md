@@ -167,3 +167,11 @@ RETURNING-OWNER / RETURNING-AGENT BRIEF:
 - Feeds +3 (Deccan Chronicle, TOI top+india, India Today national) => corroboration pool
   much richer; candidate window 40 -> 60. Secrets: AGENT_PAT added (repo Actions secret).
 - Verified locally: upload_card_public E2E (raw URL 200); monitor parses all 7 feeds.
+- Gate hardening after local repro (same pool, junk-free): en-titlecase-garbage (raw
+  TITLE-CASE headline used as bullet rejected), postposition stack now catches
+  "mein ke(liye)", UR english-noun blacklist +flood/suspected/adulterated/paste/
+  catchment/waterlogged/adulteration/diverted, _same_story: shared distinctive FULL NAME +
+  both titles in LEGAL context = one story (SC-upholds-Danam + BRS-welcomes-order deduped),
+  court converters: "upholds X's disqualification", "rejects pleas challenging/against".
+  UR_END_OK +rakha./rakhi./dein./dena./rakhte. Feeds 4->7 (Deccan/TOI/IndiaToday),
+  candidate window 40->60. Local: 3 clean bullets, no dupes, no junk.
