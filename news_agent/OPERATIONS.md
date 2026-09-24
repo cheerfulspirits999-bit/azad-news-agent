@@ -184,3 +184,18 @@ RETURNING-OWNER / RETURNING-AGENT BRIEF:
   path (zapier_post monkeypatched): last caption line = live card PNG URL, meta.image_url
   set. First themed post = next card with >=3 fresh clean stories (evening slot).
   Runner gate + dedupe confirmed working same window (18:20 run refused 1-item pool).
+
+## Round 8 (24 Sep ~22:10 IST) — permanent fix: no links, no pasted English, no fact-inversion
+- CAPTION: github image URL REMOVED permanently (owner: no links, ever). Image attaches
+  only via native photo route (Zap photo step w/ image_url, or Graph Page token).
+- writer.py: targets/targeted NO LONGER map to "tankeed" (aspiration != criticism =
+  fact inversion; same class as 18 Sep sanctions trap). "tanqeed" spelling unified.
+- New hard gates: ur-english-run (>=2 consecutive lowercase tokens that are neither
+  generator vocabulary nor names shared with the EN bullet), ur-english-verb-leftover
+  expanded (backs/seized/arrested/injured/... single verb = reject), postposition
+  stack now also catches "ko tak".
+- URDI_VOCAB auto-extracted at import from this file's UR string literals (self-
+  updating: every converter word is whitelisted automatically; raw-headline paste is not).
+- Verified: all 4 junk bullets from owner's 21:01 screenshot REJECT; all owner-approved
+  house-style bullets PASS; digest tonight correctly pool=0-clean (strict>volume).
+- Retract digest-2026-09-24-2101 (FB delete list item #9); quota gate reset to 20:10.

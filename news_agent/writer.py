@@ -766,8 +766,11 @@ UR_PAST = [
      lambda s, o: f"{s} ne {o} ka tabadla kiya."),
     (re.compile(r"\b(assured|assures|promised|promises)\b", re.I),
      lambda s, o: f"{s} ne {o} ka yaqeen dilaya."),
-    (re.compile(r"\b(criticised|criticises|slammed|slams|targeted|targets)\b", re.I),
-     lambda s, o: f"{s} ne {o} par tankeed ki."),
+    # NOTE: "targeted|targets" removed 24 Sep (same class as the 18 Sep sanctions
+    # trap): "State targets 5 GW capacity" is an ASPIRATION, not criticism -
+    # mapping it to "par tankeed ki" inverts the fact. Better no auto frame.
+    (re.compile(r"\b(criticised|criticises|slammed|slams)\b", re.I),
+     lambda s, o: f"{s} ne {o} par tanqeed ki."),
     (re.compile(r"\b(questioned|questions)\b", re.I),
      lambda s, o: f"{s} ne {o} par sawal uthaye."),
     (re.compile(r"\b(celebrated|celebrates|marked|marks|honoured|honours)\b", re.I),
@@ -1367,7 +1370,10 @@ UR_EN_FUNC = re.compile(
     r"was|were|has|have|had|will|their|its|this|that)\b")
 UR_EN_VERB = re.compile(
     r"\b(hands over|monitoring|to drive|to launch|to start|to boost|seeks|"
-    r"urges|says|meets|held|holds|announces|launches|visits|expresses)\b")
+    r"urges|says|meets|held|holds|announces|launches|visits|expresses|"
+    r"backs|targets|targeted|seized|arrested|arrests|detained|booked|"
+    r"raided|injured|killed|missing|diverted|damaged|waterlogged|"
+    r"dismissed|rejects|upholds|reinstated|suspended)\b")
 UR_EN_BLACK = re.compile(
     r"\b(into|after|before|during|while|unless|until|although|though|despite|"
     r"allegedly|reportedly|apparently|must|been|being|within|without|against|has|have|had|of|"
@@ -1382,6 +1388,62 @@ VAGUE_EN = re.compile(
     r"(issued (a )?stay|gave (a )?statement|took action|expressed "
     r"(shock|concern|grief)|issued (an )?order|made (an )?announcement)\.?$")
 
+
+# Roman-Urdu function words, verb endings and the loans our converters emit.
+# A lowercase Latin word NOT in this set (and not a name that also appears in
+# the EN bullet) is pasted English. Owner-approved house-style loans are IN
+# deliberately (march, alert, data, centre, thermal, power, coal, jail ...).
+def _urdi_vocab_auto():
+    """Words the GENERATOR itself can emit: every lowercase word inside the
+    non-regex string literals of this file (UR f-string templates, lexicon
+    values). A UR bullet word that is lowercase, NOT in this set, and not a
+    capitalized name shared with the EN bullet = pasted raw-headline English."""
+    voc = set()
+    try:
+        src = open(__file__, encoding="utf-8").read()
+    except Exception:
+        return voc
+    _MARKS = {"ke", "ki", "ka", "ne", "se", "mein", "par", "ko", "tak",
+              "hua", "gaya", "kiya", "diya", "liye", "hai", "hain", "baad",
+              "wala", "wale", "zariye", "taraf", "jaari", "mutabiq"}
+    for lit in re.findall(r'"([^"\n]{4,120})"', src) + re.findall(r"'([^'\n]{4,120})'", src):
+        if "\\" in lit or any(ch in lit for ch in "|()[]"):
+            continue  # regex / code-y string: not plain vocabulary
+        if " " not in lit:
+            continue  # bare lexicon keys (both EN and UR side) are not evidence
+        toks = re.findall(r"[a-z][a-z'\u2019\-]{2,}", lit)
+        if not (_MARKS & set(toks)):
+            continue  # English sentences/docstrings have no Urdu function words
+        for t in toks:
+            voc.add(t.strip("'\u2019-"))
+    return voc
+
+URDI_VOCAB = _urdi_vocab_auto() | frozenset((
+    'ke ki ka ne se mein me par ko tak bhi aur ya ki ek do teen char paanch panch\n'
+    'sab har kuch kuchh bohat bahut zyada thoda kam abhi ab kal aaj\n'
+    'hai hain tha thi the honge hongi hoga hogi ho hona hue hua hui\n'
+    'raha rahi rahe rehta rehti rehte\n'
+    'karta karti kare karte karne karna kiya kia kiya karwaya karvaaya karaya\n'
+    'kardiya karliya karde kar dein diya de de dein denge dega degi di\n'
+    'liya lee liye lenge lega legi le lein leti lete leta\n'
+    'chahiye chahiyen chahie nahi na haan\n'
+    'kaha kehte bolti bola bole bolen kahi kahoon\n'
+    'jaata jaati jate jaa jaana jaane jayega jayenge jayegi aaya aayi aaye\n'
+    'gaya gayi gaya gaye hua hua\n'
+    'paa paata paati paate paya payi milta milti mile mili milenge mila mili\n'
+    'liye baad pehle sath saath dwara zariye taraf karke hote karte tak\n'
+    'elan aghaaz shuru shuruat muntaqid iftitah tabadla yaqeen dilaya\n'
+    'sawal sawal uthaye manaya gaya jaari jari rawaigi bharosa\n'
+    'khatm ahliyat faisla faisle barkarar mustarid darkhast darkhastein\n'
+    'intekhab intekhabat hami samarthan\n'
+    'kharidega kharidenge kharida bechta\n'
+    'sarkar adalat police muntri mantri neta neta vidyarthi kisan naujawan\n'
+    'nojawan khatoon shakhs aadmi bachcha bacche buzurg log mahila\n'
+    'jail hirasat thanaa mukadma giraftar jaanch chhaapa chhapa\n'
+    'duniya desh rajya sheher ilaqa zila wala wale wali wali\n'
+).split())
+URDI_VOCAB |= {"wala", "wale"}
+URDI_VOCAB = frozenset(t for t in URDI_VOCAB if len(t) >= 2)
 
 def bullet_quality(en, ur):
     """Return list of reasons the EN/UR bullet pair is NOT publishable."""
@@ -1398,6 +1460,18 @@ def bullet_quality(en, ur):
     _tc = sum(1 for t in _tk[1:] if t[0].isupper())
     if len(_tk) >= 6 and _tc / max(1, len(_tk) - 1) > 0.65:
         bad.append("en-titlecase-garbage")
+    # owner 24 Sep 22:00: "backs anti-pollution", "illegal border crossing",
+    # "hyperscale data capacity" - runs of raw English glued into Urdu = hard reject.
+    _run = 0; _worst = 0
+    for _w0 in re.findall(r"[A-Za-z][A-Za-z'\-]*", ur):
+        _l0 = _w0.lower().strip("'")
+        if _l0 in URDI_VOCAB or (re.match(r"^[A-Z]", _w0) and _l0 in en.lower()):
+            _run = 0; continue
+        if any(ch.isdigit() for ch in _w0):
+            _run = 0; continue
+        _run += 1; _worst = max(_worst, _run)
+    if _worst >= 2:
+        bad.append("ur-english-run")
     funcs = {m.group(1) for m in UR_EN_FUNC.finditer(ur)}
     if len(funcs) >= 2:
         bad.append("ur-english-fragments")
@@ -1434,7 +1508,8 @@ def bullet_quality(en, ur):
         bad.append("ur-passive-mismatch")
     # postposition pile-up: "se ka elan", "mein ka", "par ka" - broken grammar
     if re.search(r"\b(se|mein|me|par|ko)\s+ka\s+(elan|elann|matlab|zikr)\b", ur) or \
-       re.search(r"\b(se|mein|me|par|ko|tak)\s+(ka|ki|ke)\b", ur):
+       re.search(r"\b(se|mein|me|par|ko|tak)\s+(ka|ki|ke)\b", ur) or \
+       re.search(r"\b(ko|tak|se|mein|par)\s+(ko|tak)\b", ur):
         bad.append("ur-postposition-stack")
     # date order mangling: "16 ko December par" / "16 December par ko"
     if re.search(r"\b\d{1,2}\s+ko\s+[A-Z][a-z]+\b", ur):
