@@ -986,7 +986,8 @@ UR_END_OK = ("diya.", "di.", "kiya.", "ki.", "liya.", "kiye.", "kiye.", "hue.",
              "jeeti.", "baar.", "shuru.", "mehdood.", "gaya.", "bache.", "pakda.",
              "munaqid.", "mila.", "mili.", "hua.", "hui.", "kahi.", "kaha.",
              "maare.", "maari.", "huye.", "huyi.", "gaye.", "karengi.",
-             "pareshan.", "barqarar.")
+             "pareshan.", "barqarar.", "jayenge.", "jayengi.", "honge.",
+             "hongi.", "muntaqid.", "iftetah.")
 
 
 _AGENT_RX = re.compile(r"\b(police|cops?|force|agency|agencies|CBI|NIA|ED|EOW|"
@@ -1133,6 +1134,31 @@ def urdu_headline(title):
         o = _reorder(_ur_postpo(_ur_clean_o(t[m.end():])))
         if len(s) >= 3 and len(o) >= 6:
             return _fin(f"{s} ne {o} ki khwahish zahir ki.")  # wanted talks, not demanded
+    m = re.search(r"\bto be (signed)\b", t, re.I)
+    if m:  # passive infinitive - Urdu MUST be passive future, never "X ne ..."
+        # other "to be X-ed" verbs fall through: the ur-passive-mismatch gate
+        # rejects agentive Urdu for them, so nothing broken can ship.
+        _pv = {"signed": "dastakhat kiye jayenge",
+               "launched": "shuru kiya jayega",
+               "held": "muntaqid hoga",
+               "announced": "ka elan kiya jayega",
+               "released": "jaari kiya jayega",
+               "inaugurated": "ka iftetah kiya jayega",
+               "completed": "mukammal hoga",
+               "finished": "mukammal hoga"}[m.group(1).lower()]
+        s = _ur_clean_s(t[:m.start()])
+        o = t[m.end():].strip()
+        dm = re.search(r"\bon\s+(\w+)\s+(\d{1,2})\b", o)   # on December 16
+        when = f"{dm.group(2)} {dm.group(1)} ko" if dm else ""
+        loc = re.sub(r"\bon\s+\w+\s+\d{1,2}\b", "", o).strip(" ,.")
+        loc = _reorder(_ur_postpo(_ur_clean_o(loc))) if loc else ""
+        if len(s) >= 3:
+            out = s
+            if when:
+                out += f" par {when}" if _pv.startswith("dastakhat") else f" {when}"
+            if loc:
+                out += f" {loc}"
+            return _fin(f"{out} {_pv}.")
     m = re.search(r"\b(offers?|offered)\s+(prayers?|duas?)\b", t, re.I)
     if m:  # "KTR offers prayers at X pandal in Hyderabad" -> proper single clause
         s = _ur_clean_s(t[:m.start()])
@@ -1213,7 +1239,7 @@ UR_EN_VERB = re.compile(
 UR_EN_BLACK = re.compile(
     r"\b(into|after|before|during|while|unless|until|although|though|despite|"
     r"allegedly|reportedly|apparently|must|been|being|within|without|against|has|have|had|of|"
-    r"across|under|over|according)\b", re.I)
+    r"across|under|over|according|between|among|amid)\b", re.I)
 UR_ING_RX = re.compile(
     r"\b[a-z]{2,}ing\b(?!\s*(?:kar|ke|ki|ko|se|mein|par|ne)\b)")
 UR_ING_OK = {"nothing", "something", "anything", "evening", "morning", "meeting",
@@ -1262,6 +1288,20 @@ def bullet_quality(en, ur):
     # "Police arrested one accused in connection with a case."
     caps = [t for i, t in enumerate(en.replace("'", "").split())
             if i > 0 and t[:1].isupper() and t[1:2].islower()]
+    # owner 24 Sep: "to be signed/launched..." EN with agentive Urdu = reject
+    if re.search(r"\bto be (signed|launched|held|announced|released|inaugurated|"
+                 r"completed|finished)\b", en, re.I) and \
+       re.search(r"\bne\b", ur) and \
+       not re.search(r"\b(jayega|jayenge|jayegi|hoga|honge|hogi|wale hain|"
+                     r"wala hai|kiya jaye|gaya|gaye)\b", ur):
+        bad.append("ur-passive-mismatch")
+    # postposition pile-up: "se ka elan", "mein ka", "par ka" - broken grammar
+    if re.search(r"\b(se|mein|me|par|ko)\s+ka\s+(elan|elann|matlab|zikr)\b", ur) or \
+       re.search(r"\b(se|mein|par)\s+ka\b", ur):
+        bad.append("ur-postposition-stack")
+    # date order mangling: "16 ko December par" / "16 December par ko"
+    if re.search(r"\b\d{1,2}\s+ko\s+[A-Z][a-z]+\b", ur):
+        bad.append("ur-date-order")
     # owner 24 Sep: "ne" and "mein" used in the wrong places - hard gate.
     # 1) "ne" glued after a quoted English word:  "Trump 'clearly' ne ..."
     if re.search(r"['\u2018\u2019\"]\s+ne\b", ur) or \
@@ -1277,7 +1317,11 @@ def bullet_quality(en, ur):
                      r"faisla|faisle|deal|agreement|video|film|movie|meeting|"
                      r"baithak|conference|scheme|yojana|plan|notice|circular|"
                      r"document|file|website|app|phone|machine|system|train|"
-                     r"gaadi|bus|building|bayan|hukm|order)\b", _subj):
+                     r"gaadi|bus|building|bayan|hukm|order|fta|pact|treaty|"
+                     r"accord|contract|mou|notification|flyover|bridge|pul|"
+                     r"road|sadak|metro|station|airport|hospital|school|"
+                     r"college|factory|plant|dam|temple|masjid|church|mandir|"
+                     r"stadium|tower|statue|monument)\b", _subj):
             bad.append("ur-ne-inanimate")
     # 3) agentive verb inside a "mein/me" clause with no passive marker:
     #    "Court mein kaha" must be "Court ne kaha" or "mein kaha gaya".
