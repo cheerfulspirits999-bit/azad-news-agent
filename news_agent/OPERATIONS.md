@@ -199,3 +199,9 @@ RETURNING-OWNER / RETURNING-AGENT BRIEF:
 - Verified: all 4 junk bullets from owner's 21:01 screenshot REJECT; all owner-approved
   house-style bullets PASS; digest tonight correctly pool=0-clean (strict>volume).
 - Retract digest-2026-09-24-2101 (FB delete list item #9); quota gate reset to 20:10.
+- 22:5x owner screenshot (Sep 12 post): THE theme = themed PNG ATTACHED to the post.
+  Root insight: Sep-12..Sep-23 payloads were multipart WITH 'image' file part and the
+  Zap posted images fine; the 24-Sep text-only switch (after owner's Zap-error report)
+  is why posts went bare text. Restored exact Sep-12 wire format (fields + image part),
+  10 MB cap retained, config kill-switch publish.attach_image added. 6h gap tonight:
+  GitHub cron dropped 21:16-22:01 runs again (throttling) + strict pool; manual dispatch.

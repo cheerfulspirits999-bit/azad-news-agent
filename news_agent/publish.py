@@ -199,7 +199,8 @@ def upload_card_public(png_path, slug):
 def zapier_post(webhook, caption, image_path, meta):
     """Hand a finished post to Zapier (Catch Hook). Zapier holds the Facebook
     authorization for the Page; we send caption + branded PNG as multipart so
-    text-only since 24 Sep (owner): image attachments broke the Zap."""
+    the Zap's photo step attaches the themed card (Sep-12 house style,
+    restored 24 Sep night at owner's explicit request)."""
     boundary = "----arenaZapBoundary9x81b"
     body = b""
     fields = {"caption": caption, "slug": meta.get("slug", ""),
@@ -211,8 +212,17 @@ def zapier_post(webhook, caption, image_path, meta):
               "has_image": "yes" if meta.get("image_url") else "no"}
     for k, v in fields.items():
         body += f"--{boundary}\r\nContent-Disposition: form-data; name=\"{k}\"\r\n\r\n{v}\r\n".encode()
-    # owner 24 Sep: "dont try to post pic as it is causing zapier error" -
-    # the image part is no longer attached; Zapier receives text fields only.
+    # owner 24 Sep 22:45 (screenshot of Sep-12 post): "this was our theme follow
+    # this only" - the themed card rode the post as the attached PNG, and the
+    # pre-24-Sep payload (fields + "image" file part) posted it fine for weeks.
+    # Restored exactly. The 10 MB hard cap upstream still protects the Zap.
+    if image_path:
+        # config publish.attach_image=false sends fields only (Zap-panic kill-switch)
+        with open(image_path, "rb") as f:
+            _img = f.read()
+        body += (f"--{boundary}\r\nContent-Disposition: form-data; name=\"image\"; "
+                 f"filename=\"{os.path.basename(image_path)}\"\r\n"
+                 f"Content-Type: image/png\r\n\r\n").encode() + _img + b"\r\n"
     body += f"--{boundary}--\r\n".encode()
     req = urllib.request.Request(
         webhook, data=body,
@@ -273,8 +283,8 @@ def run(story_path, do_publish):
     print(f"graphic : {path}  ({meta['size'][0]}x{meta['size'][1]}, "
           f"bullet font {meta['bullet_font_px']}px, logo={'yes' if meta['logo_found'] else 'MISSING'})")
     print(f"caption : {cap_path}")
-    print(f"image   : {_sz // 1024} KB built; NOT attached and NO link in the "
-          f"caption (owner 24 Sep) - awaits native photo route")
+    print(f"image   : {_sz // 1024} KB attached as multipart 'image' part "
+          f"(Sep-12 theme restored); no links in caption")
 
     if not do_publish:
         print("\nDRY RUN - nothing was posted. Re-run with --publish to post.")
@@ -310,7 +320,8 @@ def run(story_path, do_publish):
     cap_zap = caption
     try:
         if zap:
-            res = zapier_post(pub_cfg["zapier_webhook"], cap_zap, png,
+            _att = png if pub_cfg.get("attach_image", True) else ""
+            res = zapier_post(pub_cfg["zapier_webhook"], cap_zap, _att,
                               {"slug": slug, "headline": story["headline"],
                                "region": story["region"],
                                "timestamp": story.get("timestamp", ""),
