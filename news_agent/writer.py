@@ -823,6 +823,7 @@ _TAGWORD = (r"(SIR|case|scam|row|probe|investigation|issue|matter|update|budget|
 
 
 def _ur_clean_s(s):
+    s = re.sub(r"([A-Za-z]+)[\'\u2019]s\b", r"\1 ke", s)   # China's Xi -> China ke Xi
     s = CITY_TAG.sub("", s.strip()).strip().rstrip(",")
     s = re.sub(r"\s+(to be|being|will be|would be|is|are|was|were|has|have|had)$",
                "", s, flags=re.I)
@@ -948,6 +949,9 @@ NOUN_UR = [
     ("roads", "sadkein"), ("road", "sadak"), ("water", "paani"), ("rains", "barish"),
     ("rain", "barish"), ("floods", "seelab"), ("flood", "seelab"),
     ("victims", "mutasireen"), ("victim", "mutasir"),
+    ("drought-prone", "sokha se mutasir"), ("drought", "sokha"),
+    ("regions", "ilaqon"), ("region", "ilaqa"), ("own", "apni"),
+    ("youth", "nojawan"), ("removal", "barkhtarfi"), ("Assembly", "Assembly"),
     ("workers", "karkunon"), ("worker", "karkun"),
     ("prayers", "duayen"), ("prayer", "dua"),
     ("warning", "intiba"), ("farmers", "kisan"), ("farmer", "kisan"),
@@ -987,7 +991,10 @@ UR_END_OK = ("diya.", "di.", "kiya.", "ki.", "liya.", "kiye.", "kiye.", "hue.",
              "munaqid.", "mila.", "mili.", "hua.", "hui.", "kahi.", "kaha.",
              "maare.", "maari.", "huye.", "huyi.", "gaye.", "karengi.",
              "pareshan.", "barqarar.", "jayenge.", "jayengi.", "honge.",
-             "hongi.", "muntaqid.", "iftetah.")
+             "hongi.", "muntaqid.", "iftetah.", "kharidega.", "kharidenge.",
+             "dega.", "kholega.", "kholenge.", "rokega.", "rokenge.",
+             "barhayega.", "barhayenge.", "lagayega.", "lagayenge.",
+             "nikala.", "lenge.", "nahi.", "chahiye.", "karegi.", "payega.")
 
 
 _AGENT_RX = re.compile(r"\b(police|cops?|force|agency|agencies|CBI|NIA|ED|EOW|"
@@ -1041,6 +1048,20 @@ def _ijazat(s, o):
 def urdu_headline(title):
     """Rule-based Roman-Urdu rendering of a headline; None when unsure."""
     t = title.strip().rstrip(".")
+    _Q = "[\'\u2018\u2019\"]"
+    m = re.search(r"\bsays?\b(.+?)\bshould be\s*" + _Q + r"([^\'\u2019\"]+)" + _Q, t, re.I)
+    if m:  # Xi says China, U.S. should be 'partners rather than rivals'
+        s = _ur_clean_s(t[:m.start()])
+        inner = m.group(2)
+        X, _, Y = inner.partition(" rather than ")
+        parts = [p.strip() for p in re.split(r",| and ", m.group(1).strip().strip(","))
+                 if p.strip()]
+        parts = ["America" if p.upper().strip(".") in ("U.S", "US", "USA", "U.S.A")
+                 else p for p in parts]
+        if len(s) >= 2 and len(parts) >= 2 and X:
+            tail = (f"'{X.strip()}' hona chahiye, '{Y.strip()}' nahi." if Y
+                    else f"'{X.strip()}' hona chahiye.")
+            return _fin(f"{s} ne kaha ke {parts[0]} aur {parts[1]} ko " + tail)
     if re.search(r"\b(must|should|could|would)\s+be\b", t, re.I):
         return None  # modal-passive headlines: converter cannot render safely
     if re.search(r"\b(complains|complained|writes|wrote|objects|objected|"
@@ -1134,6 +1155,103 @@ def urdu_headline(title):
         o = _reorder(_ur_postpo(_ur_clean_o(t[m.end():])))
         if len(s) >= 3 and len(o) >= 6:
             return _fin(f"{s} ne {o} ki khwahish zahir ki.")  # wanted talks, not demanded
+    # ---- owner 24 Sep converter expansion (morning pool was 2/40) ----
+    m = re.search(r"\b(arrives?|arrived|reaches?|reached)\s+(in|at)\b", t, re.I)
+    if m:  # China's Xi arrives in Washington -> ... Washington pohanch gaye.
+        s = _ur_clean_s(t[:m.start()])
+        rest = t[m.end():]
+        loc = re.split(r",|;|\bkicking\b|\bgets?\b|\bfor\b|\bwhere\b", rest)[0]
+        loc = _ur_clean_o(loc.strip()).strip(" ,.")
+        if len(s) >= 2 and loc:
+            return _fin(f"{s} {loc} pohanch gaye.")
+    m = re.search(r"\bcalls?\s+for\b(.+?)\b(removal|resignation|probe|ban|"
+                  r"inquiry|enquiry)\b", t, re.I)
+    if m:  # Opposition calls for CEC Gyanesh Kumar's removal
+        s = _ur_clean_s(t[:m.start()])
+        target = re.sub(r"[\'\u2019]s\b", "", m.group(1)).strip(" ,")
+        target = _ur_clean_o(target)
+        noun = {"removal": "barkhtarfi", "resignation": "istifa", "probe": "janach",
+                "ban": "pabandi", "inquiry": "janach", "enquiry": "janach"}[m.group(2).lower()]
+        if len(s) >= 3 and target:
+            if noun == "istifa":
+                return _fin(f"{s} ne {target} ke istife ka mutalba kiya.")
+            return _fin(f"{s} ne {target} ki {noun} ka mutalba kiya.")
+    m = re.search(r"\b(alert|warning)\s+issued\s+for\b", t, re.I)
+    if m:  # Red warning alert issued for 4 Odisha districts
+        s = _ur_clean_s(t[:m.start()])
+        rest = t[m.end():]
+        loc = re.split(r"\bas\b|,|;", rest)[0].strip()
+        loc = _ur_clean_o(loc).strip(" ,.")
+        if s and loc:
+            return _fin(f"{loc} ke liye {s.lower()} jaari kiya gaya.")
+    m = re.search(r"\bmarch(?:es|ed|ing)?\s+(?:to|towards)\b", t, re.I)
+    if m:  # Odisha youth march to Assembly protesting errors in textbooks
+        s = _ur_clean_s(t[:m.start()])
+        rest = t[m.end():]
+        dest = re.split(r",|\bprotesting\b|\bover\b|\bagainst\b|\bfor\b", rest)[0]
+        dest = _ur_clean_o(dest.strip()).strip(" ,.")
+        if len(s) >= 3 and dest:
+            return _fin(f"{s} ne {dest} tak march nikala.")
+    m = re.search(r"\bcloses?\b", t, re.I)
+    if m and re.match(r"(?i)^(heavy|torrential|spell)?\s*(rain|rainfall|snow|storm|wind)",
+                      t.strip()):
+        s = _ur_clean_s(t[:m.start()])       # bhaari barish
+        s = re.sub(r"(?i)^heavy\s+", "bhaari ", s)
+        s = re.sub(r"(?i)^torrential\s+", "tez ", s)
+        o = _reorder(_ur_postpo(_ur_clean_o(t[m.end():])))
+        if len(s) >= 3 and o:
+            return _fin(f"{o} ko {s} ki wajah se band kar diya gaya.")
+    m = re.search(r"\bvisit(?:s|ed)?\b", t, re.I)
+    if m and not re.search(r"\bto visit\b|\b(arrives?|arrived|reaches?|reached)\b",
+                           t, re.I):
+        s = _ur_clean_s(t[:m.start()])
+        o = _reorder(_ur_postpo(_ur_clean_o(t[m.end():])))
+        if len(s) >= 3 and o:
+            if re.search(r"\b(mein|par|se|tak)$", o):
+                return _fin(f"{s} ne {o} daura kiya.")
+            return _fin(f"{s} ne {o} ka daura kiya.")
+    m = re.search(r"\b(criticises|criticizes|criticised|criticized)\b", t, re.I)
+    if m:
+        s = _ur_clean_s(t[:m.start()])
+        rest = t[m.end():]
+        o = re.sub(r"\bfor\b.*$", "", rest)      # drop "for distributing ..." reason
+        o = _ur_clean_o(o).strip(" ,.")
+        if len(s) >= 3 and o:
+            return _fin(f"{s} ne {o} par tanqeed ki.")
+    _FUT = {"procure": "kharidega", "buy": "kharidega", "purchase": "kharidega",
+            "build": "tameer karega", "start": "shuru karega", "begin": "shuru karega",
+            "resume": "shuru karega", "hold": "muntaqid karega", "sign": "par dastakhat karega",
+            "meet": "se mulaqat karega", "launch": "ka aghaaz karega",
+            "open": "kholega", "ban": "par pabandi lagayega", "impose": "laagu karega",
+            "raise": "barhayega", "give": "dega", "provide": "faraham karega",
+            "release": "jaari karega", "appoint": "taqarrur karega",
+            "transfer": "tabadil karega", "review": "ka jaiza lega",
+            "seek": "talab karega", "allow": "ko ijazat dega", "stop": "rokega",
+            "probe": "ki janach karega", "set up": "qaim karega"}
+    m = re.search(r"\bto (" + "|".join(re.escape(k) for k in _FUT) + r")\b", t, re.I)
+    if m and re.search(r"\b(urges?|says?|asks?|wants?|calls?|plans?|seeks?|aims?|"
+                       r"hopes?|warns?|tells?|orders?|advises?|likely|set|ready|"
+                       r"agree[sd]?|refuses?|refused)\b", t[:m.start()], re.I):
+        m = None  # embedded infinitive ("urge firms TO ALLOW") - main verb rules
+    if m:  # Telangana to procure coal from Coal India ...
+        key = m.group(1).lower()
+        s = _ur_clean_s(t[:m.start()])
+        o = _ur_postpo(_ur_clean_o(t[m.end():]))
+        fv = _FUT[key]
+        if len(s) >= 3:
+            if re.search(r"\b(aur|and)\b", s):
+                fv = re.sub(r"(karega|kharidega|dega|kholega|rokega|lagayega|"
+                            r"barhayega|jaari karega|tameer karega|qaim karega|"
+                            r"muntaqid karega|taqarrur karega|tabadil karega|"
+                            r"laagu karega|faraham karega|lega|karega)$",
+                            lambda x: x.group(0).replace("ega", "enge").replace("arega", "arenge").replace("lega", "lenge"), fv)
+            if o:
+                if key == "sign":
+                    return _fin(f"{s} {o} {fv}.")
+                if key in ("allow", "meet", "probe", "review", "ban"):
+                    return _fin(f"{s} {o} {fv}.")
+                return _fin(f"{s} {o} {fv}.")
+            return _fin(f"{s} {fv}.")
     m = re.search(r"\bto be (signed)\b", t, re.I)
     if m:  # passive infinitive - Urdu MUST be passive future, never "X ne ..."
         # other "to be X-ed" verbs fall through: the ur-passive-mismatch gate

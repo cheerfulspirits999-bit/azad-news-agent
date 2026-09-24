@@ -269,6 +269,30 @@ def _same_story(t1, t2):
        re.search(r"\b(red|orange|yellow|weather)\s+alert\b", t2, re.I) and \
        long_shared:
         return True  # same weather-alert event, different wording
+    # owner 23/24 Sep: same story must never appear as two bullets - two
+    # headlines sharing a distinctive name AND the same event verb are one story
+    # (fixes "Xi arrives in US" + "Xi arrives in Washington" riding one card).
+    C1 = set(re.findall(r"[A-Z][A-Za-z'\u2019\-]{1,}", t1))
+    C2 = set(re.findall(r"[A-Z][A-Za-z'\u2019\-]{1,}", t2))
+    GENERIC_CAP = {"India", "China", "US", "UK", "Pakistan", "Russia", "Ukraine",
+                   "Israel", "Gaza", "Telangana", "Hyderabad", "Delhi", "Mumbai",
+                   "Congress", "BJP", "TDP", "YSRCP", "BRS", "SP", "AAP", "Police",
+                   "Court", "Supreme", "High", "Minister", "Government", "Centre",
+                   "Assembly", "Parliament", "State", "City", "District", "Red",
+                   "Orange", "Heavy", "Two", "Three", "Four", "Five", "One", "New",
+                   "Top", "Big", "After", "Amid", "Odisha", "Bihar", "Kerala",
+                   "Maharashtra", "Karnataka", "Andhra", "Pradesh"}
+    ACTION = {"arrives", "arrived", "reaches", "reached", "wins", "won", "seizes",
+              "seized", "arrests", "arrested", "resigns", "resigned", "signs",
+              "signed", "launches", "launched", "visits", "visited", "meets",
+              "met", "dies", "died", "announces", "announced", "appoints",
+              "appointed", "sacks", "sacked", "protests", "protested", "marches",
+              "marched", "closes", "closed", "opens", "opened", "suspends",
+              "suspended", "kills", "killed", "holds", "held"}
+    A1 = set(re.findall(r"[a-z]{5,}", t1.lower()))
+    A2 = set(re.findall(r"[a-z]{5,}", t2.lower()))
+    if (C1 & C2) - GENERIC_CAP and (A1 & A2 & ACTION):
+        return True
     g1 = t1.lower().split()[0] if t1.split() else ""
     g2 = t2.lower().split()[0] if t2.split() else ""
     GENERIC = {"govt", "government", "police", "centre", "center", "court", "sc",
