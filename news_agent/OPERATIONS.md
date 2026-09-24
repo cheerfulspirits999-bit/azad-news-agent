@@ -140,3 +140,16 @@ RETURNING-OWNER / RETURNING-AGENT BRIEF:
 - autod: net-drop telemetry (`net-dropped(qual|repeat): …`).
 - REPO TRUTH: remote is cheerfulspirits999-bit/azad-news-agent (private).
 - Card digest-2026-09-23-2225 published 22:25 IST (3 bullets, 131 KB, Zapier 200).
+
+## Round 6 (24 Sep 09:46 IST) — owner feedback: text-only + ne/mein grammar
+- publish.py: Zapier handoff is TEXT-ONLY (no image part) — owner: pic causes Zap error.
+- writer.py gates: ur-ne-after-quote-or-comma, ur-ne-inanimate (FTA/flyover/dam/rain/...),
+  ur-mein-agentive, ur-passive-mismatch (to-be-signed), ur-postposition-stack ("se ka elan"),
+  ur-date-order ("16 ko December").
+- Converters added: arrives-in, calls-for-removal/resignation/probe, alert-issued-for,
+  march-to, rain-closes (passive), visit, criticises, to-infinitive future (main-verb guard),
+  quoted says-should-be (before modal guard), to-be-signed passive future, possessive 's -> ke.
+- autod.py: same-story rule now catches shared distinctive name + shared event verb
+  ("Xi arrives in US" vs "Xi arrives in Washington" = one story).
+- Retracted digest-2026-09-24-0923 (ne-defects) -> FB delete list now 8 posts.
+- Card digest-2026-09-24-0946 published: 5 bullets, text-only, all gates green.
