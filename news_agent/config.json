@@ -58,6 +58,34 @@
    "urls": [
     "https://newsmeter.in/feed"
    ]
+  },
+  {
+   "name": "Deccan Chronicle",
+   "source_key": "deccan",
+   "region_priority": 1,
+   "preferred": false,
+   "urls": [
+    "https://www.deccanchronicle.com/rss_feed/online/"
+   ]
+  },
+  {
+   "name": "Times of India",
+   "source_key": "toi",
+   "region_priority": 2,
+   "preferred": false,
+   "urls": [
+    "https://timesofindia.indiatimes.com/rssfeedstopstories.cms",
+    "https://timesofindia.indiatimes.com/rssfeeds/-2128936835.cms"
+   ]
+  },
+  {
+   "name": "India Today",
+   "source_key": "indiatoday",
+   "region_priority": 2,
+   "preferred": false,
+   "urls": [
+    "https://www.indiatoday.in/rss/1206578"
+   ]
   }
  ],
  "rules": {

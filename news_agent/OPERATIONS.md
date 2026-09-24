@@ -153,3 +153,17 @@ RETURNING-OWNER / RETURNING-AGENT BRIEF:
   ("Xi arrives in US" vs "Xi arrives in Washington" = one story).
 - Retracted digest-2026-09-24-0923 (ne-defects) -> FB delete list now 8 posts.
 - Card digest-2026-09-24-0946 published: 5 bullets, text-only, all gates green.
+
+## Round 7 (24 Sep ~15:45 IST) — themed card via public image URL; pool widened
+- Owner: cards must SHOW the branded graphic again; text-only was the wrong reading of
+  "dont try to post pic" (the real Zapier fault: photo step needs an IMAGE URL, not a file).
+- New: publish.upload_card_public() PUTs the card PNG to the PUBLIC repo
+  cheerfulspirits999-bit/azad-daily-cards (cards/<slug>.png) via AGENT_PAT secret;
+  Zapier payload carries image_url + has_image. Fallback: if upload fails, a pre-baked
+  branded cards/fallback.png URL is used so the Zapier photo field is NEVER empty
+  (empty field = Zap errors = auto-pause risk).
+- Needle: Zap Facebook action must switch from Create Text Post to Create Photo Post,
+  Image from code-step field image_url. Owner guided click-by-click.
+- Feeds +3 (Deccan Chronicle, TOI top+india, India Today national) => corroboration pool
+  much richer; candidate window 40 -> 60. Secrets: AGENT_PAT added (repo Actions secret).
+- Verified locally: upload_card_public E2E (raw URL 200); monitor parses all 7 feeds.

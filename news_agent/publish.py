@@ -153,6 +153,49 @@ def ensure_under_10mb(image_path):
     return jpg, buf.tell()
 
 
+def upload_card_public(png_path, slug):
+    """Owner 24 Sep: Zapier's Facebook photo step errors on uploaded FILES -
+    it needs a public image URL. We publish the branded card PNG to the
+    azad-daily-cards repo (public) and hand Zapier the raw URL.
+    Returns the URL, or None on any failure (posting then stays text-only;
+    it must never block a card)."""
+    FALLBACK = ("https://raw.githubusercontent.com/cheerfulspirits999-bit/"
+                "azad-daily-cards/main/cards/fallback.png")
+    tok = os.environ.get("AGENT_PAT")
+    if not tok:
+        print("cards upload: AGENT_PAT secret not set - fallback card URL")
+        return FALLBACK
+    import base64 as _b64
+    name = "".join(ch if ch.isalnum() or ch in ".-_" else "-" for ch in slug) + ".png"
+    api = ("https://api.github.com/repos/cheerfulspirits999-bit/azad-daily-cards"
+           f"/contents/cards/{name}")
+    hdr = {"Authorization": "Bearer " + tok, "Accept": "application/vnd.github+json"}
+    sha = None
+    try:
+        req = urllib.request.Request(api + "?ref=main", headers=hdr)
+        with urllib.request.urlopen(req, timeout=30) as r:
+            sha = json.load(r).get("sha")
+    except Exception:
+        pass
+    try:
+        with open(png_path, "rb") as f:
+            content = _b64.b64encode(f.read()).decode()
+        body = {"message": f"card {slug}", "content": content, "branch": "main"}
+        if sha:
+            body["sha"] = sha
+        req = urllib.request.Request(api, data=json.dumps(body).encode(),
+                                     headers=hdr, method="PUT")
+        with urllib.request.urlopen(req, timeout=120) as r:
+            r.read()
+        raw = ("https://raw.githubusercontent.com/cheerfulspirits999-bit/"
+               f"azad-daily-cards/main/cards/{name}")
+        print(f"cards upload: public URL live -> {raw}")
+        return raw
+    except Exception as e:
+        print(f"cards upload FAILED (fallback card URL): {e}")
+        return FALLBACK
+
+
 def zapier_post(webhook, caption, image_path, meta):
     """Hand a finished post to Zapier (Catch Hook). Zapier holds the Facebook
     authorization for the Page; we send caption + branded PNG as multipart so
@@ -163,7 +206,9 @@ def zapier_post(webhook, caption, image_path, meta):
               "headline": meta.get("headline", ""), "region": meta.get("region", ""),
               "timestamp": meta.get("timestamp", ""),
               "bullets_en": json.dumps(meta.get("bullets_en", []), ensure_ascii=False),
-              "bullets_ur": json.dumps(meta.get("bullets_ur", []), ensure_ascii=False)}
+              "bullets_ur": json.dumps(meta.get("bullets_ur", []), ensure_ascii=False),
+              "image_url": meta.get("image_url") or "",
+              "has_image": "yes" if meta.get("image_url") else "no"}
     for k, v in fields.items():
         body += f"--{boundary}\r\nContent-Disposition: form-data; name=\"{k}\"\r\n\r\n{v}\r\n".encode()
     # owner 24 Sep: "dont try to post pic as it is causing zapier error" -
@@ -258,6 +303,7 @@ def run(story_path, do_publish):
             save(pp, pend)
         return 4
 
+    image_url = upload_card_public(png, slug) if zap else None
     try:
         if zap:
             res = zapier_post(pub_cfg["zapier_webhook"], caption, png,
@@ -265,7 +311,8 @@ def run(story_path, do_publish):
                                "region": story["region"],
                                "timestamp": story.get("timestamp", ""),
                                "bullets_en": story["bullets_en"],
-                               "bullets_ur": story["bullets_ur"]})
+                               "bullets_ur": story["bullets_ur"],
+                               "image_url": image_url or ""})
             post_id = res.get("id") or res.get("post_id") or f"zapier:{slug}"
             print(f"\nHanded to Zapier webhook: {pub_cfg['zapier_webhook'][:48]}...")
         else:
@@ -289,6 +336,7 @@ def run(story_path, do_publish):
         "bullets_en": story["bullets_en"],
         "bullets_ur": story["bullets_ur"],
         "image": png,
+        "image_url": image_url or "",
         "fb_post_id": post_id,
     }
     p = os.path.join(STATE, "published.json")

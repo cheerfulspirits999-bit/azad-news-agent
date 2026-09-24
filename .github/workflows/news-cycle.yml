@@ -24,6 +24,7 @@ jobs:
         env:
           FB_PAGE_TOKEN: ${{ secrets.FB_PAGE_TOKEN }}
           FB_PAGE_ID: ${{ secrets.FB_PAGE_ID }}
+          AGENT_PAT: ${{ secrets.AGENT_PAT }}
         run: python3 news_agent/autod.py --once
       - name: commit agent memory
         if: always()
