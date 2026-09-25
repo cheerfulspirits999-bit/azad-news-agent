@@ -1,17 +1,345 @@
 {
-  "cycle_id": "20260925-0721",
-  "generated_at": "2026-09-25T07:21:36.752899+05:30",
+  "cycle_id": "20260925-1142",
+  "generated_at": "2026-09-25T11:42:15.406384+05:30",
   "feeds_ok": 7,
   "errors": [],
   "counts": {
-    "fetched": 1480,
-    "fresh": 75,
+    "fetched": 1488,
+    "fresh": 209,
     "candidates": 60,
     "duplicates_suppressed": 0
   },
   "candidates": [
     {
       "rank": 1,
+      "class": "A",
+      "score": 80,
+      "region": "hyderabad",
+      "region_confidence": 1.0,
+      "suggested_headline": "📰 LATEST NEWS — HYDERABAD",
+      "title": "Hyderabad: Youth dies after coming under tusker truck during Ganesh immersion",
+      "url": "https://telanganatoday.com/hyderabad-youth-dies-after-coming-under-tusker-truck-during-ganesh-immersion",
+      "source": "Telangana Today",
+      "source_preferred": false,
+      "published_at": "2026-09-25T11:03:30+05:30",
+      "age_hours": 0.65,
+      "categories": [
+        "accident_casualty",
+        "police_operation"
+      ],
+      "excerpt": "A youth died after accidentally coming under the wheels of a tusker truck near Khairatabad Junction during the Ganesh immersion procession on Friday. Police detained the truck driver and launched an investigation into the circumstances surrounding the incident.",
+      "corroboration": []
+    },
+    {
+      "rank": 2,
+      "class": "A",
+      "score": 78,
+      "region": "telangana",
+      "region_confidence": 1.0,
+      "suggested_headline": "📰 LATEST NEWS — TELANGANA",
+      "title": "TG-TMARS: Telangana sets up special body for road, rail safety",
+      "url": "https://www.siasat.com/tg-tmars-telangana-sets-up-special-body-for-road-rail-safety-3547852/",
+      "source": "Munsif Daily",
+      "source_preferred": true,
+      "published_at": "2026-09-25T08:45:28+05:30",
+      "age_hours": 2.95,
+      "categories": [
+        "accident_casualty"
+      ],
+      "excerpt": "Hyderabad: The Telangana government on Thursday, September 24, established a specialised bureau of state police for traffic management, highway patrolling, road crash investigation, and for the policing of the safety of rail travel within the state. The Telangana Traffic Management, Road and Rail Safety Bureau (TG-TMARS) would be headed by an Additional DGP or Inspector …",
+      "corroboration": []
+    },
+    {
+      "rank": 3,
+      "class": "C",
+      "score": 77,
+      "region": "india",
+      "region_confidence": 0.4,
+      "suggested_headline": "📰 LATEST NEWS — INDIA",
+      "title": "Major landslide strikes Sikkim's Rimbi, several houses damaged",
+      "url": "https://www.thehindu.com/news/national/sikkim/major-landslide-strikes-sikkims-rimbi-several-houses-damaged/article71507276.ece",
+      "source": "The Hindu",
+      "source_preferred": true,
+      "published_at": "2026-09-25T11:24:46+05:30",
+      "age_hours": 0.29,
+      "categories": [
+        "disaster_weather",
+        "political_major"
+      ],
+      "excerpt": "Sikkim Chief Minister Prem Singh Tamang said he had directed local authorities to remain on high alert, closely monitor the situation, and take all necessary measures to ensure the safety of residents",
+      "corroboration": []
+    },
+    {
+      "rank": 4,
+      "class": "C",
+      "score": 76,
+      "region": "india",
+      "region_confidence": 1.0,
+      "suggested_headline": "📰 LATEST NEWS — INDIA",
+      "title": "Air India Express flight carrying two Andhra Ministers to Bhogapuram diverted to Nagpur in bad weather",
+      "url": "https://www.thehindu.com/news/national/andhra-pradesh/air-india-express-flight-carrying-two-andhra-ministers-to-bhogapuram-diverted-to-nagpur-in-bad-weather/article71501689.ece",
+      "source": "The Hindu",
+      "source_preferred": true,
+      "published_at": "2026-09-25T11:05:48+05:30",
+      "age_hours": 0.61,
+      "categories": [
+        "disaster_weather"
+      ],
+      "excerpt": "The Air India Express flight from Vijayawada circled near the airport before landing in Nagpur more than two hours late on the night the deep depression approached the coast",
+      "corroboration": []
+    },
+    {
+      "rank": 5,
+      "class": "C",
+      "score": 76,
+      "region": "hyderabad",
+      "region_confidence": 1.0,
+      "suggested_headline": "📰 LATEST NEWS — HYDERABAD",
+      "title": "Cockroaches to expired food: TG SAFE inspects 15 establishments, suspends FSSAI licences of 8",
+      "url": "https://newsmeter.in/hyderabad/cockroaches-to-expired-food-tg-safe-inspects-15-establishments-suspends-fssai-licences-of-8-776170",
+      "source": "Newsmeter",
+      "source_preferred": false,
+      "published_at": "2026-09-25T10:18:58+05:30",
+      "age_hours": 1.39,
+      "categories": [
+        "public_safety_warning"
+      ],
+      "excerpt": "TG SAFE deployed eight enforcement teams comprising Food Safety Officers and police personnel, inspecting 15 establishments on September 24",
+      "corroboration": []
+    },
+    {
+      "rank": 6,
+      "class": "C",
+      "score": 76,
+      "region": "telangana",
+      "region_confidence": 1.0,
+      "suggested_headline": "📰 LATEST NEWS — TELANGANA",
+      "title": "Man Dies of Heart Attack during Ganesh Immersion in Jagtial",
+      "url": "https://www.deccanchronicle.com/southern-states/telangana/man-dies-of-heart-attack-during-ganesh-immersion-in-jagtial-1990412",
+      "source": "Deccan Chronicle",
+      "source_preferred": false,
+      "published_at": "2026-09-25T10:11:43+05:30",
+      "age_hours": 1.51,
+      "categories": [
+        "accident_casualty"
+      ],
+      "excerpt": "A Sub-Inspector Kumaraswamy, who is participating in bandobust duty, performed CPR and shifted him to district headquarters hospital in his vehicle.",
+      "corroboration": []
+    },
+    {
+      "rank": 7,
+      "class": "C",
+      "score": 76,
+      "region": "hyderabad",
+      "region_confidence": 1.0,
+      "suggested_headline": "📰 LATEST NEWS — HYDERABAD",
+      "title": "Perumulla Pranay Kumar murder case: Life convict Abdul Bari dies in Cherlapally Jail",
+      "url": "https://newsmeter.in/hyderabad/perumulla-pranay-kumar-murder-case-life-convict-abdul-bari-dies-in-cherlapally-jail-776164",
+      "source": "Newsmeter",
+      "source_preferred": false,
+      "published_at": "2026-09-25T09:09:52+05:30",
+      "age_hours": 2.54,
+      "categories": [
+        "accident_casualty"
+      ],
+      "excerpt": "Bari suffered a cardiac arrest around 3 p.m., following which jail authorities shifted him to Gandhi Hospital in Secunderabad, he died while undergoing treatment",
+      "corroboration": []
+    },
+    {
+      "rank": 8,
+      "class": "C",
+      "score": 76,
+      "region": "hyderabad",
+      "region_confidence": 1.0,
+      "suggested_headline": "📰 LATEST NEWS — HYDERABAD",
+      "title": "Khairatabad Ganesh Immersion: Man Dies In Tragic Accident",
+      "url": "https://www.deccanchronicle.com/southern-states/telangana/khairatabad-ganesh-immersion-man-dies-in-tragic-accident-1990403",
+      "source": "Deccan Chronicle",
+      "source_preferred": false,
+      "published_at": "2026-09-25T08:49:01+05:30",
+      "age_hours": 2.89,
+      "categories": [
+        "accident_casualty"
+      ],
+      "excerpt": "According to preliminary reports, the man had come to the area to witness the Ganesh immersion procession when the incident occurred.",
+      "corroboration": []
+    },
+    {
+      "rank": 9,
+      "class": "C",
+      "score": 74,
+      "region": "telangana",
+      "region_confidence": 1.0,
+      "suggested_headline": "📰 LATEST NEWS — TELANGANA",
+      "title": "Telangana provides relief to landowners troubled by Section 22A",
+      "url": "https://www.siasat.com/telangana-provides-relief-to-landowners-troubled-by-section-22a-3547855/",
+      "source": "Munsif Daily",
+      "source_preferred": true,
+      "published_at": "2026-09-25T09:06:45+05:30",
+      "age_hours": 2.59,
+      "categories": [
+        "political_major"
+      ],
+      "excerpt": "Hyderabad: Telangana Revenue Minister Ponguleti Srinivasa Reddy on Thursday, September 24, said the state government has issued orders to provide relief to citizens whose lands have been included in the prohibitive list under Section 22 A of Registration Act so that they can carry out registrations without any problems. The inclusion of lands in the …",
+      "corroboration": []
+    },
+    {
+      "rank": 10,
+      "class": "C",
+      "score": 72,
+      "region": "hyderabad",
+      "region_confidence": 0.4,
+      "suggested_headline": "📰 LATEST NEWS — HYDERABAD",
+      "title": "Cop dies after assault by history-sheeter in Thane",
+      "url": "https://www.siasat.com/cop-dies-after-assault-by-history-sheeter-in-thane-3547875/",
+      "source": "Munsif Daily",
+      "source_preferred": true,
+      "published_at": "2026-09-25T11:21:12+05:30",
+      "age_hours": 0.35,
+      "categories": [
+        "accident_casualty"
+      ],
+      "excerpt": "Thane: A police sub-inspector died during an operation after allegedly being assaulted by a history-sheeter in Maharashtra’s Thane city, officials said Friday, September 25. Deputy Commissioner of Police Prashant Kadam said the incident occurred when a patrolling team led by sub-inspector Kisan K Bhoir reached Wagle Estate to shut a shop operating late into Thursday …",
+      "corroboration": []
+    },
+    {
+      "rank": 11,
+      "class": "C",
+      "score": 72,
+      "region": "india",
+      "region_confidence": 0.4,
+      "suggested_headline": "📰 LATEST NEWS — INDIA",
+      "title": "Wangchuk seeks Amit Shah's resignation over Leh violence, fears might be killed in 'encounter'",
+      "url": "https://www.thehindu.com/news/national/ladakh/wangchuk-seeks-amit-shahs-resignation-over-leh-violence-fears-might-be-killed-in-encounter/article71507192.ece",
+      "source": "The Hindu",
+      "source_preferred": true,
+      "published_at": "2026-09-25T11:20:45+05:30",
+      "age_hours": 0.36,
+      "categories": [
+        "accident_casualty",
+        "security_terror",
+        "political_major"
+      ],
+      "excerpt": "Referring to Congress leader Rahul Gandhi’s demand for Mr. Shah’s resignation over police action against students at Jantar Mantar in New Delhi, Mr. Wangchuk supported the call but questioned Mr. Gandhi's silence over the situation in Ladakh.",
+      "corroboration": []
+    },
+    {
+      "rank": 12,
+      "class": "C",
+      "score": 72,
+      "region": "india",
+      "region_confidence": 1.0,
+      "suggested_headline": "📰 LATEST NEWS — INDIA",
+      "title": "Infrastructure in villages improved significantly in last 12 years: PM Modi",
+      "url": "https://www.thehindu.com/news/national/infrastructure-in-villages-improved-significantly-in-last-12-years-pm-modi/article71507254.ece",
+      "source": "The Hindu",
+      "source_preferred": true,
+      "published_at": "2026-09-25T11:07:58+05:30",
+      "age_hours": 0.57,
+      "categories": [
+        "political_major"
+      ],
+      "excerpt": "Over the past 12 years, the gap between cities and villages in India has significantly narrowed. Today, infrastructure in villages has improved significantly, says Prime Minister Modi",
+      "corroboration": []
+    },
+    {
+      "rank": 13,
+      "class": "C",
+      "score": 72,
+      "region": "india",
+      "region_confidence": 0.4,
+      "suggested_headline": "📰 LATEST NEWS — INDIA",
+      "title": "Collector reviews flood situation, directs officials to step up relief measures",
+      "url": "https://www.thehindu.com/news/national/andhra-pradesh/collector-reviews-flood-situation-directs-officials-to-step-up-relief-measures/article71504348.ece",
+      "source": "The Hindu",
+      "source_preferred": true,
+      "published_at": "2026-09-25T10:57:02+05:30",
+      "age_hours": 0.75,
+      "categories": [
+        "disaster_weather"
+      ],
+      "excerpt": "The Collector directed officials to pay special attention to low-lying and vulnerable areas and keep residents in these zones alert to the risks",
+      "corroboration": []
+    },
+    {
+      "rank": 14,
+      "class": "C",
+      "score": 72,
+      "region": "india",
+      "region_confidence": 1.0,
+      "suggested_headline": "📰 LATEST NEWS — INDIA",
+      "title": "Sabarimala pilgrimage: TDB president meets Keralam Devaswom Minister, briefs him on preparations",
+      "url": "https://www.thehindu.com/news/national/kerala/sabarimala-pilgrimage-tdb-president-meets-keralam-devaswom-minister-briefs-him-on-preparations/article71507123.ece",
+      "source": "The Hindu",
+      "source_preferred": true,
+      "published_at": "2026-09-25T10:32:50+05:30",
+      "age_hours": 1.16,
+      "categories": [
+        "political_major"
+      ],
+      "excerpt": "Speaking to reporters after the meeting, K. Muraleedharan says government and TDB will work together to ensure that devotees do not face difficulties during upcoming pilgrimage season",
+      "corroboration": []
+    },
+    {
+      "rank": 15,
+      "class": "C",
+      "score": 72,
+      "region": "world",
+      "region_confidence": 1.0,
+      "suggested_headline": "🌍 LATEST — WORLD",
+      "title": "Actor Mushtaq Khan dies at 75",
+      "url": "https://www.thehindu.com/entertainment/movies/actor-mushtaq-khan-dies-at-75/article71505206.ece",
+      "source": "The Hindu",
+      "source_preferred": true,
+      "published_at": "2026-09-25T10:30:31+05:30",
+      "age_hours": 1.2,
+      "categories": [
+        "accident_casualty"
+      ],
+      "excerpt": "In a career spanning five decades, Mushtaq Khan acted in over 500 movies and garnered wide popularity through his supporting roles",
+      "corroboration": []
+    },
+    {
+      "rank": 16,
+      "class": "C",
+      "score": 72,
+      "region": "india",
+      "region_confidence": 1.0,
+      "suggested_headline": "📰 LATEST NEWS — INDIA",
+      "title": "Drought relief: Karnataka announces one-time aid of ₹2,500 to about 50 lakh farmers, moratorium of 12 months for loan repayment",
+      "url": "https://www.thehindu.com/news/national/karnataka/drought-relief-karnataka-announces-one-time-aid-of-2500-to-about-50-lakh-farmers-moratorium-of-12-months-for-loan-repayment/article71505232.ece",
+      "source": "The Hindu",
+      "source_preferred": true,
+      "published_at": "2026-09-25T10:29:36+05:30",
+      "age_hours": 1.21,
+      "categories": [
+        "govt_announcement",
+        "political_major"
+      ],
+      "excerpt": "While Chief Minister D.K. Shivakumar announced that the State would share the burden if the Centre announces a loan waiver, the opposition BJP termed the State’s relief package ‘a pittance’",
+      "corroboration": []
+    },
+    {
+      "rank": 17,
+      "class": "C",
+      "score": 72,
+      "region": "india",
+      "region_confidence": 1.0,
+      "suggested_headline": "📰 LATEST NEWS — INDIA",
+      "title": "CM Revanth to receive best public servant award in Kerala",
+      "url": "https://www.siasat.com/cm-revanth-to-receive-best-public-servant-award-in-kerala-3547868/",
+      "source": "Munsif Daily",
+      "source_preferred": true,
+      "published_at": "2026-09-25T10:05:07+05:30",
+      "age_hours": 1.62,
+      "categories": [
+        "political_major"
+      ],
+      "excerpt": "Hyderabad: Telangana Chief Minister Revanth Reddy will receive the Aryadan Muhammed-2026 Best Public Servant award in Kerala on Friday, September 25, in recognition of his initiatives aimed at the welfare of farmers, Backward Classes and the general public. The award has been instituted by the Aryadan Muhammed Foundation in memory of veteran Congress leader Aryadan …",
+      "corroboration": []
+    },
+    {
+      "rank": 18,
       "class": "C",
       "score": 72,
       "region": "india",
@@ -21,19 +349,372 @@
       "url": "https://www.thehindu.com/news/national/kerala/news-analysis-cmrl-exalogic-payoff-case-raises-legal-political-challenges-to-govt-investigating-agencies/article71503974.ece",
       "source": "The Hindu",
       "source_preferred": true,
-      "published_at": "2026-09-25T06:59:26+05:30",
-      "age_hours": 0.37,
+      "published_at": "2026-09-25T09:48:28+05:30",
+      "age_hours": 1.9,
       "categories": [
         "govt_announcement",
         "political_major"
       ],
-      "excerpt": "The allegation that Chief Minister V.D. Satheesan, Home Minister Ramesh Chennithala, Health Minister K. Muraleedharan, and other politicians too had received money from CMRL surfaced on Thursday as the State government was all set to issue a notification on the formation of a special investigation team to probe the findings of the ED against former Chief Minister Pinarayi Vijayan, his daughter T. Veena, and her husband P.A. Mohamed Riyas in the money laundering case",
+      "excerpt": "Allegation that CM Satheesan, Home Minister Chennithala, Health Minister K. Muraleedharan, and other politicians too had received money from CMRL surfaced on Thursday as State government was all set to issue a notification on the formation of a special investigation team to probe the findings of ED",
       "corroboration": []
     },
     {
-      "rank": 2,
+      "rank": 19,
       "class": "C",
       "score": 72,
+      "region": "india",
+      "region_confidence": 1.0,
+      "suggested_headline": "📰 LATEST NEWS — INDIA",
+      "title": "Heavy rain lashes Odisha; over 8,000 people evacuated, ministers rush to affected districts | LIVE",
+      "url": "https://www.thehindu.com/news/national/cyclone-arnab-heavy-rain-lashes-odisha-andhra-pradesh-red-alert-weather-live-updates-september-25-2026/article71506926.ece",
+      "source": "The Hindu",
+      "source_preferred": true,
+      "published_at": "2026-09-25T09:20:21+05:30",
+      "age_hours": 2.37,
+      "categories": [
+        "disaster_weather"
+      ],
+      "excerpt": "IMD said squally weather would prevail along the coast, with winds gusting up to 70 kmph, and advised fishermen not to venture into the sea until September 25 morning.",
+      "corroboration": []
+    },
+    {
+      "rank": 20,
+      "class": "C",
+      "score": 72,
+      "region": "world",
+      "region_confidence": 1.0,
+      "suggested_headline": "🌍 LATEST — WORLD",
+      "title": "Hollywood stars among 100 arrested in NY anti-Netanyahu protest",
+      "url": "https://www.thehindu.com/news/international/hollywood-stars-among-100-arrested-in-ny-anti-netanyahu-protest/article71506943.ece",
+      "source": "The Hindu",
+      "source_preferred": true,
+      "published_at": "2026-09-25T08:31:04+05:30",
+      "age_hours": 3.19,
+      "categories": [
+        "police_operation",
+        "political_major",
+        "protest_major"
+      ],
+      "excerpt": "A spokesperson for the NYPD said officers had responded to reports of an unscheduled demonstration where people were blocking an intersection",
+      "corroboration": []
+    },
+    {
+      "rank": 21,
+      "class": "C",
+      "score": 72,
+      "region": "hyderabad",
+      "region_confidence": 1.0,
+      "suggested_headline": "📰 LATEST NEWS — HYDERABAD",
+      "title": "Ganesh Immersion: Special Buses From Hussain Sagar",
+      "url": "https://www.deccanchronicle.com/southern-states/telangana/ganesh-immersion-tgsrtc-to-operate-700-special-buses-in-hyderabad-1990398",
+      "source": "Deccan Chronicle",
+      "source_preferred": false,
+      "published_at": "2026-09-25T07:55:41+05:30",
+      "age_hours": 3.78,
+      "categories": [
+        "political_major"
+      ],
+      "excerpt": "Special RTC camps have been set up at Khairatabad, Lakdikapul, Basheerbagh, Indira Park and AIR. RTC relief vans have been stationed near the Old MLA Quarters, Indira Park and V.V. Statue to attend to emergencies.",
+      "corroboration": []
+    },
+    {
+      "rank": 22,
+      "class": "C",
+      "score": 71,
+      "region": "india",
+      "region_confidence": 1.0,
+      "suggested_headline": "📰 LATEST NEWS — INDIA",
+      "title": "Watch: Rainfall triggers major landslide in Sikkim's Rimbi",
+      "url": "https://timesofindia.indiatimes.com/india/watch-rainfall-triggers-major-landslide-in-sikkims-rimbi/articleshow/134473391.cms",
+      "source": "Times of India",
+      "source_preferred": false,
+      "published_at": "2026-09-25T08:36:38+05:30",
+      "age_hours": 3.09,
+      "categories": [
+        "disaster_weather"
+      ],
+      "excerpt": "",
+      "corroboration": []
+    },
+    {
+      "rank": 23,
+      "class": "C",
+      "score": 70,
+      "region": "india",
+      "region_confidence": 1.0,
+      "suggested_headline": "📰 LATEST NEWS — INDIA",
+      "title": "IIT Bombay Suicide Probe: Locked Phone, 47-Minute Gap & Parents' Protest",
+      "url": "https://www.indiatoday.in/india/video/iit-bombay-suicide-probe-locked-phone-47-minute-gap-parents-protest-ytvd-3002526-2026-09-25?utm_source=rss",
+      "source": "India Today",
+      "source_preferred": false,
+      "published_at": "2026-09-25T11:30:01+05:30",
+      "age_hours": 0.2,
+      "categories": [
+        "accident_casualty",
+        "political_major",
+        "protest_major"
+      ],
+      "excerpt": "IIT Bombay Suicide Probe: Locked Phone, 47-Minute Gap & Parents' Protest",
+      "corroboration": []
+    },
+    {
+      "rank": 24,
+      "class": "C",
+      "score": 70,
+      "region": "india",
+      "region_confidence": 1.0,
+      "suggested_headline": "📰 LATEST NEWS — INDIA",
+      "title": "Mumbai: Man Falls Unconscious In Lalbaug, Declared Dead at Hospital",
+      "url": "https://www.deccanchronicle.com/nation/in-other-news/mumbai-man-falls-unconscious-in-lalbaug-declared-dead-at-hospital-1990423",
+      "source": "Deccan Chronicle",
+      "source_preferred": false,
+      "published_at": "2026-09-25T11:25:18+05:30",
+      "age_hours": 0.28,
+      "categories": [
+        "accident_casualty"
+      ],
+      "excerpt": "This is the second death in the Lalbaug area, which draws huge crowds during the 12-day Ganesh festival",
+      "corroboration": []
+    },
+    {
+      "rank": 25,
+      "class": "C",
+      "score": 70,
+      "region": "hyderabad",
+      "region_confidence": 1.0,
+      "suggested_headline": "📰 LATEST NEWS — HYDERABAD",
+      "title": "Telangana HC dismisses Prince Azmet Jah’s petition in 7th Nizam Osman Ali Khan’s properties case",
+      "url": "https://newsmeter.in/hyderabad/telangana-hc-dismisses-prince-azmet-jahs-petition-in-7th-nizam-osman-ali-khans-properties-case-776157",
+      "source": "Newsmeter",
+      "source_preferred": false,
+      "published_at": "2026-09-25T08:17:19+05:30",
+      "age_hours": 3.42,
+      "categories": [
+        "court_judgment"
+      ],
+      "excerpt": "Falaknuma Palace, Chowmahalla Palace, Purani Haveli, King Kothi Palace and other properties were a part of the petition dismissed by Telangana High Court",
+      "corroboration": []
+    },
+    {
+      "rank": 26,
+      "class": "C",
+      "score": 68,
+      "region": "hyderabad",
+      "region_confidence": 0.4,
+      "suggested_headline": "📰 LATEST NEWS — HYDERABAD",
+      "title": "US Senate rejects resolution seeking to end Trump’s Iran war",
+      "url": "https://www.siasat.com/us-senate-rejects-resolution-seeking-to-end-trumps-iran-war-3547926/",
+      "source": "Munsif Daily",
+      "source_preferred": true,
+      "published_at": "2026-09-25T11:30:49+05:30",
+      "age_hours": 0.19,
+      "categories": [
+        "political_major",
+        "international_conflict"
+      ],
+      "excerpt": "Washington: The US Senate narrowly rejected a resolution seeking to end American military involvement in the war against Iran unless Congress authorised it, handing President Donald Trump another victory over lawmakers seeking to reclaim congressional war powers. The Senate voted 50–49 against the House-passed resolution after more than 200 days of conflict, according to the …",
+      "corroboration": []
+    },
+    {
+      "rank": 27,
+      "class": "C",
+      "score": 68,
+      "region": "telangana",
+      "region_confidence": 1.0,
+      "suggested_headline": "📰 LATEST NEWS — TELANGANA",
+      "title": "How 770-gram Alprazolam seizure in Zaheerabad led Telangana police to ₹4 Cr drug property",
+      "url": "https://newsmeter.in/crime/how-770-gram-alprazolam-seizure-in-zaheerabad-led-telangana-police-to-4-cr-drug-property-776174",
+      "source": "Newsmeter",
+      "source_preferred": false,
+      "published_at": "2026-09-25T11:30:58+05:30",
+      "age_hours": 0.19,
+      "categories": [
+        "major_crime"
+      ],
+      "excerpt": "EAGLE Force and Sangareddy police followed the alleged drug-money trail and identified properties under the NDPS Act",
+      "corroboration": []
+    },
+    {
+      "rank": 28,
+      "class": "C",
+      "score": 68,
+      "region": "india",
+      "region_confidence": 0.4,
+      "suggested_headline": "📰 LATEST NEWS — INDIA",
+      "title": "Election Commission row LIVE: EC faces fresh credibility crisis amid new allegations against CEC",
+      "url": "https://www.thehindu.com/news/national/election-commission-row-live-ec-faces-fresh-credibility-crisis-amid-new-allegations-against-cec/article71507022.ece",
+      "source": "The Hindu",
+      "source_preferred": true,
+      "published_at": "2026-09-25T11:25:53+05:30",
+      "age_hours": 0.27,
+      "categories": [
+        "political_major"
+      ],
+      "excerpt": "Leader of the Opposition Rahul Gandhi has escalated the criticism, alleging that elections are being rigged",
+      "corroboration": []
+    },
+    {
+      "rank": 29,
+      "class": "C",
+      "score": 68,
+      "region": "hyderabad",
+      "region_confidence": 0.4,
+      "suggested_headline": "📰 LATEST NEWS — HYDERABAD",
+      "title": "TN CM Vijay to launch campaign for Oct 6 bypolls",
+      "url": "https://www.siasat.com/tn-cm-vijay-to-launch-campaign-for-oct-6-bypolls-3547886/",
+      "source": "Munsif Daily",
+      "source_preferred": true,
+      "published_at": "2026-09-25T11:21:49+05:30",
+      "age_hours": 0.34,
+      "categories": [
+        "political_major"
+      ],
+      "excerpt": "Chennai: TVK supremo and Chief Minister C Joseph Vijay is all set to launch his campaign on Friday, September 25, at Maduranthakam near here for the October 6 bypolls. Amid burning issues like strong opposition to the government’s proposal to build a new Secretariat-Assembly complex near Marina Beach here and unceasing power cuts, Vijay is …",
+      "corroboration": [
+        "Deccan Chronicle"
+      ]
+    },
+    {
+      "rank": 30,
+      "class": "C",
+      "score": 68,
+      "region": "hyderabad",
+      "region_confidence": 0.4,
+      "suggested_headline": "📰 LATEST NEWS — HYDERABAD",
+      "title": "Netanyahu calls Iran attack easy decision, blasts UN walkout",
+      "url": "https://www.siasat.com/netanyahu-calls-iran-attack-easy-decision-blasts-un-walkout-3547915/",
+      "source": "Munsif Daily",
+      "source_preferred": true,
+      "published_at": "2026-09-25T11:18:41+05:30",
+      "age_hours": 0.39,
+      "categories": [
+        "political_major"
+      ],
+      "excerpt": "United Nations: Israeli Prime Minister Benjamin Netanyahu told world leaders Thursday that attacking Iran “was one of the easiest decisions I’ve ever had to make” and denounced as “moral cowards” a mass of delegates who walked out of the UN General Assembly when he took the podium to speak. “In defending itself, Israel is also …",
+      "corroboration": []
+    },
+    {
+      "rank": 31,
+      "class": "C",
+      "score": 68,
+      "region": "hyderabad",
+      "region_confidence": 0.4,
+      "suggested_headline": "📰 LATEST NEWS — HYDERABAD",
+      "title": "Iran proposes seven-day roadmap to reopen Strait of Hormuz",
+      "url": "https://www.siasat.com/iran-proposes-seven-day-roadmap-to-reopen-strait-of-hormuz-3547899/",
+      "source": "Munsif Daily",
+      "source_preferred": true,
+      "published_at": "2026-09-25T11:02:02+05:30",
+      "age_hours": 0.67,
+      "categories": [
+        "political_major",
+        "international_conflict"
+      ],
+      "excerpt": "Washington: Iran has given the Trump administration a proposal to reopen the Strait of Hormuz and resume negotiations aimed at ending the broader war within seven days, Iranian Foreign Minister Abbas Araghchi said. Araghchi said the proposal was delivered to US officials during indirect discussions conducted through mediators this week, according to The Washington Post. …",
+      "corroboration": []
+    },
+    {
+      "rank": 32,
+      "class": "C",
+      "score": 68,
+      "region": "india",
+      "region_confidence": 0.4,
+      "suggested_headline": "📰 LATEST NEWS — INDIA",
+      "title": "BJP spent more than half of its April-May election funds on Bengal polls",
+      "url": "https://www.thehindu.com/news/national/bjp-spent-more-in-bengal-than-congress-did-across-five-state-polls-ec-filings/article71503202.ece",
+      "source": "The Hindu",
+      "source_preferred": true,
+      "published_at": "2026-09-25T10:52:16+05:30",
+      "age_hours": 0.83,
+      "categories": [
+        "political_major"
+      ],
+      "excerpt": "The BJP spent ₹286.99 crore in West Bengal alone, which is more than half of the total of ₹529.38 crore that the party spent on the recent Assembly polls in four states and one Union Territory. The Congress spent ₹248.55 crore for all these elections held in April-May",
+      "corroboration": []
+    },
+    {
+      "rank": 33,
+      "class": "C",
+      "score": 68,
+      "region": "hyderabad",
+      "region_confidence": 0.4,
+      "suggested_headline": "📰 LATEST NEWS — HYDERABAD",
+      "title": "Jaishankar meets Jordan, Egypt FMs amid West Asia crisis",
+      "url": "https://www.siasat.com/jaishankar-meets-jordan-egypt-fms-amid-west-asia-crisis-3547891/",
+      "source": "Munsif Daily",
+      "source_preferred": true,
+      "published_at": "2026-09-25T10:51:23+05:30",
+      "age_hours": 0.85,
+      "categories": [
+        "political_major"
+      ],
+      "excerpt": "United Nations: External Affairs Minister (EAM) S. Jaishankar met on Thursday with the Foreign Ministers of two key countries from a region embroiled in crisis, Jordan and Egypt, to review developments in West Asia. After meeting with Jordan’s Foreign Minister Ayman Safadi, EAM Jaishankar on social media platform X said, “Our discussion on West Asia/Middle …",
+      "corroboration": []
+    },
+    {
+      "rank": 34,
+      "class": "C",
+      "score": 68,
+      "region": "hyderabad",
+      "region_confidence": 0.4,
+      "suggested_headline": "📰 LATEST NEWS — HYDERABAD",
+      "title": "Abbas denounces Gaza ‘genocidal war’, backs two-state solution",
+      "url": "https://www.siasat.com/abbas-denounces-gaza-genocidal-war-backs-two-state-solution-3547880/",
+      "source": "Munsif Daily",
+      "source_preferred": true,
+      "published_at": "2026-09-25T10:35:32+05:30",
+      "age_hours": 1.11,
+      "categories": [
+        "political_major",
+        "international_conflict"
+      ],
+      "excerpt": "United Nations: Palestine President Mahmoud Abbas on Thursday denounced what he termed a “genocidal war” in Gaza by Israel, while reaffirming his commitment to a two-state solution recognising Israel’s right to exist in peace. He said Palestinians seek “a democratic state that respects the rule of law and human rights, a non-militarised state that lives …",
+      "corroboration": []
+    },
+    {
+      "rank": 35,
+      "class": "C",
+      "score": 68,
+      "region": "world",
+      "region_confidence": 1.0,
+      "suggested_headline": "🌍 LATEST — WORLD",
+      "title": "Why did a U.S. court stay Trump’s ban on media outlets?",
+      "url": "https://www.thehindu.com/news/international/why-did-a-us-court-stay-trumps-ban-on-media-outlets/article71507112.ece",
+      "source": "The Hindu",
+      "source_preferred": true,
+      "published_at": "2026-09-25T09:59:21+05:30",
+      "age_hours": 1.72,
+      "categories": [
+        "public_safety_warning"
+      ],
+      "excerpt": "When he first announced the ban on the three outlets through a social media post on September 18, Mr. Trump accused them of reporting “fake news”. The outlets “constantly write or report fiction or lies”, Mr. Trump said in his post without giving any examples.",
+      "corroboration": []
+    },
+    {
+      "rank": 36,
+      "class": "C",
+      "score": 68,
+      "region": "hyderabad",
+      "region_confidence": 0.4,
+      "suggested_headline": "📰 LATEST NEWS — HYDERABAD",
+      "title": "Leh violence: Sonam seeks Shah’s resignation, fears encounter",
+      "url": "https://www.siasat.com/leh-violence-sonam-seeks-shahs-resignation-fears-encounter-3547847/",
+      "source": "Munsif Daily",
+      "source_preferred": true,
+      "published_at": "2026-09-25T08:13:14+05:30",
+      "age_hours": 3.48,
+      "categories": [
+        "accident_casualty",
+        "security_terror",
+        "political_major"
+      ],
+      "excerpt": "Leh/Jammu: Climate activist Sonam Wangchuk on Thursday, September 24, expressed apprehension that he might be killed in an “encounter” for speaking out against the government, as he demanded the resignation of Union Home Minister Amit Shah over last year’s violence in Leh that killed four people. Addressing a gathering on the first anniversary of the …",
+      "corroboration": []
+    },
+    {
+      "rank": 37,
+      "class": "C",
+      "score": 68,
       "region": "india",
       "region_confidence": 1.0,
       "suggested_headline": "📰 LATEST NEWS — INDIA",
@@ -42,7 +723,7 @@
       "source": "The Hindu",
       "source_preferred": true,
       "published_at": "2026-09-25T06:48:09+05:30",
-      "age_hours": 0.56,
+      "age_hours": 4.9,
       "categories": [
         "court_judgment",
         "political_major"
@@ -51,67 +732,144 @@
       "corroboration": []
     },
     {
-      "rank": 3,
+      "rank": 38,
       "class": "C",
-      "score": 72,
-      "region": "telangana",
+      "score": 66,
+      "region": "india",
       "region_confidence": 1.0,
-      "suggested_headline": "📰 LATEST NEWS — TELANGANA",
-      "title": "Youth Stabbed To Death By Two Drug Peddlers",
-      "url": "https://www.deccanchronicle.com/southern-states/telangana/youth-stabbed-to-death-by-two-drug-peddlers-1990380",
+      "suggested_headline": "📰 LATEST NEWS — INDIA",
+      "title": "India’s Urban-Rural Gap Narrowed Significantly in 12 Years: Modi",
+      "url": "https://www.deccanchronicle.com/nation/indias-urban-rural-gap-has-narrowed-significantly-in-12-years-modi-1990426",
       "source": "Deccan Chronicle",
       "source_preferred": false,
-      "published_at": "2026-09-25T02:02:59+05:30",
-      "age_hours": 5.31,
+      "published_at": "2026-09-25T11:35:58+05:30",
+      "age_hours": 0.1,
+      "categories": [
+        "political_major"
+      ],
+      "excerpt": "Prime Minister Says Village Infrastructure And Women’s Self-Reliance Have Improved Since 2014",
+      "corroboration": []
+    },
+    {
+      "rank": 39,
+      "class": "C",
+      "score": 66,
+      "region": "india",
+      "region_confidence": 1.0,
+      "suggested_headline": "📰 LATEST NEWS — INDIA",
+      "title": "Anant Chaturdashi: Mumbai Traffic Police Issue Traffic Advisory",
+      "url": "https://www.deccanchronicle.com/nation/in-other-news/anant-chaturdashi-mumbai-traffic-police-issue-traffic-advisories-1990422",
+      "source": "Deccan Chronicle",
+      "source_preferred": false,
+      "published_at": "2026-09-25T11:18:40+05:30",
+      "age_hours": 0.39,
+      "categories": [
+        "public_safety_warning"
+      ],
+      "excerpt": "BMC deploys 25k staffers for idol immersions",
+      "corroboration": []
+    },
+    {
+      "rank": 40,
+      "class": "C",
+      "score": 66,
+      "region": "india",
+      "region_confidence": 0.4,
+      "suggested_headline": "📰 LATEST NEWS — INDIA",
+      "title": "Bengal Court orders death sentence to man, directs administration to ensure education and well being of his minor children",
+      "url": "https://www.thehindu.com/news/national/west-bengal/bengal-court-orders-death-sentence-to-man-directs-administration-to-ensure-education-and-well-being-of-his-minor-children/article71505804.ece",
+      "source": "The Hindu",
+      "source_preferred": true,
+      "published_at": "2026-09-25T11:15:42+05:30",
+      "age_hours": 0.44,
+      "categories": [
+        "court_judgment"
+      ],
+      "excerpt": "Additional Sessions Judge, Jalpaiguri Biplab Roy stated that the sins of the parent cannot visit the child, and the State must protect the child’s educational future. The Court directed District Magistrate Jalpiaguri to ensure physical and mental well being of two minor sons of the convict",
+      "corroboration": []
+    },
+    {
+      "rank": 41,
+      "class": "C",
+      "score": 66,
+      "region": "india",
+      "region_confidence": 1.0,
+      "suggested_headline": "📰 LATEST NEWS — INDIA",
+      "title": "'Gyanesh Kumar hatao, EC bachao': Congress puts up posters targeting CEC in Delhi",
+      "url": "https://timesofindia.indiatimes.com/india/gyanesh-kumar-hatao-ec-bachao-congress-puts-up-posters-targeting-cec-in-delhi/articleshow/134476374.cms",
+      "source": "Times of India",
+      "source_preferred": false,
+      "published_at": "2026-09-25T11:14:36+05:30",
+      "age_hours": 0.46,
+      "categories": [
+        "political_major"
+      ],
+      "excerpt": "The Congress party has ramped up its protests against Chief Election Commissioner Gyanesh Kumar, claiming that the Special Intensive Revision of electoral rolls is flawed. At a press conference, Rahul Gandhi voiced serious allegations against Kumar regarding electoral misconduct. Posters demanding Kumar's removal have been plastered around Delhi, alongside protests at the Election Commission.",
+      "corroboration": []
+    },
+    {
+      "rank": 42,
+      "class": "C",
+      "score": 66,
+      "region": "india",
+      "region_confidence": 0.4,
+      "suggested_headline": "📰 LATEST NEWS — INDIA",
+      "title": "Court grants bail to journalist Ravi Nair convicted in defamation case filed by Adani Enterprises",
+      "url": "https://www.thehindu.com/news/national/court-grants-bail-to-journalist-ravi-nair-convicted-in-defamation-case-filed-by-adani-enterprises/article71507237.ece",
+      "source": "The Hindu",
+      "source_preferred": true,
+      "published_at": "2026-09-25T11:05:46+05:30",
+      "age_hours": 0.61,
+      "categories": [
+        "court_judgment"
+      ],
+      "excerpt": "On February 10, 2026, Mr. Nair was sentenced by a Mansa court in Gandhinagar to undergo an imprisonment of one year in a criminal defamation suit filed by Adani Enterprises on September 3, 2021 over certain tweets and articles attributed to him.",
+      "corroboration": []
+    },
+    {
+      "rank": 43,
+      "class": "C",
+      "score": 66,
+      "region": "india",
+      "region_confidence": 0.4,
+      "suggested_headline": "📰 LATEST NEWS — INDIA",
+      "title": "Adani promises ₹1 lakh crore investment in West Bengal by 2035, looks to diversify in power generation and transmission",
+      "url": "https://www.thehindu.com/news/national/west-bengal/adani-group-to-invest-over-1-lakh-crore-in-bengal-by-2035-gautam-adani/article71503371.ece",
+      "source": "The Hindu",
+      "source_preferred": true,
+      "published_at": "2026-09-25T10:26:48+05:30",
+      "age_hours": 1.26,
+      "categories": [
+        "economic_major"
+      ],
+      "excerpt": "The Adani Group's proposes to invest in power distribution in Kolkata, which has so far remained the monopoly of R.P. Sanjiv Goenka Group, through its flagship company CESC",
+      "corroboration": []
+    },
+    {
+      "rank": 44,
+      "class": "C",
+      "score": 66,
+      "region": "india",
+      "region_confidence": 1.0,
+      "suggested_headline": "📰 LATEST NEWS — INDIA",
+      "title": "Delhi’s old high-rises face mandatory structural safety audits under new DDA order",
+      "url": "https://timesofindia.indiatimes.com/real-estate/news/delhis-old-high-rises-face-mandatory-structural-safety-audits-under-new-dda-order/articleshow/134468120.cms",
+      "source": "Times of India",
+      "source_preferred": false,
+      "published_at": "2026-09-25T09:30:00+05:30",
+      "age_hours": 2.2,
       "categories": [
         "accident_casualty",
-        "major_crime"
+        "disaster_weather",
+        "protest_major"
       ],
-      "excerpt": "Waseem died on the way to the hospital. The assailants were identified as Sohail and Ilyas. Police said the duo suspected that Waseem was passing on information to the police about their drug peddling in Upparpally.",
+      "excerpt": "Delhi Development Authority has directed owners of older high-rise buildings to complete structural safety audits within three months. This directive applies to buildings sanctioned before March 21, 2001, with high footfall also included. Recent building collapses in Delhi have raised concerns about structural integrity and safety. The audit aims to assess the earthquake resistance of these buildings. Failure to comply may result in action against the owners.",
       "corroboration": []
     },
     {
-      "rank": 4,
+      "rank": 45,
       "class": "C",
-      "score": 72,
-      "region": "telangana",
-      "region_confidence": 1.0,
-      "suggested_headline": "📰 LATEST NEWS — TELANGANA",
-      "title": "Heavy Rain Lashes Warangal, Mahabubabad Districts",
-      "url": "https://www.deccanchronicle.com/southern-states/telangana/heavy-rain-lashes-warangal-mahabubabad-districts-1990379",
-      "source": "Deccan Chronicle",
-      "source_preferred": false,
-      "published_at": "2026-09-25T01:57:24+05:30",
-      "age_hours": 5.4,
-      "categories": [
-        "disaster_weather"
-      ],
-      "excerpt": "Warangal district also received heavy rainfall, with Geesugonda recording the highest at 104.7 mm.",
-      "corroboration": []
-    },
-    {
-      "rank": 5,
-      "class": "C",
-      "score": 72,
-      "region": "telangana",
-      "region_confidence": 1.0,
-      "suggested_headline": "📰 LATEST NEWS — TELANGANA",
-      "title": "Youth Drowns In Water Tank During Ganesh Idol Immersion",
-      "url": "https://www.deccanchronicle.com/southern-states/telangana/youth-drowns-in-water-tank-during-ganesh-idol-immersion-1990376",
-      "source": "Deccan Chronicle",
-      "source_preferred": false,
-      "published_at": "2026-09-25T01:39:31+05:30",
-      "age_hours": 5.7,
-      "categories": [
-        "accident_casualty"
-      ],
-      "excerpt": "Naveen accidentally drowned and did not return to the surface. Naresh alerted locals, following which police and a rescue team reached the spot and recovered Naveen’s body from the tank.",
-      "corroboration": []
-    },
-    {
-      "rank": 6,
-      "class": "C",
-      "score": 70,
+      "score": 66,
       "region": "india",
       "region_confidence": 1.0,
       "suggested_headline": "📰 LATEST NEWS — INDIA",
@@ -120,7 +878,7 @@
       "source": "India Today",
       "source_preferred": false,
       "published_at": "2026-09-25T07:02:26+05:30",
-      "age_hours": 0.32,
+      "age_hours": 4.66,
       "categories": [
         "accident_casualty"
       ],
@@ -128,9 +886,9 @@
       "corroboration": []
     },
     {
-      "rank": 7,
+      "rank": 46,
       "class": "C",
-      "score": 70,
+      "score": 66,
       "region": "india",
       "region_confidence": 1.0,
       "suggested_headline": "📰 LATEST NEWS — INDIA",
@@ -139,7 +897,7 @@
       "source": "The Hindu",
       "source_preferred": true,
       "published_at": "2026-09-25T06:54:19+05:30",
-      "age_hours": 0.45,
+      "age_hours": 4.8,
       "categories": [
         "govt_announcement"
       ],
@@ -147,9 +905,125 @@
       "corroboration": []
     },
     {
-      "rank": 8,
+      "rank": 47,
       "class": "C",
-      "score": 68,
+      "score": 64,
+      "region": "telangana",
+      "region_confidence": 0.4,
+      "suggested_headline": "📰 LATEST NEWS — TELANGANA",
+      "title": "Shehbaz Sharif dodges question over Pakistan’s terror links at UN",
+      "url": "https://telanganatoday.com/shehbaz-sharif-dodges-question-over-pakistans-terror-links-at-un",
+      "source": "Telangana Today",
+      "source_preferred": false,
+      "published_at": "2026-09-25T11:23:45+05:30",
+      "age_hours": 0.31,
+      "categories": [
+        "security_terror",
+        "political_major"
+      ],
+      "excerpt": "Pakistan Prime Minister Shehbaz Sharif declined to answer reporters’ questions at the UN over Lashkar-e-Taiba chief Hafiz Saeed and allegations of terrorism links. The episode followed India’s criticism of Pakistan at the UN over cross-border terrorism and governance issues",
+      "corroboration": []
+    },
+    {
+      "rank": 48,
+      "class": "C",
+      "score": 64,
+      "region": "india",
+      "region_confidence": 1.0,
+      "suggested_headline": "📰 LATEST NEWS — INDIA",
+      "title": "Aastha Kunj gang rape area was already a Delhi Police ‘dark spot’; but lighting gaps remained",
+      "url": "https://www.thehindu.com/news/cities/Delhi/aastha-kunj-gang-rape-area-was-already-a-delhi-police-dark-spot-but-lighting-gaps-remained/article71506949.ece",
+      "source": "The Hindu",
+      "source_preferred": true,
+      "published_at": "2026-09-25T08:45:17+05:30",
+      "age_hours": 2.95,
+      "categories": [
+        "major_crime"
+      ],
+      "excerpt": "Delhi Police surveys had flagged poorly lit stretches around the park and sent deficiencies to civic agencies; 33% of 1,525 streetlights checked in southeast Delhi were found non-functional",
+      "corroboration": []
+    },
+    {
+      "rank": 49,
+      "class": "C",
+      "score": 64,
+      "region": "india",
+      "region_confidence": 1.0,
+      "suggested_headline": "📰 LATEST NEWS — INDIA",
+      "title": "India Slams Pakistan At UNHRC Over Jammu & Kashmir, Minority Persecution & Terror",
+      "url": "https://www.indiatoday.in/india/video/india-slams-pakistan-at-unhrc-over-jammu-kashmir-minority-persecution-terror-ytvd-3002437-2026-09-25?utm_source=rss",
+      "source": "India Today",
+      "source_preferred": false,
+      "published_at": "2026-09-25T08:22:56+05:30",
+      "age_hours": 3.32,
+      "categories": [
+        "security_terror"
+      ],
+      "excerpt": "India Slams Pakistan At UNHRC Over Jammu & Kashmir, Minority Persecution & Terror",
+      "corroboration": []
+    },
+    {
+      "rank": 50,
+      "class": "C",
+      "score": 64,
+      "region": "india",
+      "region_confidence": 0.4,
+      "suggested_headline": "📰 LATEST NEWS — INDIA",
+      "title": "Confident that Vijay will accept Rahul as Prime Ministerial candidate: Manickam Tagore",
+      "url": "https://www.thehindu.com/news/national/tamil-nadu/confident-that-vijay-will-accept-rahul-as-prime-ministerial-candidate-manickam-tagore/article71504912.ece",
+      "source": "The Hindu",
+      "source_preferred": true,
+      "published_at": "2026-09-25T08:18:22+05:30",
+      "age_hours": 3.4,
+      "categories": [
+        "political_major"
+      ],
+      "excerpt": "In an interview with The Hindu, Tamil Nadu Congress Committee president B. Manickam Tagore exuded confidence that Mr. Vijay would make such an announcement ahead of the parliamentary election.",
+      "corroboration": []
+    },
+    {
+      "rank": 51,
+      "class": "C",
+      "score": 64,
+      "region": "world",
+      "region_confidence": 1.0,
+      "suggested_headline": "🌍 LATEST — WORLD",
+      "title": "Iran's President says it is up to U.S. to choose if it wants to end Iran war",
+      "url": "https://www.thehindu.com/news/international/irans-president-says-it-is-up-to-us-to-choose-if-it-wants-to-end-iran-war/article71506919.ece",
+      "source": "The Hindu",
+      "source_preferred": true,
+      "published_at": "2026-09-25T07:57:10+05:30",
+      "age_hours": 3.75,
+      "categories": [
+        "political_major",
+        "international_conflict"
+      ],
+      "excerpt": "But we do not wish to continue. It’s America that must choose whether it wants to end this or not, says Iranian President Masoud Pezeshkian",
+      "corroboration": []
+    },
+    {
+      "rank": 52,
+      "class": "C",
+      "score": 64,
+      "region": "hyderabad",
+      "region_confidence": 0.4,
+      "suggested_headline": "📰 LATEST NEWS — HYDERABAD",
+      "title": "Delegates walk out as Benjamin Netanyahu addresses UN",
+      "url": "https://www.siasat.com/delegates-walk-out-as-benjamin-netanyahu-addresses-un-3547843/",
+      "source": "Munsif Daily",
+      "source_preferred": true,
+      "published_at": "2026-09-25T07:37:08+05:30",
+      "age_hours": 4.09,
+      "categories": [
+        "political_major"
+      ],
+      "excerpt": "United Nations: Israel’s increasingly isolated Prime Minister Benjamin Netanyahu took centre stage at the United Nations General Assembly on Thursday, September 24, defending his decision to attack Iran as an easy one. Hamas said it was ready to move forward on a Gaza peace agreement, while a top European Union official said only a small …",
+      "corroboration": []
+    },
+    {
+      "rank": 53,
+      "class": "C",
+      "score": 64,
       "region": "india",
       "region_confidence": 0.4,
       "suggested_headline": "📰 LATEST NEWS — INDIA",
@@ -158,7 +1032,7 @@
       "source": "The Hindu",
       "source_preferred": true,
       "published_at": "2026-09-25T06:48:34+05:30",
-      "age_hours": 0.55,
+      "age_hours": 4.89,
       "categories": [
         "political_major"
       ],
@@ -166,9 +1040,9 @@
       "corroboration": []
     },
     {
-      "rank": 9,
+      "rank": 54,
       "class": "C",
-      "score": 68,
+      "score": 64,
       "region": "india",
       "region_confidence": 1.0,
       "suggested_headline": "📰 LATEST NEWS — INDIA",
@@ -177,7 +1051,7 @@
       "source": "The Hindu",
       "source_preferred": true,
       "published_at": "2026-09-25T06:19:13+05:30",
-      "age_hours": 1.04,
+      "age_hours": 5.38,
       "categories": [
         "major_crime"
       ],
@@ -185,982 +1059,121 @@
       "corroboration": []
     },
     {
-      "rank": 10,
-      "class": "C",
-      "score": 68,
-      "region": "india",
-      "region_confidence": 1.0,
-      "suggested_headline": "📰 LATEST NEWS — INDIA",
-      "title": "Yet to assess impact of mines Act on Odisha, says Minister as legislators flag potential loss",
-      "url": "https://www.thehindu.com/news/national/odisha/yet-to-assess-impact-of-mines-act-on-odisha-says-minister-as-legislators-flag-potential-loss/article71503971.ece",
-      "source": "The Hindu",
-      "source_preferred": true,
-      "published_at": "2026-09-25T01:33:49+05:30",
-      "age_hours": 5.8,
-      "categories": [
-        "political_major"
-      ],
-      "excerpt": "Recent amendments made by Parliament have curbed the power of State governments to impose taxes, cess, and other levies on mineral rights and mineral-bearing lands",
-      "corroboration": []
-    },
-    {
-      "rank": 11,
-      "class": "C",
-      "score": 66,
-      "region": "india",
-      "region_confidence": 1.0,
-      "suggested_headline": "📰 LATEST NEWS — INDIA",
-      "title": "Opposition Leader Questions Anti-Incumbency Trends, Poll Fairness And Election Mandates",
-      "url": "https://www.indiatoday.in/india/video/opposition-leader-questions-anti-incumbency-trends-poll-fairness-and-election-mandates-ytvd-3002409-2026-09-25?utm_source=rss",
-      "source": "India Today",
-      "source_preferred": false,
-      "published_at": "2026-09-25T06:49:54+05:30",
-      "age_hours": 0.53,
-      "categories": [
-        "political_major"
-      ],
-      "excerpt": "Opposition Leader Questions Anti-Incumbency Trends, Poll Fairness And Election Mandates",
-      "corroboration": []
-    },
-    {
-      "rank": 12,
-      "class": "C",
-      "score": 66,
-      "region": "india",
-      "region_confidence": 1.0,
-      "suggested_headline": "📰 LATEST NEWS — INDIA",
-      "title": "CEC Appointment, Election Commissioners' Objections And Electoral Roll Row",
-      "url": "https://www.indiatoday.in/india/video/cec-appointment-election-commissioners-objections-and-electoral-roll-row-ytvd-3002407-2026-09-25?utm_source=rss",
-      "source": "India Today",
-      "source_preferred": false,
-      "published_at": "2026-09-25T06:43:08+05:30",
-      "age_hours": 0.64,
-      "categories": [
-        "political_major"
-      ],
-      "excerpt": "CEC Appointment, Election Commissioners' Objections And Electoral Roll Row",
-      "corroboration": []
-    },
-    {
-      "rank": 13,
-      "class": "C",
-      "score": 66,
-      "region": "india",
-      "region_confidence": 1.0,
-      "suggested_headline": "📰 LATEST NEWS — INDIA",
-      "title": "Petition in Bombay High Court seeks stay on SIR in Maharashtra, restoration of voter names",
-      "url": "https://www.thehindu.com/news/national/maharashtra/petition-in-bombay-high-court-seeks-stay-on-sir-in-maharashtra-restoration-of-voter-names/article71505245.ece",
-      "source": "The Hindu",
-      "source_preferred": true,
-      "published_at": "2026-09-25T01:53:42+05:30",
-      "age_hours": 5.47,
-      "categories": [
-        "court_judgment"
-      ],
-      "excerpt": "The petition says Mr. Sandhu and Mr. Joshi recorded objections on 14 occasions in 10 months over voter registration, deletion and restoration of names, the database, the work of officers who register voters and software processes",
-      "corroboration": []
-    },
-    {
-      "rank": 14,
-      "class": "C",
-      "score": 64,
-      "region": "india",
-      "region_confidence": 1.0,
-      "suggested_headline": "📰 LATEST NEWS — INDIA",
-      "title": "Trump Admin Asks Supreme Court To Lift Deportation Limits",
-      "url": "https://www.deccanchronicle.com/world/trump-admin-asks-supreme-court-to-lift-deportation-limits-1990381",
-      "source": "Deccan Chronicle",
-      "source_preferred": false,
-      "published_at": "2026-09-25T06:35:46+05:30",
-      "age_hours": 0.76,
-      "categories": [
-        "court_judgment"
-      ],
-      "excerpt": "The US government is now urgently asking the Supreme Court to lift, until further notice, the limits on third-country removals, which it described as \"an essential tool to remove certain aliens, including some of the worst criminal aliens\"",
-      "corroboration": []
-    },
-    {
-      "rank": 15,
-      "class": "C",
-      "score": 64,
-      "region": "world",
-      "region_confidence": 1.0,
-      "suggested_headline": "🌍 LATEST — WORLD",
-      "title": "Watch: Netanyahu holds up pager at UN, recalls Israel’s attack on Hezbollah",
-      "url": "https://timesofindia.indiatimes.com/world/middle-east/remember-the-pagers-netanyahu-flashes-device-at-un-recalls-deadly-hezbollah-operation-video/articleshow/134472567.cms",
-      "source": "Times of India",
-      "source_preferred": false,
-      "published_at": "2026-09-25T06:13:58+05:30",
-      "age_hours": 1.13,
-      "categories": [
-        "security_terror"
-      ],
-      "excerpt": "",
-      "corroboration": []
-    },
-    {
-      "rank": 16,
-      "class": "C",
-      "score": 64,
-      "region": "india",
-      "region_confidence": 0.4,
-      "suggested_headline": "📰 LATEST NEWS — INDIA",
-      "title": "ED raids sparks political uproar in Punjab",
-      "url": "https://www.thehindu.com/news/national/punjab/ed-raids-sparks-political-uproar-in-punjab/article71504545.ece",
-      "source": "The Hindu",
-      "source_preferred": true,
-      "published_at": "2026-09-25T04:20:31+05:30",
-      "age_hours": 3.02,
-      "categories": [
-        "police_operation",
-        "political_major"
-      ],
-      "excerpt": "The BJP is trying to fight elections through fear after failing to generate public enthusiasm at its rallies, said Punjab cabinet minister Hardeep Singh Mundian",
-      "corroboration": []
-    },
-    {
-      "rank": 17,
-      "class": "C",
-      "score": 64,
-      "region": "india",
-      "region_confidence": 0.4,
-      "suggested_headline": "📰 LATEST NEWS — INDIA",
-      "title": "U.P. International Trade Show 2026 set to position State as Global Sourcing hub, says Minister",
-      "url": "https://www.thehindu.com/news/national/uttar-pradesh/up-international-trade-show-2026-set-to-position-state-as-global-sourcing-hub-says-minister/article71504690.ece",
-      "source": "The Hindu",
-      "source_preferred": true,
-      "published_at": "2026-09-25T04:02:30+05:30",
-      "age_hours": 3.32,
-      "categories": [
-        "political_major",
-        "economic_major"
-      ],
-      "excerpt": "UPITS 2026 will bring businesses, manufacturers, exporters and buyers together on a common platform, expand market access for local enterprises and create new avenues for investment, business growth and employment generation, said Bhupendra Chaudhary",
-      "corroboration": []
-    },
-    {
-      "rank": 18,
-      "class": "C",
-      "score": 64,
-      "region": "world",
-      "region_confidence": 1.0,
-      "suggested_headline": "🌍 LATEST — WORLD",
-      "title": "The murky world of political party finance",
-      "url": "https://www.thehindu.com/opinion/lead/the-murky-world-of-political-party-finance/article71504827.ece",
-      "source": "The Hindu",
-      "source_preferred": true,
-      "published_at": "2026-09-25T02:21:38+05:30",
-      "age_hours": 5.0,
-      "categories": [
-        "political_major"
-      ],
-      "excerpt": "The Election Commission of India should scrutinise political parties and political finance rather than legitimate voters",
-      "corroboration": []
-    },
-    {
-      "rank": 19,
-      "class": "C",
-      "score": 64,
-      "region": "india",
-      "region_confidence": 0.4,
-      "suggested_headline": "📰 LATEST NEWS — INDIA",
-      "title": "Akhilesh visits Raebareli under ‘PDA Yatra’ eyeing broader public outreach",
-      "url": "https://www.thehindu.com/news/national/uttar-pradesh/akhilesh-visits-raebareli-under-pda-yatra-eyeing-broader-public-outreach/article71505048.ece",
-      "source": "The Hindu",
-      "source_preferred": true,
-      "published_at": "2026-09-25T02:17:12+05:30",
-      "age_hours": 5.07,
-      "categories": [
-        "political_major"
-      ],
-      "excerpt": "The BJP are the fake Hindus who demolished countless temples by running bulldozers on Kashi, the oldest place on earth, said Samajwadi Party president Akhilesh Yadav",
-      "corroboration": []
-    },
-    {
-      "rank": 20,
-      "class": "C",
-      "score": 64,
-      "region": "world",
-      "region_confidence": 1.0,
-      "suggested_headline": "🌍 LATEST — WORLD",
-      "title": "A chance to retreat: On Donald Trump, the Greenland agreement",
-      "url": "https://www.thehindu.com/opinion/editorial/a-chance-to-retreat-on-donald-trump-the-greenland-agreement/article71504247.ece",
-      "source": "The Hindu",
-      "source_preferred": true,
-      "published_at": "2026-09-25T02:03:54+05:30",
-      "age_hours": 5.3,
-      "categories": [
-        "political_major"
-      ],
-      "excerpt": "The Greenland agreement allows U.S. President Donald Trump to scale down his threats",
-      "corroboration": []
-    },
-    {
-      "rank": 21,
-      "class": "C",
-      "score": 64,
-      "region": "india",
-      "region_confidence": 1.0,
-      "suggested_headline": "📰 LATEST NEWS — INDIA",
-      "title": "Wangchuk fears 'encounter' after accusing govt of Ladakh atrocities",
-      "url": "https://timesofindia.indiatimes.com/india/wangchuk-fears-encounter-after-accusing-govt-of-ladakh-atrocities/articleshow/134469652.cms",
-      "source": "Times of India",
-      "source_preferred": false,
-      "published_at": "2026-09-25T01:31:36+05:30",
-      "age_hours": 5.83,
-      "categories": [
-        "security_terror"
-      ],
-      "excerpt": "",
-      "corroboration": []
-    },
-    {
-      "rank": 22,
-      "class": "C",
-      "score": 62,
-      "region": "world",
-      "region_confidence": 1.0,
-      "suggested_headline": "🌍 LATEST — WORLD",
-      "title": "Chinese President Xi Jinping Calls For Stronger China-US Ties",
-      "url": "https://www.deccanchronicle.com/world/chinese-president-xi-jinping-calls-for-stronger-china-us-ties-1990386",
-      "source": "Deccan Chronicle",
-      "source_preferred": false,
-      "published_at": "2026-09-25T07:11:39+05:30",
-      "age_hours": 0.17,
-      "categories": [
-        "political_major"
-      ],
-      "excerpt": "Xi Jinping called for \"nurturing the beautiful flowers of Sino-US friendship\"",
-      "corroboration": []
-    },
-    {
-      "rank": 23,
-      "class": "C",
-      "score": 62,
-      "region": "india",
-      "region_confidence": 1.0,
-      "suggested_headline": "📰 LATEST NEWS — INDIA",
-      "title": "BJP spent Rs 287 crore in Bengal polls, over half its five-state election bill",
-      "url": "https://timesofindia.indiatimes.com/india/bjp-spent-287cr-in-bengal-54-of-total-expense-in-5-assembly-polls/articleshow/134472238.cms",
-      "source": "Times of India",
-      "source_preferred": false,
-      "published_at": "2026-09-25T04:54:20+05:30",
-      "age_hours": 2.45,
-      "categories": [
-        "political_major"
-      ],
-      "excerpt": "",
-      "corroboration": []
-    },
-    {
-      "rank": 24,
-      "class": "C",
-      "score": 62,
-      "region": "india",
-      "region_confidence": 0.4,
-      "suggested_headline": "📰 LATEST NEWS — INDIA",
-      "title": "Adani promises ₹1 lakh crore investment in West Bengal by 2035, looks to diversify in power generation and transmission",
-      "url": "https://www.thehindu.com/news/national/west-bengal/adani-group-to-invest-over-1-lakh-crore-in-bengal-by-2035-gautam-adani/article71503371.ece",
-      "source": "The Hindu",
-      "source_preferred": true,
-      "published_at": "2026-09-25T03:47:42+05:30",
-      "age_hours": 3.57,
-      "categories": [
-        "economic_major"
-      ],
-      "excerpt": "The Adani Group's proposes to invest in power distribution in Kolkata, which has so far remained the monopoly of R.P. Sanjiv Goenka Group, through its flagship company CESC",
-      "corroboration": []
-    },
-    {
-      "rank": 25,
-      "class": "C",
-      "score": 60,
-      "region": "india",
-      "region_confidence": 1.0,
-      "suggested_headline": "📰 LATEST NEWS — INDIA",
-      "title": "Centre moves SC for 2-year window to implement OBC creamy layer verdict",
-      "url": "https://timesofindia.indiatimes.com/india/centre-pleads-for-prospective-effect-of-sc-creamy-layer-ruling/articleshow/134472256.cms",
-      "source": "Times of India",
-      "source_preferred": false,
-      "published_at": "2026-09-25T04:59:26+05:30",
-      "age_hours": 2.37,
-      "categories": [
-        "court_judgment"
-      ],
-      "excerpt": "",
-      "corroboration": []
-    },
-    {
-      "rank": 26,
-      "class": "C",
-      "score": 60,
-      "region": "world",
-      "region_confidence": 1.0,
-      "suggested_headline": "🌍 LATEST — WORLD",
-      "title": "‘Terror attack from Pak soil will be act of war’: Defence minister Rajnath warns",
-      "url": "https://timesofindia.indiatimes.com/defence/terror-attack-from-pak-soil-will-mean-act-of-war-defence-minister-warns/articleshow/134470076.cms",
-      "source": "Times of India",
-      "source_preferred": false,
-      "published_at": "2026-09-25T03:34:39+05:30",
-      "age_hours": 3.78,
-      "categories": [
-        "security_terror",
-        "political_major",
-        "international_conflict"
-      ],
-      "excerpt": "",
-      "corroboration": []
-    },
-    {
-      "rank": 27,
-      "class": "C",
-      "score": 60,
-      "region": "world",
-      "region_confidence": 1.0,
-      "suggested_headline": "🌍 LATEST — WORLD",
-      "title": "IIT-Bombay student death: Parents begin hunger strike at Azad Maidan; institute defers mid-semester exams",
-      "url": "https://www.thehindu.com/news/cities/mumbai/iit-bombay-student-death-sahil-wakode-parents-hunger-strike-at-azad-maidan/article71504356.ece",
-      "source": "The Hindu",
-      "source_preferred": true,
-      "published_at": "2026-09-25T02:54:19+05:30",
-      "age_hours": 4.45,
-      "categories": [
-        "traffic_disruption",
-        "protest_major"
-      ],
-      "excerpt": "A CCTV clip purportedly from an IIT Bombay examination hall has gone viral amid a widening dispute over the events that preceded second-year student Sahil Wakode’s death on September 18",
-      "corroboration": []
-    },
-    {
-      "rank": 28,
-      "class": "C",
-      "score": 58,
-      "region": "india",
-      "region_confidence": 1.0,
-      "suggested_headline": "📰 LATEST NEWS — INDIA",
-      "title": "DC Edit | India Stands Firm; US Must Reconsider",
-      "url": "https://www.deccanchronicle.com/opinion/dc-comment/dc-edit-india-stands-firm-us-must-reconsider-1990384",
-      "source": "Deccan Chronicle",
-      "source_preferred": false,
-      "published_at": "2026-09-25T06:57:14+05:30",
-      "age_hours": 0.41,
-      "categories": [
-        "international_conflict"
-      ],
-      "excerpt": "While Washington sees sanctions as a means of advancing its objectives in two conflicts, New Delhi’s relations with Russia are guided by its own energy security, longstanding defence ties and the costs borne by Indian households and industry",
-      "corroboration": []
-    },
-    {
-      "rank": 29,
-      "class": "C",
-      "score": 58,
-      "region": "world",
-      "region_confidence": 1.0,
-      "suggested_headline": "🌍 LATEST — WORLD",
-      "title": "At least 30 actors, politicians arrested in anti-Netanyahu protest outside UN",
-      "url": "https://timesofindia.indiatimes.com/world/us/at-least-30-arrested-including-actors-politicians-during-anti-netanyahu-protest-outside-un/articleshow/134472170.cms",
-      "source": "Times of India",
-      "source_preferred": false,
-      "published_at": "2026-09-25T04:25:39+05:30",
-      "age_hours": 2.93,
-      "categories": [
-        "police_operation",
-        "political_major",
-        "protest_major"
-      ],
-      "excerpt": "",
-      "corroboration": []
-    },
-    {
-      "rank": 30,
-      "class": "C",
-      "score": 58,
-      "region": "india",
-      "region_confidence": 1.0,
-      "suggested_headline": "📰 LATEST NEWS — INDIA",
-      "title": "Uttar Pradesh seizes Rs 78.5 crore assets in anti-drug crackdown",
-      "url": "https://www.indiatoday.in/india/story/uttar-pradesh-drug-crackdown-rs-78-5-crore-properties-confiscated-ptag-3002273-2026-09-25?utm_source=rss",
-      "source": "India Today",
-      "source_preferred": false,
-      "published_at": "2026-09-25T02:10:14+05:30",
-      "age_hours": 5.19,
-      "categories": [
-        "major_crime",
-        "police_operation"
-      ],
-      "excerpt": "Uttar Pradesh seizes Rs 78.5 crore assets in anti-drug crackdown",
-      "corroboration": []
-    },
-    {
-      "rank": 31,
-      "class": "C",
-      "score": 58,
-      "region": "world",
-      "region_confidence": 1.0,
-      "suggested_headline": "🌍 LATEST — WORLD",
-      "title": "Fed up, you are adding to court’s burden: HC to Election Commission on symbol row",
-      "url": "https://timesofindia.indiatimes.com/city/kolkata/fed-up-you-are-adding-to-courts-burden-cal-hc-to-election-commission-on-symbol-row/articleshow/134469680.cms",
-      "source": "Times of India",
-      "source_preferred": false,
-      "published_at": "2026-09-25T01:33:38+05:30",
-      "age_hours": 5.8,
-      "categories": [
-        "political_major"
-      ],
-      "excerpt": "",
-      "corroboration": []
-    },
-    {
-      "rank": 32,
-      "class": "C",
-      "score": 56,
-      "region": "world",
-      "region_confidence": 1.0,
-      "suggested_headline": "🌍 LATEST — WORLD",
-      "title": "‘We’ve never gotten along better’: Trump, Xi strike warm tone at White House dinner",
-      "url": "https://timesofindia.indiatimes.com/world/us/trump-xi-exchange-warm-words-before-white-house-state-dinner-what-they-said/articleshow/134472633.cms",
-      "source": "Times of India",
-      "source_preferred": false,
-      "published_at": "2026-09-25T06:32:02+05:30",
-      "age_hours": 0.83,
-      "categories": [
-        "traffic_disruption"
-      ],
-      "excerpt": "",
-      "corroboration": []
-    },
-    {
-      "rank": 33,
-      "class": "C",
-      "score": 56,
-      "region": "india",
-      "region_confidence": 1.0,
-      "suggested_headline": "📰 LATEST NEWS — INDIA",
-      "title": "Rs 94,000 crore looted by Dubai-based scammers: CBI arrests key Mahadev app accused",
-      "url": "https://timesofindia.indiatimes.com/india/dubai-based-scammers-looted-rs-94000cr-cbi-arrests-mahadev-app-key-accused-deported-from-uae/articleshow/134471944.cms",
-      "source": "Times of India",
-      "source_preferred": false,
-      "published_at": "2026-09-25T03:43:58+05:30",
-      "age_hours": 3.63,
-      "categories": [
-        "police_operation"
-      ],
-      "excerpt": "",
-      "corroboration": []
-    },
-    {
-      "rank": 34,
-      "class": "D",
-      "score": 52,
-      "region": "telangana",
-      "region_confidence": 1.0,
-      "suggested_headline": "📰 LATEST NEWS — TELANGANA",
-      "title": "Changing culture of movie-watching",
-      "url": "https://www.thehindu.com/news/national/telangana/changing-culture-of-movie-watching/article71505778.ece",
-      "source": "The Hindu",
-      "source_preferred": true,
-      "published_at": "2026-09-25T06:45:00+05:30",
-      "age_hours": 0.61,
-      "categories": [
-        "routine"
-      ],
-      "excerpt": "From iconic single screens to multiplexes, streaming platforms and movies watched at home, Hyderabad’s cinema culture has changed dramatically over the years. Theatres that once anchored neighbourhoods have shut, others have reinvented themselves, and the meaning of ‘going to the movies’ has shifted. Yet the appetite for films and the pull of a shared big-screen experience remains, writes Naveen Kumar",
-      "corroboration": []
-    },
-    {
-      "rank": 35,
-      "class": "D",
-      "score": 50,
-      "region": "world",
-      "region_confidence": 1.0,
-      "suggested_headline": "🌍 LATEST — WORLD",
-      "title": "‘No greater partner than Trump’: Netanyahu defends Iran war as delegates walk out at UNGA",
-      "url": "https://timesofindia.indiatimes.com/world/middle-east/no-greater-partner-than-president-trump-netanyahu-defends-iran-war-attacks-critics-as-delegates-walk-out-at-unga/articleshow/134469836.cms",
-      "source": "Times of India",
-      "source_preferred": false,
-      "published_at": "2026-09-25T02:41:43+05:30",
-      "age_hours": 4.66,
-      "categories": [
-        "international_conflict"
-      ],
-      "excerpt": "",
-      "corroboration": []
-    },
-    {
-      "rank": 36,
-      "class": "D",
-      "score": 46,
-      "region": "india",
-      "region_confidence": 1.0,
-      "suggested_headline": "📰 LATEST NEWS — INDIA",
-      "title": "12 years of ‘Make in India’ in 12 metrics — Low and patchy impact on growth, employment & global share",
-      "url": "https://www.thehindu.com/business/Economy/12-years-of-make-in-india-in-12-metrics-low-and-patchy-impact-on-growth-employment-global-share/article71505448.ece",
-      "source": "The Hindu",
-      "source_preferred": true,
-      "published_at": "2026-09-25T06:48:17+05:30",
-      "age_hours": 0.56,
-      "categories": [
-        "routine"
-      ],
-      "excerpt": "While recent incentive schemes by the government have seen some success, those gains are limited to a handful of sectors",
-      "corroboration": []
-    },
-    {
-      "rank": 37,
-      "class": "D",
-      "score": 46,
-      "region": "india",
-      "region_confidence": 1.0,
-      "suggested_headline": "📰 LATEST NEWS — INDIA",
-      "title": "Opposition to move fresh notice for CEC’s removal; INDIA bloc mulls joint action",
-      "url": "https://www.thehindu.com/news/national/opposition-to-move-fresh-notice-for-cecs-removal-india-bloc-mulls-joint-action/article71504708.ece",
-      "source": "The Hindu",
-      "source_preferred": true,
-      "published_at": "2026-09-25T06:47:51+05:30",
-      "age_hours": 0.56,
-      "categories": [
-        "routine"
-      ],
-      "excerpt": "New petition likely in both Houses of Parliament even as an earlier Rajya Sabha notice against Gyanesh Kumar remains pending; TMC urges swift and united Opposition response",
-      "corroboration": []
-    },
-    {
-      "rank": 38,
-      "class": "D",
-      "score": 46,
-      "region": "india",
-      "region_confidence": 1.0,
-      "suggested_headline": "📰 LATEST NEWS — INDIA",
-      "title": "Operations of quarries, trekking sites, adventure tourism centres suspended in Keralam’s Wayanad",
-      "url": "https://www.thehindu.com/news/national/kerala/operations-of-quarries-trekking-sites-adventure-tourism-centres-suspended-in-keralams-wayanad/article71505251.ece",
-      "source": "The Hindu",
-      "source_preferred": true,
-      "published_at": "2026-09-25T05:48:18+05:30",
-      "age_hours": 1.56,
-      "categories": [
-        "routine"
-      ],
-      "excerpt": "Panchayat secretaries told to take the required steps if it becomes necessary to relocate people from disaster-prone areas",
-      "corroboration": []
-    },
-    {
-      "rank": 39,
-      "class": "D",
-      "score": 46,
-      "region": "india",
-      "region_confidence": 1.0,
-      "suggested_headline": "📰 LATEST NEWS — INDIA",
-      "title": "Inputs from ASHAs to shape AI-enabled training platform for cervical cancer screening in Assam",
-      "url": "https://www.thehindu.com/news/national/assam/inputs-from-ashas-to-shape-ai-enabled-training-platform-for-cervical-cancer-screening-in-assam/article71504049.ece",
-      "source": "The Hindu",
-      "source_preferred": true,
-      "published_at": "2026-09-25T05:39:06+05:30",
-      "age_hours": 1.71,
-      "categories": [
-        "routine"
-      ],
-      "excerpt": "About 110 Accredited Social Health Activists in Barak Valley collaborated with doctors, programmers, and researchers to help design the digital tools",
-      "corroboration": []
-    },
-    {
-      "rank": 40,
-      "class": "D",
-      "score": 43,
-      "region": "world",
-      "region_confidence": 1.0,
-      "suggested_headline": "🌍 LATEST — WORLD",
-      "title": "Netanyahu, at UN, calls accusations of genocide in Gaza ‘the biggest lie of the century’",
-      "url": "https://www.thehindu.com/news/international/israels-netanyahu-at-un-calls-accusations-of-genocide-in-gaza-the-biggest-lie-of-the-century/article71505769.ece",
-      "source": "The Hindu",
-      "source_preferred": true,
-      "published_at": "2026-09-25T02:37:05+05:30",
-      "age_hours": 4.74,
-      "categories": [
-        "routine"
-      ],
-      "excerpt": "When Israeli PM Benjamin Netanyahu walked to the rostrum, a mix of cheers, boos and mass walkouts erupted; scores of delegates marched out and a majority of visible seats sat empty afterward",
-      "corroboration": [
-        "Deccan Chronicle"
-      ]
-    },
-    {
-      "rank": 41,
-      "class": "D",
-      "score": 42,
-      "region": "world",
-      "region_confidence": 1.0,
-      "suggested_headline": "🌍 LATEST — WORLD",
-      "title": "Trump hosts Xi for state dinner as pomp masks tensions",
-      "url": "https://www.thehindu.com/news/international/trump-hosts-xi-for-state-dinner-as-pomp-masks-tensions/article71506872.ece",
-      "source": "The Hindu",
-      "source_preferred": true,
-      "published_at": "2026-09-25T07:06:28+05:30",
-      "age_hours": 0.25,
-      "categories": [
-        "routine"
-      ],
-      "excerpt": "U.S. tech titans attended the banquet, including Tesla's Elon Musk, Apple's Tim Cook, Nvidia's Jensen Huang and Sam Altman of OpenAI, underscoring that trade and AI were high on the agenda for Xi Jinping's visit",
-      "corroboration": []
-    },
-    {
-      "rank": 42,
-      "class": "D",
-      "score": 42,
-      "region": "india",
-      "region_confidence": 0.4,
-      "suggested_headline": "📰 LATEST NEWS — INDIA",
-      "title": "Covering the bases: from visibility to votes",
-      "url": "https://www.thehindu.com/news/national/covering-the-bases-from-visibility-to-votes/article71502791.ece",
-      "source": "The Hindu",
-      "source_preferred": true,
-      "published_at": "2026-09-25T06:35:49+05:30",
-      "age_hours": 0.76,
-      "categories": [
-        "routine"
-      ],
-      "excerpt": "Last year, the Congress set in motion the Sangathan Srijan Abhiyan, a process of rewiring its district leadership across India. This year, Rahul Gandhi is undertaking a renewed push towards public engagement bordering on activism, even as district leadership is being freed of past hierarchies. Sandeep Phukan examines the social re-engineering of the grand old party and how it intends to build up to the 2029 Parliamentary election",
-      "corroboration": []
-    },
-    {
-      "rank": 43,
-      "class": "D",
-      "score": 42,
-      "region": "india",
-      "region_confidence": 1.0,
-      "suggested_headline": "📰 LATEST NEWS — INDIA",
-      "title": "Shutdown over poor school infra paralyses Arunachal capital",
-      "url": "https://www.thehindu.com/news/national/arunachal-pradesh/shutdown-over-poor-school-infra-paralyses-arunachal-capital/article71504474.ece",
-      "source": "The Hindu",
-      "source_preferred": true,
-      "published_at": "2026-09-25T04:46:27+05:30",
-      "age_hours": 2.59,
-      "categories": [
-        "routine"
-      ],
-      "excerpt": "Some stray incidents of violence and vehicle damage were reported in Itanagar and adjoining areas",
-      "corroboration": []
-    },
-    {
-      "rank": 44,
-      "class": "D",
-      "score": 42,
-      "region": "india",
-      "region_confidence": 1.0,
-      "suggested_headline": "📰 LATEST NEWS — INDIA",
-      "title": "‘Enter at own risk’: churches to non-Christians as anti-conversion law takes effect in Chhattisgarh",
-      "url": "https://www.thehindu.com/news/national/chhattisgarh/enter-at-own-risk-churches-to-non-christians-as-anti-conversion-law-takes-effect-in-chhattisgarh/article71504784.ece",
-      "source": "The Hindu",
-      "source_preferred": true,
-      "published_at": "2026-09-25T03:49:14+05:30",
-      "age_hours": 3.54,
-      "categories": [
-        "routine"
-      ],
-      "excerpt": "Warning boards have been put up as a precautionary measure to avoid action under the Chhattisgarh Freedom of Religion Act, 2026, says Diamond Philus, general secretary of the Dhamtari District Christian Forum",
-      "corroboration": []
-    },
-    {
-      "rank": 45,
-      "class": "D",
-      "score": 42,
-      "region": "india",
-      "region_confidence": 1.0,
-      "suggested_headline": "📰 LATEST NEWS — INDIA",
-      "title": "Chirag Paswan launches youth outreach campaign from Patna",
-      "url": "https://www.thehindu.com/news/national/bihar/chirag-paswan-launches-youth-outreach-campaign-from-patna/article71505021.ece",
-      "source": "The Hindu",
-      "source_preferred": true,
-      "published_at": "2026-09-25T03:11:53+05:30",
-      "age_hours": 4.16,
-      "categories": [
-        "routine"
-      ],
-      "excerpt": "Most of the crowd belonged to the Scheduled Caste (SC), particularly from the Paswan community",
-      "corroboration": []
-    },
-    {
-      "rank": 46,
-      "class": "D",
-      "score": 42,
-      "region": "telangana",
-      "region_confidence": 1.0,
-      "suggested_headline": "📰 LATEST NEWS — TELANGANA",
-      "title": "Political Visits Disrupt Patient Care At RIMS After SNCU Fire",
-      "url": "https://www.deccanchronicle.com/southern-states/telangana/political-visits-disrupt-patient-care-at-rims-after-sncu-fire-1990378",
-      "source": "Deccan Chronicle",
-      "source_preferred": false,
-      "published_at": "2026-09-25T01:53:13+05:30",
-      "age_hours": 5.47,
-      "categories": [
-        "routine"
-      ],
-      "excerpt": "A large number of party workers, accompanying the leaders, have entered the SNCU and other wards, raising concerns about infection control.",
-      "corroboration": []
-    },
-    {
-      "rank": 47,
-      "class": "D",
-      "score": 42,
-      "region": "telangana",
-      "region_confidence": 1.0,
-      "suggested_headline": "📰 LATEST NEWS — TELANGANA",
-      "title": "Master Plan Proposed For Mallur Temple Development",
-      "url": "https://www.deccanchronicle.com/southern-states/telangana/master-plan-proposed-for-mallur-temple-development-1990375",
-      "source": "Deccan Chronicle",
-      "source_preferred": false,
-      "published_at": "2026-09-25T01:30:07+05:30",
-      "age_hours": 5.86,
-      "categories": [
-        "routine"
-      ],
-      "excerpt": "Seethakka, accompanied by district collector Borkhade Hemant Sahadeo, visited the temple in Mangapet mandal on Thursday and offered special prayers.",
-      "corroboration": []
-    },
-    {
-      "rank": 48,
-      "class": "D",
-      "score": 40,
-      "region": "india",
-      "region_confidence": 1.0,
-      "suggested_headline": "📰 LATEST NEWS — INDIA",
-      "title": "Why didn't you resign? CEC in crosshairs, but the two ECs can't escape blame",
-      "url": "https://www.indiatoday.in/india/story/election-commission-of-india-cec-gyanesh-kumar-sukhbir-singh-sandhu-and-vivek-joshi-dissent-itspc-3001837-2026-09-25?utm_source=rss",
-      "source": "India Today",
-      "source_preferred": false,
-      "published_at": "2026-09-25T06:30:00+05:30",
-      "age_hours": 0.86,
-      "categories": [
-        "routine"
-      ],
-      "excerpt": "Why didn't you resign? CEC in crosshairs, but the two ECs can't escape blame",
-      "corroboration": []
-    },
-    {
-      "rank": 49,
-      "class": "D",
-      "score": 38,
-      "region": "world",
-      "region_confidence": 1.0,
-      "suggested_headline": "🌍 LATEST — WORLD",
-      "title": "BEST to install check-meter to tackle consumers’ complaints of inflated bills on smart meters",
-      "url": "https://www.thehindu.com/news/cities/mumbai/best-to-install-check-meter-to-tackle-consumers-complaints-of-inflated-bills-on-smart-meters/article71504569.ece",
-      "source": "The Hindu",
-      "source_preferred": true,
-      "published_at": "2026-09-25T04:10:46+05:30",
-      "age_hours": 3.18,
-      "categories": [
-        "routine"
-      ],
-      "excerpt": "BEST Officials said that this is a response to consumers’ query about the unexpected sudden increase in electricity bills following the smart meter modernisation initiative",
-      "corroboration": []
-    },
-    {
-      "rank": 50,
-      "class": "D",
-      "score": 38,
-      "region": "world",
-      "region_confidence": 1.0,
-      "suggested_headline": "🌍 LATEST — WORLD",
-      "title": "A nation’s song: On Vande Mataram’s rendition",
-      "url": "https://www.thehindu.com/opinion/editorial/a-nations-song-on-vande-matarams-rendition/article71504906.ece",
-      "source": "The Hindu",
-      "source_preferred": true,
-      "published_at": "2026-09-25T02:14:21+05:30",
-      "age_hours": 5.12,
-      "categories": [
-        "routine"
-      ],
-      "excerpt": "Vande Mataram’s rendition must be in the spirit of “unity in diversity”",
-      "corroboration": []
-    },
-    {
-      "rank": 51,
-      "class": "D",
-      "score": 38,
-      "region": "world",
-      "region_confidence": 1.0,
-      "suggested_headline": "🌍 LATEST — WORLD",
-      "title": "Should permanent membership and veto powers of the UNSC be abolished?",
-      "url": "https://www.thehindu.com/opinion/op-ed/should-permanent-membership-and-veto-powers-of-the-unsc-be-abolished/article71505505.ece",
-      "source": "The Hindu",
-      "source_preferred": true,
-      "published_at": "2026-09-25T01:51:23+05:30",
-      "age_hours": 5.5,
-      "categories": [
-        "routine"
-      ],
-      "excerpt": "",
-      "corroboration": []
-    },
-    {
-      "rank": 52,
-      "class": "D",
-      "score": 38,
-      "region": "india",
-      "region_confidence": 0.4,
-      "suggested_headline": "📰 LATEST NEWS — INDIA",
-      "title": "Confident that Vijay will accept Rahul as Prime Ministerial candidate: Manickam Tagore",
-      "url": "https://www.thehindu.com/news/national/tamil-nadu/confident-that-vijay-will-accept-rahul-as-prime-ministerial-candidate-manickam-tagore/article71504912.ece",
-      "source": "The Hindu",
-      "source_preferred": true,
-      "published_at": "2026-09-25T01:45:06+05:30",
-      "age_hours": 5.61,
-      "categories": [
-        "routine"
-      ],
-      "excerpt": "",
-      "corroboration": []
-    },
-    {
-      "rank": 53,
-      "class": "D",
-      "score": 36,
-      "region": "world",
-      "region_confidence": 1.0,
-      "suggested_headline": "🌍 LATEST — WORLD",
-      "title": "DC Edit | Trust Eroded, EC Needs A Complete Overhaul",
-      "url": "https://www.deccanchronicle.com/opinion/dc-comment/dc-edit-trust-eroded-ec-needs-a-complete-overhaul-1990388",
-      "source": "Deccan Chronicle",
-      "source_preferred": false,
-      "published_at": "2026-09-25T07:14:00+05:30",
-      "age_hours": 0.13,
-      "categories": [
-        "routine"
-      ],
-      "excerpt": "Reports have said the two other commissioners in the panel questioned the decision of the CEC 14 times in 10 months; and the topics were of lasting import to a fair electoral process",
-      "corroboration": []
-    },
-    {
-      "rank": 54,
-      "class": "D",
-      "score": 36,
-      "region": "world",
-      "region_confidence": 1.0,
-      "suggested_headline": "🌍 LATEST — WORLD",
-      "title": "Netanyahu Says Iran Government Will Be Toppled By Its Lies, Corruption",
-      "url": "https://www.deccanchronicle.com/world/netanyahu-says-iran-government-will-be-toppled-by-its-lies-corruption-1990385",
-      "source": "Deccan Chronicle",
-      "source_preferred": false,
-      "published_at": "2026-09-25T07:01:44+05:30",
-      "age_hours": 0.33,
-      "categories": [
-        "routine"
-      ],
-      "excerpt": "Netanyahu predicted that the Iranian people would one day rise against their government",
-      "corroboration": []
-    },
-    {
       "rank": 55,
-      "class": "D",
-      "score": 36,
-      "region": "world",
-      "region_confidence": 1.0,
-      "suggested_headline": "🌍 LATEST — WORLD",
-      "title": "Trump hosts Xi at White House state dinner with tech, finance-heavy guest list",
-      "url": "https://timesofindia.indiatimes.com/world/us/white-house-state-dinner-trump-welcomes-xi-as-tech-bosses-top-executives-arrive/articleshow/134472449.cms",
-      "source": "Times of India",
+      "class": "C",
+      "score": 62,
+      "region": "telangana",
+      "region_confidence": 0.4,
+      "suggested_headline": "📰 LATEST NEWS — TELANGANA",
+      "title": "Dipke asks opposition parties to stop participating in ‘rigged’ elections",
+      "url": "https://telanganatoday.com/dipke-asks-opposition-parties-to-stop-participating-in-rigged-elections",
+      "source": "Telangana Today",
       "source_preferred": false,
-      "published_at": "2026-09-25T05:40:19+05:30",
-      "age_hours": 1.69,
+      "published_at": "2026-09-25T11:34:52+05:30",
+      "age_hours": 0.12,
       "categories": [
-        "routine"
+        "political_major"
       ],
-      "excerpt": "",
+      "excerpt": "CJP founder Abhijeet Dipke urged opposition parties to stop contesting elections if they believe polls are rigged, arguing participation legitimises the process. His remarks came amid scrutiny of Election Commission functioning after reports said two commissioners raised objections 14 times",
       "corroboration": []
     },
     {
       "rank": 56,
-      "class": "D",
-      "score": 36,
-      "region": "india",
-      "region_confidence": 1.0,
-      "suggested_headline": "📰 LATEST NEWS — INDIA",
-      "title": "NEET-PG 2026 result out: 2.65 lakh candidates appeared, General cut-off at 262",
-      "url": "https://timesofindia.indiatimes.com/india/neet-pg-2026-result-out-2-65-lakh-candidates-appeared-general-cut-off-at-262/articleshow/134472224.cms",
-      "source": "Times of India",
+      "class": "C",
+      "score": 62,
+      "region": "telangana",
+      "region_confidence": 0.4,
+      "suggested_headline": "📰 LATEST NEWS — TELANGANA",
+      "title": "PM Modi calls for self-reliant India, urges Seva Yatris to embrace spirit of national service",
+      "url": "https://telanganatoday.com/pm-modi-calls-for-self-reliant-india-urges-seva-yatris-to-embrace-spirit-of-national-service",
+      "source": "Telangana Today",
       "source_preferred": false,
-      "published_at": "2026-09-25T04:50:06+05:30",
-      "age_hours": 2.53,
+      "published_at": "2026-09-25T11:34:13+05:30",
+      "age_hours": 0.13,
       "categories": [
-        "routine"
+        "political_major"
       ],
-      "excerpt": "",
+      "excerpt": "Prime Minister Narendra Modi urged Seva Yatris to pursue self-reliance, public service and national welfare while interacting with participants of the Seva Yatra. The journey connects Varanasi and Vadnagar, promoting community engagement, youth participation and service activities across villages and towns",
       "corroboration": []
     },
     {
       "rank": 57,
-      "class": "D",
-      "score": 36,
-      "region": "india",
-      "region_confidence": 1.0,
-      "suggested_headline": "📰 LATEST NEWS — INDIA",
-      "title": "8 years of Ayushman Bharat: 60 crore beneficiaries, Rs 2 lakh crore in treatment",
-      "url": "https://timesofindia.indiatimes.com/india/8-years-of-ayushman-bharat-60-crore-beneficiaries-rs-2-lakh-crore-in-treatment/articleshow/134472206.cms",
-      "source": "Times of India",
+      "class": "C",
+      "score": 62,
+      "region": "telangana",
+      "region_confidence": 0.4,
+      "suggested_headline": "📰 LATEST NEWS — TELANGANA",
+      "title": "EAM Jaishankar holds several meetings with leaders on UNGA sidelines",
+      "url": "https://telanganatoday.com/eam-jaishankar-holds-several-meetings-with-leaders-on-unga-sidelines",
+      "source": "Telangana Today",
       "source_preferred": false,
-      "published_at": "2026-09-25T04:41:18+05:30",
-      "age_hours": 2.67,
+      "published_at": "2026-09-25T11:14:39+05:30",
+      "age_hours": 0.46,
       "categories": [
-        "routine"
+        "political_major",
+        "international_conflict"
       ],
-      "excerpt": "",
+      "excerpt": "External Affairs Minister S Jaishankar held meetings with foreign leaders and ministers on the sidelines of UNGA81, discussing bilateral ties, multilateral cooperation, regional security, the Ukraine conflict, West Asia developments, and economic, energy and food security issues",
       "corroboration": []
     },
     {
       "rank": 58,
-      "class": "D",
-      "score": 36,
-      "region": "india",
-      "region_confidence": 1.0,
-      "suggested_headline": "📰 LATEST NEWS — INDIA",
-      "title": "TMC split row: SC asks EC for timeframe to decide party name, symbol dispute",
-      "url": "https://timesofindia.indiatimes.com/india/sc-seeks-timeframe-from-ec-on-deciding-tmc-factional-feud/articleshow/134472183.cms",
-      "source": "Times of India",
+      "class": "C",
+      "score": 62,
+      "region": "telangana",
+      "region_confidence": 0.4,
+      "suggested_headline": "📰 LATEST NEWS — TELANGANA",
+      "title": "Pak vows to deepen ties with Bangladesh and Iran as Sharif meets Rahman, Pezeshkian on UNGA margins",
+      "url": "https://telanganatoday.com/pak-vows-to-deepen-ties-with-bangladesh-and-iran-as-sharif-meets-rahman-pezeshkian-on-unga-margins",
+      "source": "Telangana Today",
       "source_preferred": false,
-      "published_at": "2026-09-25T04:28:43+05:30",
-      "age_hours": 2.88,
+      "published_at": "2026-09-25T11:13:27+05:30",
+      "age_hours": 0.48,
       "categories": [
-        "routine"
+        "political_major",
+        "economic_major"
       ],
-      "excerpt": "",
+      "excerpt": "Pakistan Prime Minister Shehbaz Sharif met Bangladesh’s Tarique Rahman and Iranian President Masoud Pezeshkian on the sidelines of UNGA, pledging stronger bilateral cooperation with both countries. Discussions covered trade, investment, connectivity, regional developments, de-escalation, diplomacy and regional peace efforts",
       "corroboration": []
     },
     {
       "rank": 59,
-      "class": "D",
-      "score": 36,
-      "region": "india",
-      "region_confidence": 1.0,
-      "suggested_headline": "📰 LATEST NEWS — INDIA",
-      "title": "EC eyes October electoral roll revision across poll-bound states",
-      "url": "https://timesofindia.indiatimes.com/india/ec-may-order-ssr-of-rolls-in-oct-for-poll-bound-states/articleshow/134471984.cms",
-      "source": "Times of India",
+      "class": "C",
+      "score": 62,
+      "region": "telangana",
+      "region_confidence": 0.4,
+      "suggested_headline": "📰 LATEST NEWS — TELANGANA",
+      "title": "Tejashwi Yadav accuses CM Choudhary of ‘violating’ POCSO Act for ‘revealing identity’ of Jamui victim",
+      "url": "https://telanganatoday.com/tejashwi-yadav-accuses-cm-choudhary-of-violating-pocso-act-for-revealing-identity-of-jamui-victim",
+      "source": "Telangana Today",
       "source_preferred": false,
-      "published_at": "2026-09-25T04:23:43+05:30",
-      "age_hours": 2.96,
+      "published_at": "2026-09-25T11:02:49+05:30",
+      "age_hours": 0.66,
       "categories": [
-        "routine"
+        "major_crime",
+        "political_major"
       ],
-      "excerpt": "",
+      "excerpt": "Bihar Chief Minister Samrat Choudhary faced criticism after deleting a photograph with a minor victim’s family in the Jamui molestation case. RJD leader Tejashwi Yadav alleged the post violated POCSO safeguards protecting child victims’ identities, prompting demands for action",
       "corroboration": []
     },
     {
       "rank": 60,
-      "class": "D",
-      "score": 36,
-      "region": "india",
+      "class": "C",
+      "score": 62,
+      "region": "world",
       "region_confidence": 1.0,
-      "suggested_headline": "📰 LATEST NEWS — INDIA",
-      "title": "SIR row: EC says Form 6, 8 with citizenship declaration were unanimously approved",
-      "url": "https://timesofindia.indiatimes.com/india/ec-troika-unanimously-approved-sir-orders-on-forms-6-8-citizenship-declaration-officials/articleshow/134470059.cms",
+      "suggested_headline": "🌍 LATEST — WORLD",
+      "title": "Athens to Washington: What is the ‘Thucydides Trap’ Chinese President Xi keeps invoking",
+      "url": "https://timesofindia.indiatimes.com/world/us/from-athens-to-washington-what-is-the-thucydides-trap-chinese-president-xi-keeps-invoking/articleshow/134474967.cms",
       "source": "Times of India",
       "source_preferred": false,
-      "published_at": "2026-09-25T03:53:27+05:30",
-      "age_hours": 3.47,
+      "published_at": "2026-09-25T10:46:53+05:30",
+      "age_hours": 0.92,
       "categories": [
-        "routine"
+        "political_major",
+        "international_conflict"
       ],
-      "excerpt": "",
+      "excerpt": "During discussions with US leaders, Chinese President Xi Jinping emphasized the concept of the Thucydides Trap, advocating for peaceful coexistence between the two nations. His repeated calls for mutual respect convey Beijing’s desire to evade conflict with the US. Historical instances suggest that shifts in power do not inevitably lead to war. However, analysts remain split over the implications of the Thucydides Trap in the current US-China dynamic.",
       "corroboration": []
     }
   ]
