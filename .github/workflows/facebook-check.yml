@@ -11,6 +11,8 @@ jobs:
       - uses: actions/setup-python@v5
         with:
           python-version: '3.11'
+      - name: deps (pillow for publish imports)
+        run: python3 -m pip install -q pillow
       - name: check Facebook Page connection (read-only)
         env:
           FB_PAGE_TOKEN: ${{ secrets.FB_PAGE_TOKEN }}
@@ -45,15 +47,21 @@ jobs:
           age = 9999
           if quota.get("last_card_at"):
               age = (now - datetime.fromisoformat(quota["last_card_at"])).total_seconds() / 60
-          runs = api(f"https://api.github.com/repos/{repo}/actions/workflows/news-cycle.yml/runs"
-                     "?per_page=4")
-          recent = any((now - datetime.fromisoformat(
-              r["created_at"].replace("Z", "+00:00")).astimezone(IST)).total_seconds() < 75 * 60
-              for r in runs.get("workflow_runs", []))
           if age < 130:
               print(f"last card {age:.0f} min ago: cadence healthy, watchdog idle"); raise SystemExit
-          if recent:
-              print("news-cycle ran within 75 min (slot attempted, pool was thin): skip"); raise SystemExit
+          runs = api(f"https://api.github.com/repos/{repo}/actions/workflows/news-cycle.yml/runs"
+                     "?per_page=4")
+          last_run_min = 9999.0
+          for r in runs.get("workflow_runs", []):
+              dmin = (now - datetime.fromisoformat(
+                  r["created_at"].replace("Z", "+00:00")).astimezone(IST)).total_seconds() / 60
+              last_run_min = min(last_run_min, dmin)
+          if last_run_min < 30:
+              print(f"news-cycle ran {last_run_min:.0f} min ago: fresh enough, skip")
+              raise SystemExit
+          if last_run_min < 75 and age < 3 * 60:
+              print("cron gave a recent shot; one more cycle will follow - skip")
+              raise SystemExit
           print("missed slot detected -> dispatching news-cycle now")
           api(f"https://api.github.com/repos/{repo}/actions/workflows/news-cycle.yml/dispatches",
               {"ref": "main"})
