@@ -1070,6 +1070,16 @@ def urdu_headline(title):
     """Rule-based Roman-Urdu rendering of a headline; None when unsure."""
     t = title.strip().rstrip(".")
     # 25 Sep morning round: sets-up-body, advisory-on, relief-to + shrink retry
+    # 25 Sep: "Ctx: Special Buses From Place" transport frame
+    m = re.match(r"^(.{4,55}?)[:,]\s*Special (?:Buses|Bus|Trains|Train|Services?)\s+From\s+([\w'\u2019 ]+)$", t, re.I)
+    if m:
+        ctx = m.group(1).strip()
+        ctx = re.sub(r"\b(\w+\s+)?immersion\b", lambda g: (g.group(1) or "") + "visarjan", ctx, flags=re.I)
+        ctx = re.sub(r"\bVisarjan\b", "visarjan", ctx)
+        mode = "basen" if re.search(r"bus", m.group(0), re.I) else "gaadiyaan"
+        place = _ur_clean_o(m.group(2))
+        if place:
+            return _fin(f"{ctx} ke liye {place} se khaas {mode} chalayi gayi hain.")
     # 25 Sep: landslide-damage and resignation-demand frames (both seen live)
     m = re.match(r"^(?:major\s+)?landslide\s+(?:strikes|hits|buries|damages)\s+"
                  r"([\w'\u2019 ]+?)(?:,\s*(?:several|many|\d+)?\s*)?(?:houses?\s+"
@@ -1612,7 +1622,7 @@ URDI_VOCAB |= {"wala", "wale", "data", "centre", "kshamata", "thermal",
                  "samiti", "manch", "kisano", "karmiyaron",
                  "logon", "vidyarthiyon", "traffic", "advisory", "bhousadke",
                  "ghatna", "kshatigraat", "kai", "hinsa", "istifa",
-                 "maang"}
+                 "maang", "basen", "chalayi", "khaas"}
 URDI_VOCAB = frozenset(t for t in URDI_VOCAB if len(t) >= 2)
 
 def bullet_quality(en, ur):
