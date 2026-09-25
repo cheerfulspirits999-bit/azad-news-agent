@@ -420,13 +420,23 @@ def build_digest(cands, catchup=False):
                 if any(topic == x[3] for x in pool):
                     _skip["dup"] += 1
                     continue  # same story from another feed - one bullet only
-                if writer.bullet_quality(lead, lead_ur):
+                _q = writer.bullet_quality(lead, lead_ur)
+                if _q:
                     alt = writer.urdu_headline(c["title"])  # converter repair before skip
                     if alt and len(alt) <= 95 and not writer.bullet_quality(lead, alt):
                         lead_ur = alt
-                    else:
-                        _skip["qual"] += 1
-                        continue  # 17 Sep gate: no vague EN / English-fragment Urdu bullets
+                        _q = []
+                if _q and set(_q) <= {"en-titlecase-garbage", "en-no-specifics"}:
+                    # 25 Sep: feed writes Title Case; synthesize the SAME fact as
+                    # a sentence-case lead, then re-run ALL gates on it
+                    e2 = writer.en_headline(c["title"])
+                    l2 = _lead_ok(e2) if e2 else None
+                    if l2 and not writer.bullet_quality(l2, lead_ur):
+                        lead = l2
+                        _q = []
+                if _q:
+                    _skip["qual"] += 1
+                    continue  # 17 Sep gate: no vague EN / English-fragment Urdu bullets
                 pool.append((c, lead, lead_ur, topic))
 
     # never-silent stages (owner 23 Sep): the FULL pipeline runs per stage -

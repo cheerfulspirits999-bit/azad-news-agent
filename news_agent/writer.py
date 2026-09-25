@@ -1141,17 +1141,21 @@ def urdu_headline(title):
             return _fin(f"{who} ne {tgt} se {why} par istifa ki maang ki.")
     m = re.match(r"^(?:[\w.\u2019'\-]+:\s*)?(.+?)\s+sets?\s+up\s+"
                  r"(?:a\s+|an\s+|the\s+)?(?:special\s+)?"
-                 r"(body|committee|panel|task force|forum|cell|team)\s+for\s+(.+?)\.?$",
+                 r"(?:([A-Z][\w\-]{2,14})\s+)?"
+                 r"(body|bureau|committee|panel|task force|forum|cell|team)s?\s+for\s+(.+?)\.?$",
                  t, re.I)
     if m and len(m.group(1)) <= 38:
         s_ = _ur_clean_s(m.group(1))
         thing = {"body": "khaas samiti", "committee": "samiti", "panel": "samiti",
                  "task force": "khaas dal", "forum": "manch", "cell": "samiti",
-                 "team": "khaas dal"}[m.group(2).lower()]
-        pp = m.group(3).lower()
+                 "team": "khaas dal", "bureau": "karyalay"}[m.group(3).lower()]
+        if m.group(2):
+            thing = f"{m.group(2)} {thing}"
+        pp = m.group(4).lower()
         pp = re.sub(r"\broads?\b", "sadak", pp)
         pp = re.sub(r"\bsafety\b", "suraksha", pp)
         pp = re.sub(r"\bbuses?\b", "bas", pp)
+        pp = re.sub(r"\bmanagement\b", "prabandhan", pp)
         pp = re.sub(r"\bwomen\b", "mahilaon", pp)
         pp = re.sub(r"\bfarmers?\b", "kisano", pp)
         pp = re.sub(r"\blandowners?\b", "zameendaron", pp)
@@ -1515,6 +1519,11 @@ def urdu_headline(title):
         m = rx.search(t)
         if not m:
             continue
+        _rest = t[m.end():]
+        if _rest.lstrip().startswith(":"):
+            continue  # verb sits in a colon label ("X Probe: ..."), not a sentence verb
+        if "," in _rest or len(_rest) > 62:
+            continue  # compound multi-clause object: template cannot fold it safely
         s = _ur_clean_s(t[:m.start()])
         o = _reorder(_ur_postpo(_ur_clean_o(t[m.end():])))
         if len(s) < 3:
@@ -1661,8 +1670,87 @@ URDI_VOCAB |= {"wala", "wale", "data", "centre", "kshamata", "thermal",
                  "ghatna", "kshatigraat", "kai", "hinsa", "istifa",
                  "maang", "basen", "chalayi", "khaas", "chattane", "aadesh",
                  "aavedanon", "sahi", "registration", "ghat", "mein", "pradarshan",
-                 "haraotal", "qatal", "karz", "maafi"}
+                 "haraotal", "qatal", "karz", "maafi", "rail", "prabandhan",
+                 "karyalay", "launches"}
 URDI_VOCAB = frozenset(t for t in URDI_VOCAB if len(t) >= 2)
+
+# 25 Sep: sentence-case EN lead synthesizer for title-case feeds.
+# Only used when the RAW title lead was flagged *solely* as titlecase garbage;
+# the synthesized lead then runs through the SAME gates (no loosening).
+_KEEP_EN = {"India", "Telangana", "Hyderabad", "Andhra", "Pradesh", "Ganesh",
+            "Ganesha", "Malkajgiri", "Khairatabad", "Hussain", "Sagar",
+            "Vijayawada", "Indrakeeladri", "Sikkim", "Rimbi", "Hubballi",
+            "Khammam", "Jagtial", "Delhi", "Mumbai", "Chennai", "Goa",
+            "Congress", "BJP", "TDP", "YSRCP", "AIMIM", "SUPREME", "Supreme",
+            "High", "Court", "Government", "Section", "CEC", "ECI", "CBI",
+            "ED", "IMD", "RBI", "US", "USA", "Pakistan", "China", "NHAI",
+            "TG-TMARS", "Kerala", "Western", "Ghats", "Minister", "Panchayat",
+             "Panchayati", "Municipal", "Corporation", "Mahesh", "KCR",
+             "Chandrababu", "Naidu", "Revanth"}
+
+def _sentcase(text):
+    out = []
+    for i, w in enumerate(text.split()):
+        core = re.sub(r"[^\w'\u2019\-]", "", w)
+        keep = (i == 0 or core in _KEEP_EN
+                or core.rstrip("'s") in _KEEP_EN
+                or (core.isupper() and 2 < len(core) <= 10)
+                or any(ch.isdigit() for ch in core)
+                or w.endswith(":"))
+        out.append(w if keep else w.lower())
+    r = " ".join(out)
+    return r[:1].upper() + r[1:]
+
+def en_headline(title):
+    """Sentence-case EN lead mirroring the new converters; None if no rule."""
+    t = title.strip().rstrip(".")
+    t = re.sub(r"^([\w.\u2019'\-]+?):\s*", "", t)  # drop TG-TMARS-style prefix
+    m = re.match(r"^(.+?)\s+sets?\s+up\s+(?:a\s+|an\s+|the\s+)?(?:special\s+)?"
+                 r"(?:([A-Z][\w\-]{2,14})\s+)?(body|bureau|committee|panel|task force|"
+                 r"forum|cell|team)s?\s+for\s+(.+?)\.?$", t)
+    if m:
+        name = f"{m.group(2)} " if m.group(2) else ""
+        gov = "" if re.search(r"(?i)\b(govt|government)$", m.group(1)) else " Government"
+        return _sentcase(f"{m.group(1)}{gov} set up {name}{m.group(3)} "
+                         f"for {m.group(4)}.")
+    m = re.match(r"^(.+?)\s+(?:issue|issues|issued|release|releases|released|"
+                 r"give|gives|given)\s+advisory\s+(?:on|for|regarding)\s+(.+?)\.?$", t, re.I)
+    if m:
+        return _sentcase(f"{m.group(1)} issued an advisory on {m.group(2)}.")
+    m = re.match(r"^(.+?)\s+issues?\s+order\s+to\s+register\s+(?:[Ss]ection\s+)?"
+                 r"([\w.\-]+)\s+properties?\s+with\s+valid\s+"
+                 r"(?:applications?|approvals?)\.?$", t)
+    if m:
+        return _sentcase(f"{m.group(1)} Government issued an order to register "
+                         f"Section {m.group(2)} properties with valid approvals.")
+    m = re.match(r"^(.+?)\s+(?:provides?|provided|announces?|announced|offers?|"
+                 r"offered)\s+relief\s+to\s+(.+?)\.?$", t, re.I)
+    if m:
+        return _sentcase(f"{m.group(1)} provides relief to {m.group(2)}.")
+    m = re.match(r"^(.+?)\s+protests?\s+(?:across|in|at)\s+([A-Z][\w'\u2019\- ]{2,28}?)"
+                 r"(?:,|\s+and\s+|\s+)seeking\s+(?:the\s+)?(.+?)\.?$", t, re.I)
+    if m:
+        return _sentcase(f"{m.group(1)} protested across {m.group(2)} seeking "
+                         f"{m.group(3).split(',')[0].strip()}.")
+    m = re.match(r"^(?:Major\s+)?landslide\s+(?:strikes|hits|buries|damages)\s+"
+                 r"([\w'\u2019 ]+?)(?:,\s*(?:several|many|\d+)?\s*)?"
+                 r"(?:houses?\s+(?:damaged|destroyed)[\w .]*)?(?:,\s*no casualties)?\.?$",
+                 t, re.I)
+    if m:
+        return _sentcase(f"Landslide strikes {m.group(1)}; several houses damaged.")
+    m = re.match(r"^(?:Boulders|Rocks|Debris)\s+(?:crash\w*|fall(?:s)?|slid\w*|slide)\s+"
+                 r"onto\s+(.+?)\s+in\s+([A-Z][\w'\u2019\-]*(?:\s+[A-Z][\w'\u2019\-]*)*)", t)
+    if m:
+        return _sentcase(f"Boulders crash onto {m.group(1)} in {m.group(2)}.")
+    m = re.match(r"^(.+?)[,:]\s*Special (Buses|Bus|Trains|Train|Services?)\s+From\s+"
+                 r"([\w'\u2019 ]+)$", t)
+    if m:
+        ctx = re.sub(r"\b[Ii]mmersion\b", "visarjan", m.group(1))
+        return _sentcase(f"Special {m.group(2)} from {m.group(3)} "
+                         f"for {ctx}.")
+    if len(t) <= 95:
+        return _sentcase(t)  # generic: same facts, sentence case; ALL gates re-run
+    return None
 
 def bullet_quality(en, ur):
     """Return list of reasons the EN/UR bullet pair is NOT publishable."""
