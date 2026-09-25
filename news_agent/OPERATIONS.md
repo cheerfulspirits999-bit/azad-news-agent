@@ -216,3 +216,11 @@ RETURNING-OWNER / RETURNING-AGENT BRIEF:
   ROOT CAUSE vocab under-harvest: 2-char markers (ke/ki/ka) never matched the {2,} token
   scan -> 200+ legit Urdu words missing; fixed with word-boundary marks search; new rules
   hoisted above generic 'begins' handler. Local digest: 4 clean bullets (pool=6).
+
+## 25 Sep morning round (post-mortem of "no posts since morning")
+- GitHub delivered only 2 news-cycle runs 02:12→13:08 IST (07:21, 13:08); 08/10/12 slots silently throttled. 13:08 run DID attempt: stage-2 skips = casualty 63, conv 87, qual 24, fr 102 → honest empty pool (deaths/bans + unconvertible), not a crash.
+- Slot watchdog: facebook-check.yml re-armed (cron 45 2,4,6,8,10,12,14,16 * * * = 08:15..22:15 IST). It reads quota last_card_at + recent news-cycle runs; if a slot was attempted by nobody and the last card is >130 min old, it dispatches news-cycle itself → missed GitHub slots self-heal. Needs AGENT_PAT secret (already present).
+- Supply: +NDTV +LiveMint feeds (reachability verified from sandbox via curl; feedburner/livemint 200s).
+- 5 converters (writer.urdu_headline, hoisted): sets-up-body-for (→"khaas samiti gathit ki"), advisory-on (word-glossed idol/height/limits→murtiyon/unchai/seemaon + ki-inserts), relief-to incl. "troubled by Section N" → "dhara 22A se pareshan … ko raahat di", landslide-damage (property-only, "kai ghar kshatigraat hue"), resignation-over (trailing clause cut at comma, proper-noun case kept). URDI_VOCAB +13 words (sadak/suraksha/dhara/raahat/bhousadke/istifa…).
+- autod._collect: shrink-retry before conv-skip — strip " State-wide"-type modifiers and trailing " on <Month> <dd>" date clause, reconvert, adopt only if ≤95 AND bullet_quality clean. Fixes "…protests … on September 28" class of >95 overhangs.
+- VAGUE_EN trailing-dot bug FIXED: stay-against now matches titles ending with '.' (unit: "Supreme Court issued stay against the eviction drive." → vague-english ✔).

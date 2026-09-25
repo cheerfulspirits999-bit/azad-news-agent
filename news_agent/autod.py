@@ -385,6 +385,17 @@ def build_digest(cands):
                     lead = _lead_ok(c["title"].strip())
                     lead_ur = writer.urdu_headline(c["title"]) if lead else None
                 if not lead or not lead_ur or len(lead_ur) > 95:
+                    t2 = re.sub(r"\s+[A-Z][a-z]+-wide\b", "", c["title"].strip())
+                    t2 = re.sub(r",?\s+on\s+[A-Z][a-z]+\s+\d{1,2}"
+                                r"(?:st|nd|th|rd)?(?:\s+to\s+\d{1,2}"
+                                r"(?:st|nd|th|rd)?)?", "", t2).strip()
+                    if t2 and t2 != c["title"].strip():
+                        a2 = writer.urdu_headline(t2)
+                        l2 = _lead_ok(t2)
+                        if (a2 and len(a2) <= 95 and l2
+                                and not writer.bullet_quality(l2, a2)):
+                            lead, lead_ur = l2, a2  # date/modifier was the only overhang
+                if not lead or not lead_ur or len(lead_ur) > 95:
                     _skip["conv"] += 1
                     continue
                 tw = {w.lower() for w in re.findall(r"[A-Za-z]{7,}", c["title"])}

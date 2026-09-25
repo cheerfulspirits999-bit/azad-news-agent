@@ -1,6 +1,8 @@
 name: facebook-check
 on:
-  workflow_dispatch:   # cron paused while Zapier bridge carries publishing (avoids noise emails)
+  schedule:
+    - cron: "45 2,4,6,8,10,12,14,16 * * *"   # 08:15..22:15 IST slot guard
+  workflow_dispatch: {}                      # manual button stays
 jobs:
   check:
     runs-on: ubuntu-latest
@@ -14,3 +16,45 @@ jobs:
           FB_PAGE_TOKEN: ${{ secrets.FB_PAGE_TOKEN }}
           FB_PAGE_ID: ${{ secrets.FB_PAGE_ID }}
         run: python3 news_agent/publish.py --check-fb
+
+      - name: slot watchdog - re-dispatch news cycle if GitHub dropped the slot
+        if: always()
+        env:
+          PAT: ${{ secrets.AGENT_PAT }}
+          REPO: ${{ github.repository }}
+        run: |
+          python3 - <<'PY'
+          import os, json, base64, urllib.request
+          from datetime import datetime, timezone, timedelta
+          pat = os.environ.get("PAT", "")
+          if not pat:
+              print("no AGENT_PAT secret; watchdog idle"); raise SystemExit
+          repo = os.environ["REPO"]
+          def api(url, data=None):
+              req = urllib.request.Request(
+                  url, data=json.dumps(data).encode() if data else None,
+                  headers={"Authorization": "Bearer " + pat,
+                           "Accept": "application/vnd.github+json"})
+              return json.load(urllib.request.urlopen(req, timeout=30))
+          IST = timezone(timedelta(hours=5))
+          now = datetime.now(IST)
+          if not (8 <= now.hour < 23):
+              print("outside 08-22 IST publish window"); raise SystemExit
+          q = api(f"https://api.github.com/repos/{repo}/contents/news_agent/state/quota.json?ref=main")
+          quota = json.loads(base64.b64decode(q["content"]).decode())
+          age = 9999
+          if quota.get("last_card_at"):
+              age = (now - datetime.fromisoformat(quota["last_card_at"])).total_seconds() / 60
+          runs = api(f"https://api.github.com/repos/{repo}/actions/workflows/news-cycle.yml/runs"
+                     "?per_page=4")
+          recent = any((now - datetime.fromisoformat(
+              r["created_at"].replace("Z", "+00:00")).astimezone(IST)).total_seconds() < 75 * 60
+              for r in runs.get("workflow_runs", []))
+          if age < 130:
+              print(f"last card {age:.0f} min ago: cadence healthy, watchdog idle"); raise SystemExit
+          if recent:
+              print("news-cycle ran within 75 min (slot attempted, pool was thin): skip"); raise SystemExit
+          print("missed slot detected -> dispatching news-cycle now")
+          api(f"https://api.github.com/repos/{repo}/actions/workflows/news-cycle.yml/dispatches",
+              {"ref": "main"})
+          PY

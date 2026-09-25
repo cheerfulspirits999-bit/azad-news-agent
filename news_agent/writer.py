@@ -1069,6 +1069,89 @@ def _ijazat(s, o):
 def urdu_headline(title):
     """Rule-based Roman-Urdu rendering of a headline; None when unsure."""
     t = title.strip().rstrip(".")
+    # 25 Sep morning round: sets-up-body, advisory-on, relief-to + shrink retry
+    # 25 Sep: landslide-damage and resignation-demand frames (both seen live)
+    m = re.match(r"^(?:major\s+)?landslide\s+(?:strikes|hits|buries|damages)\s+"
+                 r"([\w'\u2019 ]+?)(?:,\s*(?:several|many|\d+)?\s*)?(?:houses?\s+"
+                 r"(?:damaged|destroyed)[\w .]*)?(?:,\s*no casualties)?\.?$", t, re.I)
+    if m:
+        place = _ur_clean_o(m.group(1))
+        place = re.sub(r"'s\b", " ke", place)
+        if place and len(place) <= 30:
+            return _fin(f"{place} mein bhousadke ki ghatna; kai ghar kshatigraat hue.")
+    m = re.match(r"^(.+?)\s+seeks?\s+(.+?)'?s?\s+resignation\s+over\s+(.+?)\.?$",
+                 t, re.I)
+    if m and len(m.group(1)) <= 30 and len(m.group(2)) <= 32:
+        who = _ur_clean_s(m.group(1))
+        tgt = _ur_clean_o(m.group(2))
+        why = m.group(3)
+        why = re.sub(r"\bviolence\b", "hinsa", why, flags=re.I)
+        why = re.sub(r"\bclash(es)?\b", "jharpe", why, flags=re.I)
+        why = re.sub(r"\braze?\b", "aag", why, flags=re.I)
+        why = why.split(",")[0].strip()
+        why = _ur_clean_o(why)
+        if who and tgt and len(why) >= 3:
+            return _fin(f"{who} ne {tgt} se {why} par istifa ki maang ki.")
+    m = re.match(r"^(?:[\w.\u2019'\-]+:\s*)?(.+?)\s+sets?\s+up\s+"
+                 r"(?:a\s+|an\s+|the\s+)?(?:special\s+)?"
+                 r"(body|committee|panel|task force|forum|cell|team)\s+for\s+(.+?)\.?$",
+                 t, re.I)
+    if m and len(m.group(1)) <= 38:
+        s_ = _ur_clean_s(m.group(1))
+        thing = {"body": "khaas samiti", "committee": "samiti", "panel": "samiti",
+                 "task force": "khaas dal", "forum": "manch", "cell": "samiti",
+                 "team": "khaas dal"}[m.group(2).lower()]
+        pp = m.group(3).lower()
+        pp = re.sub(r"\broads?\b", "sadak", pp)
+        pp = re.sub(r"\bsafety\b", "suraksha", pp)
+        pp = re.sub(r"\bbuses?\b", "bas", pp)
+        pp = re.sub(r"\bwomen\b", "mahilaon", pp)
+        pp = re.sub(r"\bfarmers?\b", "kisano", pp)
+        pp = re.sub(r"\blandowners?\b", "zameendaron", pp)
+        pp = _ur_clean_o(pp)
+        if s_ and pp:
+            return _fin(f"{s_} ne {pp} ke liye {thing} gathit ki.")
+    m = re.match(r"^(.+?)\s+(?:issue|issues|issued|release|releases|released|"
+                 r"give|gives|given)\s+advisory\s+(?:on|for|regarding)\s+(.+?)\.?$",
+                 t, re.I)
+    if m and len(m.group(1)) <= 42:
+        s_ = _ur_clean_s(m.group(1))
+        o = m.group(2).lower()
+        o = re.sub(r"\bidols?\b", "murtiyon", o)
+        o = re.sub(r"\bheight\b", "unchai", o)
+        o = re.sub(r"\blimits?\b", "seemaon", o)
+        o = re.sub(r"\bganesh\b", "Ganesh", o)
+        o = re.sub(r"\bimmersion\b", "visarjan", o)
+        o = o.replace("murtiyon unchai", "murtiyon ki unchai")
+        o = o.replace("unchai seemaon", "unchai ki seemaon")
+        o = _ur_clean_o(o)
+        if s_ and len(o) >= 5:
+            return _fin(f"{s_} ne {o} par salah jari kar di.")
+    m = re.match(r"^(.+?)\s+(?:provides?|provided|announces?|announced|"
+                 r"offers?|offered)\s+relief\s+to\s+(.+?)\.?$", t, re.I)
+    if m and len(m.group(1)) <= 40:
+        s_ = _ur_clean_s(m.group(1))
+        o = m.group(2).lower()
+        mo = re.match(r"^(.+?)\s+(?:troubled|aggrieved|worried|affected)\s+by\s+"
+                      r"(?:section\s+)?([\w.\-]+)$", o)
+        if mo:
+            secm = re.search(r"[Ss]ection\s+([\w.\-]+)", m.group(2))
+            if secm:
+                mo = (mo.group(1), secm.group(1))
+            who = mo[0] if isinstance(mo, tuple) else mo.group(1)
+            who = re.sub(r"\blandowners?\b", "zameendaron", who)
+            who = re.sub(r"\bfarmers?\b", "kisano", who)
+            who = re.sub(r"\bemployees?\b", "karmiyaron", who)
+            who = re.sub(r"\bpeople\b", "logon", who)
+            who = _ur_clean_o(who)
+            if who:
+                return _fin(f"{s_} ne dhara {mo[1]} se pareshan {who} ko "
+                            "raahat di.")
+        o = re.sub(r"\bfarmers?\b", "kisano", o)
+        o = re.sub(r"\bstudents?\b", "vidyarthiyon", o)
+        o = _ur_clean_o(o)
+        if o:
+            return _fin(f"{s_} ne {o} ke liye raahat ka elaan kiya.")
     # 24 Sep night round 2: begins-debate and "N things for X in Y" frames.
     m = re.search(r"(.{4,45}?)\s+(?:begins|begin|opens|opened|starts|started)\s+debate on\s+(.+)$", t, re.I)
     if m:
@@ -1463,7 +1546,7 @@ UR_ING_OK = {"nothing", "something", "anything", "evening", "morning", "meeting"
 VAGUE_EN = re.compile(
     r"(issued (a )?stay|gave (a )?statement|took action|expressed "
     r"(shock|concern|grief)|issued (an )?order|made (an )?announcement)\.?$|"
-    r"(issued (a )?stay (against|of)[^.]*$|issued orders on .*without.*)")
+    r"(issued (a )?stay (against|of)[^.]*\.?|issued orders on .*without.*)")
 
 
 # Roman-Urdu function words, verb endings and the loans our converters emit.
@@ -1523,7 +1606,13 @@ URDI_VOCAB = _urdi_vocab_auto() | frozenset((
 URDI_VOCAB |= {"wala", "wale", "data", "centre", "kshamata", "thermal",
                  "bijli", "sarkari", "madad", "waledain", "up-chunav",
                  "visarjan", "shivir", "paani", "vivadasparast", "vidheyak",
-                 "bahas", "giraftar"}
+                 "bahas", "giraftar", "sadak", "suraksha", "dhara",
+                 "zameendaron", "pareshan", "raahat", "murtiyon",
+                 "murti", "unchai", "seemaon", "khaas", "gathit",
+                 "samiti", "manch", "kisano", "karmiyaron",
+                 "logon", "vidyarthiyon", "traffic", "advisory", "bhousadke",
+                 "ghatna", "kshatigraat", "kai", "hinsa", "istifa",
+                 "maang"}
 URDI_VOCAB = frozenset(t for t in URDI_VOCAB if len(t) >= 2)
 
 def bullet_quality(en, ur):
