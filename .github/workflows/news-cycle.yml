@@ -5,7 +5,12 @@ name: news-cycle
 on:
   schedule:
     - cron: "5,20,35,50 * * * *"          # every 30 min (:10 and :40 UTC)
-  workflow_dispatch: {}           # enables the "Run workflow" test button
+  workflow_dispatch:            # "Run workflow" test button
+    inputs:
+      catchup:
+        description: "1 = drain missed stories now at 30-min spacing"
+        required: false
+        default: "0"
 permissions:
   contents: write                 # allows committing the state back
 concurrency:
@@ -25,6 +30,7 @@ jobs:
           FB_PAGE_TOKEN: ${{ secrets.FB_PAGE_TOKEN }}
           FB_PAGE_ID: ${{ secrets.FB_PAGE_ID }}
           AGENT_PAT: ${{ secrets.AGENT_PAT }}
+          DIGEST_CATCHUP: ${{ github.event.inputs.catchup || '0' }}
         run: python3 news_agent/autod.py --once
       - name: commit agent memory
         if: always()

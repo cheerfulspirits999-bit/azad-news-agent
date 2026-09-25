@@ -62,7 +62,10 @@ jobs:
           if last_run_min < 75 and age < 3 * 60:
               print("cron gave a recent shot; one more cycle will follow - skip")
               raise SystemExit
-          print("missed slot detected -> dispatching news-cycle now")
+          print(f"missed slot detected -> dispatching news-cycle now (age {age:.0f} min)")
+          body = {"ref": "main"}
+          if age >= 180:
+              body["inputs"] = {"catchup": "1"}  # owner 25 Sep: drain the backlog
           api(f"https://api.github.com/repos/{repo}/actions/workflows/news-cycle.yml/dispatches",
-              {"ref": "main"})
+              body)
           PY

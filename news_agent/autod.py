@@ -322,8 +322,10 @@ def _same_story(t1, t2):
     return j >= 0.40 or (long_shared and j >= 0.25)
 
 
-def build_digest(cands):
-    """One card, three full headlines: Hyderabad + Telangana + India."""
+def build_digest(cands, catchup=False):
+    """One card, three full headlines: Hyderabad + Telangana + India.
+    catchup (owner 25 Sep): after silence, older-but-clean stories may still
+    ride a backlog card; quality gates are identical."""
     pub = os.path.join(STATE, "published.json")
     done = set()
     if os.path.exists(pub):
@@ -508,8 +510,10 @@ def build_digest(cands):
         return picks
 
     picks = []
-    for _stage, (_ms, _ma, _mc) in enumerate([(55, 12, 60), (50, 16, 55),
-                                              (45, 20, 50)]):
+    _stages = [(55, 12, 60), (50, 16, 55), (45, 20, 50)]
+    if catchup:
+        _stages.append((45, 26, 50))  # backlog: same gates, wider age window
+    for _stage, (_ms, _ma, _mc) in enumerate(_stages):
         _collect(_ms, _ma, _mc)
         log(f"[digest] stage-{_stage}: pool={len(pool)} skips={_skip}")
         picks = _build_picks()
@@ -540,7 +544,9 @@ def build_digest(cands):
 def one_cycle():
     cfg = json.load(open(os.path.join(BASE, "config.json"), encoding="utf-8"))
     log("=== cycle start ===")
-    cyc = monitor.run_cycle(cfg["rules"]["max_post_age_hours"], 60)
+    _cu = os.environ.get("DIGEST_CATCHUP") == "1"  # backlog: widen FETCH too
+    cyc = monitor.run_cycle(26 if _cu else cfg["rules"]["max_post_age_hours"],
+                            120 if _cu else 60)
 
     def _prio(c):  # politics & main news first, then by score
         main = bool(set(c.get("categories", [])) & MAIN_CATS) or c.get("class") == "A"
@@ -557,16 +563,25 @@ def one_cycle():
         q0 = {"day": today0, "regular": 0, "day_total": 0,
               "emerg_month": q0.get("emerg_month", {})}
     ncards = q0.get("digests", {}).get(today0, 0)
-    card_gap_ok = True
+    gap_min = 9999.0
     if q0.get("last_card_at"):
-        card_gap_ok = (datetime.now(IST) -
-                       datetime.fromisoformat(q0["last_card_at"])
-                       ).total_seconds() >= 2 * 3600  # cards sit 2h+ apart
-    if (ncards < CARDS_PER_DAY
-            and datetime.now(IST).hour >= DIGEST_SLOTS[ncards]
-            and card_gap_ok and posted != 5):
+        gap_min = (datetime.now(IST) -
+                   datetime.fromisoformat(q0["last_card_at"])
+                   ).total_seconds() / 60  # cards sit 2h+ apart
+    # owner 25 Sep catch-up: a manual dispatch with catchup=1 (or ANY silence
+    # past 3h inside the window) drains the backlog at 30-min spacing until the
+    # pool is exhausted; the normal 2h slot rhythm resumes by itself.
+    catchup = (os.environ.get("DIGEST_CATCHUP") == "1"
+               or (gap_min >= 180 and 8 <= datetime.now(IST).hour < 23))
+    if catchup:
+        log(f"[catchup] armed: {gap_min:.0f} min since last card")
+    cap = CARDS_PER_DAY + (6 if catchup else 0)
+    _slot = DIGEST_SLOTS[min(ncards, len(DIGEST_SLOTS) - 1)]
+    _due = (gap_min >= 30 if catchup
+            else datetime.now(IST).hour >= _slot and gap_min >= 120)
+    if (ncards < cap and _due and posted != 5):
         try:
-            dg = build_digest(cyc["candidates"])
+            dg = build_digest(cyc["candidates"], catchup=catchup)
         except Exception as ex:
             import traceback
             log("DIGEST BUILD CRASH:", ex, traceback.format_exc()[-400:])

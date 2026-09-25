@@ -1080,10 +1080,25 @@ def urdu_headline(title):
         place = _ur_clean_o(m.group(2))
         if place:
             return _fin(f"{ctx} ke liye {place} se khaas {mode} chalayi gayi hain.")
+    m = re.match(r"^(.+?)\s+protests?\s+(?:across|in|at)\s+([A-Z][\w'\u2019\- ]{2,28}?)"
+                 r"(?:,|\s+and\s+|\s+)seeking\s+(?:the\s+)?(.+?)\.?$", t, re.I)
+    if m and len(m.group(1)) <= 34:
+        s_ = _ur_clean_s(m.group(1))
+        pl = _ur_clean_o(m.group(2))
+        dm = m.group(3).split(",")[0].strip()
+        dm = re.sub(r"\bCEC\b", "CEC", dm)
+        dm = re.sub(r"\b(?:resignation|istifa)\b", "istifa", dm, flags=re.I)
+        dm = re.sub(r"\bmurders?\b", "qatal", dm)
+        dm = re.sub(r"\bstrike[sd]?\b", "haraotal", dm)
+        dm = re.sub(r"\bloan\s+waiver\b", "karz maafi", dm, flags=re.I)
+        dm = re.sub(r"\bcancel(l?ation)?\s+of\s", "ragti khatam karne ki ", dm, flags=re.I)
+        dm = _ur_clean_o(dm)
+        if s_ and pl and dm and len(dm) <= 30:
+            return _fin(f"{s_} ne {pl} mein pradarshan kar ke {dm} ki maang ki.")
     # 25 Sep evening round: issue-order-to + rocks-on-road frames
     m = re.match(r"^(.+?)\s+issues?\s+order\s+to\s+register\s+"
                  r"(?:[Ss]ection\s+)?([\w.\-]+)\s+properties?\s+with\s+"
-                 r"valid\s+applications?\.?$", t)
+                 r"valid\s+(?:applications?|approvals?)\.?$", t)
     if m and len(m.group(1)) <= 36:
         s_ = _ur_clean_s(m.group(1))
         s_ = re.sub(r"(?i)\s*govt\.?$", " sarkar", s_)
@@ -1645,7 +1660,8 @@ URDI_VOCAB |= {"wala", "wale", "data", "centre", "kshamata", "thermal",
                  "logon", "vidyarthiyon", "traffic", "advisory", "bhousadke",
                  "ghatna", "kshatigraat", "kai", "hinsa", "istifa",
                  "maang", "basen", "chalayi", "khaas", "chattane", "aadesh",
-                 "aavedanon", "sahi", "registration", "ghat", "mein"}
+                 "aavedanon", "sahi", "registration", "ghat", "mein", "pradarshan",
+                 "haraotal", "qatal", "karz", "maafi"}
 URDI_VOCAB = frozenset(t for t in URDI_VOCAB if len(t) >= 2)
 
 def bullet_quality(en, ur):
