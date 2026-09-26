@@ -82,7 +82,8 @@ def _set_secret(name, value):
         with urllib.request.urlopen(r, timeout=30) as resp:
             return json.load(resp)
 
-    pk = req(api)
+    base = f"https://api.github.com/repos/{owner}/{repo}/actions/secrets"
+    pk = req(f"{base}/public-key")
     sealed = SealedBox(PublicKey(base64.b64decode(pk["key"]))).encrypt(
         value.encode())
     body = {"encrypted_value": base64.b64encode(sealed).decode(),
