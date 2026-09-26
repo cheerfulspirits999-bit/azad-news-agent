@@ -1,0 +1,131 @@
+"""Token self-renewal for the Azad Daily publisher (owner 26 Sep: permanent).
+
+Runs before every publish cycle. Needs four GitHub Secrets once set by the
+owner: FB_PAGE_TOKEN, FB_APP_ID, FB_APP_SECRET, FB_REFRESH_TOKEN.
+
+Logic:
+  1. debug the live FB_PAGE_TOKEN; if it is valid and does not expire within
+     48h (or never expires) -> do nothing and exit 0.
+  2. otherwise: FB_REFRESH_TOKEN (long-lived user token, ~60d) -> re-exchange
+     for a fresh long-lived user token -> derive a NON-EXPIRING Page token.
+  3. push both fresh tokens back into the GitHub secrets so the chain
+     renews itself forever, and export FB_PAGE_TOKEN for this very run.
+
+Any failure exits non-zero WITHOUT touching the pipeline: the normal publish
+then fails loudly (rc 5 + pending retry + watchdog alert) rather than posting
+through any other route.
+"""
+import base64
+import json
+import os
+import sys
+import time
+import urllib.parse
+import urllib.request
+from nacl.public import PublicKey, SealedBox
+
+API = "https://graph.facebook.com/v21.0"
+GRACE = 48 * 3600.0  # renew when < 48h of life remains
+
+
+def _jget(url):
+    with urllib.request.urlopen(url, timeout=30) as r:
+        return json.load(r)
+
+
+def _debug(token):
+    try:
+        d = _jget(f"{API}/debug_token?input_token={token}"
+                  f"&access_token={token}")["data"]
+    except Exception:
+        return None
+    return d if d.get("is_valid") else None
+
+
+def _need_renew(tok):
+    if not tok:
+        return True
+    d = _debug(tok)
+    if not d:
+        return True
+    exp = d.get("expires_at") or 0
+    return exp != 0 and exp - time.time() < GRACE
+
+
+def _exchange(refresh, app_id, app_secret):
+    q = urllib.parse.urlencode({"grant_type": "fb_exchange_token",
+                                "client_id": app_id,
+                                "client_secret": app_secret,
+                                "fb_exchange_token": refresh})
+    return _jget(f"{API}/oauth/access_token?{q}")["access_token"]
+
+
+def _page_tokens(user_tok):
+    d = _jget(f"{API}/me/accounts?fields=id,access_token&access_token={user_tok}")
+    return {p["id"]: p["access_token"] for p in d.get("data", [])}
+
+
+def _set_secret(name, value):
+    """Encrypt + PUT a repo secret. Requires GITHUB_TOKEN with secrets:write."""
+    owner = os.environ.get("GH_OWNER", "")
+    repo = os.environ.get("GH_REPO", "")
+    gh_tok = os.environ.get("GITHUB_TOKEN", "")
+    if not (owner and repo and gh_tok):
+        print(f"auth: cannot push secret {name} (missing GH env)", file=sys.stderr)
+        return False
+    api = f"https://api.github.com/repos/{owner}/{repo}/actions/secrets/{name}"
+    hdr = {"Authorization": f"Bearer {gh_tok}",
+           "Accept": "application/vnd.github+json", "User-Agent": "azad-auth"}
+
+    def req(url):
+        r = urllib.request.Request(url, headers=hdr)
+        with urllib.request.urlopen(r, timeout=30) as resp:
+            return json.load(resp)
+
+    pk = req(api)
+    sealed = SealedBox(PublicKey(base64.b64decode(pk["key"]))).encrypt(
+        value.encode())
+    body = {"encrypted_value": base64.b64encode(sealed).decode(),
+            "key_id": pk.get("key_id")}
+    r = urllib.request.Request(api, data=json.dumps(body).encode(),
+                               headers={**hdr, "Content-Type": "application/json"},
+                               method="PUT")
+    urllib.request.urlopen(r, timeout=30)
+    print(f"auth: updated secret {name}")
+    return True
+
+
+def main():
+    tok = os.environ.get("FB_PAGE_TOKEN", "")
+    if not _need_renew(tok):
+        print("auth: Page token healthy, nothing to do")
+        return 0
+    app_id = os.environ.get("FB_APP_ID", "")
+    app_secret = os.environ.get("FB_APP_SECRET", "")
+    refresh = os.environ.get("FB_REFRESH_TOKEN", "")
+    if not (app_id and app_secret and refresh):
+        print("auth: renewal IMPOSSIBLE - owner must set FB_APP_ID, "
+              "FB_APP_SECRET and FB_REFRESH_TOKEN secrets once", file=sys.stderr)
+        return 2
+    user = _exchange(refresh, app_id, app_secret)          # fresh 60d
+    pages = _page_tokens(user)
+    if not pages:
+        print("auth: user token has no Page access (token from wrong app?)",
+              file=sys.stderr)
+        return 3
+    pid, ptok = next(iter(pages.items()))
+    if "pages_manage_posts" not in (_debug(ptok) or {}).get("scopes", []):
+        print("auth: derived Page token lacks pages_manage_posts", file=sys.stderr)
+        return 4
+    _set_secret("FB_PAGE_TOKEN", ptok)
+    _set_secret("FB_REFRESH_TOKEN", user)                   # keep the chain
+    gh_env = os.environ.get("GITHUB_ENV", "")
+    if gh_env:
+        with open(gh_env, "a", encoding="utf-8") as f:
+            f.write(f"FB_PAGE_TOKEN={ptok}\nFB_PAGE_ID={pid}\n")
+    print(f"auth: renewed page token for {pid}; written to $GITHUB_ENV")
+    return 0
+
+
+if __name__ == "__main__":
+    sys.exit(main())
