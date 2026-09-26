@@ -1186,6 +1186,8 @@ def ur_to_roman(text):
                   ("manazori mal gaiy", "manzuri mil gayi"),
                   ("manzuri mal gaiy", "manzuri mil gayi"),
                   ("banad kar", "band kar"), ("baraaamad", "baramad"),
+                  (" he.", " hai."), (" hin.", " hain."),
+                  ("kararahe", "kar rahe"), ("kararaha", "kar raha"),
                   ("asatidim","stadium"),("fanad","funds")):
         s = s.replace(_a, _b)
     return re.sub(r'\s+', ' ', s).strip()
