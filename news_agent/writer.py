@@ -1156,6 +1156,31 @@ def _ur_word(core):
     return ''.join(out)
 
 
+POLISH_PAIRS = (
+    (" hu gaiy.", " ho gaye."), (" hu gaie.", " ho gaye."),
+    (" hu gaiai.", " ho gayi."), (" hu geya.", " ho gaya."),
+    ("ata he", "ata hai"), ("ati he", "ati hai"), ("ate he", "ate hain"),
+    (" he", " hai"), (" hin", " hain"),
+    (" kare gi", " karegi"), (" kare ga", " karega"),
+    (" kiya giya", " kiya gaya"), (" kiya giye", " kiye gaye"),
+    (" ho giya", " ho gaya"), (" gaiai", " gayi"),
+    ("aafas ", "office "),
+    ("manazori mal gaiy", "manzuri mil gayi"),
+    ("manzuri mal gaiy", "manzuri mil gayi"),
+    ("banad kar", "band kar"), ("baraaamad", "baramad"),
+    ("kararahe", "kar rahe"), ("kararaha", "kar raha"),
+    ("karata ", "karta "), ("karati ", "karti "), ("karate ", "karte "),
+    ("karata.", "karta."), ("karati.", "karti."),
+    ("asatidim", "stadium"), ("fanad", "funds"),
+    ("pahanach", "pohanchn"), ("khaton ", "khatoon "),
+    ("afaraad", "afrad"), ("malazamaan", "mulzamaan"),
+    ("malak ", "maalik "), ("daraj kiya", "darj kiya"),
+    ("bak ", "book "), ("hooiy ade", "hawai adda"),
+    ("naiai ", "nayi "), (" khri ", "khadi "), ("hoiy", "hue"),
+    ("meink", "mein k"),
+    ("darakhat garane", "darakhat girne"))
+
+
 def ur_to_roman(text):
     res = []
     for w in text.split():
@@ -1176,19 +1201,7 @@ def ur_to_roman(text):
           .replace(' polis ', ' police ').replace(' hakama ', ' hukm ')
           .replace(' aautar ranag rod ', ' outer ring road '))
     s = re.sub(r'\baali\b', 'aala', s)
-    for _a, _b in ((" hu gaiy.", " ho gaye."), (" hu gaie.", " ho gaye."),
-                  (" hu gaiai.", " ho gayi."), (" hu geya.", " ho gaya."),
-                  ("ata he.", "ata hai."), ("ati he.", "ati hai."),
-                  ("ate he.", "ate hain."), (" kare gi.", " karegi."),
-                  (" kare ga.", " karega."), (" kiya giya.", " kiya gaya."),
-                  (" kiya giye.", " kiye gaye."), (" ho giya.", " ho gaya."),
-                  (" gaiai.", " gayi."), ("aafas ","office "),
-                  ("manazori mal gaiy", "manzuri mil gayi"),
-                  ("manzuri mal gaiy", "manzuri mil gayi"),
-                  ("banad kar", "band kar"), ("baraaamad", "baramad"),
-                  (" he.", " hai."), (" hin.", " hain."),
-                  ("kararahe", "kar rahe"), ("kararaha", "kar raha"),
-                  ("asatidim","stadium"),("fanad","funds")):
+    for _a, _b in POLISH_PAIRS:
         s = s.replace(_a, _b)
     return re.sub(r'\s+', ' ', s).strip()
 
@@ -1217,7 +1230,17 @@ def mt_roman(title):
     _MT_BUDGET[0] -= 1
     q = re.sub(r"\bquestions\b", "raises questions about", title.strip())
     ph = {}
-    for i2, t in enumerate(dict.fromkeys(re.findall(r"\b[A-Z]{2,6}\b", q))):
+    _EXCL = {"man", "woman", "men", "boys", "girls", "child", "children",
+             "one", "two", "three", "four", "five", "six", "seven", "eight",
+             "nine", "ten", "eleven", "twelve", "thirteen", "fourteen",
+             "fifteen", "sixteen", "seventeen", "eighteen", "nineteen",
+             "twenty", "dozen", "several", "many", "another", "over",
+             "after", "before", "amid", "during", "near", "under",
+             "within", "without", "without", "no", "not", "all", "any"}
+    for i2, t in enumerate(dict.fromkeys(
+            tok for tok in re.findall(r"\b[A-Z][A-Za-z.']{1,11}\b", q)
+            if len(tok) >= 2
+            and tok.lower().strip(".") not in _EXCL)):  # acronyms AND proper nouns ride through; common EN words get translated
         k2 = f"zq{i2}x"
         ph[k2] = t
         q = re.sub(r"\b" + re.escape(t) + r"\b", k2, q, count=1)
@@ -1247,8 +1270,36 @@ def mt_roman(title):
             rom = rom.replace(k2, t)
         if re.search(r"zq\d+x", rom):
             return None
+        # token repair: drifted spellings of lowercase title words
+        # (belt->bilat, red->rid) are restored to the verified form
+        _low = {t.lower() for t in re.findall(r"[A-Za-z][A-Za-z'.]+", title)
+                if not t[:1].isupper() and len(t) >= 4}
+        if _low:
+            from difflib import SequenceMatcher as _SM
+
+            def _cmp(x):
+                y, prev = [], ""
+                for ch in x:
+                    if ch in "aeiou":
+                        continue
+                    if ch == prev:
+                        continue
+                    y.append(ch)
+                    prev = ch
+                return "".join(y)
+            for rt in set(re.findall(r"[A-Za-z][A-Za-z'.]+", rom)):
+                if rt.lower() in _low:
+                    continue
+                cand = [w for w in _low
+                        if (_cmp(w) == _cmp(rt) and abs(len(w) - len(rt)) <= 3)
+                        or _SM(w, rt.lower()).ratio() >= 0.82]
+                if len(cand) == 1:
+                    rom = re.sub(r"\b" + re.escape(rt) + r"\b",
+                                 cand[0], rom, count=1)
         if not rom.endswith('.'):
             rom += '.'
+        for _a, _b in POLISH_PAIRS:
+            rom = rom.replace(_a, _b)
         rom = rom[0].upper() + rom[1:] if rom else rom
         if not (20 <= len(rom) <= 118):
             return None
