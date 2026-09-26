@@ -1593,7 +1593,9 @@ UR_EN_BLACK = re.compile(
     r"\b(into|after|before|during|while|unless|until|although|though|despite|"
     r"allegedly|reportedly|apparently|must|been|being|within|without|against|has|have|had|of|"
     r"across|under|over|according|between|among|amid|flood|suspected"
-    r"|adulterated|paste|catchment|waterlogged|adulteration|diverted)\b", re.I)
+    r"|adulterated|paste|catchment|waterlogged|adulteration|diverted"
+    r"|flags|discusses|consults|resignation|opposition|changes|meets"
+    r"|warns|urges|asks|tells|declines|accepts|rejecting)\b", re.I)
 UR_ING_RX = re.compile(
     r"\b[a-z]{2,}ing\b(?!\s*(?:kar|ke|ki|ko|se|mein|par|ne)\b)")
 UR_ING_OK = {"nothing", "something", "anything", "evening", "morning", "meeting",
@@ -1797,6 +1799,8 @@ def bullet_quality(en, ur):
         bad.append("ur-english-clause")
     if re.search(r":\s+\S", ur) or ur.strip().endswith(":"):
         bad.append("ur-attribution-colon")
+    if re.search(r"\b(par|ke|ki|ka|ko|se|mein|me)\s+\1\b", ur, re.I):
+        bad.append("ur-particle-repeat")   # 26 Sep: "UNGA par par" class of stutters
     for tok in ("mein", "ke liye", "par ", " ko "):
         if ur.count(tok) >= 3:
             bad.append("ur-particle-repeat")
