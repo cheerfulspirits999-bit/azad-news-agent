@@ -33,6 +33,15 @@ sys.path.insert(0, BASE)
 import monitor  # noqa: E402
 import publish  # noqa: E402
 import writer  # noqa: E402
+import roman_urdu  # noqa: E402
+
+
+def _ru_on():
+    """Is the owner's roman_urdu translator usable in this run?"""
+    try:
+        return bool(roman_urdu) and roman_urdu.configured()
+    except Exception:
+        return False
 
 CYCLE_SECONDS = 90 * 60
 POST_SPACING_SECONDS = 75  # pause between posts in one burst (FB rate limits)
@@ -508,8 +517,11 @@ def build_digest(cands, catchup=False):
                                 and not writer.bullet_quality(l2, a2)):
                             lead, lead_ur = l2, a2  # date/modifier was the only overhang
                 if not lead or not lead_ur or len(lead_ur) > 118:
-                    _skip["conv"] += 1
-                    continue
+                    if lead and len(lead) <= 95 and _ru_on():
+                        lead_ur = ""    # roman_urdu step fills this after picks
+                    else:
+                        _skip["conv"] += 1
+                        continue
                 tw = {w.lower() for w in re.findall(r"[A-Za-z]{7,}", c["title"])}
                 if not tw & {w.lower() for w in re.findall(r"[A-Za-z]{7,}", lead)}:
                     lead = _lead_ok(c["title"].strip())  # frame lost the substance
@@ -522,15 +534,18 @@ def build_digest(cands, catchup=False):
                             lead, lead_ur = fr["bullets_en"][0], fr["bullets_ur"][0]
                             lead, lead_ur = _lead_ok(lead), _lead_ok(lead_ur)
                     if not lead or not lead_ur or len(lead_ur) > 118:
-                        _skip["conv"] += 1
-                        continue
+                        if lead and len(lead) <= 95 and _ru_on():
+                            lead_ur = ""    # roman_urdu fills after picks
+                        else:
+                            _skip["conv"] += 1
+                            continue
                 topic = c["region"] + "-" + slugify(c["title"])[:40]
                 if topic in done or topic in blocked:
                     continue
                 if any(topic == x[3] for x in pool):
                     _skip["dup"] += 1
                     continue  # same story from another feed - one bullet only
-                _q = writer.bullet_quality(lead, lead_ur)
+                _q = [] if not lead_ur else writer.bullet_quality(lead, lead_ur)
                 if _q:
                     alt = writer.urdu_headline(c["title"])  # converter repair before skip
                     if alt and len(alt) <= 118 and not writer.bullet_quality(lead, alt):
@@ -611,15 +626,18 @@ def build_digest(cands, catchup=False):
                     continue
                 ur_line = writer.urdu_headline(c["title"])
                 if not ur_line or len(ur_line) > 118:
-                    continue  # never publish a confusing Urdu mirror
-                if writer.bullet_quality(lead, ur_line):
+                    if lead and len(lead) <= 95 and _ru_on():
+                        ur_line = ""    # roman_urdu fills after picks
+                    else:
+                        continue  # never publish a confusing Urdu mirror
+                if ur_line and writer.bullet_quality(lead, ur_line):
                     continue  # 17 Sep gate: rules-quality Urdu only
                 picks.append((c, lead, ur_line, topic))
         # (owner 26 Sep verdict: rules-only Urdu - no MT, no filler)
         # final safety nets: unsafe pairs AND cross-card repeats (23 Sep)
         _pre = list(picks)
         def _pair_ok(p):
-            return not writer.bullet_quality(p[1], p[2])
+            return (not p[2]) or not writer.bullet_quality(p[1], p[2])
         picks = [p for p in picks if _pair_ok(p)]
         for p in _pre:
             if p not in picks:
@@ -644,7 +662,39 @@ def build_digest(cands, catchup=False):
             if _stage:
                 log(f"[digest] stage-{_stage} relaxation used (pool={len(pool)})")
             break
+    # ---- owner's Roman Urdu translation step (26 Sep) -------------------
+    # ONE roman_urdu call fills Urdu for every bullet the rules could not
+    # render (rule Urdu is never re-translated). A line failing the module's
+    # validators - or our pair gates - DEMOTES its story; if fewer than 3
+    # publishable bullets remain the run WAITS silently ("no important news
+    # => don't post"; filler is permanently banned).
+    _pend = [i for i, p in enumerate(picks) if not p[2]]
+    if _pend and _ru_on():
+        _res = roman_urdu.translate_lines([picks[i][1] for i in _pend])
+        _bad = set(_pend)
+        if _res["ok"]:
+            for _k, i in enumerate(_pend):
+                _l = _res["lines"][_k]
+                _qq = writer.bullet_quality(picks[i][1], _l)
+                # module validators already lock script/numbers/length; our
+                # ur-* vocab notes are tuned for the hand-written converter,
+                # so a module-approved line keeps them non-fatal. Real
+                # English-paste risk is caught by paste_check below.
+                _fatal = [q for q in _qq if not q.startswith("ur-")]
+                if roman_urdu.paste_check(picks[i][1], _l):
+                    _fatal.append("en-words-pasted")
+                if len(_l) <= 118 and not _fatal:
+                    picks[i] = picks[i][:2] + (_l,) + picks[i][3:]
+                    _bad.discard(i)
+        log(f"[digest] roman-urdu step: {len(_pend) - len(_bad)}/"
+            f"{len(_pend)} lines accepted"
+            + ("" if not _res["problems"] else
+               " (watch: " + str(_res["problems"][0])[:60] + ")"))
+        if _bad:
+            picks = [p for j, p in enumerate(picks) if j not in _bad]
+    picks = [p for p in picks if p[2]]   # never ship an empty Urdu mirror
     if len(picks) < 3:
+        log("[digest] wait: <3 stories with publishable Urdu this cycle")
         return None
     now = datetime.now(IST)
     return {

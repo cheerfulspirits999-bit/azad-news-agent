@@ -29,6 +29,10 @@ jobs:
         continue-on-error: true   # never block posting; publish fails loud if token dies
         env:
           FB_PAGE_TOKEN: ${{ secrets.FB_PAGE_TOKEN }}
+          RU_API_KEY: ${{ secrets.ROMAN_URDU_API_KEY }}
+          RU_PROVIDER: ${{ vars.RU_PROVIDER }}
+          RU_MODEL: ${{ vars.RU_MODEL }}
+          RU_BASE_URL: ${{ vars.RU_BASE_URL }}
           FB_APP_ID: ${{ secrets.FB_APP_ID }}
           FB_APP_SECRET: ${{ secrets.FB_APP_SECRET }}
           FB_REFRESH_TOKEN: ${{ secrets.FB_REFRESH_TOKEN }}
@@ -39,6 +43,10 @@ jobs:
       - name: run one monitor + publish cycle
         env:
           FB_PAGE_TOKEN: ${{ secrets.FB_PAGE_TOKEN }}
+          RU_API_KEY: ${{ secrets.ROMAN_URDU_API_KEY }}
+          RU_PROVIDER: ${{ vars.RU_PROVIDER }}
+          RU_MODEL: ${{ vars.RU_MODEL }}
+          RU_BASE_URL: ${{ vars.RU_BASE_URL }}
           FB_PAGE_ID: ${{ secrets.FB_PAGE_ID }}
           AGENT_PAT: ${{ secrets.AGENT_PAT }}
           DIGEST_CATCHUP: ${{ github.event.inputs.catchup || '0' }}
