@@ -36,7 +36,7 @@ import writer  # noqa: E402
 
 CYCLE_SECONDS = 90 * 60
 POST_SPACING_SECONDS = 75  # pause between posts in one burst (FB rate limits)
-MAX_POSTS_PER_CYCLE = 2
+MAX_POSTS_PER_CYCLE = 3
 STATE = os.path.join(BASE, "state")
 STORIES = os.path.join(BASE, "stories")
 IST = monitor.IST
@@ -67,7 +67,7 @@ MAX_AGE_HOURS = 6.0  # owner policy: never post old news
 MAIN_CATS = {"political_major", "govt_announcement", "economic_major",
              "court_judgment", "protest_major", "police_operation",
              "disaster_weather", "international_conflict"}
-MIN_GAP_HOURS = 2.0  # owner policy: the 3 daily posts sit 2h apart
+MIN_GAP_HOURS = 0.33  # owner 26 Sep: breaking solos may run every ~20 min
 
 
 def eligible(c):
@@ -84,9 +84,9 @@ def eligible(c):
     return False
 
 
-DAILY_REGULAR_LIMIT = 3     # owner policy: 3 regular posts a day (IST)
-MONTHLY_EMERGENCY_LIMIT = 10  # plus up to 10 emergency breaking posts a month
-DAILY_TOTAL_LIMIT = 9       # hard flood guard (owner 23 Sep: card every 2h)
+DAILY_REGULAR_LIMIT = 12    # owner 26 Sep: raised with 24/7 hourly mode
+MONTHLY_EMERGENCY_LIMIT = 10  # (casualty cats stay banned - kept as guard)
+DAILY_TOTAL_LIMIT = 30      # hard flood guard only
 EMERG_CATS = {"fire_explosion", "accident_casualty", "major_crime"}
 
 
@@ -219,10 +219,10 @@ def retry_pending():
     return done
 
 
-DIGEST_SLOTS = (8, 10, 12, 14, 16, 18, 20, 22)  # owner 23 Sep: card EVERY 2 HOURS
-CARDS_PER_DAY = 8           # 8 slots/day, 3-5 verified stories each
+DIGEST_SLOTS = tuple(range(24))  # owner 26 Sep: hourly, 24/7, never stop
+CARDS_PER_DAY = 24          # cap only guards flooding; cadence = gap_min >= 60
 DIGEST_SIZE = 5   # owner 16 Sep: every card carries 5 important news items
-DIGEST_REGIONS = ("hyderabad", "telangana", "india")
+DIGEST_REGIONS = ("hyderabad", "telangana", "india", "world")  # 26 Sep: + world
 # owner 16 Sep: NO murder/accident/casualty/fire news in cards - one small
 # mistake fills the comment section. Politics/govt/economy/court only.
 NO_CARD_CATS = {"accident_casualty", "fire_explosion", "major_crime"}
@@ -582,13 +582,12 @@ def one_cycle():
     # past 3h inside the window) drains the backlog at 30-min spacing until the
     # pool is exhausted; the normal 2h slot rhythm resumes by itself.
     catchup = (os.environ.get("DIGEST_CATCHUP") == "1"
-               or (gap_min >= 180 and 8 <= datetime.now(IST).hour < 23))
+               or gap_min >= 150)  # owner 26 Sep: no quiet hours any more
     if catchup:
         log(f"[catchup] armed: {gap_min:.0f} min since last card")
     cap = CARDS_PER_DAY + (6 if catchup else 0)
     _slot = DIGEST_SLOTS[min(ncards, len(DIGEST_SLOTS) - 1)]
-    _due = (gap_min >= 30 if catchup
-            else datetime.now(IST).hour >= _slot and gap_min >= 120)
+    _due = (gap_min >= 30 if catchup else gap_min >= 60)  # hourly owner 26 Sep
     if (ncards < cap and _due and posted != 5):
         try:
             dg = build_digest(cyc["candidates"], catchup=catchup)
@@ -632,8 +631,15 @@ def one_cycle():
         if {story.get("slug"), story.get("topic")} & retracted_slugs():
             log("BLOCKED owner-retracted story:", story["slug"])
             continue
-        log("held for the next 5-news card:", story["slug"])
-        continue  # owner 16 Sep: all news rides the 3 daily cards, no solo posts
+        # owner 26 Sep: BREAKING posts as it happens; everything else rides
+        # the hourly card. Breaking = Class A, score >= 88, politics/main-news.
+        _breaking = (c.get("class") == "A" and (c.get("score") or 0) >= 88
+                     and bool(set(c.get("categories", [])) & MAIN_CATS))
+        if not _breaking:
+            log("held for the next card:", story["slug"])
+            continue
+        emerg = False  # casualty-type cats are owner-banned, never emergency-post
+        log("BREAKING accepted (score %s): %s" % (c.get("score"), story["slug"][:60]))
         q = load_quota()
         today = datetime.now(IST).strftime("%Y-%m-%d")
         month = today[:7]

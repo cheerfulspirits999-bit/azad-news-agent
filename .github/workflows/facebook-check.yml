@@ -1,7 +1,7 @@
 name: facebook-check
 on:
   schedule:
-    - cron: "45 2,4,6,8,10,12,14,16 * * *"   # 08:15..22:15 IST slot guard
+    - cron: "45 * * * *"   # hourly patrol (owner 26 Sep: 24/7)
   workflow_dispatch: {}                      # manual button stays
 jobs:
   check:
@@ -40,15 +40,13 @@ jobs:
               return json.load(urllib.request.urlopen(req, timeout=30))
           IST = timezone(timedelta(hours=5))
           now = datetime.now(IST)
-          if not (8 <= now.hour < 23):
-              print("outside 08-22 IST publish window"); raise SystemExit
           q = api(f"https://api.github.com/repos/{repo}/contents/news_agent/state/quota.json?ref=main")
           quota = json.loads(base64.b64decode(q["content"]).decode())
           age = 9999
           if quota.get("last_card_at"):
               age = (now - datetime.fromisoformat(quota["last_card_at"])).total_seconds() / 60
-          if age < 130:
-              print(f"last card {age:.0f} min ago: cadence healthy, watchdog idle"); raise SystemExit
+          if age < 75:
+              print(f"last card {age:.0f} min ago: hourly cadence healthy"); raise SystemExit
           runs = api(f"https://api.github.com/repos/{repo}/actions/workflows/news-cycle.yml/runs"
                      "?per_page=4")
           last_run_min = 9999.0
@@ -64,7 +62,7 @@ jobs:
               raise SystemExit
           print(f"missed slot detected -> dispatching news-cycle now (age {age:.0f} min)")
           body = {"ref": "main"}
-          if age >= 180:
+          if age >= 150:
               body["inputs"] = {"catchup": "1"}  # owner 25 Sep: drain the backlog
           api(f"https://api.github.com/repos/{repo}/actions/workflows/news-cycle.yml/dispatches",
               body)
