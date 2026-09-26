@@ -1069,6 +1069,43 @@ def _ijazat(s, o):
 def urdu_headline(title):
     """Rule-based Roman-Urdu rendering of a headline; None when unsure."""
     t = title.strip().rstrip(".")
+    # owner 26 Sep: major-accident + celebrity-death frames (neutral tone only)
+    m = re.match(r"^(?:(\d{1,4})\s+(?:people\s+|persons?\s+|villagers?\s+|"
+                 r"students?\s+|workers?\s+|pilgrims?\s+|devotees?\s+|"
+                 r"passengers?\s+|children\s+|troops?\s+|constables?\s+)?)?"
+                 r"(\d{1,4})\s*(?:people\s+)?(?:killed|dead|died|clipped)\s+in\s+"
+                 r"(?:a\s+|an\s+|the\s+)?([a-z][a-z0-9 \-]{2,44}?)\s+"
+                 r"(?:in|at|near|inside)\s+([A-Z][\w'\u2019 \-]{2,30}?)\.?$", t)
+    if m:
+        n = m.group(1) or m.group(2)
+        ev = m.group(3).strip().lower()
+        for _a, _b in (("train accident", "rail gaadi ka haadsa"),
+                       ("road accident", "sadak haadsa"),
+                       ("accident", "haadsa"), ("crash", "takrao"),
+                       ("fire", "aag lagne"), ("stampede", "bhed chaal"),
+                       ("collapse", "imarat girna"), ("blast", "dhamaka"),
+                       ("firing", "firing"), ("drowning", "dubne")):
+            if _a in ev:
+                ev = ev.replace(_a, _b)
+        pl = _ur_clean_o(m.group(4))
+        if pl:
+            _inj = re.search(r"(\d{1,4})\s*(?:others?\s+)?injured", t, re.I)
+            tail = f", {_inj.group(1)} zakhmi" if _inj else ""
+            return _fin(f"{pl} mein {ev} mein {n} afrad hlaak hue{tail}.")
+    m = re.match(r"^((?:Veteran |National award[- ]winning |Academy Award[- ]winning |"
+                 r"Renowned |Famed |Noted |Stalwart )*(?:Actor|Actress|Singer|Musician|"
+                 r"Director|Cricketer|Player|Legend|Comedian|Writer|Poet|Justice|"
+                 r"Former |Ex-|Chief Minister|CM|Minister|MLA|MP )*"
+                 r"[A-Z][\w.\u2019'\- ]{2,34}?)"
+                 r"\s+(?:dies at (\d{2,3})(?:\s*(?:years?|yrs?))?|dies|died|"
+                 r"passed away|is no more|has died|expired)\.?$", t, re.I)
+    if m:
+        name = _ur_clean_s(m.group(1))
+        age = m.group(2)
+        if name and len(name.split()) >= 1 and len(name) <= 36:
+            if age:
+                return _fin(f"{name} {age} saal ki umr mein inteqal kar gaye.")
+            return _fin(f"{name} ka inteqal ho gaya.")
     # 25 Sep morning round: sets-up-body, advisory-on, relief-to + shrink retry
     # 25 Sep: "Ctx: Special Buses From Place" transport frame
     m = re.match(r"^(.{4,55}?)[:,]\s*Special (?:Buses|Bus|Trains|Train|Services?)\s+From\s+([\w'\u2019 ]+)$", t, re.I)
@@ -1673,7 +1710,10 @@ URDI_VOCAB |= {"wala", "wale", "data", "centre", "kshamata", "thermal",
                  "maang", "basen", "chalayi", "khaas", "chattane", "aadesh",
                  "aavedanon", "sahi", "registration", "ghat", "mein", "pradarshan",
                  "haraotal", "qatal", "karz", "maafi", "rail", "prabandhan",
-                 "karyalay", "launches"}
+                 "afrad", "hlaak", "zakhmi", "inteqal", "umr",
+                 "haadsa", "takrao", "dhamaka", "bhed",
+                 "chaal", "aag", "lagne", "firing", "dubne",
+                 "imarat", "girna", "saal", "bus", "bas", "karyalay"}
 URDI_VOCAB = frozenset(t for t in URDI_VOCAB if len(t) >= 2)
 
 # 25 Sep: sentence-case EN lead synthesizer for title-case feeds.
@@ -1763,6 +1803,9 @@ def bullet_quality(en, ur):
         bad.append("over-95-chars")
     if VAGUE_EN.search(en.strip()):
         bad.append("vague-english")
+    if re.search(r"\b(shocker|shocking|bloodbath|horror|gruesome|gory|"
+                 r"nightmare|barbaric|tragic|tragically)\b", en, re.I):
+        bad.append("tone-tabloid")  # owner 26 Sep: correct reporting = neutral
     if len(en.strip()) < 50 and not re.search(r"\d", en):
         bad.append("thin-english")
     _tk = [t for t in en.split() if re.fullmatch(r"[A-Za-z][A-Za-z'\-]*", t)]

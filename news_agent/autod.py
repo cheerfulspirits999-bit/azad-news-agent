@@ -219,12 +219,71 @@ def retry_pending():
     return done
 
 
+
+# ---- owner 26 Sep: casualty policy update ------------------------------------
+# MAJOR accidents and famous-personality deaths may now be covered - but only
+# with correct reporting: a named place, a verified number or a public figure,
+# neutral wire tone (no "shocker/tragic" tabloid language), multi-outlet.
+TABLOID_RX = re.compile(r"\b(shocker|shocking|bloodbath|horror|horrible|"
+                        r"gruesome|gory|nightmare|brutal|barbaric|dread|"
+                        r"tragic|tragically|twist|drama|sensational)\b", re.I)
+FAMOUS_ROLE = re.compile(
+    r"\b(actor|actress|star|hero|heroine|comedian|singer|musician|composer|"
+    r"director|filmmaker|producer|writer|author|poet|playback|anchor|journalist|"
+    r"cricketer|player|captain|coach|umpire|olympian|athlete|legend|veteran|"
+    r"sir|dr|justice|judge|chief justice|minister|cabinet|mp|mla|mnc|"
+    r"mayor|governor|president|pm|prime minister|chief minister|dy cm|"
+    r"assembly|parliament|bjp|congress|tdp|ysrcp|aipmt?|actor-cum)\b", re.I)
+FAMOUS_EVENT = re.compile(
+    r"\b(dies|died|dead|killed|passed away|no more|expired|perished|"
+    r"murdered|shot|targeted)\b", re.I)
+DISASTER_RX = re.compile(
+    r"\b(train|plane|aircraft|airliner|chopper|helicopter|ship|vessel|ferry|"
+    r"boat|building|bridge|flyover|underbridge|mine|factory|mill|school|"
+    r"hospital|theatre|cinema|hall)\b[^.]{0,30}\b"
+    r"(crash|crashes|accident|collapse|collapsed|derailment|derailed|fire|"
+    r"blast|bomb|stampede|sinking|sink|capsized|leak)\b|"
+    r"\b(stampede|blast|bomb blast|building collapse|train derailment|"
+    r"plane crash|air crash|gas leak)\b", re.I)
+CASUALTY_NUM = re.compile(
+    r"\b(\d{1,4})\b(?:\s*(?:people|persons?|of the))?"
+    r"\s*(?:killed|dead|died|deaths|clipped)\b|"
+    r"\b(?:killed|dead|died)\b[^.]{0,20}?\b(\d{1,4})\b")
+CAS_INJURED = re.compile(r"\b(\d{1,4})\b\s*(?:people\s+)?injured\b")
+
+
+def casualty_allowed(c):
+    """Owner 26 Sep: major accidents / famous-personality deaths ride cards
+    ONLY with correct reporting. Everything else stays banned, forever."""
+    t = c["title"]
+    if TABLOID_RX.search(t):
+        return False  # tabloid wording = not correct reporting
+    if FAMOUS_ROLE.search(t) and FAMOUS_EVENT.search(t):
+        return "celeb"  # public figure casualty: no WHERE needed
+    for m in CASUALTY_NUM.finditer(t):
+        n = int(m.group(1) or m.group(2) or 0)
+        if n >= 5:
+            return "major"  # 5+ dead: must name a place
+    for m in CAS_INJURED.finditer(t):
+        if int(m.group(1)) >= 15:
+            return "major"
+    if DISASTER_RX.search(t) and re.search(
+            r"\b(dead|died|killed|injured|missing|feared|rescue|rescuers|"
+            r"survivors?|stranded|trapped|hospitalised|burnt|charred)\b",
+            t, re.I):
+        return "major"  # infrastructure disaster: must name a place
+    return False
+
+
 DIGEST_SLOTS = tuple(range(24))  # owner 26 Sep: hourly, 24/7, never stop
 CARDS_PER_DAY = 24          # cap only guards flooding; cadence = gap_min >= 60
 DIGEST_SIZE = 5   # owner 16 Sep: every card carries 5 important news items
 DIGEST_REGIONS = ("hyderabad", "telangana", "india", "world")  # 26 Sep: + world
-# owner 16 Sep: NO murder/accident/casualty/fire news in cards - one small
-# mistake fills the comment section. Politics/govt/economy/court only.
+# owner 16 Sep + REFINED 26 Sep: casualty news rides cards ONLY as MAJOR
+# accidents (5+ dead / 15+ injured / train-plane-collapse-stampede class, with
+# a named place) or famous-personality deaths - always neutral wire tone,
+# numbers only from verified headline text. Petty/local incidents and any
+# tabloid wording stay banned outright.
 NO_CARD_CATS = {"accident_casualty", "fire_explosion", "major_crime"}
 NO_CARD_RX = re.compile(r"\b(killed|murder|murdered|died|death|accident|crash|"
                         r"crashes|collision|drowned|suicide|rape|raped)\b", re.I)
@@ -359,12 +418,14 @@ def build_digest(cands, catchup=False):
                 if age > maxage or (c.get("score") or 0) < minscore:
                     _skip["stale"] += 1
                     continue
-                if set(c.get("categories", [])) & NO_CARD_CATS:
+                _ban = bool(set(c.get("categories", [])) & NO_CARD_CATS) \
+                       or bool(NO_CARD_RX.search(c["title"]))
+                _cv = casualty_allowed(c) if _ban else False
+                if _ban and not (_cv == "celeb"
+                                 or (_cv == "major"
+                                     and writer._has_loc(c["title"]))):
                     _skip["casualty"] += 1
-                    continue  # casualty/crime/fire news never rides the cards
-                if NO_CARD_RX.search(c["title"]):
-                    _skip["casualty"] += 1
-                    continue
+                    continue  # 26 Sep: only MAJOR(+WHERE)/celebrity may pass
                 _sc = c.get("score") or 0
                 if c.get("class") not in ("A", "B") and \
                    not set(c.get("categories", [])) & MAIN_CATS and \
