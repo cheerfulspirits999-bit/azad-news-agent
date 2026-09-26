@@ -311,7 +311,9 @@ def _tidy_lead(b):
 # generic Urdu line that asserts nothing beyond the category - it can never
 # be wrong. Real converter output always wins; this is the last fallback.
 GEN_UR = (("political_major", ("Siyasat se muttaliq ahem khabar hai.",
-                               "Siyasi harkat se judi khabar hai.")),
+                               "Siyasi harkat se judi khabar hai.",
+                               "Siyasi harkat ki taza khabar hai.",
+                               "Siyasat ki is khabar par sab ki nazar hai.")),
           ("govt_announcement", ("Sarkar ki taraf se ahem eilan hai.",
                                  "Sarkari faislay se muttaliq khabar hai.")),
           ("economic_major", ("Maashiayat se muttaliq ahem khabar hai.",

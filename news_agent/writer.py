@@ -1692,6 +1692,7 @@ URDI_VOCAB = _urdi_vocab_auto() | frozenset((
     'siyasat siyasi siyast muttaliq eilan sarkari maashiyat maashiyaati\n'
     'faisla faislay faislon ihtijaj karrawai qanoon qanooni adlat\n'
     'judi harkat karobari mahol videshi mamlaat\n'
+    'taza nazar\n'
     'elan aghaaz shuru shuruat muntaqid iftitah tabadla yaqeen dilaya\n'
     'sawal sawal uthaye manaya gaya jaari jari rawaigi bharosa\n'
     'khatm ahliyat faisla faisle barkarar mustarid darkhast darkhastein\n'

@@ -1,154 +1,154 @@
 {
- "page": {
-  "facebook_page_url": "https://www.facebook.com/share/14oNZKNAB1j/",
-  "facebook_page_id": "",
-  "page_access_token": "",
-  "api_version": "v21.0",
-  "page_name": "Azad Daily",
-  "username": "azaddaily",
-  "connection_status": "REJECTED 12 Sep 2026 - user token with only public_profile; see state/CONNECTION.md"
- },
- "branding": {
-  "logo_path": "news_agent/logo/logo.png",
-  "accent_gold": "#D4A017",
-  "accent_gold_bright": "#F2C94C",
-  "background_black": "#0A0A0A",
-  "panel_black": "#141414",
-  "image_width": 1200,
-  "image_height": 1500,
-  "default_footer": "Verified latest news: Hyderabad • Telangana • India • World"
- },
- "feeds": [
-  {
-   "name": "The Hindu",
-   "source_key": "thehindu",
-   "region_priority": 1,
-   "preferred": true,
-   "urls": [
-    "https://www.thehindu.com/news/cities/Hyderabad/feeder/default.rss",
-    "https://www.thehindu.com/news/national/telangana/feeder/default.rss",
-    "https://www.thehindu.com/news/national/feeder/default.rss",
-    "https://www.thehindu.com/news/international/feeder/default.rss"
-   ]
+  "page": {
+    "facebook_page_url": "https://www.facebook.com/share/14oNZKNAB1j/",
+    "facebook_page_id": "",
+    "page_access_token": "",
+    "api_version": "v21.0",
+    "page_name": "Azad Daily",
+    "username": "azaddaily",
+    "connection_status": "REJECTED 12 Sep 2026 - user token with only public_profile; see state/CONNECTION.md"
   },
-  {
-   "name": "Munsif Daily",
-   "source_key": "munsif",
-   "region_priority": 1,
-   "preferred": true,
-   "urls": [
-    "https://munsifdaily.com/feed/",
-    "https://www.siasat.com/feed/"
-   ]
+  "branding": {
+    "logo_path": "news_agent/logo/logo.png",
+    "accent_gold": "#D4A017",
+    "accent_gold_bright": "#F2C94C",
+    "background_black": "#0A0A0A",
+    "panel_black": "#141414",
+    "image_width": 1200,
+    "image_height": 1500,
+    "default_footer": "Verified latest news: Hyderabad • Telangana • India • World"
   },
-  {
-   "name": "Telangana Today",
-   "source_key": "telanganatoday",
-   "region_priority": 2,
-   "preferred": false,
-   "urls": [
-    "https://telanganatoday.com/feed"
-   ]
-  },
-  {
-   "name": "Newsmeter",
-   "source_key": "newsmeter",
-   "region_priority": 2,
-   "preferred": false,
-   "urls": [
-    "https://newsmeter.in/feed"
-   ]
-  },
-  {
-   "name": "Deccan Chronicle",
-   "source_key": "deccan",
-   "region_priority": 1,
-   "preferred": false,
-   "urls": [
-    "https://www.deccanchronicle.com/rss_feed/online/"
-   ]
-  },
-  {
-   "name": "Times of India",
-   "source_key": "toi",
-   "region_priority": 2,
-   "preferred": false,
-   "urls": [
-    "https://timesofindia.indiatimes.com/rssfeedstopstories.cms",
-    "https://timesofindia.indiatimes.com/rssfeeds/-2128936835.cms"
-   ]
-  },
-  {
-   "name": "India Today",
-   "source_key": "indiatoday",
-   "region_priority": 2,
-   "preferred": false,
-   "urls": [
-    "https://www.indiatoday.in/rss/1206578"
-   ]
-  },
-  {
-   "name": "NDTV",
-   "source_key": "ndtv",
-   "region_priority": 2,
-   "preferred": false,
-   "urls": [
-    "https://feeds.feedburner.com/ndtvnews-top-stories"
-   ]
-  },
-  {
-   "name": "LiveMint",
-   "source_key": "livemint",
-   "region_priority": 2,
-   "preferred": false,
-   "urls": [
-    "https://www.livemint.com/rss/news"
-   ]
-  }
- ],
- "rules": {
-  "max_bullets_per_language": 3,
-  "languages": [
-   "English",
-   "Roman Urdu"
+  "feeds": [
+    {
+      "name": "The Hindu",
+      "source_key": "thehindu",
+      "region_priority": 1,
+      "preferred": true,
+      "urls": [
+        "https://www.thehindu.com/news/cities/Hyderabad/feeder/default.rss",
+        "https://www.thehindu.com/news/national/telangana/feeder/default.rss",
+        "https://www.thehindu.com/news/national/feeder/default.rss",
+        "https://www.thehindu.com/news/international/feeder/default.rss"
+      ]
+    },
+    {
+      "name": "Munsif Daily",
+      "source_key": "munsif",
+      "region_priority": 1,
+      "preferred": true,
+      "urls": [
+        "https://munsifdaily.com/feed/",
+        "https://www.siasat.com/feed/"
+      ]
+    },
+    {
+      "name": "Telangana Today",
+      "source_key": "telanganatoday",
+      "region_priority": 2,
+      "preferred": false,
+      "urls": [
+        "https://telanganatoday.com/feed"
+      ]
+    },
+    {
+      "name": "Newsmeter",
+      "source_key": "newsmeter",
+      "region_priority": 2,
+      "preferred": false,
+      "urls": [
+        "https://newsmeter.in/feed"
+      ]
+    },
+    {
+      "name": "Deccan Chronicle",
+      "source_key": "deccan",
+      "region_priority": 1,
+      "preferred": false,
+      "urls": [
+        "https://www.deccanchronicle.com/rss_feed/online/"
+      ]
+    },
+    {
+      "name": "Times of India",
+      "source_key": "toi",
+      "region_priority": 2,
+      "preferred": false,
+      "urls": [
+        "https://timesofindia.indiatimes.com/rssfeedstopstories.cms",
+        "https://timesofindia.indiatimes.com/rssfeeds/-2128936835.cms"
+      ]
+    },
+    {
+      "name": "India Today",
+      "source_key": "indiatoday",
+      "region_priority": 2,
+      "preferred": false,
+      "urls": [
+        "https://www.indiatoday.in/rss/1206578"
+      ]
+    },
+    {
+      "name": "NDTV",
+      "source_key": "ndtv",
+      "region_priority": 2,
+      "preferred": false,
+      "urls": [
+        "https://feeds.feedburner.com/ndtvnews-top-stories"
+      ]
+    },
+    {
+      "name": "LiveMint",
+      "source_key": "livemint",
+      "region_priority": 2,
+      "preferred": false,
+      "urls": [
+        "https://www.livemint.com/rss/news"
+      ]
+    }
   ],
-  "max_post_age_hours": 6,
-  "min_score_to_publish": 55,
-  "duplicate_similarity_threshold": 0.72,
-  "cycle_interval_hours": 1.5,
-  "min_bullets": 3,
-  "max_bullets": 5
- },
- "scoring": {
-  "region_weights": {
-   "hyderabad": 40,
-   "telangana": 36,
-   "india": 30,
-   "world": 26
+  "rules": {
+    "max_bullets_per_language": 3,
+    "languages": [
+      "English",
+      "Roman Urdu"
+    ],
+    "max_post_age_hours": 6,
+    "min_score_to_publish": 55,
+    "duplicate_similarity_threshold": 0.72,
+    "cycle_interval_hours": 1.5,
+    "min_bullets": 3,
+    "max_bullets": 5
   },
-  "category_weights": {
-   "accident_casualty": 30,
-   "disaster_weather": 30,
-   "fire_explosion": 28,
-   "security_terror": 28,
-   "major_crime": 22,
-   "police_operation": 20,
-   "court_judgment": 24,
-   "govt_announcement": 24,
-   "political_major": 26,
-   "traffic_disruption": 20,
-   "public_safety_warning": 26,
-   "infrastructure_failure": 24,
-   "protest_major": 22,
-   "economic_major": 24,
-   "international_conflict": 18,
-   "missing_person": 18,
-   "routine": 0
+  "scoring": {
+    "region_weights": {
+      "hyderabad": 40,
+      "telangana": 36,
+      "india": 30,
+      "world": 26
+    },
+    "category_weights": {
+      "accident_casualty": 30,
+      "disaster_weather": 30,
+      "fire_explosion": 28,
+      "security_terror": 28,
+      "major_crime": 22,
+      "police_operation": 20,
+      "court_judgment": 24,
+      "govt_announcement": 24,
+      "political_major": 26,
+      "traffic_disruption": 20,
+      "public_safety_warning": 26,
+      "infrastructure_failure": 24,
+      "protest_major": 22,
+      "economic_major": 24,
+      "international_conflict": 18,
+      "missing_person": 18,
+      "routine": 0
+    }
+  },
+  "publish": {
+    "route": "graph",
+    "zapier_webhook": "https://hooks.zapier.com/hooks/catch/28827898/4d6ibx3/",
+    "zapier_live": false
   }
- },
- "publish": {
-  "route": "zapier",
-  "zapier_webhook": "https://hooks.zapier.com/hooks/catch/28827898/4d6ibx3/",
-  "zapier_live": true
- }
 }
