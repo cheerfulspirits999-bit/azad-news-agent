@@ -69,7 +69,7 @@ def _set_secret(name, value):
     """Encrypt + PUT a repo secret. Requires GITHUB_TOKEN with secrets:write."""
     owner = os.environ.get("GH_OWNER", "")
     repo = os.environ.get("GH_REPO", "")
-    gh_tok = os.environ.get("GITHUB_TOKEN", "")
+    gh_tok = os.environ.get("AGENT_PAT", "") or os.environ.get("GITHUB_TOKEN", "")
     if not (owner and repo and gh_tok):
         print(f"auth: cannot push secret {name} (missing GH env)", file=sys.stderr)
         return False

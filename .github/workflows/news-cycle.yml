@@ -13,8 +13,6 @@ on:
         default: "0"
 permissions:
   contents: write                 # allows committing the state back
-  secrets: write                  # auth.py self-renews the FB tokens
-  actions: write                  # ...and keeps the refresh chain alive
 concurrency:
   group: news-cycle               # never two cycles at once (no double posts)
   cancel-in-progress: false
@@ -36,7 +34,7 @@ jobs:
           FB_REFRESH_TOKEN: ${{ secrets.FB_REFRESH_TOKEN }}
           GH_OWNER: ${{ github.repository_owner }}
           GH_REPO: ${{ github.event.repository.name }}
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          AGENT_PAT: ${{ secrets.AGENT_PAT }}
         run: python3 news_agent/auth.py
       - name: run one monitor + publish cycle
         env:
