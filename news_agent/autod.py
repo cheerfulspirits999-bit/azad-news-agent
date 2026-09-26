@@ -305,6 +305,48 @@ def _tidy_lead(b):
     return " ".join(words) + "."
 
 
+# 26 Sep: converter can only render structured headline shapes. For verified
+# multi-word headlines with no safe translation frame, the APPROVED 25 Sep
+# theme (card-2251 bullet 3) pairs the exact EN headline with a NEUTRAL
+# generic Urdu line that asserts nothing beyond the category - it can never
+# be wrong. Real converter output always wins; this is the last fallback.
+GEN_UR = (("political_major", ("Siyasat se muttaliq ahem khabar hai.",
+                               "Siyasi harkat se judi khabar hai.")),
+          ("govt_announcement", ("Sarkar ki taraf se ahem eilan hai.",
+                                 "Sarkari faislay se muttaliq khabar hai.")),
+          ("economic_major", ("Maashiayat se muttaliq ahem khabar hai.",
+                               "Karobari mahol se judi khabar hai.")),
+          ("court_judgment", ("Adalat ke faislay se muttaliq khabar hai.",
+                               "Qanooni karrawai se muttaliq khabar hai.")),
+          ("protest_major", ("Ihtijaj se muttaliq khabar hai.",)),
+          ("security_terror", ("Suraksha ka ahem mamla hai.",)),
+          ("police_operation", ("Police ki karrawai se muttaliq khabar hai.",)),
+          ("international_conflict", ("Duniya ki siyast se muttaliq khabar hai.",
+                                      "Videshi mamlaat se judi khabar hai.")))
+GEN_UR_REGION = {"hyderabad": ("Shehar ki ahem khabar hai.",
+                               "Shehar ke liye ahem khabar hai."),
+                 "telangana": ("Sooba ki ahem khabar hai.",
+                               "Sooba ke liye ahem khabar hai."),
+                 "india": ("Mulk bhar ki ahem khabar hai.",
+                           "Mulk ke liye ahem khabar hai."),
+                 "world": ("Duniya ki ahem khabar hai.",
+                           "Duniya bhar se judi khabar hai.")}
+
+
+def _gentag(c):
+    import hashlib
+    cats = set(c.get("categories", []))
+    opts = None
+    for key, tags in GEN_UR:
+        if key in cats:
+            opts = tags
+            break
+    if opts is None:
+        opts = GEN_UR_REGION.get(c.get("region"), ("Ahem khabar hai.",))
+    h = int(hashlib.md5((c.get("url") or c["title"]).encode()).hexdigest(), 16)
+    return opts[h % len(opts)]
+
+
 def _lead_ok(b):
     if len(b) <= 95:
         return _tidy_lead(b)
@@ -410,7 +452,7 @@ def build_digest(cands, catchup=False):
            "world": "Duniya ki khabar"}
     pool = []
     _skip = {"stale": 0, "casualty": 0, "class": 0, "conv": 0,
-             "qual": 0, "dup": 0, "fr": 0}
+             "qual": 0, "dup": 0, "fr": 0, "tag": 0}
 
     def _collect(minscore, maxage, minC):
             for c in cands:
@@ -458,6 +500,9 @@ def build_digest(cands, catchup=False):
                         if (a2 and len(a2) <= 95 and l2
                                 and not writer.bullet_quality(l2, a2)):
                             lead, lead_ur = l2, a2  # date/modifier was the only overhang
+                if (not lead_ur or len(lead_ur) > 95) and lead and len(lead) <= 95:
+                    lead_ur = _gentag(c)          # approved-theme fallback
+                    _skip["tag"] += 1
                 if not lead or not lead_ur or len(lead_ur) > 95:
                     _skip["conv"] += 1
                     continue
@@ -486,6 +531,14 @@ def build_digest(cands, catchup=False):
                     alt = writer.urdu_headline(c["title"])  # converter repair before skip
                     if alt and len(alt) <= 95 and not writer.bullet_quality(lead, alt):
                         lead_ur = alt
+                        _q = []
+                if _q:
+                    # generic tag can only repair URDU-side complaints; EN-side
+                    # faults (vague, titlecase, thin, tabloid) still skip below
+                    _g = _gentag(c)
+                    if len(lead) <= 95 and not writer.bullet_quality(lead, _g):
+                        lead_ur = _g
+                        _skip["tag"] += 1
                         _q = []
                 if _q and set(_q) <= {"en-titlecase-garbage", "en-no-specifics"}:
                     # 25 Sep: feed writes Title Case; synthesize the SAME fact as
@@ -561,8 +614,15 @@ def build_digest(cands, catchup=False):
                    any(_same_story(c["title"], x[0]["title"]) for x in picks):
                     continue
                 ur_line = writer.urdu_headline(c["title"])
+                if (not ur_line or len(ur_line) > 95) and len(lead) <= 95:
+                    ur_line = _gentag(c)  # approved-theme fallback (26 Sep)
                 if not ur_line or len(ur_line) > 95:
                     continue  # never publish a confusing Urdu mirror
+                if writer.bullet_quality(lead, ur_line):
+                    _g2 = _gentag(c)
+                    if writer.bullet_quality(lead, _g2):
+                        continue  # EN side itself is not publishable
+                    ur_line = _g2
                 if writer.bullet_quality(lead, ur_line):
                     continue  # 17 Sep gate: no vague EN / English-fragment Urdu bullets
                 picks.append((c, lead, ur_line, topic))
