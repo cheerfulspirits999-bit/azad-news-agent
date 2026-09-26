@@ -330,6 +330,15 @@ def run(story_path, do_publish):
                                "image_url": image_url or ""})
             post_id = res.get("id") or res.get("post_id") or f"zapier:{slug}"
             print(f"\nHanded to Zapier webhook: {pub_cfg['zapier_webhook'][:48]}...")
+            # owner 25 Sep: "Handed to Zapier" proved nothing when the Zap was off;
+            # keep what Zapier said so a silent drop is visible in run logs.
+            print(f"  zapier said: {json.dumps(res, ensure_ascii=False)[:180]}")
+            try:
+                json.dump({"at": now_iso(), "slug": slug, "response": res},
+                          open(os.path.join(STATE, "zapier_last.json"), "w"),
+                          ensure_ascii=False, indent=1)
+            except Exception:
+                pass
         else:
             res = graph_post_photo(pg["facebook_page_id"], pg["page_access_token"],
                                    caption, png, pg.get("api_version", "v21.0"))
