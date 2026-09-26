@@ -507,14 +507,6 @@ def build_digest(cands, catchup=False):
                         if (a2 and len(a2) <= 95 and l2
                                 and not writer.bullet_quality(l2, a2)):
                             lead, lead_ur = l2, a2  # date/modifier was the only overhang
-                if (not lead_ur or len(lead_ur) > 118) and lead and len(lead) <= 95:
-                    _mt = writer.mt_roman(c["title"])   # 26 Sep: MT line before tag
-                    if _mt:
-                        lead_ur = _mt
-                        _skip["mt"] += 1
-                    else:
-                        lead_ur = _gentag(c)      # approved-theme fallback
-                        _skip["tag"] += 1
                 if not lead or not lead_ur or len(lead_ur) > 118:
                     _skip["conv"] += 1
                     continue
@@ -539,25 +531,10 @@ def build_digest(cands, catchup=False):
                     _skip["dup"] += 1
                     continue  # same story from another feed - one bullet only
                 _q = writer.bullet_quality(lead, lead_ur)
-                if _q and lead_ur and lead_ur not in _TAG_LINES and \
-                   writer.urdu_headline(c["title"]) is None and fr is None:
-                    # MT-sourced line: its own safety checks (verb/digits/
-                    # placeholders) ran inside mt_roman; ur-vocab complaints
-                    # target hand-written converter output, not MT translit
-                    _q = [x for x in _q if not x.startswith("ur-")]
                 if _q:
                     alt = writer.urdu_headline(c["title"])  # converter repair before skip
                     if alt and len(alt) <= 118 and not writer.bullet_quality(lead, alt):
                         lead_ur = alt
-                        _q = []
-                if _q:
-                    # MT/neutral tag can only repair URDU-side complaints; EN-side
-                    # faults (vague, titlecase, thin, tabloid) still skip below
-                    _mt2 = writer.mt_roman(c["title"])
-                    _g = _mt2 or _gentag(c)
-                    if len(lead) <= 95 and not writer.bullet_quality(lead, _g):
-                        lead_ur = _g
-                        _skip["mt" if _mt2 else "tag"] += 1
                         _q = []
                 if _q and set(_q) <= {"en-titlecase-garbage", "en-no-specifics"}:
                     # 25 Sep: feed writes Title Case; synthesize the SAME fact as
@@ -633,45 +610,16 @@ def build_digest(cands, catchup=False):
                    any(_same_story(c["title"], x[0]["title"]) for x in picks):
                     continue
                 ur_line = writer.urdu_headline(c["title"])
-                if (not ur_line or len(ur_line) > 118) and len(lead) <= 95:
-                    ur_line = writer.mt_roman(c["title"]) or _gentag(c)
                 if not ur_line or len(ur_line) > 118:
                     continue  # never publish a confusing Urdu mirror
-                _q2 = writer.bullet_quality(lead, ur_line)
-                if _q2 and ur_line not in _TAG_LINES and \
-                   writer.urdu_headline(c["title"]) is None:
-                    _q2 = [x for x in _q2 if not x.startswith("ur-")]
-                if _q2:
-                    _g2 = _gentag(c)
-                    if writer.bullet_quality(lead, _g2):
-                        continue  # EN side itself is not publishable
-                    ur_line = _g2
-                if writer.bullet_quality(lead, ur_line) and \
-                        ur_line in _TAG_LINES and writer.urdu_headline(c["title"]):
-                    continue  # 17 Sep gate (converter lines only)
-                if writer.bullet_quality(lead, ur_line) and ur_line in _TAG_LINES:
-                    continue
+                if writer.bullet_quality(lead, ur_line):
+                    continue  # 17 Sep gate: rules-quality Urdu only
                 picks.append((c, lead, ur_line, topic))
-        # 26 Sep owner: cards must not read as boilerplate - real Urdu first,
-        # generic tags max 2 per card, swapped for pool alternatives when any
-        while sum(1 for p in picks if p[2] in _TAG_LINES) > 2:
-            _worst = min((p for p in picks if p[2] in _TAG_LINES),
-                         key=lambda p: p[0].get("score") or 0)
-            _rep = next((x for x in pool
-                         if x not in picks and x[2] not in _TAG_LINES
-                         and not any(_same_story(x[0]["title"], p[0]["title"])
-                                     for p in picks)), None)
-            if _rep is None:
-                break
-            picks[picks.index(_worst)] = _rep
+        # (owner 26 Sep verdict: rules-only Urdu - no MT, no filler)
         # final safety nets: unsafe pairs AND cross-card repeats (23 Sep)
         _pre = list(picks)
         def _pair_ok(p):
-            _qq = writer.bullet_quality(p[1], p[2])
-            if _qq and p[2] not in _TAG_LINES and \
-               writer.urdu_headline(p[0]["title"]) is None:
-                _qq = [x for x in _qq if not x.startswith("ur-")]
-            return not _qq
+            return not writer.bullet_quality(p[1], p[2])
         picks = [p for p in picks if _pair_ok(p)]
         for p in _pre:
             if p not in picks:
