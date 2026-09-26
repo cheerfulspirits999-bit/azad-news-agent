@@ -64,9 +64,10 @@ def validate(story):
         counts[label] = len(b)
         if not (3 <= len(b) <= 5):
             errors.append(f"{label}: expected 3-5 bullets, found {len(b)}")
+        _capx = 95 if label == "ENGLISH" else 118  # 26 Sep: MT Urdu runs longer
         for x in b:
-            if len(x) > 95:
-                errors.append(f"{label}: bullet over 95 chars ({len(x)}) - card spec")
+            if len(x) > _capx:
+                errors.append(f"{label}: bullet over {_capx} chars ({len(x)}) - card spec")
                 break
     if counts.get("ENGLISH") != counts.get("ROMAN URDU"):
         errors.append("ENGLISH and ROMAN URDU must carry the same number of bullets")

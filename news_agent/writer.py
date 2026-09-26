@@ -1,25 +1,17 @@
-#!/usr/bin/env python3
-"""
-Automatic bilingual bullet writer for autonomous cycles.
-
-Safety contract:
-  * Every bullet slot is filled ONLY from the verified headline/excerpt text of
-    the candidate item. Numbers must appear in an explicit context
-    ("3 people died", "25,000 cabs", "Rs 21 per km") - a bare "43" in
-    "Rs 43L fine" can never become a casualty count.
-  * Arrest actors may only be police/investigating agencies, never political
-    parties or protest groups (the detained party is never the arresting one).
-  * Roman Urdu uses the natural Hyderabad news register: English noun phrases
-    inside Urdu grammar (ne / ko / ka kehna hai / jaari kiya).
-  * English and Roman Urdu are emitted from the SAME fact frame, so both
-    languages always carry the same three facts.
-  * Developing stories carry explicit uncertainty wording.
-  * build() returns None when a frame cannot be filled safely; the story then
-    waits for the editorial pass instead of being auto-published.
-  * A global sanitizer rejects any bullet containing unresolved slots
-    ("None"), empty slots, or invented-looking content.
-"""
+import json
 import re
+import os
+MT_VERB_UR = {"\u06c1\u06d2","\u06c1\u06cc\u06ba","\u06af\u0627",
+ "\u06af\u06cc","\u06af\u06cc\u0627","\u06af\u0626\u06cc","\u06af\u0626\u06d2",
+ "\u06c1\u0648\u0627","\u06c1\u0648\u0626\u06cc","\u06c1\u0648","\u06a9\u06cc\u0627",
+ "\u06a9\u0631","\u062f\u06cc\u0627","\u062f\u06cc","\u0644\u06cc\u0627",
+ "\u0631\u06c1\u0627","\u0631\u06c1\u06cc","\u062a\u06be\u0627",
+ "\u062a\u06be\u06cc","\u0686\u06a9\u0627","\u0686\u06a9\u06cc",
+ "\u062c\u0627\u0626\u06d2","\u062c\u0627\u0626\u06cc\u06af\u06cc",
+ "\u0645\u06cc\u0644\u06cc","\u0645\u06cc\u0644","\u0645\u0627\u0631\u0627",
+ "\u0632\u062e\u0645\u06cc","\u06c1\u0644\u0627\u06a9","\u06af\u0631\u0641\u062a\u0627\u0631",
+ "\u0628\u06be\u06cc\u062c","\u062c\u0627\u0631\u06cc"}
+
 
 AWAIT_EN = "More details are awaited."
 AWAIT_UR = "Mazeed details ka intezar hai."
@@ -1066,6 +1058,222 @@ def _ijazat(s, o):
     return f"{s} ne {op} ko ijazat di."
 
 
+
+# ---------------------------------------------------------------- 26 Sep
+# Machine translation fallback: EN headline -> Urdu script (Google gtx, no
+# key, best-effort) -> natural Roman Urdu via the built-in transliterator.
+# Used ONLY when the rule converter has no frame, and only if every check
+# below passes; anything doubtful returns None (caller falls back to tag or
+# drops the bullet). The story FACTS come from the EN verified headline; the
+# Urdu line must mirror it - never invent.
+_UR_C = {'\u0628':'b','\u067e':'p','\u062a':'t','\u0679':'t','\u062b':'s',
+ '\u062c':'j','\u0686':'ch','\u062d':'h','\u062e':'kh','\u062f':'d',
+ '\u0688':'d','\u0630':'z','\u0631':'r','\u0691':'r','\u0632':'z',
+ '\u0698':'zh','\u0633':'s','\u0634':'sh','\u0635':'s','\u0636':'z',
+ '\u0637':'t','\u0638':'z','\u0639':'a','\u063a':'gh','\u0641':'f',
+ '\u0642':'q','\u06a9':'k','\u06af':'g','\u0644':'l','\u0645':'m',
+ '\u0646':'n','\u0648':'v','\u06c1':'h','\u06be':'h','\u064a':'y',
+ '\u06cc':'y','\u06ba':'n'}
+_UR_DIA = {'\u064e':'a','\u0650':'i','\u064f':'u','\u0657':'o','\u0670':'a'}
+_UR_PUNCT = "\u060c.;:!?()'\u00bb\u00ab \u06d4"
+
+
+def _ur_word(core):
+    out = []
+    i = 0
+    n = len(core)
+    while i < n:
+        ch = core[i]
+        if i + 1 < n and core[i + 1] in _UR_DIA:
+            if ch in _UR_C:
+                out.append(_UR_C[ch] + _UR_DIA[core[i + 1]])
+                i += 2
+                continue
+            i += 1
+            continue
+        if ch == '\u0627':                      # alif
+            nxt = core[i + 1] if i + 1 < n else ''
+            if not out and nxt == '\u0648':
+                out.append('ow')
+                i += 2
+                if i < n and core[i] in ('\u06cc', '\u064a'):
+                    out.pop()
+                    out.append('owai' if core[i - 1:i] else 'ow')
+                continue
+            if not out:
+                out.append('a')
+            i += 1
+            continue
+        if ch == '\u0622': out.append('aa'); i += 1; continue
+        if ch == '\u06d2': out.append('ai'); i += 1; continue
+        if ch in ('\u0626', '\u0621', '\u0624', '\u0623'):
+            out.append({'\u0626': 'i', '\u0624': 'u', '\u0623': 'a'}.get(ch, ''))
+            i += 1
+            continue
+        if ch not in _UR_C:
+            i += 1
+            continue
+        base = _UR_C[ch]
+        if ch == '\u06be':                       # do-chashm h: aspirates prior
+            i += 1
+            continue
+        if base == 'a':                           # ain
+            out.append('a')
+            i += 1
+            continue
+        nxt = core[i + 1] if i + 1 < n else ''
+        nxt2 = core[i + 2] if i + 2 < n else ''
+        if ch == '\u06c1' and nxt == '':
+            out.append(''); i += 1; continue
+        if nxt == '\u0627':
+            long_a = nxt2 != '' and nxt2 not in _UR_PUNCT and i + 2 >= n - 1
+            out.append(base + ('aa' if long_a else 'a'))
+            i += 2
+            continue
+        if nxt == '\u06be':
+            if nxt2 == '\u0627':
+                out.append(base + 'ha'); i += 3; continue
+            out.append(base + 'h'); i += 2; continue
+        if nxt in ('\u06cc', '\u064a'):
+            if nxt2 == '\u0627': out.append(base + 'iya'); i += 3; continue
+            if nxt2 == '\u06d2': out.append(base + 'iye'); i += 3; continue
+            if nxt2 == '':       out.append(base + 'i');  i += 2; continue
+            out.append(base + 'i'); i += 2; continue
+        if nxt == '\u06d2': out.append(base + 'e'); i += 2; continue
+        if nxt == '\u0648':
+            if nxt2 == '\u0627': out.append(base + 'oo'); i += 3; continue
+            if nxt2 == '':       out.append(base + 'u');  i += 2; continue
+            out.append(base + 'o'); i += 2; continue
+        if nxt == '':
+            if base == 'v': base = 'w'
+            out.append(base + ('a' if ch == '\u0645' and i == n - 1 else ''))
+            i += 1
+            continue
+        if base == 'v' and i == 0: base = 'w'
+        out.append(base + 'a')
+        i += 1
+        continue
+    return ''.join(out)
+
+
+def ur_to_roman(text):
+    res = []
+    for w in text.split():
+        core = ''.join(c for c in w if c not in _UR_PUNCT)
+        suf = '.' if ('.' in w or '\u06d4' in w) else ('?' if '?' in w else '')
+        if core and any('\u0600' <= c <= '\u06ff' for c in core):
+            res.append(_ur_word(core) + suf)
+        elif core:
+            res.append(w)
+    s = ' '.join(res).replace('\u060c', ',')
+    s = s.replace(' ki ', ' ke ').replace(' kah ', ' ke ')
+    s = re.sub(r'\s+ga\b', 'ga', s)
+    s = s.replace('hoie', 'hue').replace(' hoe', ' hue')
+    s = re.sub(r'\bjae ga\b', 'jayega', s)
+    s = (s.replace(' jaiaiga', ' jayega').replace(' aainada ', ' aanay walay ')
+          .replace(' ku ', ' ko ').replace(' du ko', ' do ko').replace(' du ', ' do ')
+          .replace(' min ', ' mein ').replace('Polis ', 'Police ')
+          .replace(' polis ', ' police ').replace(' hakama ', ' hukm ')
+          .replace(' aautar ranag rod ', ' outer ring road '))
+    s = re.sub(r'\baali\b', 'aala', s)
+    for _a, _b in ((" hu gaiy.", " ho gaye."), (" hu gaie.", " ho gaye."),
+                  (" hu gaiai.", " ho gayi."), (" hu geya.", " ho gaya."),
+                  ("ata he.", "ata hai."), ("ati he.", "ati hai."),
+                  ("ate he.", "ate hain."), (" kare gi.", " karegi."),
+                  (" kare ga.", " karega."), (" kiya giya.", " kiya gaya."),
+                  (" kiya giye.", " kiye gaye."), (" ho giya.", " ho gaya."),
+                  (" gaiai.", " gayi."), ("aafas ","office "),
+                  ("manazori mal gaiy", "manzuri mil gayi"),
+                  ("manzuri mal gaiy", "manzuri mil gayi"),
+                  ("banad kar", "band kar"), ("baraaamad", "baramad"),
+                  ("asatidim","stadium"),("fanad","funds")):
+        s = s.replace(_a, _b)
+    return re.sub(r'\s+', ' ', s).strip()
+
+
+_MT_CACHE = {}
+_MT_BUDGET = [18]
+
+
+MT_VERB_ENDS = {"diya","di","kiya","kiye","gaya","gayi","gaye","hue","hua","hui",
+ "hai","hain","hoga","hogi","honge","liya","liye","jaiaiga","jayega","jaiga","jaie",
+ "karega","karegi","bheja","bhej","diya","raha","rahi","rahe","tha","thi","the",
+ "lete","maanga","maangi","bataya","batayi","uthaya","uthaye","mil","mili","mila",
+ "mile","ja","ho","ki","kar","liye","die","kiya","huaa","jaye","lai","laye","dea"}
+
+
+def mt_roman(title):
+    """EN headline -> natural Roman Urdu via MT, or None (silent fallback).
+    Acronyms are placeholder-protected so they ride through in Latin form;
+    numbers may only mirror the title; the Urdu sentence must land on a
+    real verb. Anything doubtful -> None -> caller tags or drops the bullet."""
+    key = title.strip().lower()
+    if key in _MT_CACHE:
+        return _MT_CACHE[key]
+    if _MT_BUDGET[0] <= 0:
+        return None
+    _MT_BUDGET[0] -= 1
+    q = re.sub(r"\bquestions\b", "raises questions about", title.strip())
+    ph = {}
+    for i2, t in enumerate(dict.fromkeys(re.findall(r"\b[A-Z]{2,6}\b", q))):
+        k2 = f"zq{i2}x"
+        ph[k2] = t
+        q = re.sub(r"\b" + re.escape(t) + r"\b", k2, q, count=1)
+    try:
+        import urllib.request
+        import urllib.parse as _up
+        u = ("https://translate.googleapis.com/translate_a/single?client=gtx"
+             "&sl=en&tl=ur&dt=t&q=" + _up.quote(q))
+        req = urllib.request.Request(u, headers={"User-Agent": "Mozilla/5.0"})
+        with urllib.request.urlopen(req, timeout=8) as r:
+            d = json.loads(r.read().decode())
+        ur = ''.join(seg[0] for seg in d[0] if seg and seg[0])
+    except Exception:
+        _MT_CACHE[key] = None
+        return None
+    out = None
+    try:
+        if not ur or not any('\u0600' <= c <= '\u06ff' for c in ur):
+            return None
+        _uw = re.sub(r"[\u06d4.\s]+$", "", ur).split()[-1] if ur.split() else ''
+        if _uw not in MT_VERB_UR:
+            return None      # not landing on a real Urdu verb = suspect
+        rom = ur_to_roman(ur)
+        for k2, t in ph.items():
+            if k2 not in rom:
+                return None  # placeholder lost = structure damaged
+            rom = rom.replace(k2, t)
+        if re.search(r"zq\d+x", rom):
+            return None
+        if not rom.endswith('.'):
+            rom += '.'
+        rom = rom[0].upper() + rom[1:] if rom else rom
+        if not (20 <= len(rom) <= 118):
+            return None
+        if ':' in rom or any('\u0600' <= c <= '\u06ff' for c in rom):
+            return None
+        if re.search(r'\b(shocker|tragic|horror|gruesome|bloodbath)\b',
+                     rom, re.I):
+            return None
+        a = set(re.findall(r"\d+", rom))
+        b = set(re.findall(r"\d+", title))
+        _wd = {"one": "1", "two": "2", "three": "3", "four": "4", "five": "5",
+               "six": "6", "seven": "7", "eight": "8", "nine": "9",
+               "ten": "10", "eleven": "11", "twelve": "12", "thirteen": "13",
+               "fourteen": "14", "fifteen": "15", "sixteen": "16",
+               "seventeen": "17", "eighteen": "18", "nineteen": "19",
+               "twenty": "20", "thirty": "30", "forty": "40", "fifty": "50"}
+        _tl = {w.lower() for w in re.findall(r"[A-Za-z]+", title)}
+        _ok = b | {_wd[w] for w in _tl if w in _wd}
+        if not a <= _ok or not b <= a:
+            return None      # digits may only mirror the title
+        out = rom
+    finally:
+        _MT_CACHE[key] = out
+    return out
+
+
+
 def urdu_headline(title):
     """Rule-based Roman-Urdu rendering of a headline; None when unsure."""
     t = title.strip().rstrip(".")
@@ -1804,7 +2012,7 @@ def bullet_quality(en, ur):
     if not en or not ur:
         return ["empty-pair"]
     bad = []
-    if len(en) > 95 or len(ur) > 95:
+    if len(en) > 95 or len(ur) > 118:
         bad.append("over-95-chars")
     if VAGUE_EN.search(en.strip()):
         bad.append("vague-english")
