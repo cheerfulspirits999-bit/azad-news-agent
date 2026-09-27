@@ -1,12 +1,16 @@
-"""Offline tests for roman_urdu (no network, no API key). Run:
-    python3 tests/test_roman_urdu.py     from the news_agent directory.
+"""Contract tests for the roman_urdu SHIM (news_agent/roman_urdu.py).
+
+The engine itself is covered by the owner's own suite:
+    python3 ../roman_urdu_translator/tests/test_offline.py   (66 tests)
+This file only checks what news_agent/autod.py relies on: import works,
+public surface exists, no-key mode never raises and never says ok.
 """
 import os
 import sys
 
 sys.path.insert(0, os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
-os.environ["RU_PROVIDER"] = "mock"
 os.environ.pop("RU_API_KEY", None)
+os.environ.pop("RU_PROVIDER", None)
 import roman_urdu as R  # noqa: E402
 
 N = F = 0
@@ -20,65 +24,36 @@ def ck(name, cond):
         print("FAIL:", name)
 
 
-def mock(mode):
-    os.environ["RU_MOCK"] = mode
+ck("engine is owner package", R.ENGINE == "owner-package")
+for fn in ("configured", "translate_lines", "translate_news", "paste_check"):
+    ck(f"surface: {fn} callable", callable(getattr(R, fn, None)))
+ck("MAXLEN = 118 (card cap)", R.MAXLEN == 118)
+ck("no key => not configured", R.configured() is False)
+r = R.translate_lines(["Government announced a new tax on petrol."])
+ck("no-key call returns clean failure", r["ok"] is False and r["lines"] == []
+   and "problems" in r and "warning" in r)
+ck("empty input handled", R.translate_lines([])["ok"] is False)
 
+# paste semantics: verbatim 4+ word runs from the EN line are caught;
+# translated prose that legitimately keeps proper nouns is not.
+en = "Woman belt shop owner in Hyderabad booked under PD Act."
+ur_ok = "Hyderabad mein khatoon belt shop ke maalik PD Act ke tahat book hue."
+ur_bad = "Woman belt shop owner in Hyderabad ko PD Act ke tahat book kiya gaya."
+ck("names-only Urdu passes", R.paste_check(en, ur_ok) is False)
+ck("verbatim 4-word run caught", R.paste_check(en, ur_bad) is True)
 
-SRC = ["Earthquake of magnitude 6.2 hits eastern Afghanistan",
-       "At least 18 people were killed and 40 injured",
-       "Rescue teams reached the affected area after six hours",
-       "The UN has promised emergency aid",
-       "Roads and communication networks remain badly damaged"]
-
-mock("good")
-r = R.translate_lines(SRC)
-ck("happy path ok", r["ok"] and len(r["lines"]) == len(SRC))
-ck("digits locked", "6.2" in r["lines"][0] and "18" in r["lines"][1])
-ck("all roman", not any(R._SCRIPT_RE.search(l) for l in r["lines"]))
-ck("lines end with period", all(l.endswith(".") for l in r["lines"]))
-ck("length cap", all(len(l) <= R.MAXLEN for l in r["lines"]))
-
-mock("script")
-r = R.translate_lines(SRC)
-ck("urdu script rejected", not r["ok"] and any("script" in p for p in r["problems"]))
-
-mock("short")
-r = R.translate_lines(SRC)
-ck("line-count enforced", not r["ok"] and any("line-count" in p for p in r["problems"]))
-
-mock("same")
-r = R.translate_lines(SRC)
-ck("untranslated detected", not r["ok"] and any("untranslated" in p for p in r["problems"]))
-
-mock("digits")
-r = R.translate_lines(["Petrol price may increase by Rs 8 per litre this week"])
-ck("digit loss caught", not r["ok"] and any("number" in p for p in r["problems"]))
-
-mock("wrapper")
-r = R.translate_lines(["Google launches new model for smartphones"])
-ck("wrapper chatter stripped & ok", r["ok"] and "sure" not in r["lines"][0].lower())
-ck("no bullet marker leaks", not r["lines"][0].startswith("-"))
-
-ck("unconfigured -> not ok", not R.configured() or os.environ.get("RU_PROVIDER") == "mock")
-os.environ["RU_PROVIDER"] = "openai"
-ck("no key => not configured", not R.configured())
-r = R.translate_lines(["Government announced new aid"])
-ck("never crashes without key", r["ok"] is False and r["method"] == "none")
+mock_on = os.environ.get("RU_PROVIDER")
 os.environ["RU_PROVIDER"] = "mock"
-
-r = R.translate_news(title_en=SRC[0], bullets_en=SRC[1:])
-mock("good")
-r = R.translate_news(title_en=SRC[0], bullets_en=SRC[1:])
-ck("card API alignment", r["ok"] and len(r["bullets_ur"]) == 4
-   and "6.2" in r["title_ur"])
-
-ck("empty input handled", not R.translate_lines([])["ok"])
-ck("junk input handled", not R.translate_lines(["   ", ""])["ok"])
-
-os.environ["RU_MAX_RETRIES"] = "0"
-mock("short")
-ck("retries bounded", not R.translate_lines(SRC)["ok"])
-del os.environ["RU_MAX_RETRIES"]
+import importlib  # noqa: E402
+importlib.reload(R)
+ck("mock provider => configured", R.configured() is True)
+r = R.translate_lines(["Government announced a new tax on petrol."])
+ck("mock call never raises", isinstance(r, dict) and "ok" in r)
+if mock_on is None:
+    del os.environ["RU_PROVIDER"]
+else:
+    os.environ["RU_PROVIDER"] = mock_on
+importlib.reload(R)
 
 print(f"RESULT: {N - F} passed, {F} failed")
 sys.exit(1 if F else 0)
