@@ -4,7 +4,7 @@
 name: news-cycle
 on:
   schedule:
-    - cron: "5,20,35,50 * * * *"          # every 30 min (:10 and :40 UTC)
+    - cron: "*/10 * * * *"          # owner 27 Sep: every 10 min - breaking caught fast; digest self-limits to 1 card/60 min
   workflow_dispatch:            # "Run workflow" test button
     inputs:
       catchup:

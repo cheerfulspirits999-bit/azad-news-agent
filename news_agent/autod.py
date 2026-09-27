@@ -72,7 +72,10 @@ def slugify(t):
     return t[:60]
 
 
-MAX_AGE_HOURS = 6.0  # owner policy: never post old news
+MAX_AGE_HOURS = 26.0  # owner 27 Sep: "take and post" - anything within the
+                      # last day across ALL regions/categories is fair game;
+                      # hourly silence only when the day is truly exhausted
+                      # (old 6h window caused the dead morning hours)
 MAIN_CATS = {"political_major", "govt_announcement", "economic_major",
              "court_judgment", "protest_major", "police_operation",
              "disaster_weather", "international_conflict"}
@@ -551,6 +554,9 @@ def build_digest(cands, catchup=False):
                     if alt and len(alt) <= 118 and not writer.bullet_quality(lead, alt):
                         lead_ur = alt
                         _q = []
+                if _q and _ru_on() and all(q.startswith("ur-") for q in _q):
+                    lead_ur = ""    # 27 Sep owner: rules line failed quality
+                    _q = []         # -> the translator gets its one chance
                 if _q and set(_q) <= {"en-titlecase-garbage", "en-no-specifics"}:
                     # 25 Sep: feed writes Title Case; synthesize the SAME fact as
                     # a sentence-case lead, then re-run ALL gates on it
@@ -631,7 +637,11 @@ def build_digest(cands, catchup=False):
                     else:
                         continue  # never publish a confusing Urdu mirror
                 if ur_line and writer.bullet_quality(lead, ur_line):
-                    continue  # 17 Sep gate: rules-quality Urdu only
+                    _qb = writer.bullet_quality(lead, ur_line)
+                    if _ru_on() and all(q.startswith("ur-") for q in _qb):
+                        ur_line = ""  # 27 Sep: failed rules line -> LLM turn
+                    else:
+                        continue  # 17 Sep gate: rules-quality Urdu only
                 picks.append((c, lead, ur_line, topic))
         # (owner 26 Sep verdict: rules-only Urdu - no MT, no filler)
         # final safety nets: unsafe pairs AND cross-card repeats (23 Sep)
@@ -651,9 +661,10 @@ def build_digest(cands, catchup=False):
         return picks
 
     picks = []
-    _stages = [(55, 12, 60), (50, 16, 55), (45, 20, 50)]
-    if catchup:
-        _stages.append((45, 26, 50))  # backlog: same gates, wider age window
+    _stages = [(55, 12, 60), (50, 16, 55), (45, 20, 50),
+               (45, 26, 50)]  # owner 27 Sep: every run finishes at the wide
+                              # 26h window - nothing eligible left = wait, not
+                              # a narrower filter
     for _stage, (_ms, _ma, _mc) in enumerate(_stages):
         _collect(_ms, _ma, _mc)
         log(f"[digest] stage-{_stage}: pool={len(pool)} skips={_skip}")
@@ -717,9 +728,9 @@ def build_digest(cands, catchup=False):
 def one_cycle():
     cfg = json.load(open(os.path.join(BASE, "config.json"), encoding="utf-8"))
     log("=== cycle start ===")
-    _cu = os.environ.get("DIGEST_CATCHUP") == "1"  # backlog: widen FETCH too
+    _cu = os.environ.get("DIGEST_CATCHUP") == "1"
     cyc = monitor.run_cycle(26 if _cu else cfg["rules"]["max_post_age_hours"],
-                            120 if _cu else 60)
+                            120)  # owner 27 Sep: full breadth every run
 
     def _prio(c):  # politics & main news first, then by score
         main = bool(set(c.get("categories", [])) & MAIN_CATS) or c.get("class") == "A"
