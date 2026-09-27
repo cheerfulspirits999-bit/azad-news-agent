@@ -2172,4 +2172,29 @@ def bullet_quality(en, ur):
        not re.search(r"\b(two|three|four|five|six|seven|eight|nine|ten|eleven|"
                      r"twelve|dozen|crore|lakh|percent|Rs|km)\b", en, re.I):
         bad.append("en-no-specifics")   # number-words count as specifics
+    # Owner 27 Sep: "person arrested in the case" is not news. An
+    # arrest/booking bullet that mentions a case must say WHICH case -
+    # offence word, statute/section, or a number (year, section, case no).
+    _el = (en or "").lower()
+    if re.search(r"\barrest|\bheld\b|\bbooked\b|\bdetained\b|\baccused\b|"
+                 r"\bsuspects?\b|\bculprits?\b", _el) and \
+       re.search(r"\bcase\b|\bcases\b|\bcomplaint\b|\bf\.?i\.?r\.?\b|"
+                 r"\bselsila\b", _el) and \
+       not re.search(r"\d|\bmurder|\bdeath|\braide?s?\b|\btrap\b|\brape\b|"
+                     r"\bsexual|\bminor\b|\bchild\b|\bcheat|\bfraud|\bcyber|"
+                     r"\bextort|\bkidnap|\brob\b|\brobbery|\bdacoit|\btheft|"
+                     r"\bstolen|\bsteal|\bdrug|\bnarcotic|\bsmuggl|\bgambl|"
+                     r"\bbribe|\bvoting|\belection money|\bmoney\b|\bland\b|"
+                     r"\bencroach|\bforged|\bfake\b|\bcounterfeit|\bfirearm|"
+                     r"\bguns?\b|\bweapons?\b|\bblast|\bbomb|\baccident|"
+                     r"\bhit\b|\bmissing|\bharass|\bcorrupt|\bmolest|"
+                     r"\bassault|\bouriya|\battack|\barson|\bfire case|"
+                     r"\bcheque|\bdishonou?r|\bpossession\b|\binsult|\bviolation|"
+                     r"\bdefam|\bthreat|\bblackmail|\bchant|\bprotest|"
+                     r"\brucksha|\bchain ?snatch|\bsnatch|\bpitch\b|"
+                     r"\bact\b|\bsection\b|\blaws?\b|\bipc\b|\bcrpc\b|\bbns\b|"
+                     r"\bndps\b|\bpocso\b|\bpmla\b|\bpoea\b|\bgovt orders?\b|"
+                     r"\bsco\b|\bproclaimed\b|\bhistory ?sheet|\bowt\b|"
+                     r"\bmurdered\b|\bkidnapped\b|\bharassment\b", _el):
+        bad.append("en-case-unspecified")
     return bad
