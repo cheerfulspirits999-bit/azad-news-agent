@@ -1,0 +1,88 @@
+{
+  "_comment": "n8n snippet: drop these nodes into your existing hourly news workflow, between the 'recreate news (English bullets)' node and the 'generate card image' node. Import via Workflow > Import from JSON, or just copy the two HTTP/AI nodes manually. Replace <YOUR_TRANSLATOR_URL> and <YOUR_LLM_ENDPOINT>.",
+  "name": "News - English to Roman Urdu translation step",
+  "nodes": [
+    {
+      "parameters": {
+        "method": "POST",
+        "url": "<YOUR_TRANSLATOR_URL>/translate-card",
+        "sendBody": true,
+        "specifyBody": "json",
+        "jsonBody": "={{ JSON.stringify({ title_en: $json.title_en, bullets_en: $json.bullets_en }) }}",
+        "options": { "timeout": 60000 }
+      },
+      "id": "ru-translate-card-http",
+      "name": "Translate to Roman Urdu (HTTP)",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "position": [0, 0],
+      "_note": "Option A: call the bundled http_server.py. Response gives you title_ur + bullets_ur + card_text_ur, line-for-line aligned."
+    },
+    {
+      "parameters": {
+        "resource": "chat",
+        "model": { "__rl": true, "mode": "list", "value": "gpt-4o-mini" },
+        "messages": {
+          "values": [
+            {
+              "role": "system",
+              "content": "You are a professional English to Roman Urdu translation engine for Pakistani news media. Output ONLY the Roman Urdu translation: no explanation, no notes, no markdown. Roman script only - never Urdu/Arabic characters. Keep the exact same number of lines and the same bullet markers as the input. Translate every line; never summarize, skip, merge or reorder. Keep names, brands, places, hashtags, mentions, URLs, emojis, currency codes, units, digits and dates exactly as in the source. Do not convert digits into words. Use natural Pakistani news-style Roman Urdu (hukumat, elaan, izafa, tehqeeq, mutabiq, afraad, shehriyon), not Hindi-heavy wording, not literal word-for-word translation. Stay factual and neutral. Never add information that is not in the source."
+            },
+            {
+              "role": "user",
+              "content": "={{ $json.title_en + \"\\n\" + $json.bullets_en.map(b => \"- \" + b).join(\"\\n\") }}"
+            }
+          ]
+        },
+        "jsonOutput": false,
+        "options": { "temperature": 0.2 }
+      },
+      "id": "ru-translate-openai",
+      "name": "Translate to Roman Urdu (OpenAI node)",
+      "type": "@n8n/n8n-nodes-langchain.openAi",
+      "typeVersion": 1.8,
+      "position": [0, 220],
+      "_note": "Option B: if you don't want to host the Python server. Add a Set/Code node after it to split message.content by newline into bullets_ur."
+    },
+    {
+      "parameters": {
+        "jsCode": "// Split the model output back into an aligned bullets array, and guard the output.\nconst out = $input.first().json;\nlet raw = (out.choices?.[0]?.message?.content ?? out.message?.content ?? out.roman_urdu ?? '').trim();\nraw = raw.replace(/^```[a-z]*\\n?/i, '').replace(/```$/, '').replace(/^(roman urdu|translation)\\s*[:-]\\s*/i, '').trim();\n\nconst lines = raw.split('\\n');\nconst title_ur = lines[0] || '';\nconst bullets_ur = lines.slice(1).map(l => l.replace(/^\\s*[-*\\u2022]\\s*/, '').trim()).filter(Boolean);\n\n// Safety: never let Urdu/Arabic script reach the card renderer\nconst urduScript = /[\\u0600-\\u06FF\\u0750-\\u077F\\uFB50-\\uFDFF\\uFE70-\\uFEFF\\u0900-\\u097F]/;\nconst clean = s => s.replace(/[\\u0600-\\u06FF\\u0750-\\u077F\\uFB50-\\uFDFF\\uFE70-\\uFEFF\\u0900-\\u097F]/g, '');\n\nreturn [{ json: {\n  ...out,\n  title_ur: clean(title_ur),\n  bullets_ur: bullets_ur.map(clean),\n  card_text_ur: clean([title_ur, ...bullets_ur.map(b => '- ' + b)].join('\\n')),\n  translation_ok: !urduScript.test(raw) && bullets_ur.length >= 3 && bullets_ur.length <= 5\n}}];"
+      },
+      "id": "ru-normalize-code",
+      "name": "Normalize + Safety Check",
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [220, 220],
+      "_note": "Use after Option B. Option A already returns normalized fields, so you can skip this node."
+    },
+    {
+      "parameters": {
+        "conditions": {
+          "options": { "caseSensitive": true, "leftValue": "", "typeValidation": "strict" },
+          "conditions": [
+            {
+              "leftValue": "={{ $json.translation_ok }}",
+              "rightValue": true,
+              "operator": { "type": "boolean", "operation": "true", "singleValue": true }
+            }
+          ],
+          "combinator": "and"
+        }
+      },
+      "id": "ru-if-ok",
+      "name": "Translation OK?",
+      "type": "n8n-nodes-base.if",
+      "typeVersion": 2.2,
+      "position": [440, 220],
+      "_note": "TRUE branch -> generate card + post to Facebook. FALSE branch -> re-run the translation node (retry) or log/alert yourself."
+    }
+  ],
+  "connections": {
+    "Translate to Roman Urdu (OpenAI node)": {
+      "main": [[{ "node": "Normalize + Safety Check", "type": "main", "index": 0 }]]
+    },
+    "Normalize + Safety Check": {
+      "main": [[{ "node": "Translation OK?", "type": "main", "index": 0 }]]
+    }
+  }
+}

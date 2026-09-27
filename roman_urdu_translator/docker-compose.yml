@@ -1,0 +1,21 @@
+# docker compose up -d
+# Pehle:  cp .env.example .env   aur .env mein RU_API_KEY bharein
+
+services:
+  roman-urdu-translator:
+    build: .
+    container_name: ru-translate
+    restart: unless-stopped
+    ports:
+      - "8080:8080"
+    env_file:
+      - .env
+    environment:
+      # .env ki values ko override karna ho to yahan likh dein
+      PORT: "8080"
+    healthcheck:
+      test: ["CMD", "python3", "-c", "import urllib.request; urllib.request.urlopen('http://127.0.0.1:8080/health', timeout=4)"]
+      interval: 30s
+      timeout: 5s
+      retries: 3
+      start_period: 10s

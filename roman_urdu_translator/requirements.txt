@@ -1,0 +1,9 @@
+# Koi third-party package ki zaroorat NAHI.
+# Yeh module sirf Python standard library use karta hai:
+#   argparse, json, os, re, sys, time, unicodedata, urllib, http.server
+#
+# Python 3.9+ chahiye (type hints ke liye). Tested on Python 3.13.
+#
+# Agar aap chahein to optional extras:
+# requests>=2.31        # urllib ki jagah requests use karna ho (code mein khud nahi chahiye)
+# python-dotenv>=1.0    # .env ko Python se load karna ho (abhi run.sh / Docker se hota hai)

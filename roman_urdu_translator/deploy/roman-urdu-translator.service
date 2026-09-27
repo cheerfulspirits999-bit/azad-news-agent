@@ -1,0 +1,37 @@
+# Systemd service - VPS par 24/7 chalane ke liye
+#
+# Setup:
+#   sudo mkdir -p /opt/roman-urdu-translator
+#   sudo cp -r ./* /opt/roman-urdu-translator/
+#   sudo cp .env.example /opt/roman-urdu-translator/.env   # phir API key bharein
+#   sudo cp deploy/roman-urdu-translator.service /etc/systemd/system/
+#   sudo systemctl daemon-reload
+#   sudo systemctl enable --now roman-urdu-translator
+#   sudo systemctl status roman-urdu-translator
+#   journalctl -u roman-urdu-translator -f          # live logs
+#
+# Agar aapka python3 kahin aur hai:  which python3   -> ExecStart mein wahi path dein
+
+[Unit]
+Description=English to Roman Urdu translation API (news automation)
+After=network-online.target
+Wants=network-online.target
+
+[Service]
+Type=simple
+User=root
+WorkingDirectory=/opt/roman-urdu-translator
+EnvironmentFile=/opt/roman-urdu-translator/.env
+ExecStart=/usr/bin/python3 /opt/roman-urdu-translator/http_server.py --host 0.0.0.0 --port 8080
+Restart=always
+RestartSec=5
+StandardOutput=journal
+StandardError=journal
+
+# Hardening
+NoNewPrivileges=true
+PrivateTmp=true
+ProtectSystem=full
+
+[Install]
+WantedBy=multi-user.target
