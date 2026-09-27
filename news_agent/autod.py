@@ -36,6 +36,30 @@ import writer  # noqa: E402
 import roman_urdu  # noqa: E402
 
 
+_NONROMAN_RE = re.compile(r"[\u0600-\u06FF\u0750-\u077F\u08A0-\u08FF"
+                          r"\uFB50-\uFDFF\uFE70-\uFEFF\u0900-\u097F]")
+
+
+def _real_paste(en, ur, n=4):
+    """True when `ur` carries >=n consecutive LOWERCASE English words copied
+    verbatim from `en`. Capitalised tokens (names, laws, events: 'Ganesh
+    idol', 'PD Act', 'Hyderabad Metro') legitimately survive into Roman
+    Urdu newsroom style, so any run containing one is not a paste. 4+
+    lowercase source words in a row still means untranslated."""
+    t = re.findall(r"[A-Za-z][A-Za-z'\-.]*", en or "")
+    u = re.findall(r"[A-Za-z][A-Za-z'\-.]*", ur or "")
+    if len(t) < n or len(u) < n:
+        return False
+    tset = {tuple(w.lower() for w in t[j:j + n]) for j in range(len(t) - n + 1)}
+    for i in range(len(u) - n + 1):
+        seg = u[i:i + n]
+        if any(w[0].isupper() for w in seg):
+            continue
+        if tuple(w.lower() for w in seg) in tset:
+            return True
+    return False
+
+
 def _ru_on():
     """Is the owner's roman_urdu translator usable in this run?"""
     try:
@@ -682,21 +706,28 @@ def build_digest(cands, catchup=False):
     _pend = [i for i, p in enumerate(picks) if not p[2]]
     if _pend and _ru_on():
         _res = roman_urdu.translate_lines([picks[i][1] for i in _pend])
+        _cand = _res.get("lines") or []
         _bad = set(_pend)
-        if _res["ok"]:
+        # 27 Sep CI lesson: the engine's blanket 4-word English-paste rule
+        # kills legitimate name runs ("Ganesh idol immersion"), so judge every
+        # line it returned - even when its overall verdict was ok=False - with
+        # OUR OWN name-aware checks. Facts first; style second.
+        if len(_cand) == len(_pend):
             for _k, i in enumerate(_pend):
-                _l = _res["lines"][_k]
-                _qq = writer.bullet_quality(picks[i][1], _l)
-                # module validators already lock script/numbers/length; our
-                # ur-* vocab notes are tuned for the hand-written converter,
-                # so a module-approved line keeps them non-fatal. Real
-                # English-paste risk is caught by paste_check below.
-                _fatal = [q for q in _qq if not q.startswith("ur-")]
-                if roman_urdu.paste_check(picks[i][1], _l):
-                    _fatal.append("en-words-pasted")
-                if len(_l) <= 118 and not _fatal:
-                    picks[i] = picks[i][:2] + (_l,) + picks[i][3:]
-                    _bad.discard(i)
+                _l = (_cand[_k] or "").strip()
+                _en = picks[i][1]
+                if not _l or len(_l) > 118 or _NONROMAN_RE.search(_l):
+                    continue                    # empty / over-cap / Urdu script
+                if set(re.findall(r"\d+(?:[.,]\d+)*", _en)) != \
+                   set(re.findall(r"\d+(?:[.,]\d+)*", _l)):
+                    continue                      # digits moved: never ship
+                _qq = writer.bullet_quality(_en, _l)
+                if [q for q in _qq if not q.startswith("ur-")]:
+                    continue                      # EN side itself unsafe
+                if _real_paste(_en, _l):
+                    continue                      # untranslated lowercase run
+                picks[i] = picks[i][:2] + (_l,) + picks[i][3:]
+                _bad.discard(i)
         log(f"[digest] roman-urdu step: {len(_pend) - len(_bad)}/"
             f"{len(_pend)} lines accepted"
             + ("" if not _res["problems"] else
