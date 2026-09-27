@@ -24,11 +24,13 @@ news cycle ya Facebook post trigger nahi hoti.
 | Dependencies | stdlib only | stdlib only |
 | Providers | OpenAI-compatible + mock | OpenAI-compatible + Gemini + Anthropic + mock |
 
-**Aapki quality problem ka sab se baro waja:** purane module mein few-shot
-examples nahi hain aur validation fail hone par `lines=[]` wapas jata hai — jis
-se `autod.py` rules-based (word-swap) Urdu use karta hai. Wahi kachhi Roman Urdu
-card par chhap jati hai. Naya module us case mein bhi structure-preserving
-fallback deta hai, aur few-shot ki wajah se fail hone ki noobat hi kam aati hai.
+**Aapki quality + throughput problem ki asal wajah:** `ROMAN_URDU_API_KEY` secret
+repo mein set hi nahi hai, isliye `_ru_on()` False rehta hai aur translator kabhi
+chalta hi nahi — rules-converter fail hone wala har candidate turant drop ho jata
+hai. Poori tafseel, production logs ke saboot ke sath: **`THROUGHPUT-FIX.md`**.
+
+Doosri wajah: purane `_SYSTEM` prompt mein few-shot examples nahi hain, aur
+`max_tokens = 40 + 45 * lines` output ko truncate kar sakta hai.
 
 ---
 
@@ -108,7 +110,7 @@ aayega, bina koi wiring badle.
 
 ```bash
 cd roman_urdu_translator
-python3 tests/test_offline.py          # 31 passed, 0 failed (no API key needed)
+python3 tests/test_offline.py          # 66 passed, 0 failed (no API key needed)
 python3 roman_urdu.py --mock --text "Petrol price may increase by Rs 8 per litre"
 
 # Real model ke sath (wahi secrets jo news_agent use karta hai):
@@ -135,7 +137,7 @@ sakta hai (read-only, koi post nahi karta):
 | `http_server.py` | HTTP API + browser demo page (n8n/Make/Zapier ke liye) |
 | `prompts/system_prompt.txt` | **the agent prompt** — purane `_SYSTEM` se kahin zyada detailed |
 | `prompts/few_shot_examples.md` | 5 worked news examples + anti-patterns |
-| `tests/test_offline.py` | 31 offline tests |
+| `tests/test_offline.py` | 66 offline tests |
 | `run.sh`, `Dockerfile`, `docker-compose.yml`, `deploy/*.service`, `.env.example` | hosting options |
 | `n8n_workflow_snippet.json` | ready nodes (HTTP + OpenAI + normalize + quality gate) |
 | `README.md`, `QUICKSTART.md` | documentation |

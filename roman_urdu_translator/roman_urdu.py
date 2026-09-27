@@ -59,6 +59,14 @@ DEFAULT_TEMPERATURE = float(os.environ.get("RU_TEMPERATURE", "0.2"))
 DEFAULT_MAX_RETRIES = int(os.environ.get("RU_MAX_RETRIES", "2"))     # retries AFTER the first attempt
 DEFAULT_TIMEOUT = int(os.environ.get("RU_TIMEOUT", "60"))
 
+# news_agent/render.py + writer.bullet_quality() enforce a hard per-line cap.
+# Roman Urdu lines longer than this are rejected by the card pipeline, so we
+# enforce it here instead of letting the caller discover it after a wasted cycle.
+MAXLEN = int(os.environ.get("RU_MAXLEN", "118"))
+# writer.bullet_quality()/paste_check(): >= this many consecutive English words
+# copied verbatim into the Urdu line = "en-words-pasted" = fatal for that bullet.
+PASTE_N = int(os.environ.get("RU_PASTE_N", "4"))
+
 ENDPOINTS = {
     "openai": os.environ.get(
         "RU_BASE_URL",
@@ -291,6 +299,46 @@ def has_urdu_script(text: str) -> bool:
     return bool(URDU_SCRIPT_RE.search(text))
 
 
+def configured(provider: Optional[str] = None, api_key: str = "") -> bool:
+    """
+    Same semantics as news_agent/roman_urdu.py::configured() so this module can
+    be dropped in behind an `_ru_on()` style check. An explicit api_key counts
+    as configured even when no environment key exists.
+    """
+    p = (provider or DEFAULT_PROVIDER or "openai").lower()
+    if p == "mock":
+        return True
+    return bool(api_key or API_KEYS.get(p))
+
+
+def paste_check(en: str, ur: str, n: int = PASTE_N) -> bool:
+    """
+    True when `ur` still carries an unbroken run of >= n words copied verbatim
+    from `en` (case-insensitive). Vocabulary-free, so it flags real English
+    paste without punishing legitimate proper nouns (Hyderabad, PD Act).
+    Mirrors news_agent/roman_urdu.py::paste_check exactly.
+    """
+    t = re.findall(r"[a-z0-9][a-z0-9'.\-]*", (en or "").lower())
+    u = re.findall(r"[a-z0-9][a-z0-9'.\-]*", (ur or "").lower())
+    if len(t) < n or len(u) < n:
+        return False
+    tg = {tuple(t[j:j + n]) for j in range(len(t) - n + 1)}
+    return any(tuple(u[i:i + n]) in tg for i in range(len(u) - n + 1))
+
+
+def trim_to(text: str, limit: int = MAXLEN) -> str:
+    """Fit a line inside `limit` chars on a word boundary (never mid-word).
+
+    Reserves one character for the ellipsis so the result is ALWAYS <= limit.
+    """
+    if len(text) <= limit:
+        return text
+    cut = text[: max(1, limit - 1)]     # leave room for the ellipsis
+    if " " in cut:
+        cut = cut[: cut.rfind(" ")]
+    return cut.rstrip(",;:.") + "…"
+
+
 def strip_wrappers(text: str) -> str:
     """Remove common LLM noise so downstream nodes get clean text."""
     out = text.strip()
@@ -321,9 +369,19 @@ def _markers(lines: List[str]) -> List[str]:
     return markers
 
 
-def validate(source: str, translated: str) -> Tuple[bool, List[str]]:
+def validate(
+    source: str,
+    translated: str,
+    max_line_len: Optional[int] = None,
+    paste_n: Optional[int] = None,
+) -> Tuple[bool, List[str]]:
     """
     Return (is_ok, list_of_problems). Used to decide whether to retry.
+
+    max_line_len: when set (card mode), every output line must fit inside this
+                  many characters - the news card renderer has a hard cap.
+    paste_n:      when set, reject lines that copy >= paste_n consecutive
+                  English words verbatim (writer.paste_check equivalent).
     """
     problems: List[str] = []
     src_lines = source.strip("\n").split("\n")
@@ -355,6 +413,31 @@ def validate(source: str, translated: str) -> Tuple[bool, List[str]]:
             if s.strip() == "" and o.strip() != "":
                 problems.append(f"Line {i}: input is blank but output is not. Keep blank lines blank.")
                 break
+
+        # --- card constraints (only meaningful when lines are aligned) ---
+        if max_line_len:
+            over = [
+                (i, len(o)) for i, o in enumerate(out_lines, start=1)
+                if len(o) > max_line_len
+            ]
+            if over:
+                detail = ", ".join(f"line {i}={n} chars" for i, n in over[:5])
+                problems.append(
+                    f"Lines longer than the card cap of {max_line_len} characters "
+                    f"({detail}). Shorten the Urdu phrasing on those lines without "
+                    "dropping any fact, name or number."
+                )
+        if paste_n:
+            pasted = [
+                i for i, (s, o) in enumerate(zip(src_lines, out_lines), start=1)
+                if paste_check(s, o, paste_n)
+            ]
+            if pasted:
+                problems.append(
+                    f"Lines {pasted[:5]} copy {paste_n}+ consecutive English words "
+                    "verbatim into the Roman Urdu. Re-express those phrases in Urdu; "
+                    "keep only proper nouns/brands/technical terms in English."
+                )
 
     src_numbers = NUMBER_RE.findall(source)
     out_numbers = NUMBER_RE.findall(translated)
@@ -581,8 +664,10 @@ def mock_translate(text: str) -> str:
 
 
 def translate_news(
-    text: str,
+    text: Optional[str] = None,
     *,
+    title_en: str = "",
+    bullets_en: Any = (),
     provider: str = DEFAULT_PROVIDER,
     model: str = DEFAULT_MODEL,
     api_key: str = "",
@@ -592,23 +677,72 @@ def translate_news(
     system_prompt: Optional[str] = None,
     use_few_shot: bool = True,
     strict: bool = True,
+    max_line_len: Optional[int] = None,
+    paste_n: Optional[int] = None,
 ) -> Dict[str, Any]:
     """
     Translate English news text into Roman Urdu.
 
-    Returns a dict:
+    Two calling styles (the second matches news_agent/roman_urdu.py so this
+    module can be swapped in without touching the caller):
+
+        translate_news("Headline\\n- bullet one\\n- bullet two")
+        translate_news(title_en="Headline", bullets_en=["bullet one", "bullet two"])
+
+    Returns a dict (a superset of both modules' shapes):
       {
         "ok": bool,                 # passed validation
         "roman_urdu": str,          # <- use this on the card
         "lines_ur": [str, ...],     # per-line, aligned with lines_en
         "lines_en": [str, ...],
-        "method": "llm"|"retry"|"fallback",
+        "title_ur": str,            # card mode only
+        "bullets_ur": [str, ...],   # card mode only
+        "method": "llm"|"retry"|"fallback"|"none"|"noop",
         "attempts": int,
         "problems": [str, ...],     # last validation issues (empty when ok)
         "warning": str|None,
       }
+
+    max_line_len / paste_n: card constraints. Pass max_line_len=MAXLEN (118) for
+    card bullets so over-long lines are rejected and retried instead of being
+    silently dropped later by writer.bullet_quality().
     """
-    text = text.replace("\r\n", "\n").replace("\r", "\n")
+    # ---- card mode: title_en=/bullets_en= -------------------------------
+    card_mode = text is None
+    if card_mode:
+        bullets = [str(b).strip() for b in (bullets_en or []) if str(b).strip()]
+        title = (title_en or "").strip()
+        src = ([title] if title else []) + bullets
+        if not src:
+            return {
+                "ok": False, "roman_urdu": "", "lines_ur": [], "lines_en": [],
+                "title_ur": "", "bullets_ur": [], "method": "none", "attempts": 0,
+                "problems": ["empty input"], "warning": None,
+            }
+        if not configured(provider, api_key):
+            return {
+                "ok": False, "roman_urdu": "", "lines_ur": [], "lines_en": src,
+                "title_ur": "", "bullets_ur": [], "method": "none", "attempts": 0,
+                "problems": [f"no API key configured for provider {provider}"],
+                "warning": "translator not configured",
+            }
+        res = translate_news(
+            "\n".join(src),
+            provider=provider, model=model, api_key=api_key,
+            temperature=temperature, max_retries=max_retries, timeout=timeout,
+            system_prompt=system_prompt, use_few_shot=use_few_shot, strict=strict,
+            max_line_len=MAXLEN if max_line_len is None else max_line_len,
+            paste_n=PASTE_N if paste_n is None else paste_n,
+        )
+        off = 1 if title else 0
+        ok = res["ok"] and len(res["lines_ur"]) == len(src)
+        res["title_ur"] = res["lines_ur"][0] if ok and off else ""
+        res["bullets_ur"] = res["lines_ur"][off:] if ok else []
+        if not ok:
+            res["title_ur"], res["bullets_ur"] = "", []
+        return res
+
+    text = str(text).replace("\r\n", "\n").replace("\r", "\n")
     result: Dict[str, Any] = {
         "ok": False,
         "roman_urdu": "",
@@ -650,7 +784,7 @@ def translate_news(
             continue
 
         cleaned = strip_wrappers(raw)
-        ok, problems = validate(text, cleaned)
+        ok, problems = validate(text, cleaned, max_line_len, paste_n)
         if ok:
             result.update(
                 ok=True,
@@ -674,7 +808,9 @@ def translate_news(
     # All attempts failed -> deterministic fallback so the pipeline never dies
     fb = fallback_translate(text)
     fb = strip_wrappers(fb)
-    ok_fb, problems_fb = validate(text, fb)
+    if max_line_len:
+        fb = "\n".join(trim_to(ln, max_line_len) for ln in fb.split("\n"))
+    ok_fb, problems_fb = validate(text, fb, max_line_len, paste_n)
     result.update(
         ok=ok_fb,
         roman_urdu=fb,
@@ -694,6 +830,56 @@ def translate_news(
     return result
 
 
+def translate_lines(lines: Any, **kwargs) -> Dict[str, Any]:
+    """
+    Drop-in replacement for news_agent/roman_urdu.py::translate_lines().
+
+    lines: plain English strings (news bullets). Returns
+    {ok, lines, method, problems, warning}. ok=False => caller falls back;
+    this function itself never raises.
+
+    Differences from the old module (all deliberate, all throughput-positive):
+      * enforces MAXLEN=118 per line and rejects 4-word English pastes BEFORE
+        returning, so writer.bullet_quality() cannot kill the bullet afterwards
+      * retries with a line-specific error report instead of giving up
+      * on total failure returns a structure-preserving fallback (the old module
+        returned lines=[], which made autod.py drop every affected story)
+    """
+    try:
+        src = [str(l).strip() for l in (lines or []) if str(l).strip()]
+        if not src:
+            return {"ok": False, "lines": [], "method": "none",
+                    "problems": ["empty input"], "warning": None}
+        provider = kwargs.get("provider", DEFAULT_PROVIDER)
+        if not configured(provider, kwargs.get("api_key", "")):
+            return {"ok": False, "lines": [], "method": "none",
+                    "problems": [f"no API key configured for provider {provider}"],
+                    "warning": "translator not configured"}
+        kw = {k: v for k, v in kwargs.items() if k != "max_line_len"}
+        res = translate_news(
+            "\n".join(src),
+            max_line_len=kwargs.get("max_line_len", MAXLEN),
+            paste_n=PASTE_N,
+            **kw,
+        )
+        out_lines = res["lines_ur"]
+        # Hard guarantee: count must match, every line must fit the card cap.
+        if len(out_lines) != len(src):
+            out_lines = (out_lines + src[len(out_lines):])[: len(src)]
+        out_lines = [trim_to(l, MAXLEN) for l in out_lines]
+        return {
+            "ok": res["ok"] and len(out_lines) == len(src),
+            "lines": out_lines,
+            "method": res["method"],
+            "problems": res["problems"],
+            "warning": res["warning"],
+        }
+    except Exception as exc:  # noqa: BLE001  -- never raise into a news cycle
+        return {"ok": False, "lines": [], "method": "none",
+                "problems": [f"translate_lines crashed: {exc}"],
+                "warning": str(exc)}
+
+
 # --------------------------------------------------------------------------
 # JSON mode (for n8n / Make / Zapier)
 # --------------------------------------------------------------------------
@@ -710,7 +896,9 @@ def translate_payload(payload: Dict[str, Any], **kwargs) -> Dict[str, Any]:
         title_ur, bullets_ur, summary_ur, roman_urdu (single card-ready string)
     """
     out = dict(payload)
-    kw = kwargs
+    kw = dict(kwargs)
+    kw.setdefault("max_line_len", MAXLEN)   # card renderer has a hard per-line cap
+    kw.setdefault("paste_n", PASTE_N)       # reject verbatim English runs
 
     def pick(*keys: str) -> Optional[str]:
         for k in keys:

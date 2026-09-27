@@ -69,7 +69,7 @@ Agar aapka agent ek Python script hai:
 cp -r roman-urdu-translator /path/to/your-news-agent/
 cd /path/to/your-news-agent/roman-urdu-translator
 export RU_PROVIDER=openai RU_MODEL=gpt-4o-mini RU_API_KEY=sk-...
-python3 tests/test_offline.py      # 31 tests pass hone chahiye
+python3 tests/test_offline.py      # 66 tests pass hone chahiye
 ```
 
 ```python
@@ -188,7 +188,7 @@ n8n ke ready nodes: `n8n_workflow_snippet.json` import kar lein.
 1. `GET /health` → `"key_present": true` hona chahiye (warna `.env` theek nahi).
 2. Browser mein `http://YOUR-HOST:8080/` khol kar demo page par **Translate & build card**
    dabayein → banner par "LIVE" likha ho, "MOCK MODE" nahi.
-3. `python3 tests/test_offline.py` → `31 passed, 0 failed`.
+3. `python3 tests/test_offline.py` → `66 passed, 0 failed`.
 4. Ek real news item par test karein, aur check karein:
    - [ ] koi Urdu/Arabic harf nahi
    - [ ] bullets ki ginti same (3–5)

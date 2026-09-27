@@ -34,11 +34,30 @@ roman-urdu-translator/
 ├── prompts/
 │   ├── system_prompt.txt         # THE agent prompt (is copy karein kisi bhi AI node mein)
 │   └── few_shot_examples.md      # 5 worked examples (quality booster)
-└── tests/
-    └── test_offline.py           # 31 offline tests, API key ke baghair
+├── tests/
+│   └── test_offline.py           # 66 offline tests, API key ke baghair
+├── THROUGHPUT-FIX.md             # ★ "1-4 cards/day then stops" ka diagnosis + fix
+└── INTEGRATION.md                # news_agent/ ke sath compatibility + drop-in shim
 ```
 
 **Zero dependencies** — sirf Python standard library. `pip install` ki zaroorat nahi.
+
+### Card-pipeline compatibility (`news_agent/` ke sath drop-in)
+
+`roman_urdu.py` mein yeh functions aapke existing module ki **exact same shape**
+dete hain, taaki swap karna ho to caller code na badalna pade:
+
+| Function | Kaam |
+|---|---|
+| `translate_lines(lines)` | `{ok, lines, method, problems, warning}` — `autod.py` isi ko call karta hai |
+| `translate_news(title_en=..., bullets_en=[...])` | `{ok, title_ur, bullets_ur, problems, warning, method}` |
+| `configured(provider)` | `_ru_on()` gate ke liye same semantics |
+| `paste_check(en, ur, n)` | `writer.bullet_quality()` wala English-paste test |
+| `trim_to(line, 118)` | card ke `MAXLEN` cap mein word-boundary par fit karna |
+| `MAXLEN` / `PASTE_N` | 118 / 4 — `RU_MAXLEN`, `RU_PASTE_N` env se override |
+
+Over-long lines aur English-paste runs ab **validator ke andar hi** pakde jate
+hain (retry ke sath), na ke baad mein `bullet_quality()` par bullet marne se.
 
 ---
 
@@ -270,7 +289,7 @@ export RU_API_KEY=ollama
 
 ```bash
 python3 tests/test_offline.py
-# RESULT: 31 passed, 0 failed
+# RESULT: 66 passed, 0 failed
 ```
 
 Tests yeh cover karte hain: structure preservation, Urdu-script rejection,
