@@ -1,4 +1,7 @@
 name: facebook-check
+permissions:
+  contents: read
+  actions: write              # watchdog self-heals dropped slots with the job token
 on:
   schedule:
     - cron: "45 * * * *"   # hourly patrol (owner 26 Sep: 24/7)
@@ -22,7 +25,7 @@ jobs:
       - name: slot watchdog - re-dispatch news cycle if GitHub dropped the slot
         if: always()
         env:
-          PAT: ${{ secrets.AGENT_PAT }}
+          PAT: ${{ github.token }}
           REPO: ${{ github.repository }}
         run: |
           python3 - <<'PY'

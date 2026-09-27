@@ -13,6 +13,9 @@ on:
         default: "0"
 permissions:
   contents: write                 # allows committing the state back
+  actions: write                  # owner 27 Sep: the job's built-in GITHUB_TOKEN can
+                                  # save/refresh secrets itself - NO personal PAT needed,
+                                  # so a revoked token can never stop the hourly cycle
 concurrency:
   group: news-cycle               # never two cycles at once (no double posts)
   cancel-in-progress: false
@@ -38,7 +41,7 @@ jobs:
           FB_REFRESH_TOKEN: ${{ secrets.FB_REFRESH_TOKEN }}
           GH_OWNER: ${{ github.repository_owner }}
           GH_REPO: ${{ github.event.repository.name }}
-          AGENT_PAT: ${{ secrets.AGENT_PAT }}
+          GITHUB_TOKEN: ${{ github.token }}
         run: python3 news_agent/auth.py
       - name: run one monitor + publish cycle
         env:
@@ -48,7 +51,6 @@ jobs:
           RU_MODEL: ${{ vars.RU_MODEL }}
           RU_BASE_URL: ${{ vars.RU_BASE_URL }}
           FB_PAGE_ID: ${{ secrets.FB_PAGE_ID }}
-          AGENT_PAT: ${{ secrets.AGENT_PAT }}
           DIGEST_CATCHUP: ${{ github.event.inputs.catchup || '0' }}
         run: python3 news_agent/autod.py --once
       - name: commit agent memory
