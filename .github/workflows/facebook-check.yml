@@ -2,6 +2,7 @@ name: facebook-check
 permissions:
   contents: read
   actions: write              # watchdog self-heals dropped slots with the job token
+  issues: write               # fail-loud: a broken Facebook token opens an issue
 on:
   schedule:
     - cron: "45 * * * *"   # hourly patrol (owner 26 Sep: 24/7)
@@ -21,6 +22,32 @@ jobs:
           FB_PAGE_TOKEN: ${{ secrets.FB_PAGE_TOKEN }}
           FB_PAGE_ID: ${{ secrets.FB_PAGE_ID }}
         run: python3 news_agent/publish.py --check-fb
+
+      - name: fail loud - open an issue if the Page connection broke
+        if: failure()
+        env:
+          GH_TOKEN: ${{ github.token }}
+          REPO: ${{ github.repository }}
+        run: |
+          python3 - <<'PY'
+          import os, json, urllib.request
+          body = {"title": "Facebook posting is blocked - page token needs attention",
+                  "labels": [],
+                  "body": "The hourly check could not reach the Page. Open the repo's "
+                          "Actions tab, then refresh FB_PAGE_TOKEN (or the FB secrets) "
+                          "under Settings -> Secrets. Until fixed, posting pauses but "
+                          "never posts junk."}
+          req = urllib.request.Request(
+              f"https://api.github.com/repos/{os.environ['REPO']}/issues",
+              data=json.dumps(body).encode(),
+              headers={"Authorization": "Bearer " + os.environ["GH_TOKEN"],
+                       "Accept": "application/vnd.github+json"})
+          try:
+              urllib.request.urlopen(req, timeout=30)
+              print("issue opened")
+          except Exception as e:
+              print("issue open failed:", e)
+          PY
 
       - name: slot watchdog - re-dispatch news cycle if GitHub dropped the slot
         if: always()

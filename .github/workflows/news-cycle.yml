@@ -50,7 +50,7 @@ jobs:
           RU_PROVIDER: ${{ vars.RU_PROVIDER }}
           RU_MODEL: ${{ vars.RU_MODEL }}
           RU_BASE_URL: ${{ vars.RU_BASE_URL }}
-          FB_PAGE_ID: ${{ secrets.FB_PAGE_ID }}
+          RU_TIMEOUT: \"40\"   # never let LLM retries eat a whole slot
           DIGEST_CATCHUP: ${{ github.event.inputs.catchup || '0' }}
         run: python3 news_agent/autod.py --once
       - name: commit agent memory
