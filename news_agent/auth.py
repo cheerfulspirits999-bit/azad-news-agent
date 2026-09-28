@@ -128,8 +128,10 @@ def _visibility_check(tok, pid_hint=""):
                 "). Meta shows its posts only to app-role accounts - owner "
                 "must provide a fresh token from a LIVE app with "
                 "pages_manage_posts (developers.facebook.com > My Apps).") \
-            if gated else ("PUBLIC: signing app " + (app or "?") +
-                           " is distinct from the Page app")
+            if gated else ("public-at-API: signing app " + (app or "?") +
+                           " is not the Page auto-app; if reach is still "
+                           "limited, switch THIS app to Live in the Meta "
+                           "dashboard - no review needed for your own Page")
         print("auth: VISIBILITY MODE - " + mode)
         state = os.path.join(os.path.dirname(os.path.abspath(__file__)),
                              "state")

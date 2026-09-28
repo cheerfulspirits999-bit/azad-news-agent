@@ -15,39 +15,57 @@ jobs:
       FB_REFRESH_TOKEN: ${{ secrets.FB_REFRESH_TOKEN }}
     steps:
       - uses: actions/checkout@v4
-      - name: self truth
+      - name: logged-out render probe + cleanup
         run: |
           python3 - <<'PY'
           import json, os, urllib.request, urllib.error, urllib.parse
           G = "https://graph.facebook.com/v21.0/"
           PT = os.environ.get("FB_PAGE_TOKEN", "")
-          U = os.environ.get("FB_REFRESH_TOKEN", "")
           PAGE = os.environ.get("FB_PAGE_ID", "")
-          def get(u):
+          def graph(u, data=None):
+              if data is not None:
+                  data["access_token"] = PT
+                  req = urllib.request.Request(u, data=urllib.parse.urlencode(data).encode(),
+                                               method="POST")
+              else:
+                  u += ("&" if "?" in u else "?") + "access_token=" + PT
+                  req = urllib.request.Request(u)
               try:
-                  with urllib.request.urlopen(u, timeout=30) as r:
+                  with urllib.request.urlopen(req, timeout=40) as r:
                       return json.loads(r.read().decode())
               except urllib.error.HTTPError as e:
-                  return {"__error": e.code, "body": e.read().decode()[:180]}
-          def post(u, data):
-              req = urllib.request.Request(u, data=urllib.parse.urlencode(data).encode(),
-                                           method="POST")
+                  return {"__error": e.code, "body": e.read().decode()[:160]}
+          def plain(u):
               try:
-                  with urllib.request.urlopen(req, timeout=30) as r:
-                      return json.loads(r.read().decode())
-              except urllib.error.HTTPError as e:
-                  return {"__error": e.code, "body": e.read().decode()[:180]}
-          for label, tok in [("PAGE-TOKEN self-debug", PT),
-                             ("USER-TOKEN self-debug", U)]:
-              d = get(f"{G}debug_token?input_token={tok}&access_token={tok}").get("data", {})
-              print(label, "-> app:", d.get("app_id"), "| valid:", d.get("is_valid"),
-                    "| id:", d.get("id"), "| scopes:", d.get("scopes"))
-          f = get(f"{G}{PAGE}/published_posts?limit=10&fields=id,created_time,message"
-                  f"&access_token={PT}")
-          for q in (f.get("data") or []):
+                  r = urllib.request.urlopen(urllib.request.Request(
+                      u, headers={"User-Agent": "Mozilla/5.0 (X11; Linux x86_64)"}), timeout=40)
+                  return r.read().decode("utf-8", "replace")
+              except Exception as e:
+                  return "__plain_error " + str(e)
+          f = graph(f"{G}{PAGE}/published_posts?limit=15&fields=id,created_time,message,permalink_url")
+          if "data" not in f:
+              print("READ FAILED:", json.dumps(f)[:200])
+          posts = f.get("data") or []
+          print("listed:", len(posts))
+          probes = []
+          for q in posts:
               m = (q.get("message") or "").strip()
-              if m.startswith("🔧"):
-                  r = post(f"{G}{q['id']}", {"method": "DELETE", "access_token": PT})
-                  print("deleted labeled note", q["id"][-14:], "->", json.dumps(r)[:60])
-          print("cleanup pass done")
+              if m.startswith("\U0001f527"):
+                  r = graph(G + q["id"], {"method": "DELETE"})
+                  print("deleted note ->", json.dumps(r)[:50])
+              elif q.get("permalink_url") and len(probes) < 2:
+                  probes.append(("recent " + q["created_time"][5:16], q["permalink_url"]))
+          probes.append(("CONTROL sep26", "https://www.facebook.com/1657288895957921/posts/1655293676157443"))
+          for label, href in probes:
+              html = plain("https://www.facebook.com/plugins/post.php?href="
+                           + urllib.parse.quote(href, safe="") + "&show_text=true")
+              if html.startswith("__plain_error"):
+                  print(label, "->", html[:90])
+                  continue
+              low = html.lower()
+              denied = "isn't available" in low or "not available" in low
+              shown = "\U0001f4f0" in html or "latest news" in low or "azad" in low
+              verdict = "BLOCKED" if denied else ("VISIBLE" if shown else "UNKNOWN")
+              print(label, "-> logged-out render:", verdict, "| len:", len(html))
+          print("probe pass done")
           PY
