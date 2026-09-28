@@ -13,46 +13,36 @@ jobs:
       FB_USER_TOKEN: ${{ secrets.FB_REFRESH_TOKEN }}
     steps:
       - uses: actions/checkout@v4
-      - name: feed read + dev-mode expiry check
+      - name: published_posts expiry + violations probe
         run: |
           python3 - <<'PY'
-          import json, os, urllib.request, urllib.parse, urllib.error
+          import json, os, urllib.request, urllib.error
           PAGE = os.environ.get("FB_PAGE_ID", "")
-          TOKS = {"page": os.environ.get("FB_PAGE_TOKEN", ""),
-                  "user": os.environ.get("FB_USER_TOKEN", "")}
+          PT = os.environ.get("FB_PAGE_TOKEN", "")
           def api(url, tok):
               sep = "&" if "?" in url else "?"
-              req = urllib.request.Request(
-                  "https://graph.facebook.com" + url + sep + "access_token=" + tok)
+              req = urllib.request.Request("https://graph.facebook.com" + url + sep + "access_token=" + tok)
               try:
                   with urllib.request.urlopen(req, timeout=30) as r:
                       return json.loads(r.read().decode())
               except urllib.error.HTTPError as e:
-                  return {"__error": e.code, "body": e.read().decode()[:300]}
-          print("== who is the user token ==")
-          print(json.dumps(api("/v21.0/me?fields=id,name", TOKS["user"]))[:200])
-          print("== token grants on the Page (roles/perm) ==")
-          acc = api("/v21.0/me/accounts?fields=id,name,tasks,permalink_url",
-                    TOKS["user"])
-          for pg in (acc.get("data") or []):
-              if pg.get("id") == PAGE:
-                  print("PAGE ROLE:", json.dumps(pg)[:300])
-          print("== PAGE feed via user token (public view of it) ==")
-          f = api(f"/v21.0/{PAGE}/feed?limit=10&fields=id,created_time,"
-                  "expires_at,is_hidden,permalink_url,message", TOKS["user"])
-          if f.get("data") is None:
-              print("feed read:", json.dumps(f)[:400])
-          for post in (f.get("data") or []):
-              m = (post.get("message") or "").replace("\n", " ")[:38]
-              print(f"  {post.get('created_time','')[5:16]} "
-                    f"exp={post.get('expires_at','NONE')[:16]} "
-                    f"hidden={post.get('is_hidden')} | {m}")
-          print("== PAGE state ==")
-          a = api(f"/v21.0/{PAGE}?fields=name,is_published,link,fan_count,"
-                  "restrictions", TOKS["page"])
-          print(json.dumps(a, indent=1)[:600])
-          for post in (f.get("data") or [])[:2]:
-              pr = api(f"/{post['id']}?fields=id,application,permalink_url,"
-                       "expires_at", TOKS["user"])
-              print("post app/perm:", json.dumps(pr, default=str)[:400])
+                  return {"__error": e.code, "body": e.read().decode()[:350]}
+          print("== PUBLISHED_POSTS (posts made by OUR app on this page) ==")
+          f = api(f"/v21.0/{PAGE}/published_posts?limit=10&fields=id,created_time,"
+                  "expires_at,status,is_hidden,permalink_url,message", PT)
+          data = f.get("data")
+          if data is None:
+              print("published_posts:", json.dumps(f)[:420])
+          else:
+              for post in data:
+                  m = (post.get("message") or "").replace("\n", " ")[:40]
+                  print(f"  {post.get('created_time','')} exp={post.get('expires_at','NONE')} "
+                        f"status={post.get('status','?')} hidden={post.get('is_hidden')} | {m}")
+              print("== PERMISSIONS ON THE PAGE TOKEN ==")
+          print("== PAGE VIOLATIONS / QUALITY ==")
+          v = api(f"/v21.0/{PAGE}/violations", PT)
+          print("violations:", json.dumps(v)[:300])
+          print("== TOKEN SCOPES (via /me perm check) ==")
+          s = api("/v21.0/me?fields=id,link,username", PT)
+          print("me:", json.dumps(s)[:250])
           PY
