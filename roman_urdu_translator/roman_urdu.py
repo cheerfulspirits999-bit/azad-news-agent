@@ -777,12 +777,16 @@ def translate_news(
     for attempt in range(1, max_retries + 2):
         result["attempts"] = attempt
         try:
+            # 28 Sep fix: with temperature 0 the self-correcting retries were
+            # byte-identical echoes of the first attempt (deterministic).
+            # Each retry now warms the sampler a little so a re-ask can
+            # actually diverge from the rejected output.
             raw = call_llm(
                 attempt_text,
                 provider=provider,
                 model=model,
                 api_key=api_key,
-                temperature=temperature,
+                temperature=min(0.55, temperature + 0.25 * (attempt - 1)),
                 timeout=timeout,
                 system_prompt=base_prompt,
                 use_few_shot=use_few_shot,

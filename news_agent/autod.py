@@ -806,6 +806,31 @@ def build_digest(cands, catchup=False):
                 _bad.discard(i)
         _RU_STATS["kills"] = _RU_STATS.get("kills") or _kill
         _RU_STATS["accepted"] = len(_pend) - len(_bad)
+        # 28 Sep salvage pass: a line the block-call lost gets ONE private
+        # re-ask (short single-line prompts translate where 5-line compounds
+        # echo). Only runs when the card would otherwise starve - API spent
+        # exactly when needed (owner 27 Sep).
+        if _bad and (len(_pend) - len(_bad)) < 3:
+            for i in sorted(_bad):
+                _en2 = picks[i][1]
+                if not _en2:
+                    continue
+                try:
+                    _r2 = roman_urdu.translate_lines([_en2])
+                except Exception:
+                    continue
+                _l2 = ((_r2.get("lines") or [""])[0] or "").strip()
+                if (not _l2 or len(_l2) > 118 or _NONROMAN_RE.search(_l2)
+                        or _real_paste(_en2, _l2)):
+                    continue
+                _ed2 = set(re.findall(r"\d+(?:[.,]\d+)*", _en2))
+                _ud2 = set(re.findall(r"\d+(?:[.,]\d+)*", _l2))
+                if _ud2 - _ed2 - _en_digits(_en2):
+                    continue
+                picks[i] = picks[i][:2] + (_l2,) + picks[i][3:]
+                _bad.discard(i)
+                _RU_STATS.setdefault("salvaged", []).append(i + 1)
+            _RU_STATS["accepted"] = len(_pend) - len(_bad)
         log(f"[digest] roman-urdu step: {len(_pend) - len(_bad)}/"
             f"{len(_pend)} lines accepted"
             + ("" if not _res["problems"] else
