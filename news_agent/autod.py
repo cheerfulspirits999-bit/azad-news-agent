@@ -80,6 +80,7 @@ HEADLINE_MAP = monitor.HEADLINE_MAP
 
 _LOGTAIL = []           # 28 Sep: in-progress visibility - the tail of this
 _DIGEST_NOTE = ""       # last digest verdict of this cycle, lands in state
+_RU_STATS = {}          # roman-urdu accept/kill anatomy of the last attempt
 
 
 def log(*a):            # cycle's stdout rides inside last_cycle.json, which
@@ -741,10 +742,20 @@ def build_digest(cands, catchup=False):
     # publishable bullets remain the run WAITS silently ("no important news
     # => don't post"; filler is permanently banned).
     _pend = [i for i, p in enumerate(picks) if not p[2]]
+    _RU_STATS.clear()
+    _RU_STATS.update({"pre_ru_picks": len(picks), "to_translate": len(_pend)})
+    _kill = {}
+    def _killed(i, why):
+        _kill.setdefault(why, []).append(i + 1)
     if _pend and _ru_on():
         _res = roman_urdu.translate_lines([picks[i][1] for i in _pend])
         _cand = _res.get("lines") or []
         _bad = set(_pend)
+        _RU_STATS["engine"] = {"ok": bool(_res.get("ok")),
+                               "lines_in": len(_cand), "lines_want": len(_pend),
+                               "problems": str(_res.get("problems") or [])[:160]}
+        if len(_cand) != len(_pend):
+            _RU_STATS["kills"] = {"count-mismatch": "all"}
         # 27 Sep CI lesson: the engine's blanket 4-word English-paste rule
         # kills legitimate name runs ("Ganesh idol immersion"), so judge every
         # line it returned - even when its overall verdict was ok=False - with
@@ -753,18 +764,24 @@ def build_digest(cands, catchup=False):
             for _k, i in enumerate(_pend):
                 _l = (_cand[_k] or "").strip()
                 _en = picks[i][1]
-                if not _l or len(_l) > 118 or _NONROMAN_RE.search(_l):
-                    continue                    # empty / over-cap / Urdu script
+                if not _l:
+                    _killed(i, "empty"); continue
+                if len(_l) > 118:
+                    _killed(i, "len>118"); continue
+                if _NONROMAN_RE.search(_l):
+                    _killed(i, "urdu-script"); continue
                 if set(re.findall(r"\d+(?:[.,]\d+)*", _en)) != \
                    set(re.findall(r"\d+(?:[.,]\d+)*", _l)):
-                    continue                      # digits moved: never ship
+                    _killed(i, "digits"); continue  # digits moved: never ship
                 _qq = writer.bullet_quality(_en, _l)
                 if [q for q in _qq if not q.startswith("ur-")]:
-                    continue                      # EN side itself unsafe
+                    _killed(i, "en-quality"); continue  # EN side itself unsafe
                 if _real_paste(_en, _l):
-                    continue                      # untranslated lowercase run
+                    _killed(i, "paste"); continue  # untranslated lowercase run
                 picks[i] = picks[i][:2] + (_l,) + picks[i][3:]
                 _bad.discard(i)
+        _RU_STATS["kills"] = _RU_STATS.get("kills") or _kill
+        _RU_STATS["accepted"] = len(_pend) - len(_bad)
         log(f"[digest] roman-urdu step: {len(_pend) - len(_bad)}/"
             f"{len(_pend)} lines accepted"
             + ("" if not _res["problems"] else
@@ -972,6 +989,7 @@ def one_cycle():
     summary = {"cycle": cyc["cycle_id"], "at": datetime.now(IST).isoformat(),
                "candidates": len(cyc["candidates"]), "published_this_cycle": n}
     summary["digest"] = _DIGEST_NOTE
+    summary["ru"] = dict(_RU_STATS)
     summary["tail"] = list(_LOGTAIL)[-30:]   # live diagnostics (refusal reasons,
                                               # roman-urdu acceptance, stage skips)
     os.makedirs(STATE, exist_ok=True)
