@@ -12,32 +12,24 @@ jobs:
       FB_PAGE_ID: ${{ secrets.FB_PAGE_ID }}
     steps:
       - uses: actions/checkout@v4
-      - name: verify 00:05 card visibility
+      - name: verify latest cards public
         run: |
           python3 - <<'PY'
           import json, os, urllib.request, urllib.error, urllib.parse
           PAGE = os.environ.get("FB_PAGE_ID", "")
           PT = os.environ.get("FB_PAGE_TOKEN", "")
-          def api(url, data=None):
-              u = "https://graph.facebook.com/v21.0/" + url
-              body = None
-              if data is not None:
-                  data["access_token"] = PT
-                  body = urllib.parse.urlencode(data).encode()
-              else:
-                  u += ("&" if "?" in u else "?") + "access_token=" + PT
-              req = urllib.request.Request(u, data=body,
-                                           method="POST" if body else "GET")
+          def api(url):
+              u = "https://graph.facebook.com/v21.0/" + url + "&access_token=" + PT
               try:
-                  with urllib.request.urlopen(req, timeout=30) as r:
+                  with urllib.request.urlopen(u, timeout=30) as r:
                       return json.loads(r.read().decode())
               except urllib.error.HTTPError as e:
                   return {"__error": e.code, "body": e.read().decode()[:200]}
-          f = api(f"{PAGE}/published_posts?limit=3&fields=id,created_time,message,is_hidden,feed_targeting,stream_visibility")
+          f = api(f"{PAGE}/published_posts?limit=3&fields=id,created_time,"
+                  "message,is_hidden,feed_targeting")
           for q in (f.get("data") or []):
-              m = (q.get("message") or "").replace("
-", " ")[:56]
+              m = (q.get("message") or "").replace("\n", " ")[:56]
               print(q.get("created_time", ""), "|", m)
-              print("   id:", q["id"], "| is_hidden:", q.get("is_hidden"),
-                    "| feed_targeting:", json.dumps(q.get("feed_targeting"))[:60],
-                    "| stream_visibility:", q.get("stream_visibility", "(unreadable=default-public)"))          PY
+              print("   id:", q.get("id"), "| is_hidden:", q.get("is_hidden"),
+                    "| feed_targeting:", json.dumps(q.get("feed_targeting"))[:60])
+          PY
