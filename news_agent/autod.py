@@ -79,6 +79,7 @@ HEADLINE_MAP = monitor.HEADLINE_MAP
 
 
 _LOGTAIL = []           # 28 Sep: in-progress visibility - the tail of this
+_DIGEST_NOTE = ""       # last digest verdict of this cycle, lands in state
 
 
 def log(*a):            # cycle's stdout rides inside last_cycle.json, which
@@ -86,7 +87,7 @@ def log(*a):            # cycle's stdout rides inside last_cycle.json, which
            + " ".join(str(x) for x in a))                         # pushes
     print(msg, flush=True)                                        # EVERY cycle.
     _LOGTAIL.append(msg[-170:])
-    del _LOGTAIL[:-40:]
+    del _LOGTAIL[:-130:]
 
 
 def alert(reason, detail=""):
@@ -829,6 +830,10 @@ def one_cycle():
     cap = CARDS_PER_DAY + (6 if catchup else 0)
     _slot = DIGEST_SLOTS[min(ncards, len(DIGEST_SLOTS) - 1)]
     _due = (gap_min >= 30 if catchup else gap_min >= 60)  # hourly owner 26 Sep
+    global _DIGEST_NOTE
+    if not (ncards < cap and _due and posted != 5):
+        _DIGEST_NOTE = (f"gate closed: ncards {ncards}/{cap}, gap {gap_min:.0f} min, "
+                        f"retry_pending={posted}")
     if (ncards < cap and _due and posted != 5):
         try:
             dg = build_digest(cyc["candidates"], catchup=catchup)
@@ -836,7 +841,9 @@ def one_cycle():
             import traceback
             log("DIGEST BUILD CRASH:", ex, traceback.format_exc()[-400:])
             dg = None
+        _DIGEST_NOTE = "starved: <3 publishable Urdu lines"
         if dg:
+            _DIGEST_NOTE = "ready"
             log("DIGEST ready: 3 fresh stories, one card")
             rc, _ = try_publish(dg)
             if rc == 0:
@@ -844,13 +851,16 @@ def one_cycle():
                 q0["last_card_at"] = datetime.now(IST).isoformat()
                 q0["day_total"] = q0.get("day_total", 0) + 1
                 save_quota(q0)
+                _DIGEST_NOTE = f"PUBLISHED {dg['slug']}"
                 log("published daily card:", dg["slug"])
                 time.sleep(POST_SPACING_SECONDS)
             elif rc == 3:
+                _DIGEST_NOTE = "duplicate, slot skipped"
                 log("digest duplicate, skipping this slot")
                 q0["digests"] = {today0: ncards + 1}
                 save_quota(q0)
             else:
+                _DIGEST_NOTE = f"REFUSED rc={rc} - retrying next cycle"
                 log(f"digest refused (rc={rc}), will retry next cycle")
     if posted == 5:
         alert("Facebook publish failed while retrying pending posts",
@@ -961,7 +971,8 @@ def one_cycle():
 
     summary = {"cycle": cyc["cycle_id"], "at": datetime.now(IST).isoformat(),
                "candidates": len(cyc["candidates"]), "published_this_cycle": n}
-    summary["tail"] = list(_LOGTAIL)[-16:]   # live diagnostics (refusal reasons,
+    summary["digest"] = _DIGEST_NOTE
+    summary["tail"] = list(_LOGTAIL)[-30:]   # live diagnostics (refusal reasons,
                                               # roman-urdu acceptance, stage skips)
     os.makedirs(STATE, exist_ok=True)
     json.dump(summary, open(os.path.join(STATE, "last_cycle.json"), "w"), indent=2)
