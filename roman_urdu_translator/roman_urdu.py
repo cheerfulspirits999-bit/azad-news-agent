@@ -53,19 +53,28 @@ from typing import Any, Dict, List, Optional, Tuple
 # Configuration (all overridable by environment variables / CLI flags)
 # --------------------------------------------------------------------------
 
+def _num(name, default, cast=int):
+    """Numeric env reads that can never crash the module import (28 Sep:
+    one malformed workflow value silenced the whole pipeline for hours)."""
+    try:
+        return cast((os.environ.get(name) or "").strip() or default)
+    except (ValueError, TypeError):
+        return cast(default)
+
+
 DEFAULT_PROVIDER = os.environ.get("RU_PROVIDER", "openai")          # openai | gemini | anthropic | mock
 DEFAULT_MODEL = os.environ.get("RU_MODEL", "gpt-4o-mini")
-DEFAULT_TEMPERATURE = float(os.environ.get("RU_TEMPERATURE", "0.2"))
-DEFAULT_MAX_RETRIES = int(os.environ.get("RU_MAX_RETRIES", "2"))     # retries AFTER the first attempt
-DEFAULT_TIMEOUT = int(os.environ.get("RU_TIMEOUT", "60"))
+DEFAULT_TEMPERATURE = _num("RU_TEMPERATURE", "0.2", float)
+DEFAULT_MAX_RETRIES = _num("RU_MAX_RETRIES", "2", int)     # retries AFTER the first attempt
+DEFAULT_TIMEOUT = _num("RU_TIMEOUT", 60)
 
 # news_agent/render.py + writer.bullet_quality() enforce a hard per-line cap.
 # Roman Urdu lines longer than this are rejected by the card pipeline, so we
 # enforce it here instead of letting the caller discover it after a wasted cycle.
-MAXLEN = int(os.environ.get("RU_MAXLEN", "118"))
+MAXLEN = _num("RU_MAXLEN", "118", int)
 # writer.bullet_quality()/paste_check(): >= this many consecutive English words
 # copied verbatim into the Urdu line = "en-words-pasted" = fatal for that bullet.
-PASTE_N = int(os.environ.get("RU_PASTE_N", "4"))
+PASTE_N = _num("RU_PASTE_N", "4", int)
 
 ENDPOINTS = {
     "openai": os.environ.get(

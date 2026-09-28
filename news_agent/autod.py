@@ -936,17 +936,72 @@ def main():
         log("single-cycle mode (--once)")
         one_cycle()
         return
-    log("autonomous daemon up - cycle every", CYCLE_SECONDS // 60, "minutes")
+    # Owner 28 Sep "no interruptions": self-reliant relay loop. Bounded by
+    # --deadline=MIN so the workflow hands off to a fresh runner before any
+    # hard kill; tolerates single-cycle errors; pushes memory after EVERY
+    # cycle so even a crash can never re-post a story or lose the cadence.
+    _dl = 0.0
+    for _a in sys.argv:
+        if _a.startswith("--deadline="):
+            try:
+                _dl = float(_a.split("=", 1)[1])
+            except ValueError:
+                pass
+    _iv = float(os.environ.get("DAEMON_INTERVAL_MIN", "10"))
+    _t0 = time.time()
+    log(f"autonomous relay up - cycle every {_iv:.0f} min"
+        + (f", deadline {_dl:.0f} min" if _dl else ", no deadline"))
+    _fails = 0
     while True:
         try:
             one_cycle()
+            _fails = 0
         except SystemExit:
+            _commit_memory()
             raise
-        except Exception as e:
-            alert("Unhandled technical error in cycle",
-                  traceback.format_exc()[-1500:])
-            raise SystemExit(9)
-        time.sleep(CYCLE_SECONDS)
+        except Exception:
+            _fails += 1
+            log("cycle error (%d/3): %s" % (_fails, traceback.format_exc()[-350:]))
+            if _fails >= 3:
+                alert("relay: 3 consecutive cycle failures - exiting; a fresh "
+                      "runner takes over within minutes (cron+watchdog)", "")
+                _commit_memory()
+                raise SystemExit(9)
+        _commit_memory()
+        if _dl and (time.time() - _t0) / 60.0 >= _dl - 8:
+            log("relay deadline reached - handing off to the next queued run")
+            return
+        time.sleep(_iv * 60)
+
+
+def _commit_memory():
+    """Best-effort: push state after each cycle (relay mode). Never raises."""
+    import subprocess
+    root = os.path.dirname(BASE)
+    def _git(*a, check=False):
+        try:
+            r = subprocess.run(("git", "-C", root) + a, capture_output=True,
+                               timeout=60)
+            if check and r.returncode != 0:
+                raise RuntimeError(r.stderr.decode()[:200])
+            return r
+        except Exception:
+            if check:
+                raise
+            return None
+    try:
+        _git("add", "news_agent/state", "news_agent/stories", check=True)
+        d = _git("diff", "--cached", "--quiet")
+        if d is None or d.returncode == 0:
+            return  # nothing changed
+        _git("-c", "user.name=azad-news-agent", "-c", "user.email=agent@localhost",
+             "commit", "-m", f"relay cycle {datetime.now(IST).isoformat(timespec='seconds')}",
+             check=True)
+        _git("pull", "--rebase", "origin", os.environ.get("GITHUB_REF_NAME", "main"))
+        _git("push", "origin", "HEAD", check=True)
+        log("[relay] memory pushed")
+    except Exception as e:
+        log("[relay] memory push skipped:", str(e)[:120])
 
 
 if __name__ == "__main__":

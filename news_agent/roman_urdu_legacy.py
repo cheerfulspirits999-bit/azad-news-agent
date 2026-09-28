@@ -72,6 +72,15 @@ def _env(name, default=""):
     return v or default
 
 
+def _num(name, default, cast=int):
+    """Numeric env that can NEVER crash a cycle - bad values fall back."""
+    try:
+        return cast(_env(name, str(default)))
+    except (ValueError, TypeError):
+        sys.stderr.write(f"[roman_urdu] ignoring bad {name} value; using {default}\n")
+        return default
+
+
 def _key():
     return (_env("RU_API_KEY") or _env("GROQ_API_KEY")
             or _env("OPENAI_API_KEY") or _env("GOOGLE_API_KEY")
@@ -94,7 +103,7 @@ def _call_llm(system, user, attempt_report=""):
         user += "\n\nYour previous reply FAILED validation:\n" + attempt_report \
                 + "\nFix it and reply with only the corrected lines."
     key = _key()
-    timeout = int(_env("RU_TIMEOUT", "60"))
+    timeout = _num("RU_TIMEOUT", 60)
     model = _env("RU_MODEL", "gpt-4o-mini")
     temp = float(_env("RU_TEMPERATURE", "0.2"))
     msgs = [{"role": "system", "content": system},

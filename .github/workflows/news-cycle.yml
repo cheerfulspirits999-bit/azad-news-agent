@@ -22,7 +22,7 @@ concurrency:
 jobs:
   cycle:
     runs-on: ubuntu-latest
-    timeout-minutes: 10
+    timeout-minutes: 350
     steps:
       - uses: actions/checkout@v4
       - uses: actions/setup-python@v5
@@ -50,9 +50,32 @@ jobs:
           RU_PROVIDER: ${{ vars.RU_PROVIDER }}
           RU_MODEL: ${{ vars.RU_MODEL }}
           RU_BASE_URL: ${{ vars.RU_BASE_URL }}
-          RU_TIMEOUT: \"40\"   # never let LLM retries eat a whole slot
+          RU_TIMEOUT: 40
           DIGEST_CATCHUP: ${{ github.event.inputs.catchup || '0' }}
-        run: python3 news_agent/autod.py --once
+          DAEMON_INTERVAL_MIN: "10"
+        run: python3 news_agent/autod.py --deadline=330   # relay: cycles every
+        # 10 min for ~5.5h, then hands off to the queued successor run
+      - name: relay handoff - queue the successor now
+        if: always()
+        env:
+          GH_TOKEN: ${{ github.token }}
+          REPO: ${{ github.repository }}
+        run: |
+          python3 - <<'PY'
+          import os, json, urllib.request
+          req = urllib.request.Request(
+              f"https://api.github.com/repos/{os.environ['REPO']}"
+              "/actions/workflows/news-cycle.yml/dispatches",
+              data=json.dumps({"ref": "main"}).encode(),
+              headers={"Authorization": "Bearer " + os.environ["GH_TOKEN"],
+                       "Accept": "application/vnd.github+json"})
+          try:
+              urllib.request.urlopen(req, timeout=30)
+              print("successor queued - cadence continues without GitHub's cron")
+          except Exception as e:
+              print("handoff failed; cron + watchdog remain as backup:", e)
+          PY
+
       - name: commit agent memory
         if: always()
         run: |
