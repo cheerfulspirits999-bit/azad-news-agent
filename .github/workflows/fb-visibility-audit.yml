@@ -15,23 +15,17 @@ jobs:
       FB_REFRESH_TOKEN: ${{ secrets.FB_REFRESH_TOKEN }}
     steps:
       - uses: actions/checkout@v4
-      - name: logged-out render probe + cleanup
+      - name: exact-text logged-out proof
         run: |
           python3 - <<'PY'
-          import json, os, urllib.request, urllib.error, urllib.parse
+          import json, os, urllib.request, urllib.error, urllib.parse, re
           G = "https://graph.facebook.com/v21.0/"
           PT = os.environ.get("FB_PAGE_TOKEN", "")
           PAGE = os.environ.get("FB_PAGE_ID", "")
-          def graph(u, data=None):
-              if data is not None:
-                  data["access_token"] = PT
-                  req = urllib.request.Request(u, data=urllib.parse.urlencode(data).encode(),
-                                               method="POST")
-              else:
-                  u += ("&" if "?" in u else "?") + "access_token=" + PT
-                  req = urllib.request.Request(u)
+          def graph(u):
               try:
-                  with urllib.request.urlopen(req, timeout=40) as r:
+                  with urllib.request.urlopen(u + ("&" if "?" in u else "?")
+                        + "access_token=" + PT, timeout=40) as r:
                       return json.loads(r.read().decode())
               except urllib.error.HTTPError as e:
                   return {"__error": e.code, "body": e.read().decode()[:160]}
@@ -42,30 +36,30 @@ jobs:
                   return r.read().decode("utf-8", "replace")
               except Exception as e:
                   return "__plain_error " + str(e)
-          f = graph(f"{G}{PAGE}/published_posts?limit=15&fields=id,created_time,message,permalink_url")
-          if "data" not in f:
-              print("READ FAILED:", json.dumps(f)[:200])
+          def norm(t):
+              return re.sub(r"\s+", " ", t).lower()
+          f = graph(f"{G}{PAGE}/published_posts?limit=6&fields=id,created_time,message,permalink_url")
           posts = f.get("data") or []
           print("listed:", len(posts))
-          probes = []
-          for q in posts:
-              m = (q.get("message") or "").strip()
-              if m.startswith("\U0001f527"):
-                  r = graph(G + q["id"], {"method": "DELETE"})
-                  print("deleted note ->", json.dumps(r)[:50])
-              elif q.get("permalink_url") and len(probes) < 2:
-                  probes.append(("recent " + q["created_time"][5:16], q["permalink_url"]))
-          probes.append(("CONTROL sep26", "https://www.facebook.com/1657288895957921/posts/1655293676157443"))
-          for label, href in probes:
+          for q in posts[:3]:
+              msg = q.get("message") or ""
+              frag = ""
+              for ln in msg.splitlines()[1:]:
+                  frag = re.sub(r"^[*\u2022\s]+", "", ln)[:46].strip()
+                  if len(frag) > 18:
+                      break
+              href = q.get("permalink_url", "")
               html = plain("https://www.facebook.com/plugins/post.php?href="
                            + urllib.parse.quote(href, safe="") + "&show_text=true")
-              if html.startswith("__plain_error"):
-                  print(label, "->", html[:90])
-                  continue
-              low = html.lower()
-              denied = "isn't available" in low or "not available" in low
-              shown = "\U0001f4f0" in html or "latest news" in low or "azad" in low
-              verdict = "BLOCKED" if denied else ("VISIBLE" if shown else "UNKNOWN")
-              print(label, "-> logged-out render:", verdict, "| len:", len(html))
-          print("probe pass done")
+              hit = frag and norm(frag) in norm(html)
+              print(q["created_time"], "| exact-bullet in logged-out render:",
+                    ("YES" if hit else "NO"), "| frag:", frag[:40])
+          html = plain("https://www.facebook.com/plugins/page.php?href="
+                       + urllib.parse.quote("https://www.facebook.com/1657288895957921", safe="")
+                       + "&tabs=timeline&width=500")
+          first = norm((posts[0].get("message") or "").splitlines()[-1][:40]) if posts else ""
+          print("timeline widget len:", len(html),
+                "| latest-card-frag in timeline:",
+                (first and first in norm(html)))
+          print("proof pass done")
           PY
