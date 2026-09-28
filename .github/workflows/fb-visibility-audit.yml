@@ -13,7 +13,7 @@ jobs:
       FB_USER_TOKEN: ${{ secrets.FB_REFRESH_TOKEN }}
     steps:
       - uses: actions/checkout@v4
-      - name: published_posts expiry + violations probe
+      - name: restrictions + visibility settings
         run: |
           python3 - <<'PY'
           import json, os, urllib.request, urllib.error
@@ -26,23 +26,22 @@ jobs:
                   with urllib.request.urlopen(req, timeout=30) as r:
                       return json.loads(r.read().decode())
               except urllib.error.HTTPError as e:
-                  return {"__error": e.code, "body": e.read().decode()[:350]}
-          print("== PUBLISHED_POSTS (posts made by OUR app on this page) ==")
-          f = api(f"/v21.0/{PAGE}/published_posts?limit=10&fields=id,created_time,"
-                  "expires_at,status,is_hidden,permalink_url,message", PT)
-          data = f.get("data")
+                  return {"__error": e.code, "body": e.read().decode()[:250]}
+          print("== PAGE SETTINGS (restrictions/age/maintenance) ==")
+          ps = api(f"/v21.0/{PAGE}/page_settings", PT)
+          data = ps.get("data")
           if data is None:
-              print("published_posts:", json.dumps(f)[:420])
+              print("page_settings:", json.dumps(ps)[:300])
           else:
-              for post in data:
-                  m = (post.get("message") or "").replace("\n", " ")[:40]
-                  print(f"  {post.get('created_time','')} exp={post.get('expires_at','NONE')} "
-                        f"status={post.get('status','?')} hidden={post.get('is_hidden')} | {m}")
-              print("== PERMISSIONS ON THE PAGE TOKEN ==")
-          print("== PAGE VIOLATIONS / QUALITY ==")
-          v = api(f"/v21.0/{PAGE}/violations", PT)
-          print("violations:", json.dumps(v)[:300])
-          print("== TOKEN SCOPES (via /me perm check) ==")
-          s = api("/v21.0/me?fields=id,link,username", PT)
-          print("me:", json.dumps(s)[:250])
+              interesting = ("MAINTENANCE", "COUNTRY_RESTRICTEDNESS", "RESTRICTED_COUNTRIES",
+                             "AGE", "MIN_AGE", "PUBLIC", "PUBLISHED", "PAGE_PROFILE_STATUS",
+                             "PAGE_TASKS", "PAGE_PROFILE_VISIBILITY", "VISIBILITY")
+              for row in data:
+                  k = str(row.get("setting", ""))
+                  if any(w in k.upper() for w in interesting):
+                      print("  ", k, "=", json.dumps(row.get("value"))[:120])
+          print("== PAGE core fields ==")
+          c = api(f"/v21.0/{PAGE}?fields=name,is_published,link,age_min,"
+                  "has_ad_access,page_upgrade_status,verification_status,status", PT)
+          print(json.dumps(c, indent=1)[:700])
           PY
