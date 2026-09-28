@@ -15,64 +15,39 @@ jobs:
       FB_REFRESH_TOKEN: ${{ secrets.FB_REFRESH_TOKEN }}
     steps:
       - uses: actions/checkout@v4
-      - name: token lineage and test
+      - name: self truth
         run: |
           python3 - <<'PY'
           import json, os, urllib.request, urllib.error, urllib.parse
           G = "https://graph.facebook.com/v21.0/"
+          PT = os.environ.get("FB_PAGE_TOKEN", "")
+          U = os.environ.get("FB_REFRESH_TOKEN", "")
+          PAGE = os.environ.get("FB_PAGE_ID", "")
           def get(u):
               try:
                   with urllib.request.urlopen(u, timeout=30) as r:
                       return json.loads(r.read().decode())
               except urllib.error.HTTPError as e:
-                  return {"__error": e.code, "body": e.read().decode()[:200]}
+                  return {"__error": e.code, "body": e.read().decode()[:180]}
           def post(u, data):
-              data = urllib.parse.urlencode(data).encode()
-              req = urllib.request.Request(u, data=data, method="POST")
+              req = urllib.request.Request(u, data=urllib.parse.urlencode(data).encode(),
+                                           method="POST")
               try:
                   with urllib.request.urlopen(req, timeout=30) as r:
                       return json.loads(r.read().decode())
               except urllib.error.HTTPError as e:
-                  return {"__error": e.code, "body": e.read().decode()[:200]}
-          PAGE = os.environ.get("FB_PAGE_ID", "")
-          U = os.environ.get("FB_REFRESH_TOKEN", "")
-          PT = os.environ.get("FB_PAGE_TOKEN", "")
-          AID = os.environ.get("FB_APP_ID", "")
-          ASEC = os.environ.get("FB_APP_SECRET", "")
-          apptok = get(f"{G}oauth/access_token?grant_type=client_credentials"
-                       f"&client_id={AID}&client_secret={ASEC}").get("access_token", "")
-          d1 = get(f"{G}debug_token?input_token={PT}&access_token={apptok}")\
-              .get("data", {})
-          print("CURRENT PAGE TOKEN app:", d1.get("app_id"), "valid:", d1.get("is_valid"))
-          for label, tok in [("REFRESH/USER-TOKEN", U)]:
-              if not tok:
-                  print(label, ": absent"); continue
-              d = get(f"{G}debug_token?input_token={tok}&access_token={apptok}")\
-                  .get("data", {})
-              print(label, "app:", d.get("app_id"), "valid:", d.get("is_valid"),
-                    "scopes:", d.get("scopes"), "expires:", d.get("expires_at"))
-          cand = ""
-          if U and get(f"{G}me/accounts?access_token={U}").get("data"):
-              pages = get(f"{G}me/accounts?fields=id,access_token&access_token={U}")
-              for p in pages.get("data", []):
-                  if p.get("id") == PAGE and p.get("access_token"):
-                      cand = p["access_token"]
-              print("DERIVED candidate:", bool(cand))
-              if cand:
-                  d = get(f"{G}debug_token?input_token={cand}&access_token={apptok}")\
-                      .get("data", {})
-                  print("CANDIDATE app:", d.get("app_id"), "valid:", d.get("is_valid"),
-                        "expires:", d.get("expires_at"), "scopes:", d.get("scopes"))
-                  r = post(f"{G}{PAGE}/feed", {
-                      "message": "🔧 LINEAGE TEST (29 00:5x) — same engine, restored token "
-                                 "lineage. If a non-admin can read this on the Page, the "
-                                 "visibility fix is confirmed. Delete anytime.",
-                      "stream_visibility": "PUBLIC", "access_token": cand})
-                  print("TEST POST:", json.dumps(r)[:160])
-                  if r.get("id"):
-                      chk = get(f"{G}{r['id']}?fields=id,is_hidden,feed_targeting"
-                                f"&access_token={cand}")
-                      print("TEST STATE:", json.dumps(chk)[:160])
-          else:
-              print("no /me/accounts access with stored user token")
+                  return {"__error": e.code, "body": e.read().decode()[:180]}
+          for label, tok in [("PAGE-TOKEN self-debug", PT),
+                             ("USER-TOKEN self-debug", U)]:
+              d = get(f"{G}debug_token?input_token={tok}&access_token={tok}").get("data", {})
+              print(label, "-> app:", d.get("app_id"), "| valid:", d.get("is_valid"),
+                    "| id:", d.get("id"), "| scopes:", d.get("scopes"))
+          f = get(f"{G}{PAGE}/published_posts?limit=10&fields=id,created_time,message"
+                  f"&access_token={PT}")
+          for q in (f.get("data") or []):
+              m = (q.get("message") or "").strip()
+              if m.startswith("🔧"):
+                  r = post(f"{G}{q['id']}", {"method": "DELETE", "access_token": PT})
+                  print("deleted labeled note", q["id"][-14:], "->", json.dumps(r)[:60])
+          print("cleanup pass done")
           PY

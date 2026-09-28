@@ -121,7 +121,8 @@ def _visibility_check(tok, pid_hint=""):
         if not d:
             return
         app = str(d.get("app_id", ""))
-        obj = str(d.get("id", "") or pid_hint)
+        obj = str(d.get("id", "") or pid_hint or
+                os.environ.get("FB_PAGE_ID", ""))
         gated = bool(app) and app == obj
         mode = ("ROLE-GATED: publishing app is the Page auto-app (" + app +
                 "). Meta shows its posts only to app-role accounts - owner "
