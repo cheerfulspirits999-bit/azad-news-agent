@@ -11,7 +11,7 @@ jobs:
       FB_PAGE_TOKEN: ${{ secrets.FB_PAGE_TOKEN }}
       FB_PAGE_ID: ${{ secrets.FB_PAGE_ID }}
       FB_APP_ID: ${{ secrets.FB_APP_ID }}
-      FB_APP_SECRET: *** secrets.FB_APP_SECRET }}
+      FB_APP_SECRET: ${{ secrets.FB_APP_SECRET }}
     steps:
       - uses: actions/checkout@v4
       - name: app mode and scopes
