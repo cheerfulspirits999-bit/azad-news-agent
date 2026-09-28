@@ -527,6 +527,11 @@ def build_digest(cands, catchup=False):
                 if age > maxage or (c.get("score") or 0) < minscore:
                     _skip["stale"] += 1
                     continue
+                if any(_same_story(c["title"], dt) for dt in done_heads if dt):
+                    _skip["dup"] += 1
+                    continue  # 28 Sep: stories that rode a recent card must
+                              # never re-enter the pool - they only came here
+                              # to be net-dropped, starving picks to <3
                 _ban = bool(set(c.get("categories", [])) & NO_CARD_CATS) \
                        or bool(NO_CARD_RX.search(c["title"]))
                 _cv = casualty_allowed(c) if _ban else False
