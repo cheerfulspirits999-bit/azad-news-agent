@@ -10,26 +10,53 @@ jobs:
     env:
       FB_PAGE_TOKEN: ${{ secrets.FB_PAGE_TOKEN }}
       FB_PAGE_ID: ${{ secrets.FB_PAGE_ID }}
+      FB_APP_ID: ${{ secrets.FB_APP_ID }}
+      FB_APP_SECRET: *** secrets.FB_APP_SECRET }}
     steps:
       - uses: actions/checkout@v4
-      - name: verify latest cards public
+      - name: app mode and scopes
         run: |
           python3 - <<'PY'
           import json, os, urllib.request, urllib.error, urllib.parse
-          PAGE = os.environ.get("FB_PAGE_ID", "")
           PT = os.environ.get("FB_PAGE_TOKEN", "")
-          def api(url):
-              u = "https://graph.facebook.com/v21.0/" + url + "&access_token=" + PT
+          AID = os.environ.get("FB_APP_ID", "")
+          ASEC = os.environ.get("FB_APP_SECRET", "")
+          def get(u):
               try:
                   with urllib.request.urlopen(u, timeout=30) as r:
                       return json.loads(r.read().decode())
               except urllib.error.HTTPError as e:
-                  return {"__error": e.code, "body": e.read().decode()[:200]}
-          f = api(f"{PAGE}/published_posts?limit=3&fields=id,created_time,"
-                  "message,is_hidden,feed_targeting")
-          for q in (f.get("data") or []):
-              m = (q.get("message") or "").replace("\n", " ")[:56]
-              print(q.get("created_time", ""), "|", m)
-              print("   id:", q.get("id"), "| is_hidden:", q.get("is_hidden"),
-                    "| feed_targeting:", json.dumps(q.get("feed_targeting"))[:60])
+                  return {"__error": e.code, "body": e.read().decode()[:220]}
+          G = "https://graph.facebook.com/v21.0/"
+          app_token = ""
+          if AID and ASEC:
+              d = get(f"{G}oauth/access_token?grant_type=client_credentials"
+                      f"&client_id={AID}&client_secret={ASEC}")
+              app_token = d.get("access_token", "")
+              print("app-token derived:", bool(app_token))
+          print("APP_ID:", AID)
+          if app_token:
+              a = get(f"{G}{AID}?fields=id,name,status,app_type,created_time,"
+                      f"privacy_policy_url,company&access_token={app_token}")
+              print("APP OBJECT:", json.dumps(a, ensure_ascii=False)[:400])
+              cap = get(f"{G}{AID}/live_app_capabilities?access_token={app_token}")
+              data = cap.get("data")
+              if data is None:
+                  print("CAPS raw:", json.dumps(cap)[:300])
+              else:
+                  for c in data:
+                      lc = c.get("live_capabilities")
+                      print("  cap:", c.get("name"), "->",
+                            json.dumps(lc)[:120])
+          if PT and app_token:
+              t = get(f"{G}debug_token?input_token={PT}"
+                      f"&access_token={app_token}")
+              d = t.get("data", t)
+              print("PAGE TOKEN: app_id:", d.get("app_id"),
+                    "| user:", d.get("id"), "| expires:", d.get("expires_at"),
+                    "| issued:", d.get("issued_at"))
+              print("SCOPES:", d.get("scopes"))
+          f = get(f"{G}1538679366414544?fields=name,is_published,fan_count"
+                  f"&access_token={PT}")
+          print("PAGE:", json.dumps(f)[:200])
           PY
