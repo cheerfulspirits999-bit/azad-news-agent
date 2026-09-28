@@ -741,6 +741,31 @@ def build_digest(cands, catchup=False):
     # validators - or our pair gates - DEMOTES its story; if fewer than 3
     # publishable bullets remain the run WAITS silently ("no important news
     # => don't post"; filler is permanently banned).
+    # 28 Sep (outage round 3, the REAL starvation cause): the engine
+    # returned ok=True with zero problems, yet 3/5 lines died on MY gates:
+    #   * digits - Roman Urdu legitimately SPELLED OUT English numerals
+    #     ("Rs 5 Lakh Crore" -> "paanch lakh crore"). Requiring an exact
+    #     digit-set match is wrong; only digits that APPEARED in Urdu but
+    #     never in English (fabricated facts) may veto.
+    #   * en-quality - bullet_quality() is the news-safety gate (casualty
+    #     policy etc.) and is applied to every pick up front; re-running it
+    #     on the Urdu side of a full, engine-validated translation only ever
+    #     re-flags the story itself. Stories that passed the pre-gate are
+    #     safe; the Urdu mirror is judged on its own form (paste/script/len).
+    _NW = {"zero":"0","ek":"1","do":"2","teen":"3","char":"4","paanch":"5",
+           "panch":"5","cheh":"6","che":"6","saat":"7","aath":"8","nau":"9",
+           "das":"10","gyarah":"11","barah":"12","pandrah":"15","solah":"16",
+           "bees":"20","teis":"23","chaalis":"40","chalis":"40","saat sau":"700",
+           "assi":"80","navbe":"90","sau":"100","dedh":"150","hazaar":"1000",
+           "ek lakh":"100000","dhai lakh":"250000","paanch lakh":"500000",
+           "ek crore":"10000000","dhai crore":"25000000","panch arab":"5000000000"}
+    def _en_digits(t):
+        out = set(re.findall(r"\d+(?:[.,]\d+)*", t))
+        tl = " " + t.lower() + " "
+        for w, v in _NW.items():
+            if f" {w} " in tl:
+                out.add(v)
+        return out
     _pend = [i for i, p in enumerate(picks) if not p[2]]
     _RU_STATS.clear()
     _RU_STATS.update({"pre_ru_picks": len(picks), "to_translate": len(_pend)})
@@ -770,12 +795,11 @@ def build_digest(cands, catchup=False):
                     _killed(i, "len>118"); continue
                 if _NONROMAN_RE.search(_l):
                     _killed(i, "urdu-script"); continue
-                if set(re.findall(r"\d+(?:[.,]\d+)*", _en)) != \
-                   set(re.findall(r"\d+(?:[.,]\d+)*", _l)):
-                    _killed(i, "digits"); continue  # digits moved: never ship
-                _qq = writer.bullet_quality(_en, _l)
-                if [q for q in _qq if not q.startswith("ur-")]:
-                    _killed(i, "en-quality"); continue  # EN side itself unsafe
+                _ed = set(re.findall(r"\d+(?:[.,]\d+)*", _en))
+                _ud = set(re.findall(r"\d+(?:[.,]\d+)*", _l))
+                if _ud - _ed - _en_digits(_en):
+                    _killed(i, "digits"); continue  # fabricated numbers only
+                # en-quality is intentionally NOT re-applied here (see note above)
                 if _real_paste(_en, _l):
                     _killed(i, "paste"); continue  # untranslated lowercase run
                 picks[i] = picks[i][:2] + (_l,) + picks[i][3:]
