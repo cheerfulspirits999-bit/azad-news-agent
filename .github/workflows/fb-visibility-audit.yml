@@ -10,74 +10,49 @@ jobs:
     env:
       FB_PAGE_TOKEN: ${{ secrets.FB_PAGE_TOKEN }}
       FB_PAGE_ID: ${{ secrets.FB_PAGE_ID }}
+      FB_USER_TOKEN: ${{ secrets.FB_REFRESH_TOKEN }}
     steps:
       - uses: actions/checkout@v4
-      - name: diagnose public visibility of recent posts
+      - name: feed read + dev-mode expiry check
         run: |
           python3 - <<'PY'
-          import json, os, re, urllib.request, urllib.parse, urllib.error
-          tok = os.environ.get("FB_PAGE_TOKEN", "")
-          pid = os.environ.get("FB_PAGE_ID", "")
-          def api(url, data=None):
+          import json, os, urllib.request, urllib.parse, urllib.error
+          PAGE = os.environ.get("FB_PAGE_ID", "")
+          TOKS = {"page": os.environ.get("FB_PAGE_TOKEN", ""),
+                  "user": os.environ.get("FB_USER_TOKEN", "")}
+          def api(url, tok):
+              sep = "&" if "?" in url else "?"
               req = urllib.request.Request(
-                  "https://graph.facebook.com" + url,
-                  data=urllib.parse.urlencode(data).encode() if data else None,
-                  headers={"Authorization": "Bearer " + tok} if not data else {},
-                  method="POST" if data else "GET")
+                  "https://graph.facebook.com" + url + sep + "access_token=" + tok)
               try:
                   with urllib.request.urlopen(req, timeout=30) as r:
                       return json.loads(r.read().decode())
               except urllib.error.HTTPError as e:
-                  return {"__error": e.code, "body": e.read().decode()[:400]}
-          print("== PAGE STATE ==")
-          p = api(f"/v21.0/{pid}?fields=name,link,is_published,fan_count,"
-                  "new_like_count,posting_restricted_reason,verification_status,"
-                  "restrictions")
-          print(json.dumps(p, indent=1)[:1200])
-          print("== PUBLISH PERMISSION / TOKEN SCOPE ==")
-          t = api(f"/v21.0/me?fields=id,name&access_token={tok}")
-          print("token resolves to:", json.dumps(t)[:300])
-          print("== RECENT POSTS (from published.json) ==")
-          recs = json.load(open("news_agent/state/published.json"))
-          ids = [r.get("fb_post_id") for r in recs[-8:] if r.get("fb_post_id")]
-          hidden = []
-          for fid in ids:
-              f = api(f"/v21.0/{fid}?fields=id,is_hidden,status,backdated_time,"
-                      "permalink_url,created_time,promotable_status"
-                      f"&access_token={tok}")
-              keep = {k: f.get(k) for k in ("id", "is_hidden", "status",
-                       "created_time", "permalink_url", "promotable_status") or
-                      f}
-              print(json.dumps(keep, default=str)[:420])
-              if f.get("is_hidden"):
-                  hidden.append(fid)
-          print("== AUTO-UNHIDE ==")
-          for fid in hidden:
-              r = api(f"/v21.0/{fid}", {"is_hidden": "false",
-                                        "access_token": tok})
-              print("unhide", fid, "->", json.dumps(r)[:120])
-          print("(none hidden)" if not hidden else f"unhid {len(hidden)} post(s)")
-          PY
-      - name: anonymous permalink probe (what the public sees)
-        run: |
-          python3 - <<'PY'
-          import json, urllib.request, re
-          recs = json.load(open("news_agent/state/published.json"))
-          for r in recs[-5:]:
-              pl = None
-              # permalink unknown without the fetch above; derive via id
-              fid = r.get("fb_post_id") or ""
-              url = f"https://www.facebook.com/{fid}"
-              try:
-                  req = urllib.request.Request(
-                      url, headers={"User-Agent": "Mozilla/5.0 (X11; Linux x86_64)"})
-                  with urllib.request.urlopen(req, timeout=25) as resp:
-                      html = resp.read(300000).decode("utf-8", "ignore")
-                  blocked = bool(re.search(
-                      r"(content isn.?t available|not available|log in to see|"
-                      "this content isn.?t available right now)", html, re.I))
-                  print(r.get("published_at"), fid, "->",
-                        "BLOCKED-FOR-PUBLIC" if blocked else "reachable-anon")
-              except Exception as e:
-                  print(r.get("published_at"), fid, "-> fetch:", str(e)[:80])
+                  return {"__error": e.code, "body": e.read().decode()[:300]}
+          print("== who is the user token ==")
+          print(json.dumps(api("/v21.0/me?fields=id,name", TOKS["user"]))[:200])
+          print("== token grants on the Page (roles/perm) ==")
+          acc = api("/v21.0/me/accounts?fields=id,name,tasks,permalink_url",
+                    TOKS["user"])
+          for pg in (acc.get("data") or []):
+              if pg.get("id") == PAGE:
+                  print("PAGE ROLE:", json.dumps(pg)[:300])
+          print("== PAGE feed via user token (public view of it) ==")
+          f = api(f"/v21.0/{PAGE}/feed?limit=10&fields=id,created_time,"
+                  "expires_at,is_hidden,permalink_url,message", TOKS["user"])
+          if f.get("data") is None:
+              print("feed read:", json.dumps(f)[:400])
+          for post in (f.get("data") or []):
+              m = (post.get("message") or "").replace("\n", " ")[:38]
+              print(f"  {post.get('created_time','')[5:16]} "
+                    f"exp={post.get('expires_at','NONE')[:16]} "
+                    f"hidden={post.get('is_hidden')} | {m}")
+          print("== PAGE state ==")
+          a = api(f"/v21.0/{PAGE}?fields=name,is_published,link,fan_count,"
+                  "restrictions", TOKS["page"])
+          print(json.dumps(a, indent=1)[:600])
+          for post in (f.get("data") or [])[:2]:
+              pr = api(f"/{post['id']}?fields=id,application,permalink_url,"
+                       "expires_at", TOKS["user"])
+              print("post app/perm:", json.dumps(pr, default=str)[:400])
           PY
