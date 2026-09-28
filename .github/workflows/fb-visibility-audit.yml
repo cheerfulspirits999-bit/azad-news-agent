@@ -12,31 +12,67 @@ jobs:
       FB_PAGE_ID: ${{ secrets.FB_PAGE_ID }}
       FB_APP_ID: ${{ secrets.FB_APP_ID }}
       FB_APP_SECRET: ${{ secrets.FB_APP_SECRET }}
+      FB_REFRESH_TOKEN: ${{ secrets.FB_REFRESH_TOKEN }}
     steps:
       - uses: actions/checkout@v4
-      - name: compare signing apps across the 27th
+      - name: token lineage and test
         run: |
           python3 - <<'PY'
-          import json, os, urllib.request, urllib.error
-          PT = os.environ.get("FB_PAGE_TOKEN", "")
+          import json, os, urllib.request, urllib.error, urllib.parse
           G = "https://graph.facebook.com/v21.0/"
           def get(u):
               try:
                   with urllib.request.urlopen(u, timeout=30) as r:
                       return json.loads(r.read().decode())
               except urllib.error.HTTPError as e:
-                  return {"__error": e.code, "body": e.read().decode()[:220]}
-          posts = [("sep26-visible?", "1538679366414544_1655293676157443"),
-                   ("sep27-am", "1538679366414544_1655908446095966"),
-                   ("sep28-night", "1538679366414544_1657243039295840"),
-                   ("sep29-0005", "1538679366414544_1657353759284768")]
-          for label, pid in posts:
-              d = get(f"{G}{pid}?fields=id,created_time,app,share_count,"
-                      f"comment_count,permalink_url&access_token={PT}")
-              app = d.get("app") or {}
-              print(label, "|", d.get("created_time", "?"),
-                    "| app:", app.get("name"), app.get("id"),
-                    "| shares:", d.get("share_count"), "| comments:", d.get("comment_count"))
-              if "__error" in d:
-                  print("   err:", d["body"][:160])
+                  return {"__error": e.code, "body": e.read().decode()[:200]}
+          def post(u, data):
+              data = urllib.parse.urlencode(data).encode()
+              req = urllib.request.Request(u, data=data, method="POST")
+              try:
+                  with urllib.request.urlopen(req, timeout=30) as r:
+                      return json.loads(r.read().decode())
+              except urllib.error.HTTPError as e:
+                  return {"__error": e.code, "body": e.read().decode()[:200]}
+          PAGE = os.environ.get("FB_PAGE_ID", "")
+          U = os.environ.get("FB_REFRESH_TOKEN", "")
+          PT = os.environ.get("FB_PAGE_TOKEN", "")
+          AID = os.environ.get("FB_APP_ID", "")
+          ASEC = os.environ.get("FB_APP_SECRET", "")
+          apptok = get(f"{G}oauth/access_token?grant_type=client_credentials"
+                       f"&client_id={AID}&client_secret={ASEC}").get("access_token", "")
+          d1 = get(f"{G}debug_token?input_token={PT}&access_token={apptok}")\
+              .get("data", {})
+          print("CURRENT PAGE TOKEN app:", d1.get("app_id"), "valid:", d1.get("is_valid"))
+          for label, tok in [("REFRESH/USER-TOKEN", U)]:
+              if not tok:
+                  print(label, ": absent"); continue
+              d = get(f"{G}debug_token?input_token={tok}&access_token={apptok}")\
+                  .get("data", {})
+              print(label, "app:", d.get("app_id"), "valid:", d.get("is_valid"),
+                    "scopes:", d.get("scopes"), "expires:", d.get("expires_at"))
+          cand = ""
+          if U and get(f"{G}me/accounts?access_token={U}").get("data"):
+              pages = get(f"{G}me/accounts?fields=id,access_token&access_token={U}")
+              for p in pages.get("data", []):
+                  if p.get("id") == PAGE and p.get("access_token"):
+                      cand = p["access_token"]
+              print("DERIVED candidate:", bool(cand))
+              if cand:
+                  d = get(f"{G}debug_token?input_token={cand}&access_token={apptok}")\
+                      .get("data", {})
+                  print("CANDIDATE app:", d.get("app_id"), "valid:", d.get("is_valid"),
+                        "expires:", d.get("expires_at"), "scopes:", d.get("scopes"))
+                  r = post(f"{G}{PAGE}/feed", {
+                      "message": "🔧 LINEAGE TEST (29 00:5x) — same engine, restored token "
+                                 "lineage. If a non-admin can read this on the Page, the "
+                                 "visibility fix is confirmed. Delete anytime.",
+                      "stream_visibility": "PUBLIC", "access_token": cand})
+                  print("TEST POST:", json.dumps(r)[:160])
+                  if r.get("id"):
+                      chk = get(f"{G}{r['id']}?fields=id,is_hidden,feed_targeting"
+                                f"&access_token={cand}")
+                      print("TEST STATE:", json.dumps(chk)[:160])
+          else:
+              print("no /me/accounts access with stored user token")
           PY
