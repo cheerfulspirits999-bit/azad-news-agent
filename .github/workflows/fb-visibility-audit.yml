@@ -14,49 +14,29 @@ jobs:
       FB_APP_SECRET: ${{ secrets.FB_APP_SECRET }}
     steps:
       - uses: actions/checkout@v4
-      - name: app mode and scopes
+      - name: compare signing apps across the 27th
         run: |
           python3 - <<'PY'
-          import json, os, urllib.request, urllib.error, urllib.parse
+          import json, os, urllib.request, urllib.error
           PT = os.environ.get("FB_PAGE_TOKEN", "")
-          AID = os.environ.get("FB_APP_ID", "")
-          ASEC = os.environ.get("FB_APP_SECRET", "")
+          G = "https://graph.facebook.com/v21.0/"
           def get(u):
               try:
                   with urllib.request.urlopen(u, timeout=30) as r:
                       return json.loads(r.read().decode())
               except urllib.error.HTTPError as e:
                   return {"__error": e.code, "body": e.read().decode()[:220]}
-          G = "https://graph.facebook.com/v21.0/"
-          app_token = ""
-          if AID and ASEC:
-              d = get(f"{G}oauth/access_token?grant_type=client_credentials"
-                      f"&client_id={AID}&client_secret={ASEC}")
-              app_token = d.get("access_token", "")
-              print("app-token derived:", bool(app_token))
-          print("APP_ID:", AID)
-          if app_token:
-              a = get(f"{G}{AID}?fields=id,name,status,app_type,created_time,"
-                      f"privacy_policy_url,company&access_token={app_token}")
-              print("APP OBJECT:", json.dumps(a, ensure_ascii=False)[:400])
-              cap = get(f"{G}{AID}/live_app_capabilities?access_token={app_token}")
-              data = cap.get("data")
-              if data is None:
-                  print("CAPS raw:", json.dumps(cap)[:300])
-              else:
-                  for c in data:
-                      lc = c.get("live_capabilities")
-                      print("  cap:", c.get("name"), "->",
-                            json.dumps(lc)[:120])
-          if PT and app_token:
-              t = get(f"{G}debug_token?input_token={PT}"
-                      f"&access_token={app_token}")
-              d = t.get("data", t)
-              print("PAGE TOKEN: app_id:", d.get("app_id"),
-                    "| user:", d.get("id"), "| expires:", d.get("expires_at"),
-                    "| issued:", d.get("issued_at"))
-              print("SCOPES:", d.get("scopes"))
-          f = get(f"{G}1538679366414544?fields=name,is_published,fan_count"
-                  f"&access_token={PT}")
-          print("PAGE:", json.dumps(f)[:200])
+          posts = [("sep26-visible?", "1538679366414544_1655293676157443"),
+                   ("sep27-am", "1538679366414544_1655908446095966"),
+                   ("sep28-night", "1538679366414544_1657243039295840"),
+                   ("sep29-0005", "1538679366414544_1657353759284768")]
+          for label, pid in posts:
+              d = get(f"{G}{pid}?fields=id,created_time,app,share_count,"
+                      f"comment_count,permalink_url&access_token={PT}")
+              app = d.get("app") or {}
+              print(label, "|", d.get("created_time", "?"),
+                    "| app:", app.get("name"), app.get("id"),
+                    "| shares:", d.get("share_count"), "| comments:", d.get("comment_count"))
+              if "__error" in d:
+                  print("   err:", d["body"][:160])
           PY
