@@ -23,6 +23,7 @@ Stops and raises an alert (state/ALERT.md + exit code 9) ONLY on:
 import json
 import os
 import re
+import signal
 import sys
 import time
 import traceback
@@ -975,14 +976,26 @@ def main():
     log(f"autonomous relay up - cycle every {_iv:.0f} min"
         + (f", deadline {_dl:.0f} min" if _dl else ", no deadline"))
     _fails = 0
+    # 28 Sep: hard per-cycle wall budget - a frozen runner or wedged cycle
+    # cannot hold the slot; the alarm raises into the existing 3-strike
+    # handler which commits memory and moves on.
+    _cmax = int(os.environ.get("DAEMON_CYCLE_MAX_SEC", "780"))
+    class _CycleTimeout(Exception):
+        pass
+    def _fire(_sig, _frm):
+        raise _CycleTimeout(f"cycle exceeded {_cmax}s wall budget")
+    signal.signal(signal.SIGALRM, _fire)
     while True:
         try:
+            signal.setitimer(signal.ITIMER_REAL, _cmax)
             one_cycle()
+            signal.setitimer(signal.ITIMER_REAL, 0)
             _fails = 0
         except SystemExit:
             _commit_memory()
             raise
         except Exception:
+            signal.setitimer(signal.ITIMER_REAL, 0)
             _fails += 1
             log("cycle error (%d/3): %s" % (_fails, traceback.format_exc()[-350:]))
             if _fails >= 3:
