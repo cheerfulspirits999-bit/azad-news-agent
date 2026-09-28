@@ -78,8 +78,15 @@ IST = monitor.IST
 HEADLINE_MAP = monitor.HEADLINE_MAP
 
 
-def log(*a):
-    print(f"[{datetime.now(IST).strftime('%d %b %H:%M:%S')}]", *a, flush=True)
+_LOGTAIL = []           # 28 Sep: in-progress visibility - the tail of this
+
+
+def log(*a):            # cycle's stdout rides inside last_cycle.json, which
+    msg = (f"[{datetime.now(IST).strftime('%d %b %H:%M:%S')}] "  # the relay
+           + " ".join(str(x) for x in a))                         # pushes
+    print(msg, flush=True)                                        # EVERY cycle.
+    _LOGTAIL.append(msg[-170:])
+    del _LOGTAIL[:-40:]
 
 
 def alert(reason, detail=""):
@@ -954,6 +961,8 @@ def one_cycle():
 
     summary = {"cycle": cyc["cycle_id"], "at": datetime.now(IST).isoformat(),
                "candidates": len(cyc["candidates"]), "published_this_cycle": n}
+    summary["tail"] = list(_LOGTAIL)[-16:]   # live diagnostics (refusal reasons,
+                                              # roman-urdu acceptance, stage skips)
     os.makedirs(STATE, exist_ok=True)
     json.dump(summary, open(os.path.join(STATE, "last_cycle.json"), "w"), indent=2)
     log(f"=== cycle end: {n} new post(s), "
