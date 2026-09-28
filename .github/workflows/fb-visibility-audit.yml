@@ -12,7 +12,7 @@ jobs:
       FB_PAGE_ID: ${{ secrets.FB_PAGE_ID }}
     steps:
       - uses: actions/checkout@v4
-      - name: delete blank debug posts, keep labeled test
+      - name: verify 00:05 card visibility
         run: |
           python3 - <<'PY'
           import json, os, urllib.request, urllib.error, urllib.parse
@@ -33,22 +33,11 @@ jobs:
                       return json.loads(r.read().decode())
               except urllib.error.HTTPError as e:
                   return {"__error": e.code, "body": e.read().decode()[:200]}
-          f = api(f"{PAGE}/published_posts?limit=25&fields=id,created_time,message")
-          posts = f.get("data") or []
-          print(f"listed {len(posts)} recent app posts")
-          doomed = []
-          for p in posts:
-              m = (p.get("message") or "").strip()
-              if not m or m.startswith("🔧 VISIBILITY TEST #2"):
-                  doomed.append(p["id"])
-          print(f"deleting {len(doomed)} blank/test2 post(s)")
-          for pid in doomed:
-              r = api(pid, {"method": "DELETE"})
-              ok = r.get("success", r)
-              print("  del", pid[-14:], "->", json.dumps(ok)[:80])
-          f2 = api(f"{PAGE}/published_posts?limit=12&fields=id,created_time,message")
-          print("== remaining recent posts ==")
-          for p in (f2.get("data") or []):
-              m = (p.get("message") or "").replace("\n", " ")[:72]
-              print(p.get("created_time", ""), "|", m or "(EMPTY)")
-          PY
+          f = api(f"{PAGE}/published_posts?limit=3&fields=id,created_time,message,is_hidden,feed_targeting,stream_visibility")
+          for q in (f.get("data") or []):
+              m = (q.get("message") or "").replace("
+", " ")[:56]
+              print(q.get("created_time", ""), "|", m)
+              print("   id:", q["id"], "| is_hidden:", q.get("is_hidden"),
+                    "| feed_targeting:", json.dumps(q.get("feed_targeting"))[:60],
+                    "| stream_visibility:", q.get("stream_visibility", "(unreadable=default-public)"))
