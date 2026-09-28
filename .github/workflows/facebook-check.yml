@@ -22,6 +22,10 @@ jobs:
           FB_PAGE_TOKEN: ${{ secrets.FB_PAGE_TOKEN }}
           FB_PAGE_ID: ${{ secrets.FB_PAGE_ID }}
         run: python3 news_agent/publish.py --check-fb
+      - name: visibility mode (public-reach guard, committed by auth.py)
+        run: |
+          cat news_agent/state/visibility_mode.json 2>/dev/null \
+            || echo "no visibility state yet - set after next relay start"
 
       - name: fail loud - open an issue if the Page connection broke
         if: failure()

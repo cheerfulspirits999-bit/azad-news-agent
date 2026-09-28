@@ -108,11 +108,48 @@ def _export_current():
             f.write(f"FB_PAGE_TOKEN={tok}\nFB_PAGE_ID={pid}\n")
     return tok, pid
 
+def _visibility_check(tok, pid_hint=""):
+    """Owner 28 Sep: posts must reach the PUBLIC, every cycle, verifiably.
+    Meta renders posts published through a Page's own auto-app (app_id ==
+    page_id) only for accounts with a role on that app - the post itself
+    looks public (is_hidden false, no feed_targeting), so the gate can only
+    be detected structurally. Check it at every relay start, print the
+    verdict and commit it in state/visibility_mode.json. Never fails the
+    pipeline."""
+    try:
+        d = _debug(tok)
+        if not d:
+            return
+        app = str(d.get("app_id", ""))
+        obj = str(d.get("id", "") or pid_hint)
+        gated = bool(app) and app == obj
+        mode = ("ROLE-GATED: publishing app is the Page auto-app (" + app +
+                "). Meta shows its posts only to app-role accounts - owner "
+                "must provide a fresh token from a LIVE app with "
+                "pages_manage_posts (developers.facebook.com > My Apps).") \
+            if gated else ("PUBLIC: signing app " + (app or "?") +
+                           " is distinct from the Page app")
+        print("auth: VISIBILITY MODE - " + mode)
+        state = os.path.join(os.path.dirname(os.path.abspath(__file__)),
+                             "state")
+        os.makedirs(state, exist_ok=True)
+        json.dump({"mode": "role-gated" if gated else "public",
+                   "app_id": app, "page_id": obj,
+                   "checked_at": time.strftime("%Y-%m-%dT%H:%M:%SZ",
+                                               time.gmtime()),
+                   "note": mode},
+                  open(os.path.join(state, "visibility_mode.json"), "w"),
+                  indent=1)
+    except Exception as e:
+        print(f"auth: visibility check skipped ({e})")
+
+
 def main():
     _export_current()  # safety net first; renewed values overwrite below
     tok = os.environ.get("FB_PAGE_TOKEN", "")
     if not _need_renew(tok):
         print("auth: Page token healthy, nothing to do")
+        _visibility_check(tok)
         return 0
     app_id = os.environ.get("FB_APP_ID", "")
     app_secret = os.environ.get("FB_APP_SECRET", "")
@@ -138,6 +175,7 @@ def main():
         with open(gh_env, "a", encoding="utf-8") as f:
             f.write(f"FB_PAGE_TOKEN={ptok}\nFB_PAGE_ID={pid}\n")
     print(f"auth: renewed page token for {pid}; written to $GITHUB_ENV")
+    _visibility_check(ptok, pid)
     return 0
 
 
