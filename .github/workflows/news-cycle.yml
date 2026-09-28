@@ -104,8 +104,24 @@ jobs:
               pend = json.loads(base64.b64decode(d["content"]))
           except Exception as e:
               pend = []
-          if not pend:
+          pend = pend if isinstance(pend, list) else []
+          alert = ""
+          try:
+              d2 = gh(f"/repos/{repo}/contents/news_agent/state/ALERT.md")
+              alert = base64.b64decode(d2["content"]).decode()[:600]
+          except Exception:
+              pass
+          if not pend and not alert:
               print("publishing not blocked - nothing pending"); raise SystemExit(0)
+          if not pend and alert:
+              title = "[ALERT] agent raised a stop alert - attention needed"
+              body = ("The pipeline wrote ALERT.md during the last runs:\n\n"
+                      + alert + "\n\nRun " + os.environ.get("GITHUB_RUN_ID",""))
+              open_issues = gh(f"/repos/{repo}/issues?state=open")
+              if not any(i.get("title") == title for i in open_issues):
+                  gh(f"/repos/{repo}/issues", {"title": title, "body": body})
+                  print("OPENED alert issue from ALERT.md")
+              raise SystemExit(0)
           title = "[ALERT] publishing blocked: cards waiting in pending_publish"
           body = (f"{len(pend)} card(s) were built but Facebook refused to accept "
                   "them this run - check FB_PAGE_TOKEN / FB_PAGE_ID secrets and "
