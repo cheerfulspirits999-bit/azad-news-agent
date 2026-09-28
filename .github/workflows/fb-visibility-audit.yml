@@ -13,51 +13,21 @@ jobs:
       FB_USER_TOKEN: ${{ secrets.FB_REFRESH_TOKEN }}
     steps:
       - uses: actions/checkout@v4
-      - name: stream_visibility audit + fix
+      - name: who posted these
         run: |
           python3 - <<'PY'
           import json, os, urllib.request, urllib.error, urllib.parse
           PAGE = os.environ.get("FB_PAGE_ID", "")
           PT = os.environ.get("FB_PAGE_TOKEN", "")
-          def api(url, data=None):
-              u = "https://graph.facebook.com/v21.0/" + url
-              body = None
-              if data:
-                  data["access_token"] = PT
-                  body = urllib.parse.urlencode(data).encode()
-              else:
-                  u += ("&" if "?" in u else "?") + "access_token=" + PT
-              req = urllib.request.Request(u, data=body, method="POST" if body else "GET")
+          def api(url):
+              u = "https://graph.facebook.com/v21.0/" + url + "&access_token=" + PT
               try:
-                  with urllib.request.urlopen(req, timeout=30) as r:
+                  with urllib.request.urlopen(u, timeout=30) as r:
                       return json.loads(r.read().decode())
               except urllib.error.HTTPError as e:
-                  return {"__error": e.code, "body": e.read().decode()[:250]}
-          print("== our posts as the app sees them: visibility fields ==")
-          f = api(f"{PAGE}/published_posts?limit=6&fields=id,created_time,"
-                  "stream_visibility,is_hidden,feed_targeting")
-          posts = f.get("data") or []
-          if not posts:
-              print("read:", json.dumps(f)[:300])
-          nonpublic = []
-          for p in posts:
-              sv = p.get("stream_visibility")
-              print("  ", p.get("id", "")[-16:], p.get("created_time", "")[5:16],
-                    "stream_visibility:", sv, "| hidden:", p.get("is_hidden"),
-                    "| targeting:", json.dumps(p.get("feed_targeting"))[:40])
-              if sv not in (None, "PUBLIC"):
-                  nonpublic.append(p["id"])
-          print("== try flipping non-public posts to PUBLIC ==")
-          for pid in nonpublic:
-              r = api(f"{pid}", {"stream_visibility": "PUBLIC"})
-              print("  fix", pid[-14:], "->", json.dumps(r)[:120])
-          print("== publish a test note with stream_visibility=PUBLIC ==")
-          r = api(f"{PAGE}/feed", {"message": "🔧 VISIBILITY TEST #2 (explicit PUBLIC audience) - "
-                  "if you can read this from a non-admin phone, the audience flag was the issue "
-                  "and it is now fixed at publish time. Ignore/delete anytime.",
-                  "link": "", "stream_visibility": "PUBLIC"})
-          print("  test2:", json.dumps(r)[:200])
-          if "id" in r:
-              chk = api(f"{r['id']}?fields=id,stream_visibility,is_hidden,permalink_url")
-              print("  test2 state:", json.dumps(chk)[:300])
+                  return {"__error": e.code, "body": e.read().decode()[:200]}
+          f = api(f"{PAGE}/published_posts?limit=12&fields=id,created_time,message")
+          for p in (f.get("data") or []):
+              m = (p.get("message") or "").replace("\n", " ")[:88]
+              print(p.get("created_time", ""), "|", m)
           PY
