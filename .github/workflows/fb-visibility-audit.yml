@@ -10,24 +10,45 @@ jobs:
     env:
       FB_PAGE_TOKEN: ${{ secrets.FB_PAGE_TOKEN }}
       FB_PAGE_ID: ${{ secrets.FB_PAGE_ID }}
-      FB_USER_TOKEN: ${{ secrets.FB_REFRESH_TOKEN }}
     steps:
       - uses: actions/checkout@v4
-      - name: who posted these
+      - name: delete blank debug posts, keep labeled test
         run: |
           python3 - <<'PY'
           import json, os, urllib.request, urllib.error, urllib.parse
           PAGE = os.environ.get("FB_PAGE_ID", "")
           PT = os.environ.get("FB_PAGE_TOKEN", "")
-          def api(url):
-              u = "https://graph.facebook.com/v21.0/" + url + "&access_token=" + PT
+          def api(url, data=None):
+              u = "https://graph.facebook.com/v21.0/" + url
+              body = None
+              if data is not None:
+                  data["access_token"] = PT
+                  body = urllib.parse.urlencode(data).encode()
+              else:
+                  u += ("&" if "?" in u else "?") + "access_token=" + PT
+              req = urllib.request.Request(u, data=body,
+                                           method="POST" if body else "GET")
               try:
-                  with urllib.request.urlopen(u, timeout=30) as r:
+                  with urllib.request.urlopen(req, timeout=30) as r:
                       return json.loads(r.read().decode())
               except urllib.error.HTTPError as e:
                   return {"__error": e.code, "body": e.read().decode()[:200]}
-          f = api(f"{PAGE}/published_posts?limit=12&fields=id,created_time,message")
-          for p in (f.get("data") or []):
-              m = (p.get("message") or "").replace("\n", " ")[:88]
-              print(p.get("created_time", ""), "|", m)
+          f = api(f"{PAGE}/published_posts?limit=25&fields=id,created_time,message")
+          posts = f.get("data") or []
+          print(f"listed {len(posts)} recent app posts")
+          doomed = []
+          for p in posts:
+              m = (p.get("message") or "").strip()
+              if not m or m.startswith("🔧 VISIBILITY TEST #2"):
+                  doomed.append(p["id"])
+          print(f"deleting {len(doomed)} blank/test2 post(s)")
+          for pid in doomed:
+              r = api(pid, {"method": "DELETE"})
+              ok = r.get("success", r)
+              print("  del", pid[-14:], "->", json.dumps(ok)[:80])
+          f2 = api(f"{PAGE}/published_posts?limit=12&fields=id,created_time,message")
+          print("== remaining recent posts ==")
+          for p in (f2.get("data") or []):
+              m = (p.get("message") or "").replace("\n", " ")[:72]
+              print(p.get("created_time", ""), "|", m or "(EMPTY)")
           PY

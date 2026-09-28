@@ -105,11 +105,66 @@ def dup_check(story, thresh):
 
 
 # --------------------------------------------------------------------------
+def verify_public(post_id, pg):
+    """Owner 28 Sep: "when you are posting check the visibility to public".
+    Read the fresh post back and print a verdict line; if Facebook stored it
+    hidden, un-hide it once. A failed check never stops the cadence - it just
+    prints what is provable (23:2x forensics: the audience flags on our posts
+    are feed_targeting=null / is_hidden=false; the only readable signals)."""
+    if not post_id or str(post_id).startswith("zapier"):
+        return
+    ver = pg.get("api_version", "v21.0")
+    tok = pg.get("page_access_token")
+    base = f"https://graph.facebook.com/{ver}/{post_id}"
+
+    def _get(url):
+        req = urllib.request.Request(url + ("&" if "?" in url else "?") +
+                                     f"access_token={tok}", method="GET")
+        with urllib.request.urlopen(req, timeout=30) as r:
+            return json.load(r)
+
+    d = None
+    try:
+        d = _get(base + "?fields=id,is_hidden,feed_targeting")
+    except Exception:
+        try:  # direct post read can 404 on migrated pages; published_posts can
+            pid = pg.get("facebook_page_id")
+            f = _get(f"https://graph.facebook.com/{ver}/{pid}/published_posts"
+                     f"?limit=6&fields=id,is_hidden,feed_targeting")
+            for p in (f.get("data") or []):
+                if p.get("id") == post_id:
+                    d = p
+                    break
+        except Exception as e2:
+            print(f"VISIBILITY: unreadable right now ({e2}); post itself was accepted")
+            return
+    if d is None:
+        print("VISIBILITY: post accepted but not listed yet; will confirm next audit")
+        return
+    hidden, tgt = bool(d.get("is_hidden")), d.get("feed_targeting")
+    if hidden:
+        try:
+            data = urllib.parse.urlencode({"is_hidden": "false",
+                                           "access_token": tok}).encode()
+            urllib.request.urlopen(urllib.request.Request(
+                base, data=data, method="POST"), timeout=30)
+            print("VISIBILITY: was HIDDEN -> un-hid it, now public")
+            hidden = False
+        except Exception as e3:
+            print(f"VISIBILITY: WARNING hidden and un-hide failed: {e3}")
+    aud = "default (public)" if not tgt else json.dumps(tgt, ensure_ascii=False)[:80]
+    print(f"VISIBILITY: verified public - is_hidden={hidden} "
+          f"feed_targeting={aud} post_id={post_id}")
+
+
 def graph_post_photo(page_id, token, caption, image_path, api_version):
-    """Upload the branded graphic with the caption as one Page post."""
+    """Upload the branded graphic with the caption as one Page post.
+    Owner 28 Sep: publish with explicit PUBLIC audience (stream_visibility -
+    accepted by Graph even for our unreviewed app; test2 proved it)."""
     boundary = "----arenaBoundary7MA4YWxkTrZu0gW"
     body = b""
-    fields = {"caption": caption, "access_token": token}
+    fields = {"caption": caption, "stream_visibility": "PUBLIC",
+              "access_token": token}
     for k, v in fields.items():
         body += f"--{boundary}\r\nContent-Disposition: form-data; name=\"{k}\"\r\n\r\n{v}\r\n".encode()
     with open(image_path, "rb") as f:
@@ -239,7 +294,9 @@ def zapier_post(webhook, caption, image_path, meta):
 
 def graph_post_text(page_id, token, message, api_version):
     url = f"https://graph.facebook.com/{api_version}/{page_id}/feed"
-    data = urllib.parse.urlencode({"message": message, "access_token": token}).encode()
+    data = urllib.parse.urlencode({"message": message,
+                                   "stream_visibility": "PUBLIC",
+                                   "access_token": token}).encode()
     req = urllib.request.Request(url, data=data, method="POST")
     with urllib.request.urlopen(req, timeout=60) as r:
         return json.load(r)
@@ -319,6 +376,12 @@ def run(story_path, do_publish):
     # showed raw github text on FB without a preview - removed permanently.
     # Themed image attaches ONLY via native photo post (Zap photo step / Graph token).
     cap_zap = caption
+    # 28 Sep blank-post incident guard: an empty caption must NEVER reach the
+    # Page (10 no-message posts appeared 23:24 IST from a caption-less /photos
+    # test - a publisher must be structurally incapable of that).
+    if do_publish and not (caption or "").strip():
+        print("\nPUBLISH REFUSED: caption is empty - refusing to post a blank note.")
+        return 6
     try:
         if zap:
             _att = png if pub_cfg.get("attach_image", True) else ""
@@ -344,6 +407,10 @@ def run(story_path, do_publish):
             res = graph_post_photo(pg["facebook_page_id"], pg["page_access_token"],
                                    caption, png, pg.get("api_version", "v21.0"))
             post_id = res.get("post_id") or res.get("id")
+            try:
+                verify_public(post_id, pg)
+            except Exception as _ve:
+                print(f"VISIBILITY: check skipped ({_ve})")
     except urllib.error.HTTPError as e:
         print(f"\nPUBLISH ERROR {e.code}: {e.read().decode()[:600]}")
         return 5
