@@ -921,6 +921,7 @@ def one_cycle():
                 q0["day_total"] = q0.get("day_total", 0) + 1
                 save_quota(q0)
                 _DIGEST_NOTE = f"PUBLISHED {dg['slug']}"
+                q0["refuse_streak"] = 0
                 log("published daily card:", dg["slug"])
                 time.sleep(POST_SPACING_SECONDS)
             elif rc == 3:
@@ -931,6 +932,17 @@ def one_cycle():
             else:
                 _DIGEST_NOTE = f"REFUSED rc={rc} - retrying next cycle"
                 log(f"digest refused (rc={rc}), will retry next cycle")
+                # 28 Sep: a Meta-side wall (#283 etc.) lets cycles build
+                # cards forever while nothing publishes. Three refusals in
+                # a row = not transient: write ALERT.md so the job-end step
+                # escalates it to a GitHub issue (fail loud, never silent).
+                q0["refuse_streak"] = int(q0.get("refuse_streak") or 0) + 1
+                if q0["refuse_streak"] >= 3:
+                    alert(f"Publishing refused by Facebook {q0['refuse_streak']} cycles in a row",
+                          f"Latest rc={rc}. Cards are building fine - the wall is on the "
+                          "Meta side (permissions/review). Pipeline will resume on its own "
+                          "the moment Graph accepts posts again.")
+                save_quota(q0)
     if posted == 5:
         alert("Facebook publish failed while retrying pending posts",
               "Check Page token permissions (pages_manage_posts).")
