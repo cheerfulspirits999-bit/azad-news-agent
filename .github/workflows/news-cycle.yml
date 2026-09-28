@@ -46,6 +46,9 @@ jobs:
       - name: run one monitor + publish cycle
         env:
           FB_PAGE_TOKEN: ${{ secrets.FB_PAGE_TOKEN }}
+          FB_PAGE_ID: ${{ secrets.FB_PAGE_ID }}
+          FB_APP_SECRET: ${{ secrets.FB_APP_SECRET }}
+          FB_REFRESH_TOKEN: ${{ secrets.FB_REFRESH_TOKEN }}
           RU_API_KEY: ${{ secrets.ROMAN_URDU_API_KEY }}
           RU_PROVIDER: ${{ vars.RU_PROVIDER }}
           RU_MODEL: ${{ vars.RU_MODEL }}

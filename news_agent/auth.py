@@ -96,7 +96,20 @@ def _set_secret(name, value):
     return True
 
 
+def _export_current():
+    """Never let a failed refresh blind the publisher: always export the
+    token/pid from the vault env for THIS run; publish step stays loud if
+    the token itself is dead."""
+    gh_env = os.environ.get("GITHUB_ENV", "")
+    tok = os.environ.get("FB_PAGE_TOKEN", "")
+    pid = os.environ.get("FB_PAGE_ID", "")
+    if gh_env:
+        with open(gh_env, "a", encoding="utf-8") as f:
+            f.write(f"FB_PAGE_TOKEN={tok}\nFB_PAGE_ID={pid}\n")
+    return tok, pid
+
 def main():
+    _export_current()  # safety net first; renewed values overwrite below
     tok = os.environ.get("FB_PAGE_TOKEN", "")
     if not _need_renew(tok):
         print("auth: Page token healthy, nothing to do")

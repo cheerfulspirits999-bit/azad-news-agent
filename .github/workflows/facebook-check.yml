@@ -67,7 +67,9 @@ jobs:
                   url, data=json.dumps(data).encode() if data else None,
                   headers={"Authorization": "Bearer " + pat,
                            "Accept": "application/vnd.github+json"})
-              return json.load(urllib.request.urlopen(req, timeout=30))
+              with urllib.request.urlopen(req, timeout=30) as _r:
+                _b = _r.read()
+            return json.loads(_b) if _b.strip() else {}
           IST = timezone(timedelta(hours=5))
           now = datetime.now(IST)
           q = api(f"https://api.github.com/repos/{repo}/contents/news_agent/state/quota.json?ref=main")
