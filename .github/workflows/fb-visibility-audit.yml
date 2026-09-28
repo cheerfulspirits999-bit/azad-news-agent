@@ -13,7 +13,7 @@ jobs:
       FB_USER_TOKEN: ${{ secrets.FB_REFRESH_TOKEN }}
     steps:
       - uses: actions/checkout@v4
-      - name: restrictions + visibility settings
+      - name: final publish-state probe
         run: |
           python3 - <<'PY'
           import json, os, urllib.request, urllib.error
@@ -27,21 +27,13 @@ jobs:
                       return json.loads(r.read().decode())
               except urllib.error.HTTPError as e:
                   return {"__error": e.code, "body": e.read().decode()[:250]}
-          print("== PAGE SETTINGS (restrictions/age/maintenance) ==")
-          ps = api(f"/v21.0/{PAGE}/page_settings", PT)
-          data = ps.get("data")
-          if data is None:
-              print("page_settings:", json.dumps(ps)[:300])
-          else:
-              interesting = ("MAINTENANCE", "COUNTRY_RESTRICTEDNESS", "RESTRICTED_COUNTRIES",
-                             "AGE", "MIN_AGE", "PUBLIC", "PUBLISHED", "PAGE_PROFILE_STATUS",
-                             "PAGE_TASKS", "PAGE_PROFILE_VISIBILITY", "VISIBILITY")
-              for row in data:
-                  k = str(row.get("setting", ""))
-                  if any(w in k.upper() for w in interesting):
-                      print("  ", k, "=", json.dumps(row.get("value"))[:120])
-          print("== PAGE core fields ==")
-          c = api(f"/v21.0/{PAGE}?fields=name,is_published,link,age_min,"
-                  "has_ad_access,page_upgrade_status,verification_status,status", PT)
-          print(json.dumps(c, indent=1)[:700])
+          print("== PAGE publish state ==")
+          print(json.dumps(api(f"/v21.0/{PAGE}?fields=name,is_published,link,fan_count,"
+                               "verification_status,about", PT), indent=1)[:500])
+          print("== one card permalink via published_posts ==")
+          f = api(f"/v21.0/{PAGE}/published_posts?limit=1&fields=id,permalink_url,"
+                  "created_time,is_shared_to_feed,stream_visibility", PT)
+          d = f.get("data") or [{}]
+          for k in ("id", "permalink_url", "stream_visibility", "is_shared_to_feed"):
+              print(f"  {k}:", d[0].get(k, "?"))
           PY
