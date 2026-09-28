@@ -40,4 +40,4 @@ jobs:
               print(q.get("created_time", ""), "|", m)
               print("   id:", q["id"], "| is_hidden:", q.get("is_hidden"),
                     "| feed_targeting:", json.dumps(q.get("feed_targeting"))[:60],
-                    "| stream_visibility:", q.get("stream_visibility", "(unreadable=default-public)"))
+                    "| stream_visibility:", q.get("stream_visibility", "(unreadable=default-public)"))          PY
