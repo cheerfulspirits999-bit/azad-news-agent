@@ -13,6 +13,7 @@ on:
         default: "0"
 permissions:
   contents: write                 # allows committing the state back
+  issues: write                   # fail-loud issue when publishing is blocked
   actions: write                  # owner 27 Sep: the job's built-in GITHUB_TOKEN can
                                   # save/refresh secrets itself - NO personal PAT needed,
                                   # so a revoked token can never stop the hourly cycle
@@ -77,6 +78,44 @@ jobs:
               print("successor queued - cadence continues without GitHub's cron")
           except Exception as e:
               print("handoff failed; cron + watchdog remain as backup:", e)
+          PY
+
+      - name: fail loud if publishing was blocked
+        if: always()
+        env:
+          GH_TOKEN: ${{ github.token }}
+          REPO: ${{ github.repository }}
+        run: |
+          python3 - <<'PY'
+          import os, json, base64, urllib.request
+          def gh(url, data=None, method=None):
+              req = urllib.request.Request(
+                  f"https://api.github.com{url}",
+                  data=json.dumps(data).encode() if data else None,
+                  headers={"Authorization": "Bearer " + os.environ["GH_TOKEN"],
+                           "Accept": "application/vnd.github+json"},
+                  method=method or ("POST" if data else "GET"))
+              with urllib.request.urlopen(req, timeout=30) as r:
+                  b = r.read()
+              return json.loads(b) if b.strip() else {}
+          repo = os.environ["REPO"]
+          try:
+              d = gh(f"/repos/{repo}/contents/news_agent/state/pending_publish.json")
+              pend = json.loads(base64.b64decode(d["content"]))
+          except Exception as e:
+              pend = []
+          if not pend:
+              print("publishing not blocked - nothing pending"); raise SystemExit(0)
+          title = "[ALERT] publishing blocked: cards waiting in pending_publish"
+          body = (f"{len(pend)} card(s) were built but Facebook refused to accept "
+                  "them this run - check FB_PAGE_TOKEN / FB_PAGE_ID secrets and "
+                  f"run {os.environ.get('GITHUB_RUN_ID','')} (auth step + publish logs).")
+          open_issues = gh(f"/repos/{repo}/issues?state=open")
+          if any(i.get("title") == title for i in open_issues):
+              print("alert issue already open - skipping duplicate")
+          else:
+              gh(f"/repos/{repo}/issues", {"title": title, "body": body})
+              print("OPENED alert issue:", title)
           PY
 
       - name: commit agent memory

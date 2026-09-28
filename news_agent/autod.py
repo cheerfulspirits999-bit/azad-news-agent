@@ -205,11 +205,34 @@ def retry_pending():
     if not os.path.exists(pp):
         return 0
     pend = json.load(open(pp, encoding="utf-8"))
+    # 28 Sep: backlog older than 2h references an out-of-date pool - drop
+    # it (loudly) instead of replaying stale/duplicate bullets onto the Page.
+    _fresh = []
+    for it in pend:
+        try:
+            _age = (datetime.now(IST) - datetime.fromisoformat(it["at"])).total_seconds() / 60
+        except Exception:
+            _age = 0
+        if _age > 120:
+            log(f"[pending] dropped stale backlog {it.get('story')} ({_age:.0f} min old)")
+        else:
+            _fresh.append(it)
+    if len(_fresh) != len(pend):
+        json.dump(_fresh, open(pp, "w", encoding="utf-8"), ensure_ascii=False, indent=1)
+    pend = _fresh
+    if not pend:
+        return 0
     cfg = json.load(open(os.path.join(BASE, "config.json"), encoding="utf-8"))
     pub = cfg.get("publish", {})
+    pgc = cfg.setdefault("page", {})
+    # 28 Sep: CI injects credentials via env (config.json keeps them blank)
+    if os.environ.get("FB_PAGE_TOKEN"):
+        pgc["page_access_token"] = os.environ["FB_PAGE_TOKEN"]
+    if os.environ.get("FB_PAGE_ID"):
+        pgc["facebook_page_id"] = os.environ["FB_PAGE_ID"]
     connected = (pub.get("route") == "zapier" and pub.get("zapier_webhook")
                  and pub.get("zapier_live", False)) or (
-        cfg["page"].get("facebook_page_id") and cfg["page"].get("page_access_token"))
+        pgc.get("facebook_page_id") and pgc.get("page_access_token"))
     if not connected:
         return 0
     done = 0
