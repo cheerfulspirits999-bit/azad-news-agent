@@ -61,6 +61,52 @@ def _real_paste(en, ur, n=4):
     return False
 
 
+_RU_FUNC = {"ne", "ka", "ke", "ki", "ko", "se", "mein", "me", "par", "pe",
+            "hai", "hain", "tha", "thi", "the", "hua", "hui", "hue", "ho",
+            "hota", "nahi", "nahin", "kyun", "kyon", "aur", "ya", "karna",
+            "kar", "raha", "rahe", "rahay", "rahi", "bola", "boli", "liye",
+            "baad", "pehle", "tak", "bhi", "sakte", "sakti", "chahiye"}
+
+
+def _echo_paste(en, ur):
+    """Owner 29 Sep 'roman urdu got disturbed': _real_paste is deliberately
+    blind to capitalised words, so a VERBATIM English echo
+    ('Etihad Rail Dubai Station officially inaugurated.') or an Urdu shell
+    with a whole English sentence pasted inside ('...727 Voter Exclusions
+    Delhi. What Poll Body Said mein...') slips through. Kill when the line
+    mirrors the source too closely AND shows no translating effort: >=55%
+    token overlap with NO Urdu function word anywhere, or a verbatim run of
+    6+ consecutive source tokens (case-insensitive, punctuation ignored).
+    Legit proper-noun-dense newsroom lines ('Hyderabad Metro Pink Line ka
+    jaiza meeting hui') carry function words and short name runs -> pass."""
+    t_raw = re.findall(r"[A-Za-z][A-Za-z'\-.]*|\d+", en or "")
+    t = [w.lower().strip("'.-") for w in t_raw]
+    t_cap = [bool(w) and w[0].isupper() for w in t_raw]
+    u = [w.lower().strip("'.-") for w in
+         re.findall(r"[A-Za-z][A-Za-z'\-.]*|\d+", ur or "")]
+    if len(u) < 4:
+        return False
+    from collections import Counter
+    ct = Counter(x for x in t if x)
+    shared = sum(min(c, ct[x]) for x, c in
+                 Counter(x for x in u if x).items())
+    overlap = shared / len(u)
+    has_func = any(x in _RU_FUNC for x in u)
+    run = best = lcrun = bestlc = 0
+    for i in range(len(u)):
+        for j in range(len(t)):
+            k = 0
+            lc = 0
+            while (i + k < len(u) and j + k < len(t)
+                   and u[i + k] and u[i + k] == t[j + k]):
+                k += 1
+                if j + k - 1 < len(t) and not t_cap[j + k - 1]:
+                    lc = k  # run still all-lowercase (non-proper-noun)
+            best = max(best, k)
+            bestlc = max(bestlc, lc)
+    return (overlap >= 0.55 and (not has_func or bestlc >= 3)) or best >= 6
+
+
 def _ru_on():
     """Is the owner's roman_urdu translator usable in this run?"""
     try:
@@ -802,16 +848,18 @@ def build_digest(cands, catchup=False):
                 # en-quality is intentionally NOT re-applied here (see note above)
                 if _real_paste(_en, _l):
                     _killed(i, "paste"); continue  # untranslated lowercase run
+                if _echo_paste(_en, _l):
+                    _killed(i, "english-echo"); continue  # verbatim/wholesale
                 picks[i] = picks[i][:2] + (_l,) + picks[i][3:]
                 _bad.discard(i)
         _RU_STATS["kills"] = _RU_STATS.get("kills") or _kill
         _RU_STATS["accepted"] = len(_pend) - len(_bad)
-        # 28 Sep salvage pass: a line the block-call lost gets ONE private
-        # re-ask (short single-line prompts translate where 5-line compounds
-        # echo). Only runs when the card would otherwise starve - API spent
-        # exactly when needed (owner 27 Sep).
-        if _bad and (len(_pend) - len(_bad)) < 3:
-            for i in sorted(_bad):
+        # 28 Sep salvage pass, WIDENED 29 Sep: every killed line (not just a
+        # starving card) gets ONE private re-ask - a single-line prompt
+        # translates where the batch echo'd. Capped at 4 lines/cycle: the API
+        # is still spent only on lines that failed quality (owner 27 Sep).
+        if _bad:
+            for i in sorted(_bad)[:4]:
                 _en2 = picks[i][1]
                 if not _en2:
                     continue
@@ -821,7 +869,7 @@ def build_digest(cands, catchup=False):
                     continue
                 _l2 = ((_r2.get("lines") or [""])[0] or "").strip()
                 if (not _l2 or len(_l2) > 118 or _NONROMAN_RE.search(_l2)
-                        or _real_paste(_en2, _l2)):
+                        or _real_paste(_en2, _l2) or _echo_paste(_en2, _l2)):
                     continue
                 _ed2 = set(re.findall(r"\d+(?:[.,]\d+)*", _en2))
                 _ud2 = set(re.findall(r"\d+(?:[.,]\d+)*", _l2))
