@@ -1,17 +1,17 @@
 {
-  "cycle": "20260930-0202",
-  "at": "2026-09-30T02:02:21.838016+05:30",
+  "cycle": "20260930-0212",
+  "at": "2026-09-30T02:15:25.099589+05:30",
   "candidates": 120,
   "published_this_cycle": 0,
-  "digest": "gate closed: ncards 2/24, gap 52 min, retry_pending=0",
+  "digest": "PUBLISHED auto-digest-2026-09-30-s0214",
   "ru": {
-    "pre_ru_picks": 3,
-    "to_translate": 3,
+    "pre_ru_picks": 5,
+    "to_translate": 5,
     "engine": {
       "ok": false,
-      "lines_in": 3,
-      "lines_want": 3,
-      "problems": "['Lines [1, 2, 3] copy 4+ consecutive English words verbatim into the Roman Urdu. Re-express those phrases in Urdu; keep only proper nouns/brands/technical term"
+      "lines_in": 5,
+      "lines_want": 5,
+      "problems": "['Lines [1, 2, 3, 4, 5] copy 4+ consecutive English words verbatim into the Roman Urdu. Re-express those phrases in Urdu; keep only proper nouns/brands/technica"
     },
     "kills": {
       "english-echo": [
@@ -19,51 +19,53 @@
         3
       ],
       "paste": [
-        2
+        2,
+        4,
+        5
       ]
     },
     "accepted": 3,
     "salvaged": [
       1,
       2,
-      3
+      4
     ],
     "via": {
       "1": "google/gemini-2.5-flash-lite",
       "2": "google/gemini-2.5-flash-lite",
-      "3": "google/gemini-2.5-flash-lite"
+      "4": "google/gemini-2.5-flash-lite"
     }
   },
   "tail": [
-    "[30 Sep 02:02:21] stale or low-score, skipped: Fire Incident: High-Level Panel Completes Its Probe At RIMS",
-    "[30 Sep 02:02:21] queued for editorial pass (no safe auto frame): Decomposed body found inside old railway coach at Ponnurunni yard in K",
-    "[30 Sep 02:02:21] stale or low-score, skipped: Man Kills Father Over Harassment Of Mother",
-    "[30 Sep 02:02:21] stale or low-score, skipped: Woman allegedly beaten to death by husband in Ameerpet hotel",
-    "[30 Sep 02:02:21] held for the next card: auto-27-killed-across-nepal-due-to-incessant-rainfall-since-septe",
-    "[30 Sep 02:02:21] stale or low-score, skipped: Budgam encounter: Army kills LeT terrorist in fierce gunfigh",
-    "[30 Sep 02:02:21] stale or low-score, skipped: R. Veeramani booked for abetting suicide of minor in 2004",
-    "[30 Sep 02:02:21] stale or low-score, skipped: Inquiry into RIMS-Adilabad tragedy concludes, report to be s",
-    "[30 Sep 02:02:21] stale or low-score, skipped: Mancherial surrounding villages continue to depend on privat",
-    "[30 Sep 02:02:21] stale or low-score, skipped: Top LeT terrorist wanted for several attacks in J-K killed i",
-    "[30 Sep 02:02:21] stale or low-score, skipped: 25,000 crash victims treated under PM-RAHAT; hospitals reimb",
-    "[30 Sep 02:02:21] stale or low-score, skipped: RIMS fire: High-level panel to submit report to govt soon",
-    "[30 Sep 02:02:21] stale or low-score, skipped: Cat and rat droppings, flies, dead cockroaches: Why Mumbai\u2019s",
-    "[30 Sep 02:02:21] stale or low-score, skipped: 4 CISF personnel killed after colleague opens fire in J&K's ",
-    "[30 Sep 02:02:21] stale or low-score, skipped: Young Woman Stabbed to Death in Kerala",
-    "[30 Sep 02:02:21] stale or low-score, skipped: On cam: Military aircraft crashes in Russia due to 'fuel exp",
-    "[30 Sep 02:02:21] stale or low-score, skipped: Revanth Reddy's Ram-Shiva Remarks Most Despicable Attack on ",
-    "[30 Sep 02:02:21] stale or low-score, skipped: SR Nagar: Woman Found Dead Under Suspicious Circumstances at",
-    "[30 Sep 02:02:21] stale or low-score, skipped: Woman Killed After Being Run Over by Tractor in Badangpet",
-    "[30 Sep 02:02:21] stale or low-score, skipped: Married Woman Strangles Youth to Death in Dhoolpet",
-    "[30 Sep 02:02:21] stale or low-score, skipped: Private Travel Bus Collides With Lorry in Khammam, Driver Ki",
-    "[30 Sep 02:02:21] stale or low-score, skipped: People Divided Over Linking Traffic Fines With Power Bills",
-    "[30 Sep 02:02:21] stale or low-score, skipped: UK Police Find Fuel But No Explosives at Fairford Scene",
-    "[30 Sep 02:02:21] stale or low-score, skipped: HC Pleas Challenge Rowdy Sheets in TDP Case",
-    "[30 Sep 02:02:21] stale or low-score, skipped: Modifications that Kumaraswamy claims led to NICE \u2018scam\u2019",
-    "[30 Sep 02:02:21] stale or low-score, skipped: Dating scam: Hyderabad techie left with Rs 29,884 pub bill a",
-    "[30 Sep 02:02:21] stale or low-score, skipped: Molten Steel Spill At VSP Unit, None Hurt",
-    "[30 Sep 02:02:21] stale or low-score, skipped: IIT, BIT fan changes draw focus to student mental health and",
-    "[30 Sep 02:02:21] stale or low-score, skipped: Double Murder In Tirunelveli Over Parking Dispute Between Ne",
-    "[30 Sep 02:02:21] stale or low-score, skipped: J&K: CISF Jawan Opens Fire After Altercation, Kills Four Per"
+    "[30 Sep 02:15:25] queued for editorial pass (no safe auto frame): Terrorist killed in ongoing operation in Kashmir\u2019s Budgam",
+    "[30 Sep 02:15:25] stale or low-score, skipped: Fire Incident: High-Level Panel Completes Its Probe At RIMS",
+    "[30 Sep 02:15:25] queued for editorial pass (no safe auto frame): Decomposed body found inside old railway coach at Ponnurunni yard in K",
+    "[30 Sep 02:15:25] stale or low-score, skipped: Man Kills Father Over Harassment Of Mother",
+    "[30 Sep 02:15:25] stale or low-score, skipped: Woman allegedly beaten to death by husband in Ameerpet hotel",
+    "[30 Sep 02:15:25] held for the next card: auto-27-killed-across-nepal-due-to-incessant-rainfall-since-septe",
+    "[30 Sep 02:15:25] stale or low-score, skipped: Budgam encounter: Army kills LeT terrorist in fierce gunfigh",
+    "[30 Sep 02:15:25] stale or low-score, skipped: R. Veeramani booked for abetting suicide of minor in 2004",
+    "[30 Sep 02:15:25] stale or low-score, skipped: Inquiry into RIMS-Adilabad tragedy concludes, report to be s",
+    "[30 Sep 02:15:25] stale or low-score, skipped: Mancherial surrounding villages continue to depend on privat",
+    "[30 Sep 02:15:25] stale or low-score, skipped: Top LeT terrorist wanted for several attacks in J-K killed i",
+    "[30 Sep 02:15:25] stale or low-score, skipped: 25,000 crash victims treated under PM-RAHAT; hospitals reimb",
+    "[30 Sep 02:15:25] stale or low-score, skipped: RIMS fire: High-level panel to submit report to govt soon",
+    "[30 Sep 02:15:25] stale or low-score, skipped: Cat and rat droppings, flies, dead cockroaches: Why Mumbai\u2019s",
+    "[30 Sep 02:15:25] stale or low-score, skipped: 4 CISF personnel killed after colleague opens fire in J&K's ",
+    "[30 Sep 02:15:25] stale or low-score, skipped: On cam: Military aircraft crashes in Russia due to 'fuel exp",
+    "[30 Sep 02:15:25] stale or low-score, skipped: Revanth Reddy's Ram-Shiva Remarks Most Despicable Attack on ",
+    "[30 Sep 02:15:25] stale or low-score, skipped: SR Nagar: Woman Found Dead Under Suspicious Circumstances at",
+    "[30 Sep 02:15:25] stale or low-score, skipped: Woman Killed After Being Run Over by Tractor in Badangpet",
+    "[30 Sep 02:15:25] stale or low-score, skipped: Married Woman Strangles Youth to Death in Dhoolpet",
+    "[30 Sep 02:15:25] stale or low-score, skipped: Private Travel Bus Collides With Lorry in Khammam, Driver Ki",
+    "[30 Sep 02:15:25] stale or low-score, skipped: People Divided Over Linking Traffic Fines With Power Bills",
+    "[30 Sep 02:15:25] stale or low-score, skipped: UK Police Find Fuel But No Explosives at Fairford Scene",
+    "[30 Sep 02:15:25] stale or low-score, skipped: HC Pleas Challenge Rowdy Sheets in TDP Case",
+    "[30 Sep 02:15:25] stale or low-score, skipped: Modifications that Kumaraswamy claims led to NICE \u2018scam\u2019",
+    "[30 Sep 02:15:25] stale or low-score, skipped: Dating scam: Hyderabad techie left with Rs 29,884 pub bill a",
+    "[30 Sep 02:15:25] stale or low-score, skipped: Molten Steel Spill At VSP Unit, None Hurt",
+    "[30 Sep 02:15:25] stale or low-score, skipped: IIT, BIT fan changes draw focus to student mental health and",
+    "[30 Sep 02:15:25] stale or low-score, skipped: Double Murder In Tirunelveli Over Parking Dispute Between Ne",
+    "[30 Sep 02:15:25] stale or low-score, skipped: J&K: CISF Jawan Opens Fire After Altercation, Kills Four Per"
   ]
 }
