@@ -68,6 +68,23 @@ _RU_FUNC = {"ne", "ka", "ke", "ki", "ko", "se", "mein", "me", "par", "pe",
             "baad", "pehle", "tak", "bhi", "sakte", "sakti", "chahiye"}
 
 
+# Words that are NEVER written as bare English tokens in genuine Pakistani
+# newsroom Roman Urdu (unlike loanwords such as case/meeting/committee/
+# launch, deliberately excluded to avoid false kills).
+_EN_COMMON = {
+    "the", "and", "but", "with", "from", "have", "has", "had", "will",
+    "would", "shall", "should", "could", "may", "might", "must", "for",
+    "after", "before", "while", "during", "against", "under", "between",
+    "about", "again", "than", "into", "over", "near", "said", "says",
+    "told", "urges", "warns", "warned", "demands", "seeks", "accuses",
+    "blames", "cites", "stages", "smoothly", "gears", "inaugurated",
+    "inaugurate", "symbolically", "students", "student", "hostel",
+    "hostels", "meal", "meals", "trigger", "triggers", "turnout",
+    "results", "locals", "poses", "risks", "crops", "warns", "centre",
+    "resignation", "demanding", "conclude", "concludes", "opposes",
+}
+
+
 def _echo_paste(en, ur):
     """Owner 29 Sep 'roman urdu got disturbed': _real_paste is deliberately
     blind to capitalised words, so a VERBATIM English echo
@@ -104,7 +121,12 @@ def _echo_paste(en, ur):
                     lc = k  # run still all-lowercase (non-proper-noun)
             best = max(best, k)
             bestlc = max(bestlc, lc)
-    return (overlap >= 0.55 and (not has_func or bestlc >= 3)) or best >= 6
+    best = max(best, 0)
+    ct2 = Counter(x for x in t if x in _EN_COMMON)
+    sc = sum(min(c, ct2[x]) for x, c in
+             Counter(x for x in u if x in _EN_COMMON).items())
+    return ((overlap >= 0.55 and (not has_func or bestlc >= 3))
+            or best >= 6 or (sc >= 3 and overlap >= 0.45))
 
 
 def _ru_on():
