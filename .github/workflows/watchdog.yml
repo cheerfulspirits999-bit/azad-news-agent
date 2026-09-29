@@ -1,9 +1,13 @@
-# Watchdog: if the news cycle has not run for >45 minutes (GitHub scheduler
-# can skip cron slots under load), wake it up via repository dispatch.
+# Watchdog v2 (29 Sep): the v1 flaw was that it only DISPATCHED a wake-up run
+# while a frozen runner kept holding a slot - the wake queued behind the very
+# zombie that had stalled the cadence (3 freezes on 29 Sep: #242/#262/#265).
+# v2 checks LIVENESS (does cycle state still advance?), cancels any stuck run
+# (in_progress with stale state, or stale queued backlog), then respawns.
+# Cadence is otherwise guaranteed by the relay handoff inside news-cycle.yml.
 name: watchdog
 on:
   schedule:
-    - cron: "25,55 * * * *"
+    - cron: "3,18,33,48 * * * *"
   workflow_dispatch: {}
 permissions:
   contents: read
@@ -17,27 +21,50 @@ jobs:
     timeout-minutes: 5
     steps:
       - uses: actions/checkout@v4
-      - name: trigger cycle if stale
+      - name: liveness guard - cancel frozen, wake cadence
         env:
           GH_TOKEN: ${{ github.token }}
+          REPO: ${{ github.repository }}
         run: |
-          AGE=$(python3 - <<'PY'
-          import json, datetime
+          python3 - <<'PY'
+          import json, os, datetime, urllib.request
+          AGE = 999
           try:
-              d = json.load(open('news_agent/state/last_cycle.json'))
-              t = datetime.datetime.fromisoformat(d['at'])
-              print(int((datetime.datetime.now(t.tzinfo) - t).total_seconds() // 60))
+              d = json.load(open("news_agent/state/last_cycle.json"))
+              t = datetime.datetime.fromisoformat(d["at"])
+              AGE = int((datetime.datetime.now(t.tzinfo)
+                         - t).total_seconds() // 60)
           except Exception:
-              print(999)
+              pass
+          def api(path, method="GET"):
+              req = urllib.request.Request(
+                  "https://api.github.com/repos/" + os.environ["REPO"] + path,
+                  method=method,
+                  headers={"Authorization": "***" + os.environ["GH_TOKEN"],
+                           "Accept": "application/vnd.github+json"})
+              try:
+                  with urllib.request.urlopen(req, timeout=30) as r:
+                      b = r.read()
+                      return json.loads(b) if b else {}
+              except Exception as e:
+                  print("api err:", str(e)[:120])
+                  return None
+          runs = (api("/actions/workflows/news-cycle.yml/runs?per_page=6")
+                  or {}).get("workflow_runs", [])
+          live = [r for r in runs if r["status"] in
+                  ("queued", "pending", "requested", "in_progress")]
+          print(f"state age {AGE} min; live runs: "
+                f"{[(r['run_number'], r['status']) for r in live]}")
+          stale = AGE > 25
+          if not stale and live:
+              print("healthy - cadence advancing, nothing to do")
+              raise SystemExit(0)
+          if not live and not stale and AGE != 999:
+              print("no live run but state fresh (relay handoff window) - ok")
+              raise SystemExit(0)
+          for r in live:
+              print("cancel", r["run_number"], r["status"], r["id"])
+              api(f"/actions/runs/{r['id']}/cancel", "POST")
+          code = api("/actions/workflows/news-cycle.yml/dispatches", "POST")
+          print("wake dispatched")
           PY
-          )
-          echo "last cycle ${AGE} min ago"
-          if [ "$AGE" -gt 45 ]; then
-            curl -s -o /dev/null -w "wake dispatch http %{http_code}\n" -X POST \
-              -H "Authorization: Bearer $GH_TOKEN" \
-              -H "Accept: application/vnd.github+json" \
-              "https://api.github.com/repos/$GITHUB_REPOSITORY/actions/workflows/news-cycle.yml/dispatches" \
-              -d '{"ref":"main"}'
-          else
-            echo "cycle fresh - nothing to do"
-          fi
