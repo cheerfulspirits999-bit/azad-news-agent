@@ -61,6 +61,40 @@ def _real_paste(en, ur, n=4):
     return False
 
 
+# 29 Sep evening fix: the digest re-picked the same candidates every cycle
+# and the pinned model echoed them deterministically (temp-0 lesson again)
+# -> 6h of "starved: <3 publishable Urdu lines" while 120 candidates waited.
+# Bank every line the RU stage killed for 4h so picks rotate toward stories
+# the model CAN translate, and give salvage a fallback-model chain (owner:
+# OpenRouter is funded - one model's bad hour must never stop the pipeline).
+_RU_MISS_TTL = 4 * 3600.0
+_RU_FALLBACK_MODELS = ("google/gemini-2.5-flash-lite", "openai/gpt-4o-mini",
+                       "anthropic/claude-3.5-haiku")
+
+
+def _line_h(text):
+    import hashlib
+    return hashlib.sha1((text or "").lower().encode()[:200]).hexdigest()[:12]
+
+
+def _ru_miss_load():
+    try:
+        raw = json.load(open(os.path.join(STATE, "ru_misses.json"),
+                             encoding="utf-8"))
+    except Exception:
+        return {}
+    now = time.time()
+    return {str(k): float(v) for k, v in raw.items()
+            if isinstance(v, (int, float)) and now - v < _RU_MISS_TTL}
+
+
+def _ru_miss_save(bank):
+    try:
+        json.dump(bank, open(os.path.join(STATE, "ru_misses.json"), "w"))
+    except Exception:
+        pass
+
+
 _RU_FUNC = {"ne", "ka", "ke", "ki", "ko", "se", "mein", "me", "par", "pe",
             "hai", "hain", "tha", "thi", "the", "hua", "hui", "hue", "ho",
             "hota", "nahi", "nahin", "kyun", "kyon", "aur", "ya", "karna",
@@ -834,6 +868,13 @@ def build_digest(cands, catchup=False):
             if f" {w} " in tl:
                 out.add(v)
         return out
+    _miss_bank = _ru_miss_load()
+    if _miss_bank and picks:
+        _n0 = len(picks)
+        picks = [p for p in picks if _line_h(p[1]) not in _miss_bank]
+        if len(picks) < _n0:
+            log(f"[digest] ru-miss bank rotated out "
+                f"{_n0 - len(picks)} repeat-echo line(s)")
     _pend = [i for i, p in enumerate(picks) if not p[2]]
     _RU_STATS.clear()
     _RU_STATS.update({"pre_ru_picks": len(picks), "to_translate": len(_pend)})
@@ -885,27 +926,37 @@ def build_digest(cands, catchup=False):
                 _en2 = picks[i][1]
                 if not _en2:
                     continue
-                try:
-                    _r2 = roman_urdu.translate_lines([_en2])
-                except Exception:
-                    continue
-                _l2 = ((_r2.get("lines") or [""])[0] or "").strip()
-                if (not _l2 or len(_l2) > 118 or _NONROMAN_RE.search(_l2)
-                        or _real_paste(_en2, _l2) or _echo_paste(_en2, _l2)):
-                    continue
-                _ed2 = set(re.findall(r"\d+(?:[.,]\d+)*", _en2))
-                _ud2 = set(re.findall(r"\d+(?:[.,]\d+)*", _l2))
-                if _ud2 - _ed2 - _en_digits(_en2):
-                    continue
-                picks[i] = picks[i][:2] + (_l2,) + picks[i][3:]
-                _bad.discard(i)
-                _RU_STATS.setdefault("salvaged", []).append(i + 1)
+                for _m2 in (None,) + _RU_FALLBACK_MODELS:
+                    try:
+                        _r2 = (roman_urdu.translate_lines([_en2]) if not _m2
+                               else roman_urdu.translate_lines([_en2],
+                                                               model=_m2))
+                    except Exception:
+                        continue
+                    _l2 = ((_r2.get("lines") or [""])[0] or "").strip()
+                    if (not _l2 or len(_l2) > 118 or _NONROMAN_RE.search(_l2)
+                            or _real_paste(_en2, _l2)
+                            or _echo_paste(_en2, _l2)):
+                        continue
+                    _ed2 = set(re.findall(r"\d+(?:[.,]\d+)*", _en2))
+                    _ud2 = set(re.findall(r"\d+(?:[.,]\d+)*", _l2))
+                    if _ud2 - _ed2 - _en_digits(_en2):
+                        continue
+                    picks[i] = picks[i][:2] + (_l2,) + picks[i][3:]
+                    _bad.discard(i)
+                    _RU_STATS.setdefault("salvaged", []).append(i + 1)
+                    if _m2:
+                        _RU_STATS.setdefault("via", {})[str(i + 1)] = _m2
+                    break
             _RU_STATS["accepted"] = len(_pend) - len(_bad)
         log(f"[digest] roman-urdu step: {len(_pend) - len(_bad)}/"
             f"{len(_pend)} lines accepted"
             + ("" if not _res["problems"] else
                " (watch: " + str(_res["problems"][0])[:60] + ")"))
         if _bad:
+            for i in _bad:
+                _miss_bank[_line_h(picks[i][1])] = time.time()
+            _ru_miss_save(_miss_bank)
             picks = [p for j, p in enumerate(picks) if j not in _bad]
     picks = [p for p in picks if p[2]]   # never ship an empty Urdu mirror
     if len(picks) < 3:
