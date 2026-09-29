@@ -53,16 +53,33 @@ jobs:
                   or {}).get("workflow_runs", [])
           live = [r for r in runs if r["status"] in
                   ("queued", "pending", "requested", "in_progress")]
+          now = datetime.datetime.now(datetime.timezone.utc)
+          def run_age_min(r):
+              try:
+                  s = r.get("run_started_at") or r.get("created_at")
+                  t = datetime.datetime.fromisoformat(
+                      s.replace("Z", "+00:00"))
+                  return int((now - t).total_seconds() // 60)
+              except Exception:
+                  return 0
           print(f"state age {AGE} min; live runs: "
                 f"{[(r['run_number'], r['status']) for r in live]}")
-          stale = AGE > 25
+          stale = AGE > 35  # >35min no state commit = frozen (a live digest
+          # can legitimately run ~20min through the salvage-model chain)
           if not stale and live:
               print("healthy - cadence advancing, nothing to do")
               raise SystemExit(0)
-          if not live and not stale and AGE != 999:
+          if not live and AGE <= 35:
               print("no live run but state fresh (relay handoff window) - ok")
               raise SystemExit(0)
           for r in live:
+              # never kill a run that is younger than the stale threshold -
+              # it may be mid-publish; cancel it only once it has also had
+              # more time than a worst-case cycle needs
+              if r["status"] == "in_progress" and run_age_min(r) < 45:
+                  print("run", r["run_number"], "in_progress",
+                        run_age_min(r), "min - too young to kill, will recheck")
+                  continue
               print("cancel", r["run_number"], r["status"], r["id"])
               api(f"/actions/runs/{r['id']}/cancel", "POST")
           code = api("/actions/workflows/news-cycle.yml/dispatches", "POST")
