@@ -1,9 +1,9 @@
 {
-  "cycle": "20260930-1933",
-  "at": "2026-09-30T19:33:16.350908+05:30",
+  "cycle": "20260930-1943",
+  "at": "2026-09-30T19:46:44.372479+05:30",
   "candidates": 120,
   "published_this_cycle": 0,
-  "digest": "gate closed: ncards 18/24, gap 53 min, retry_pending=0",
+  "digest": "PUBLISHED auto-digest-2026-09-30-s1945",
   "ru": {
     "pre_ru_picks": 5,
     "to_translate": 5,
@@ -14,60 +14,58 @@
       "problems": "['Lines [1, 2, 3, 4, 5] copy 4+ consecutive English words verbatim into the Roman Urdu. Re-express those phrases in Urdu; keep only proper nouns/brands/technica"
     },
     "kills": {
-      "paste": [
+      "english-echo": [
         1
       ],
-      "english-echo": [
+      "paste": [
         2,
         3,
         4,
         5
       ]
     },
-    "accepted": 4,
+    "accepted": 3,
     "salvaged": [
-      1,
       2,
       3,
       4
     ],
     "via": {
-      "1": "google/gemini-2.5-flash-lite",
       "2": "google/gemini-2.5-flash-lite",
-      "3": "google/gemini-2.5-flash-lite",
+      "3": "openai/gpt-4o-mini",
       "4": "google/gemini-2.5-flash-lite"
     }
   },
   "tail": [
-    "[30 Sep 19:33:16] queued for editorial pass (no safe auto frame): Passenger on rerouted flydubai flight claims pilot tried to crash plan",
-    "[30 Sep 19:33:16] held for the next card: auto-one-dies-in-blast-at-mangalore-refinery-and-petrochemicals-p",
-    "[30 Sep 19:33:16] queued for editorial pass (no safe auto frame): Israel-bound flydubai plane rerouted, pilots wounded in reported fight",
-    "[30 Sep 19:33:16] held for the next card: auto-iran-retaliates-after-israeli-strikes-its-nuclear-program-3-",
-    "[30 Sep 19:33:16] stale or low-score, skipped: Keralam constitutes panel to prepare 10-year master plan for",
-    "[30 Sep 19:33:16] stale or low-score, skipped: Delhi\u2019s Barapullah Phase-III flyover leaves commuters in 3.5",
-    "[30 Sep 19:33:16] stale or low-score, skipped: Blue drum case: Meerut court convicts wife, lover for husban",
-    "[30 Sep 19:33:16] stale or low-score, skipped: Fire breaks out at historic Koder House in Fort Kochi",
-    "[30 Sep 19:33:16] stale or low-score, skipped: Woman allegedly beaten to death by husband in Ameerpet hotel",
-    "[30 Sep 19:33:16] stale or low-score, skipped: Dozens injured in French student protests over school resour",
-    "[30 Sep 19:33:16] stale or low-score, skipped: Assistant commandant among 4 CISF personnel killed in J-K\u2019s ",
-    "[30 Sep 19:33:16] stale or low-score, skipped: Indian sailor among five killed, another injured as Somali f",
-    "[30 Sep 19:33:16] stale or low-score, skipped: Siddipet: Man, son attacked over extra marital affair in Che",
-    "[30 Sep 19:33:16] stale or low-score, skipped: Sangareddy: Youth Dies by Suicide After Losing Rs.9 Lakh in ",
-    "[30 Sep 19:33:16] stale or low-score, skipped: OU: Man Killed in Tipper Scooty Collision Near EFLU",
-    "[30 Sep 19:33:16] stale or low-score, skipped: 3 Killed, 3 Injured As Crane Falls Into Pit In Tirupati",
-    "[30 Sep 19:33:16] stale or low-score, skipped: Pratyusha Banerjee suicide case: \u092a\u094d\u0930\u0924\u094d\u092f\u0941\u0937\u093e \u092c\u0928\u0930\u094d\u091c\u0940 \u0938\u0941\u0938\u093e\u0907\u0921 \u0915\u0947\u0938",
-    "[30 Sep 19:33:16] stale or low-score, skipped: \"He Attacked Us, We Overpowered Him\": Video Emerges From fly",
-    "[30 Sep 19:33:16] stale or low-score, skipped: One jawan killed, four injured in Changlang ambush",
-    "[30 Sep 19:33:16] stale or low-score, skipped: IIT Bombay suicide case: Crime Branch records 40 statements,",
-    "[30 Sep 19:33:16] stale or low-score, skipped: Pilot Tried To Take Control Of flydubai Plane, Terror Attack",
-    "[30 Sep 19:33:16] stale or low-score, skipped: Meerut blue drum murder: Merchant Navy officer's wife Muskan",
-    "[30 Sep 19:33:16] stale or low-score, skipped: Mangaluru refinery blas sparks fire: Missing labourer found ",
-    "[30 Sep 19:33:16] stale or low-score, skipped: Ex-Pak SSG commando, LeT terrorist, Pahalgam mastermind kill",
-    "[30 Sep 19:33:16] stale or low-score, skipped: Flydubai jet makes emergency landing in Saudi Arabia after h",
-    "[30 Sep 19:33:16] stale or low-score, skipped: LPG Cylinder Explodes on Vacant Site in Bengaluru, No Casual",
-    "[30 Sep 19:33:16] stale or low-score, skipped: Fire Incident: High-Level Panel Completes Its Probe At RIMS",
-    "[30 Sep 19:33:16] stale or low-score, skipped: Man Kills Father Over Harassment Of Mother",
-    "[30 Sep 19:33:16] stale or low-score, skipped: Inquiry into RIMS-Adilabad tragedy concludes, report to be s",
-    "[30 Sep 19:33:16] stale or low-score, skipped: Mangaluru MRPL Blast: MP Brijesh Chowta Appeals People To No"
+    "[30 Sep 19:46:44] stale or low-score, skipped: Hyderabad: Youth killed after tipper truck rams scooter near",
+    "[30 Sep 19:46:44] stale or low-score, skipped: Hyd-Vizag Private Bus Overturns Near Suryapet, 10 Injured",
+    "[30 Sep 19:46:44] stale or low-score, skipped: 7-Yr-Old Girl killed, 3 Injured After School Staircase Colla",
+    "[30 Sep 19:46:44] queued for editorial pass (no safe auto frame): Israel-bound flydubai plane rerouted, pilots wounded in reported fight",
+    "[30 Sep 19:46:44] queued for editorial pass (no safe auto frame): Passenger on rerouted flydubai flight claims pilot tried to crash plan",
+    "[30 Sep 19:46:44] held for the next card: auto-one-dies-in-blast-at-mangalore-refinery-and-petrochemicals-p",
+    "[30 Sep 19:46:44] held for the next card: auto-iran-retaliates-after-israeli-strikes-its-nuclear-program-3-",
+    "[30 Sep 19:46:44] stale or low-score, skipped: Keralam constitutes panel to prepare 10-year master plan for",
+    "[30 Sep 19:46:44] stale or low-score, skipped: Delhi\u2019s Barapullah Phase-III flyover leaves commuters in 3.5",
+    "[30 Sep 19:46:44] stale or low-score, skipped: Blue drum case: Meerut court convicts wife, lover for husban",
+    "[30 Sep 19:46:44] stale or low-score, skipped: Fire breaks out at historic Koder House in Fort Kochi",
+    "[30 Sep 19:46:44] stale or low-score, skipped: Woman allegedly beaten to death by husband in Ameerpet hotel",
+    "[30 Sep 19:46:44] stale or low-score, skipped: Dozens injured in French student protests over school resour",
+    "[30 Sep 19:46:44] stale or low-score, skipped: Assistant commandant among 4 CISF personnel killed in J-K\u2019s ",
+    "[30 Sep 19:46:44] stale or low-score, skipped: Indian sailor among five killed, another injured as Somali f",
+    "[30 Sep 19:46:44] stale or low-score, skipped: Siddipet: Man, son attacked over extra marital affair in Che",
+    "[30 Sep 19:46:44] stale or low-score, skipped: Sangareddy: Youth Dies by Suicide After Losing Rs.9 Lakh in ",
+    "[30 Sep 19:46:44] stale or low-score, skipped: OU: Man Killed in Tipper Scooty Collision Near EFLU",
+    "[30 Sep 19:46:44] stale or low-score, skipped: 3 Killed, 3 Injured As Crane Falls Into Pit In Tirupati",
+    "[30 Sep 19:46:44] stale or low-score, skipped: \"He Attacked Us, We Overpowered Him\": Video Emerges From fly",
+    "[30 Sep 19:46:44] stale or low-score, skipped: One jawan killed, four injured in Changlang ambush",
+    "[30 Sep 19:46:44] stale or low-score, skipped: IIT Bombay suicide case: Crime Branch records 40 statements,",
+    "[30 Sep 19:46:44] stale or low-score, skipped: Meerut blue drum murder: Merchant Navy officer's wife Muskan",
+    "[30 Sep 19:46:44] stale or low-score, skipped: Mangaluru refinery blas sparks fire: Missing labourer found ",
+    "[30 Sep 19:46:44] stale or low-score, skipped: Ex-Pak SSG commando, LeT terrorist, Pahalgam mastermind kill",
+    "[30 Sep 19:46:44] stale or low-score, skipped: Flydubai jet makes emergency landing in Saudi Arabia after h",
+    "[30 Sep 19:46:44] stale or low-score, skipped: LPG Cylinder Explodes on Vacant Site in Bengaluru, No Casual",
+    "[30 Sep 19:46:44] stale or low-score, skipped: Fire Incident: High-Level Panel Completes Its Probe At RIMS",
+    "[30 Sep 19:46:44] stale or low-score, skipped: Man Kills Father Over Harassment Of Mother",
+    "[30 Sep 19:46:44] stale or low-score, skipped: Mangaluru MRPL Blast: MP Brijesh Chowta Appeals People To No"
   ]
 }
