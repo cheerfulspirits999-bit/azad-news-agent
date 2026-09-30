@@ -443,6 +443,9 @@ def run_cycle(max_age_hours, limit):
                 d = parse_date(it["pub_raw"])
                 it["published_at"] = d.isoformat() if d else None
                 it["age_hours"] = round((now - d).total_seconds() / 3600, 2) if d else None
+                if feed.get("strip_title_suffix"):
+                    it["title"] = re.sub(r"\s+-\s+[^-]{2,40}$", "",
+                                         it.get("title") or "").strip()
                 it["source"] = feed["name"]
                 it["source_key"] = feed["source_key"]
                 it["source_preferred"] = feed["preferred"]

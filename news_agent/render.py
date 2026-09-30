@@ -284,6 +284,12 @@ def render(story, out_path):
     if ft:
         d.text(((W - d.textlength(ft, font=f_foot)) / 2, foot_top + 2), ft,
                font=f_foot, fill=rgb(GREY))
+    # owner 29 Sep: credit line at the very bottom, under everything
+    cred = B.get("credit_line", "")
+    if cred:
+        f_cred = font(24, True)
+        d.text(((W - d.textlength(cred, font=f_cred)) / 2, foot_top + 46),
+               cred, font=f_cred, fill=rgb(GOLD_BRIGHT))
 
     assert y <= foot_top - 18, f"content overran footer: {y} > {foot_top}"
 
