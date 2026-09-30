@@ -1,72 +1,40 @@
 {
-  "cycle": "20260930-2049",
-  "at": "2026-09-30T20:52:20.835033+05:30",
+  "cycle": "20260930-2052",
+  "at": "2026-09-30T20:52:57.718110+05:30",
   "candidates": 120,
   "published_this_cycle": 0,
-  "digest": "PUBLISHED auto-digest-2026-09-30-s2051",
-  "ru": {
-    "pre_ru_picks": 5,
-    "to_translate": 4,
-    "engine": {
-      "ok": false,
-      "lines_in": 4,
-      "lines_want": 4,
-      "problems": "['Lines [1, 2, 3] copy 4+ consecutive English words verbatim into the Roman Urdu. Re-express those phrases in Urdu; keep only proper nouns/brands/technical term"
-    },
-    "kills": {
-      "paste": [
-        2,
-        3,
-        4
-      ],
-      "english-echo": [
-        5
-      ]
-    },
-    "accepted": 4,
-    "salvaged": [
-      2,
-      3,
-      4,
-      5
-    ],
-    "via": {
-      "2": "google/gemini-2.5-flash-lite",
-      "3": "google/gemini-2.5-flash-lite",
-      "4": "google/gemini-2.5-flash-lite",
-      "5": "google/gemini-2.5-flash-lite"
-    }
-  },
+  "digest": "gate closed: ncards 20/24, gap 2 min, retry_pending=0",
+  "ru": {},
   "tail": [
-    "[30 Sep 20:52:20] queued for editorial pass (no safe auto frame): Karnataka CM blames previous BJP governments for Finance Department ad",
-    "[30 Sep 20:52:20] queued for editorial pass (no safe auto frame): Israel-bound flydubai plane rerouted, pilots wounded in reported fight",
-    "[30 Sep 20:52:20] queued for editorial pass (no safe auto frame): Passenger on rerouted flydubai flight claims pilot tried to crash plan",
-    "[30 Sep 20:52:20] held for the next card: auto-iran-retaliates-after-israeli-strikes-its-nuclear-program-3-",
-    "[30 Sep 20:52:20] stale or low-score, skipped: Indian captain Smit Machchhar identified as pilot stabbed on",
-    "[30 Sep 20:52:20] stale or low-score, skipped: Fire breaks out at historic Koder House in Fort Kochi",
-    "[30 Sep 20:52:20] stale or low-score, skipped: 7-Yr-Old Girl killed, 3 Injured After School Staircase Colla",
-    "[30 Sep 20:52:20] stale or low-score, skipped: One Killed, 12 Injured in Mangaluru MRPL Blast",
-    "[30 Sep 20:52:20] stale or low-score, skipped: Dozens injured in French student protests over school resour",
-    "[30 Sep 20:52:20] stale or low-score, skipped: Assistant commandant among 4 CISF personnel killed in J-K\u2019s ",
-    "[30 Sep 20:52:20] stale or low-score, skipped: Indian sailor among five killed, another injured as Somali f",
-    "[30 Sep 20:52:20] stale or low-score, skipped: Siddipet: Man, son attacked over extra marital affair in Che",
-    "[30 Sep 20:52:20] stale or low-score, skipped: Sangareddy: Youth Dies by Suicide After Losing Rs.9 Lakh in ",
-    "[30 Sep 20:52:20] stale or low-score, skipped: OU: Man Killed in Tipper Scooty Collision Near EFLU",
-    "[30 Sep 20:52:20] stale or low-score, skipped: 3 Killed, 3 Injured As Crane Falls Into Pit In Tirupati",
-    "[30 Sep 20:52:20] stale or low-score, skipped: Indian Captain Fought Co-Pilot To Prevent FlyDubai Flight 'C",
-    "[30 Sep 20:52:20] stale or low-score, skipped: Indian pilot fought co-pilot during Flydubai cockpit inciden",
-    "[30 Sep 20:52:20] stale or low-score, skipped: FlyDubai Pilot Stabbed Another, Apparently Tried To Crash Pl",
-    "[30 Sep 20:52:20] stale or low-score, skipped: \"He Attacked Us, We Overpowered Him\": Video Emerges From fly",
-    "[30 Sep 20:52:20] stale or low-score, skipped: Blue drum case: Meerut court convicts wife, lover for husban",
-    "[30 Sep 20:52:20] stale or low-score, skipped: Meerut blue drum murder: Merchant Navy officer's wife Muskan",
-    "[30 Sep 20:52:20] stale or low-score, skipped: Mangaluru refinery blas sparks fire: Missing labourer found ",
-    "[30 Sep 20:52:20] stale or low-score, skipped: Ex-Pak SSG commando, LeT terrorist, Pahalgam mastermind kill",
-    "[30 Sep 20:52:20] stale or low-score, skipped: Flydubai jet makes emergency landing in Saudi Arabia after h",
-    "[30 Sep 20:52:20] stale or low-score, skipped: LPG Cylinder Explodes on Vacant Site in Bengaluru, No Casual",
-    "[30 Sep 20:52:20] stale or low-score, skipped: Fire Incident: High-Level Panel Completes Its Probe At RIMS",
-    "[30 Sep 20:52:20] stale or low-score, skipped: Man Kills Father Over Harassment Of Mother",
-    "[30 Sep 20:52:20] stale or low-score, skipped: US troops leave Iraq after 23 years: What happens next as Ir",
-    "[30 Sep 20:52:20] stale or low-score, skipped: Congress, BJP trade allegations over attacks on party office",
-    "[30 Sep 20:52:20] stale or low-score, skipped: Mangaluru MRPL Blast: MP Brijesh Chowta Appeals People To No"
+    "[30 Sep 20:52:57] queued for editorial pass (no safe auto frame): Muskan, Sahil guilty in Saurabh Rajput murder case; sentencing hearing",
+    "[30 Sep 20:52:57] queued for editorial pass (no safe auto frame): Karnataka CM blames previous BJP governments for Finance Department ad",
+    "[30 Sep 20:52:57] queued for editorial pass (no safe auto frame): Israel-bound flydubai plane rerouted, pilots wounded in reported fight",
+    "[30 Sep 20:52:57] queued for editorial pass (no safe auto frame): Passenger on rerouted flydubai flight claims pilot tried to crash plan",
+    "[30 Sep 20:52:57] held for the next card: auto-iran-retaliates-after-israeli-strikes-its-nuclear-program-3-",
+    "[30 Sep 20:52:57] stale or low-score, skipped: Fire breaks out at historic Koder House in Fort Kochi",
+    "[30 Sep 20:52:57] stale or low-score, skipped: 7-Yr-Old Girl killed, 3 Injured After School Staircase Colla",
+    "[30 Sep 20:52:57] stale or low-score, skipped: One Killed, 12 Injured in Mangaluru MRPL Blast",
+    "[30 Sep 20:52:57] stale or low-score, skipped: Dozens injured in French student protests over school resour",
+    "[30 Sep 20:52:57] stale or low-score, skipped: Assistant commandant among 4 CISF personnel killed in J-K\u2019s ",
+    "[30 Sep 20:52:57] stale or low-score, skipped: Indian sailor among five killed, another injured as Somali f",
+    "[30 Sep 20:52:57] stale or low-score, skipped: Siddipet: Man, son attacked over extra marital affair in Che",
+    "[30 Sep 20:52:57] stale or low-score, skipped: Sangareddy: Youth Dies by Suicide After Losing Rs.9 Lakh in ",
+    "[30 Sep 20:52:57] stale or low-score, skipped: OU: Man Killed in Tipper Scooty Collision Near EFLU",
+    "[30 Sep 20:52:57] stale or low-score, skipped: 3 Killed, 3 Injured As Crane Falls Into Pit In Tirupati",
+    "[30 Sep 20:52:57] stale or low-score, skipped: Indian Captain Fought Co-Pilot To Prevent FlyDubai Flight 'C",
+    "[30 Sep 20:52:57] stale or low-score, skipped: FlyDubai Pilot Stabbed Another, Apparently Tried To Crash Pl",
+    "[30 Sep 20:52:57] stale or low-score, skipped: Indian pilot fought co-pilot during Flydubai cockpit inciden",
+    "[30 Sep 20:52:57] stale or low-score, skipped: \"He Attacked Us, We Overpowered Him\": Video Emerges From fly",
+    "[30 Sep 20:52:57] stale or low-score, skipped: Blue drum case: Meerut court convicts wife, lover for husban",
+    "[30 Sep 20:52:57] stale or low-score, skipped: Meerut blue drum murder: Merchant Navy officer's wife Muskan",
+    "[30 Sep 20:52:57] stale or low-score, skipped: Mangaluru refinery blas sparks fire: Missing labourer found ",
+    "[30 Sep 20:52:57] stale or low-score, skipped: Ex-Pak SSG commando, LeT terrorist, Pahalgam mastermind kill",
+    "[30 Sep 20:52:57] stale or low-score, skipped: Flydubai jet makes emergency landing in Saudi Arabia after h",
+    "[30 Sep 20:52:57] stale or low-score, skipped: LPG Cylinder Explodes on Vacant Site in Bengaluru, No Casual",
+    "[30 Sep 20:52:57] stale or low-score, skipped: Fire Incident: High-Level Panel Completes Its Probe At RIMS",
+    "[30 Sep 20:52:57] stale or low-score, skipped: Man Kills Father Over Harassment Of Mother",
+    "[30 Sep 20:52:57] stale or low-score, skipped: US troops leave Iraq after 23 years: What happens next as Ir",
+    "[30 Sep 20:52:57] stale or low-score, skipped: Congress, BJP trade allegations over attacks on party office",
+    "[30 Sep 20:52:57] stale or low-score, skipped: Mangaluru MRPL Blast: MP Brijesh Chowta Appeals People To No"
   ]
 }
