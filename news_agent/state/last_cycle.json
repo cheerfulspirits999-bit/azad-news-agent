@@ -1,72 +1,40 @@
 {
-  "cycle": "20261001-0212",
-  "at": "2026-10-01T02:15:41.046924+05:30",
+  "cycle": "20261001-0215",
+  "at": "2026-10-01T02:16:09.122308+05:30",
   "candidates": 120,
   "published_this_cycle": 0,
-  "digest": "PUBLISHED auto-digest-2026-10-01-s0214",
-  "ru": {
-    "pre_ru_picks": 4,
-    "to_translate": 4,
-    "engine": {
-      "ok": false,
-      "lines_in": 4,
-      "lines_want": 4,
-      "problems": "['Lines [1, 2, 3, 4] copy 4+ consecutive English words verbatim into the Roman Urdu. Re-express those phrases in Urdu; keep only proper nouns/brands/technical t"
-    },
-    "kills": {
-      "paste": [
-        1,
-        4
-      ],
-      "english-echo": [
-        2,
-        3
-      ]
-    },
-    "accepted": 4,
-    "salvaged": [
-      1,
-      2,
-      3,
-      4
-    ],
-    "via": {
-      "1": "google/gemini-2.5-flash-lite",
-      "2": "google/gemini-2.5-flash-lite",
-      "3": "google/gemini-2.5-flash-lite",
-      "4": "google/gemini-2.5-flash-lite"
-    }
-  },
+  "digest": "gate closed: ncards 3/24, gap 2 min, retry_pending=0",
+  "ru": {},
   "tail": [
-    "[01 Oct 02:15:41] stale or low-score, skipped: J&K parties, barring BJP, blast officials over anti-statehoo",
-    "[01 Oct 02:15:41] stale or low-score, skipped: TG SAFE Suspends Licences Of Four Dark Stores",
-    "[01 Oct 02:15:41] stale or low-score, skipped: All four LeT commanders active in J&K since 2022 now dead, s",
-    "[01 Oct 02:15:41] stale or low-score, skipped: Afghanistan's Defence Ministry claims forces killed 41 insur",
-    "[01 Oct 02:15:41] stale or low-score, skipped: flydubai incident: Captain who fought co-pilot is Indian ori",
-    "[01 Oct 02:15:41] stale or low-score, skipped: 7-Yr-Old Girl killed, 3 Injured After School Staircase Colla",
-    "[01 Oct 02:15:41] stale or low-score, skipped: One Killed, 12 Injured in Mangaluru MRPL Blast",
-    "[01 Oct 02:15:41] stale or low-score, skipped: Indian captain hailed after foiling alleged crash bid on fly",
-    "[01 Oct 02:15:41] stale or low-score, skipped: \u2018Injured Flydubai pilot Smit Machchhar stable\u2019: Indian Embas",
-    "[01 Oct 02:15:41] stale or low-score, skipped: Indian pilot foils co-pilot\u2019s alleged bid to crash Flydubai ",
-    "[01 Oct 02:15:41] stale or low-score, skipped: flydubai Hero Pilot Is Indian, Fought Off Colleague Who Stab",
-    "[01 Oct 02:15:41] stale or low-score, skipped: \"Extraordinary Bravery\": Netanyahu \"Salutes\" Indian Hero Pil",
-    "[01 Oct 02:15:41] stale or low-score, skipped: Kasimedu fishers to go on indefinite strike, ask govt. to re",
-    "[01 Oct 02:15:41] stale or low-score, skipped: Pilot stabbed, jet plunges 14,000ft: How flydubai passengers",
-    "[01 Oct 02:15:41] stale or low-score, skipped: Balcony portion collapses on 49-year-old man in Mumbai, deat",
-    "[01 Oct 02:15:41] stale or low-score, skipped: Siddipet: Man, son attacked over extra marital affair in Che",
-    "[01 Oct 02:15:41] stale or low-score, skipped: Sangareddy: Youth Dies by Suicide After Losing Rs.9 Lakh in ",
-    "[01 Oct 02:15:41] stale or low-score, skipped: OU: Man Killed in Tipper Scooty Collision Near EFLU",
-    "[01 Oct 02:15:41] stale or low-score, skipped: Trump calls Iraq exit a \u2018victory\u2019 over ISIS: Why June 2027 i",
-    "[01 Oct 02:15:41] stale or low-score, skipped: Indian pilot hailed after foiling alleged cockpit attack on ",
-    "[01 Oct 02:15:41] stale or low-score, skipped: Food Safety officials seize 44 kg of unlabelled food in Nara",
-    "[01 Oct 02:15:41] stale or low-score, skipped: Op Sheruwali: How security forces tracked LeT commander Musa",
-    "[01 Oct 02:15:41] stale or low-score, skipped: Passenger on rerouted flydubai flight claims pilot tried to ",
-    "[01 Oct 02:15:41] stale or low-score, skipped: Dozens injured in French student protests over school resour",
-    "[01 Oct 02:15:41] stale or low-score, skipped: Indian sailor among five killed, another injured as Somali f",
-    "[01 Oct 02:15:41] stale or low-score, skipped: Pennsylvania Reports Fifth Measles Death in Widening Crisis",
-    "[01 Oct 02:15:41] stale or low-score, skipped: Musharraf's Guard To LeT Commander: Who Was Hashim Musa, Kil",
-    "[01 Oct 02:15:41] stale or low-score, skipped: Shiv Sena (UBT) Leader Shot Dead In Thane",
-    "[01 Oct 02:15:41] stale or low-score, skipped: Israel PM Says Pilot of Rerouted Flight Tried To Crash Plane",
-    "[01 Oct 02:15:41] stale or low-score, skipped: \u20b914.77 Cr Released For Three Railway Overbridges In Nizamaba"
+    "[01 Oct 02:16:09] stale or low-score, skipped: TG SAFE Suspends Licences Of Four Dark Stores",
+    "[01 Oct 02:16:09] stale or low-score, skipped: All four LeT commanders active in J&K since 2022 now dead, s",
+    "[01 Oct 02:16:09] stale or low-score, skipped: Afghanistan's Defence Ministry claims forces killed 41 insur",
+    "[01 Oct 02:16:09] stale or low-score, skipped: flydubai incident: Captain who fought co-pilot is Indian ori",
+    "[01 Oct 02:16:09] stale or low-score, skipped: 7-Yr-Old Girl killed, 3 Injured After School Staircase Colla",
+    "[01 Oct 02:16:09] stale or low-score, skipped: One Killed, 12 Injured in Mangaluru MRPL Blast",
+    "[01 Oct 02:16:09] stale or low-score, skipped: Indian captain hailed after foiling alleged crash bid on fly",
+    "[01 Oct 02:16:09] stale or low-score, skipped: \u2018Injured Flydubai pilot Smit Machchhar stable\u2019: Indian Embas",
+    "[01 Oct 02:16:09] stale or low-score, skipped: Indian pilot foils co-pilot\u2019s alleged bid to crash Flydubai ",
+    "[01 Oct 02:16:09] stale or low-score, skipped: flydubai Hero Pilot Is Indian, Fought Off Colleague Who Stab",
+    "[01 Oct 02:16:09] stale or low-score, skipped: \"Extraordinary Bravery\": Netanyahu \"Salutes\" Indian Hero Pil",
+    "[01 Oct 02:16:09] stale or low-score, skipped: Kasimedu fishers to go on indefinite strike, ask govt. to re",
+    "[01 Oct 02:16:09] stale or low-score, skipped: Balcony portion collapses on 49-year-old man in Mumbai, deat",
+    "[01 Oct 02:16:09] stale or low-score, skipped: Siddipet: Man, son attacked over extra marital affair in Che",
+    "[01 Oct 02:16:09] stale or low-score, skipped: Sangareddy: Youth Dies by Suicide After Losing Rs.9 Lakh in ",
+    "[01 Oct 02:16:09] stale or low-score, skipped: OU: Man Killed in Tipper Scooty Collision Near EFLU",
+    "[01 Oct 02:16:09] stale or low-score, skipped: Trump calls Iraq exit a \u2018victory\u2019 over ISIS: Why June 2027 i",
+    "[01 Oct 02:16:09] stale or low-score, skipped: Indian pilot hailed after foiling alleged cockpit attack on ",
+    "[01 Oct 02:16:09] stale or low-score, skipped: Food Safety officials seize 44 kg of unlabelled food in Nara",
+    "[01 Oct 02:16:09] stale or low-score, skipped: Op Sheruwali: How security forces tracked LeT commander Musa",
+    "[01 Oct 02:16:09] stale or low-score, skipped: Passenger on rerouted flydubai flight claims pilot tried to ",
+    "[01 Oct 02:16:09] stale or low-score, skipped: Dozens injured in French student protests over school resour",
+    "[01 Oct 02:16:09] stale or low-score, skipped: Indian sailor among five killed, another injured as Somali f",
+    "[01 Oct 02:16:09] stale or low-score, skipped: Pennsylvania Reports Fifth Measles Death in Widening Crisis",
+    "[01 Oct 02:16:09] stale or low-score, skipped: Pilot stabbed, jet plunges 14,000ft: How flydubai passengers",
+    "[01 Oct 02:16:09] stale or low-score, skipped: Musharraf's Guard To LeT Commander: Who Was Hashim Musa, Kil",
+    "[01 Oct 02:16:09] stale or low-score, skipped: FlyDubai scare: 'Crash' attempt, pilot stabbing and a 17,000",
+    "[01 Oct 02:16:09] stale or low-score, skipped: Shiv Sena (UBT) Leader Shot Dead In Thane",
+    "[01 Oct 02:16:09] stale or low-score, skipped: Israel PM Says Pilot of Rerouted Flight Tried To Crash Plane",
+    "[01 Oct 02:16:09] stale or low-score, skipped: \u20b914.77 Cr Released For Three Railway Overbridges In Nizamaba"
   ]
 }
