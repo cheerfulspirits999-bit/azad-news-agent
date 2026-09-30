@@ -1,40 +1,71 @@
 {
-  "cycle": "20260930-2144",
-  "at": "2026-09-30T21:44:37.577328+05:30",
+  "cycle": "20260930-2154",
+  "at": "2026-09-30T21:57:57.250551+05:30",
   "candidates": 120,
   "published_this_cycle": 0,
-  "digest": "gate closed: ncards 20/24, gap 54 min, retry_pending=0",
-  "ru": {},
+  "digest": "PUBLISHED auto-digest-2026-09-30-s2156",
+  "ru": {
+    "pre_ru_picks": 5,
+    "to_translate": 5,
+    "engine": {
+      "ok": false,
+      "lines_in": 5,
+      "lines_want": 5,
+      "problems": "['Lines [1, 2, 3, 4, 5] copy 4+ consecutive English words verbatim into the Roman Urdu. Re-express those phrases in Urdu; keep only proper nouns/brands/technica"
+    },
+    "kills": {
+      "english-echo": [
+        1,
+        2,
+        3,
+        4
+      ],
+      "paste": [
+        5
+      ]
+    },
+    "accepted": 3,
+    "salvaged": [
+      1,
+      2,
+      3
+    ],
+    "via": {
+      "1": "google/gemini-2.5-flash-lite",
+      "2": "google/gemini-2.5-flash-lite",
+      "3": "google/gemini-2.5-flash-lite"
+    }
+  },
   "tail": [
-    "[30 Sep 21:44:37] stale or low-score, skipped: Hyd-Vizag Private Bus Overturns Near Suryapet, 10 Injured",
-    "[30 Sep 21:44:37] queued for editorial pass (no safe auto frame): Afghanistan's Defence Ministry claims forces killed 41 insurgents cros",
-    "[30 Sep 21:44:37] queued for editorial pass (no safe auto frame): Two Andhra Medical College PG students found dead within five days; pr",
-    "[30 Sep 21:44:37] queued for editorial pass (no safe auto frame): flydubai incident: Captain who fought co-pilot is Indian origin",
-    "[30 Sep 21:44:37] held for the next card: auto-iran-retaliates-after-israeli-strikes-its-nuclear-program-3-",
-    "[30 Sep 21:44:37] stale or low-score, skipped: Fire breaks out at historic Koder House in Fort Kochi",
-    "[30 Sep 21:44:37] stale or low-score, skipped: 7-Yr-Old Girl killed, 3 Injured After School Staircase Colla",
-    "[30 Sep 21:44:37] stale or low-score, skipped: One Killed, 12 Injured in Mangaluru MRPL Blast",
-    "[30 Sep 21:44:37] stale or low-score, skipped: Operation Sheruwali: How security forces tracked LeT command",
-    "[30 Sep 21:44:37] stale or low-score, skipped: Israel-bound flydubai plane rerouted, pilots wounded in repo",
-    "[30 Sep 21:44:37] stale or low-score, skipped: Passenger on rerouted flydubai flight claims pilot tried to ",
-    "[30 Sep 21:44:37] stale or low-score, skipped: Dozens injured in French student protests over school resour",
-    "[30 Sep 21:44:37] stale or low-score, skipped: Assistant commandant among 4 CISF personnel killed in J-K\u2019s ",
-    "[30 Sep 21:44:37] stale or low-score, skipped: Siddipet: Man, son attacked over extra marital affair in Che",
-    "[30 Sep 21:44:37] stale or low-score, skipped: Sangareddy: Youth Dies by Suicide After Losing Rs.9 Lakh in ",
-    "[30 Sep 21:44:37] stale or low-score, skipped: 3 Killed, 3 Injured As Crane Falls Into Pit In Tirupati",
-    "[30 Sep 21:44:37] stale or low-score, skipped: \u20b914.77 Cr Released For Three Railway Overbridges In Nizamaba",
-    "[30 Sep 21:44:37] stale or low-score, skipped: \"He Attacked Us, We Overpowered Him\": Video Emerges From fly",
-    "[30 Sep 21:44:37] stale or low-score, skipped: flydubai Hero Pilot Is Indian, Fought Off Colleague Who Stab",
-    "[30 Sep 21:44:37] stale or low-score, skipped: Indian Captain Fought Co-Pilot To Prevent FlyDubai Flight 'C",
-    "[30 Sep 21:44:37] stale or low-score, skipped: FlyDubai Pilot Stabbed Another, Apparently Tried To Crash Pl",
-    "[30 Sep 21:44:37] stale or low-score, skipped: Indian pilot fought co-pilot during Flydubai cockpit inciden",
-    "[30 Sep 21:44:37] stale or low-score, skipped: Blue drum case: Meerut court convicts wife, lover for husban",
-    "[30 Sep 21:44:37] stale or low-score, skipped: Meerut blue drum murder: Merchant Navy officer's wife Muskan",
-    "[30 Sep 21:44:37] stale or low-score, skipped: Ex-Pakistan SSG commando, highly trained LeT terrorist, Paha",
-    "[30 Sep 21:44:37] stale or low-score, skipped: OU: Man Killed in Tipper Scooty Collision Near EFLU",
-    "[30 Sep 21:44:37] stale or low-score, skipped: Fire Incident: High-Level Panel Completes Its Probe At RIMS",
-    "[30 Sep 21:44:37] stale or low-score, skipped: What Is Squawk 7500? Code That Sparked Hijack Fears On flydu",
-    "[30 Sep 21:44:37] stale or low-score, skipped: US troops leave Iraq after 23 years: What happens next as Ir",
-    "[30 Sep 21:44:37] stale or low-score, skipped: Congress, BJP trade allegations over attacks on party office"
+    "[30 Sep 21:57:57] queued for editorial pass (no safe auto frame): Two Andhra Medical College PG students found dead within five days; pr",
+    "[30 Sep 21:57:57] queued for editorial pass (no safe auto frame): flydubai incident: Captain who fought co-pilot is Indian origin",
+    "[30 Sep 21:57:57] stale or low-score, skipped: Hyderabad: Youth killed after tipper truck rams scooter near",
+    "[30 Sep 21:57:57] held for the next card: auto-iran-retaliates-after-israeli-strikes-its-nuclear-program-3-",
+    "[30 Sep 21:57:57] stale or low-score, skipped: Fire breaks out at historic Koder House in Fort Kochi",
+    "[30 Sep 21:57:57] stale or low-score, skipped: 7-Yr-Old Girl killed, 3 Injured After School Staircase Colla",
+    "[30 Sep 21:57:57] stale or low-score, skipped: One Killed, 12 Injured in Mangaluru MRPL Blast",
+    "[30 Sep 21:57:57] stale or low-score, skipped: Operation Sheruwali: How security forces tracked LeT command",
+    "[30 Sep 21:57:57] stale or low-score, skipped: Israel-bound flydubai plane rerouted, pilots wounded in repo",
+    "[30 Sep 21:57:57] stale or low-score, skipped: Passenger on rerouted flydubai flight claims pilot tried to ",
+    "[30 Sep 21:57:57] stale or low-score, skipped: Dozens injured in French student protests over school resour",
+    "[30 Sep 21:57:57] stale or low-score, skipped: Siddipet: Man, son attacked over extra marital affair in Che",
+    "[30 Sep 21:57:57] stale or low-score, skipped: Sangareddy: Youth Dies by Suicide After Losing Rs.9 Lakh in ",
+    "[30 Sep 21:57:57] stale or low-score, skipped: 3 Killed, 3 Injured As Crane Falls Into Pit In Tirupati",
+    "[30 Sep 21:57:57] stale or low-score, skipped: Israel PM Says Pilot of Rerouted Flight Tried To Crash Plane",
+    "[30 Sep 21:57:57] stale or low-score, skipped: \u20b914.77 Cr Released For Three Railway Overbridges In Nizamaba",
+    "[30 Sep 21:57:57] stale or low-score, skipped: \"He Attacked Us, We Overpowered Him\": Video Emerges From fly",
+    "[30 Sep 21:57:57] stale or low-score, skipped: flydubai Hero Pilot Is Indian, Fought Off Colleague Who Stab",
+    "[30 Sep 21:57:57] stale or low-score, skipped: Indian Captain Fought Co-Pilot To Prevent FlyDubai Flight 'C",
+    "[30 Sep 21:57:57] stale or low-score, skipped: FlyDubai Pilot Stabbed Another, Apparently Tried To Crash Pl",
+    "[30 Sep 21:57:57] stale or low-score, skipped: Indian pilot fought co-pilot during Flydubai cockpit inciden",
+    "[30 Sep 21:57:57] stale or low-score, skipped: Blue drum case: Meerut court convicts wife, lover for husban",
+    "[30 Sep 21:57:57] stale or low-score, skipped: Meerut blue drum murder: Merchant Navy officer's wife Muskan",
+    "[30 Sep 21:57:57] stale or low-score, skipped: Ex-Pakistan SSG commando, highly trained LeT terrorist, Paha",
+    "[30 Sep 21:57:57] stale or low-score, skipped: OU: Man Killed in Tipper Scooty Collision Near EFLU",
+    "[30 Sep 21:57:57] stale or low-score, skipped: Fire Incident: High-Level Panel Completes Its Probe At RIMS",
+    "[30 Sep 21:57:57] stale or low-score, skipped: What Is Squawk 7500? Code That Sparked Hijack Fears On flydu",
+    "[30 Sep 21:57:57] stale or low-score, skipped: US troops leave Iraq after 23 years: What happens next as Ir",
+    "[30 Sep 21:57:57] stale or low-score, skipped: Assistant commandant among 4 CISF personnel killed in J-K\u2019s ",
+    "[30 Sep 21:57:57] stale or low-score, skipped: Indian sailor among five killed, another injured as Somali f"
   ]
 }
