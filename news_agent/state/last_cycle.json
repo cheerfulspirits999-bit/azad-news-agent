@@ -1,25 +1,26 @@
 {
-  "cycle": "20260930-0825",
-  "at": "2026-09-30T08:25:32.425770+05:30",
+  "cycle": "20260930-0835",
+  "at": "2026-09-30T08:38:24.522405+05:30",
   "candidates": 120,
   "published_this_cycle": 0,
-  "digest": "gate closed: ncards 8/24, gap 52 min, retry_pending=0",
+  "digest": "PUBLISHED auto-digest-2026-09-30-s0837",
   "ru": {
-    "pre_ru_picks": 4,
-    "to_translate": 4,
+    "pre_ru_picks": 5,
+    "to_translate": 5,
     "engine": {
       "ok": false,
-      "lines_in": 4,
-      "lines_want": 4,
-      "problems": "['Lines [1, 2, 3, 4] copy 4+ consecutive English words verbatim into the Roman Urdu. Re-express those phrases in Urdu; keep only proper nouns/brands/technical t"
+      "lines_in": 5,
+      "lines_want": 5,
+      "problems": "['Lines [1, 2, 3, 4, 5] copy 4+ consecutive English words verbatim into the Roman Urdu. Re-express those phrases in Urdu; keep only proper nouns/brands/technica"
     },
     "kills": {
-      "paste": [
-        1,
-        4
-      ],
       "english-echo": [
+        1,
         2,
+        4,
+        5
+      ],
+      "paste": [
         3
       ]
     },
@@ -34,39 +35,39 @@
       "1": "google/gemini-2.5-flash-lite",
       "2": "google/gemini-2.5-flash-lite",
       "3": "google/gemini-2.5-flash-lite",
-      "4": "openai/gpt-4o-mini"
+      "4": "google/gemini-2.5-flash-lite"
     }
   },
   "tail": [
-    "[30 Sep 08:25:32] queued for editorial pass (no safe auto frame): Terrorist killed in ongoing operation in Kashmir\u2019s Budgam",
-    "[30 Sep 08:25:32] stale or low-score, skipped: Dead In 2022, Mumbai Woman Preserves Father's Body For 4 Yea",
-    "[30 Sep 08:25:32] stale or low-score, skipped: Lashkar Commander Musa Killed in Budgam Encounter; Joint For",
-    "[30 Sep 08:25:32] stale or low-score, skipped: 3 Killed, 3 Injured As Crane Falls Into Pit In Tirupati",
-    "[30 Sep 08:25:32] stale or low-score, skipped: Woman allegedly beaten to death by husband in Ameerpet hotel",
-    "[30 Sep 08:25:32] stale or low-score, skipped: 27 killed across Nepal due to incessant rainfall since Septe",
-    "[30 Sep 08:25:32] stale or low-score, skipped: India in Talks With China for Alternate Air Route Amid Pakis",
-    "[30 Sep 08:25:32] stale or low-score, skipped: Local Sena (UBT) leader dies in Thane after firing by uniden",
-    "[30 Sep 08:25:32] stale or low-score, skipped: Fire Incident: High-Level Panel Completes Its Probe At RIMS",
-    "[30 Sep 08:25:32] stale or low-score, skipped: Man Kills Father Over Harassment Of Mother",
-    "[30 Sep 08:25:32] stale or low-score, skipped: Spiritual Guru Kalki Bhagavan Dies At 77",
-    "[30 Sep 08:25:32] stale or low-score, skipped: Shiv Sena (UBT) neta shot dead outside party office in Thane",
-    "[30 Sep 08:25:32] stale or low-score, skipped: Mangaluru: Goods Rickshaw Driver Killed, Judge Injured In Ac",
-    "[30 Sep 08:25:32] stale or low-score, skipped: Inquiry into RIMS-Adilabad tragedy concludes, report to be s",
-    "[30 Sep 08:25:32] stale or low-score, skipped: Mancherial surrounding villages continue to depend on privat",
-    "[30 Sep 08:25:32] stale or low-score, skipped: SR Nagar: Woman Found Dead Under Suspicious Circumstances at",
-    "[30 Sep 08:25:32] stale or low-score, skipped: Woman Killed After Being Run Over by Tractor in Badangpet",
-    "[30 Sep 08:25:32] stale or low-score, skipped: Married Woman Strangles Youth to Death in Dhoolpet",
-    "[30 Sep 08:25:32] stale or low-score, skipped: India warns US about cosying up to Pakistan, says could impa",
-    "[30 Sep 08:25:32] stale or low-score, skipped: R. Veeramani booked for abetting suicide of minor in 2004",
-    "[30 Sep 08:25:32] stale or low-score, skipped: Revanth Reddy's Ram-Shiva Remarks Most Despicable Attack on ",
-    "[30 Sep 08:25:32] stale or low-score, skipped: University of Georgia student survives eight-storey fall aft",
-    "[30 Sep 08:25:32] stale or low-score, skipped: College Student Dies In Accident Due To Stray Cattle",
-    "[30 Sep 08:25:32] stale or low-score, skipped: Top LeT terrorist wanted for several attacks in J&K killed i",
-    "[30 Sep 08:25:32] stale or low-score, skipped: RIMS fire: High-level panel to submit report to govt soon",
-    "[30 Sep 08:25:32] stale or low-score, skipped: Cat and rat droppings, flies, dead cockroaches: Why Mumbai\u2019s",
-    "[30 Sep 08:25:32] stale or low-score, skipped: Dating scam: Hyderabad techie left with Rs 29,884 pub bill a",
-    "[30 Sep 08:25:32] stale or low-score, skipped: US Forces Exit Iraq Amid Rising Fears Of ISIS Resurgence",
-    "[30 Sep 08:25:32] stale or low-score, skipped: Pentagon Signs $20 Billion Boeing Deal For 6th-Generation St",
-    "[30 Sep 08:25:32] stale or low-score, skipped: Budgam encounter: Army kills LeT terrorist after fierce gunf"
+    "[30 Sep 08:38:24] queued for editorial pass (no safe auto frame): Terrorist killed in ongoing operation in Kashmir\u2019s Budgam",
+    "[30 Sep 08:38:24] stale or low-score, skipped: Dead In 2022, Mumbai Woman Preserves Father's Body For 4 Yea",
+    "[30 Sep 08:38:24] stale or low-score, skipped: Lashkar Commander Musa Killed in Budgam Encounter; Joint For",
+    "[30 Sep 08:38:24] stale or low-score, skipped: 3 Killed, 3 Injured As Crane Falls Into Pit In Tirupati",
+    "[30 Sep 08:38:24] stale or low-score, skipped: Woman allegedly beaten to death by husband in Ameerpet hotel",
+    "[30 Sep 08:38:24] stale or low-score, skipped: 27 killed across Nepal due to incessant rainfall since Septe",
+    "[30 Sep 08:38:24] stale or low-score, skipped: India in Talks With China for Alternate Air Route Amid Pakis",
+    "[30 Sep 08:38:24] stale or low-score, skipped: Local Sena (UBT) leader dies in Thane after firing by uniden",
+    "[30 Sep 08:38:24] stale or low-score, skipped: Fire Incident: High-Level Panel Completes Its Probe At RIMS",
+    "[30 Sep 08:38:24] stale or low-score, skipped: Man Kills Father Over Harassment Of Mother",
+    "[30 Sep 08:38:24] stale or low-score, skipped: Spiritual Guru Kalki Bhagavan Dies At 77",
+    "[30 Sep 08:38:24] stale or low-score, skipped: Shiv Sena (UBT) neta shot dead outside party office in Thane",
+    "[30 Sep 08:38:24] stale or low-score, skipped: Mangaluru: Goods Rickshaw Driver Killed, Judge Injured In Ac",
+    "[30 Sep 08:38:24] stale or low-score, skipped: Inquiry into RIMS-Adilabad tragedy concludes, report to be s",
+    "[30 Sep 08:38:24] stale or low-score, skipped: Mancherial surrounding villages continue to depend on privat",
+    "[30 Sep 08:38:24] stale or low-score, skipped: SR Nagar: Woman Found Dead Under Suspicious Circumstances at",
+    "[30 Sep 08:38:24] stale or low-score, skipped: Woman Killed After Being Run Over by Tractor in Badangpet",
+    "[30 Sep 08:38:24] stale or low-score, skipped: Married Woman Strangles Youth to Death in Dhoolpet",
+    "[30 Sep 08:38:24] stale or low-score, skipped: India warns US about cosying up to Pakistan, says could impa",
+    "[30 Sep 08:38:24] stale or low-score, skipped: R. Veeramani booked for abetting suicide of minor in 2004",
+    "[30 Sep 08:38:24] stale or low-score, skipped: Revanth Reddy's Ram-Shiva Remarks Most Despicable Attack on ",
+    "[30 Sep 08:38:24] stale or low-score, skipped: University of Georgia student survives eight-storey fall aft",
+    "[30 Sep 08:38:24] stale or low-score, skipped: College Student Dies In Accident Due To Stray Cattle",
+    "[30 Sep 08:38:24] stale or low-score, skipped: Top LeT terrorist wanted for several attacks in J&K killed i",
+    "[30 Sep 08:38:24] stale or low-score, skipped: RIMS fire: High-level panel to submit report to govt soon",
+    "[30 Sep 08:38:24] stale or low-score, skipped: Cat and rat droppings, flies, dead cockroaches: Why Mumbai\u2019s",
+    "[30 Sep 08:38:24] stale or low-score, skipped: Dating scam: Hyderabad techie left with Rs 29,884 pub bill a",
+    "[30 Sep 08:38:24] stale or low-score, skipped: US Forces Exit Iraq Amid Rising Fears Of ISIS Resurgence",
+    "[30 Sep 08:38:24] stale or low-score, skipped: Pentagon Signs $20 Billion Boeing Deal For 6th-Generation St",
+    "[30 Sep 08:38:24] stale or low-score, skipped: Budgam encounter: Army kills LeT terrorist after fierce gunf"
   ]
 }
