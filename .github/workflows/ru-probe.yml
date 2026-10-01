@@ -1,0 +1,39 @@
+name: ru-probe
+on:
+  workflow_dispatch: {}
+jobs:
+  probe:
+    runs-on: ubuntu-latest
+    steps:
+      - name: probe
+        env:
+          RU_API_KEY: ${{ secrets.ROMAN_URDU_API_KEY }}
+          RU_BASE_URL: ${{ vars.RU_BASE_URL }}
+        run: |
+          python3 - <<'PY'
+          import os, json, urllib.request, urllib.error
+          key = os.environ.get("RU_API_KEY", "")
+          base = os.environ.get("RU_BASE_URL") or "https://openrouter.ai/api/v1"
+          print("key_present:", bool(key), "len:", len(key))
+          def call(url, payload=None):
+              req = urllib.request.Request(url,
+                  data=json.dumps(payload).encode() if payload else None,
+                  headers={"Authorization": "Bearer " + key,
+                           "Content-Type": "application/json"})
+              try:
+                  with urllib.request.urlopen(req, timeout=30) as r:
+                      return r.status, json.loads(r.read())
+              except urllib.error.HTTPError as e:
+                  return e.code, e.read()[:300].decode(errors="ignore")
+              except Exception as e:
+                  return "ERR", str(e)[:150]
+          s, d = call(base + "/key")
+          print("KEYSTATUS:", s, json.dumps(d.get("data", d) if isinstance(d, dict) else d, default=str)[:350])
+          msg = [{"role": "user", "content": "Translate to roman urdu: The government announced a new decision today."}]
+          for m in ("google/gemini-2.5-flash", "mistralai/mistral-small-3.2-24b-instruct"):
+              s2, d2 = call(base + "/chat/completions", {"model": m, "messages": msg, "temperature": 0})
+              out = ""
+              if isinstance(d2, dict) and d2.get("choices"):
+                  out = d2["choices"][0].get("message", {}).get("content", "")[:120]
+              print("CALL", m, "->", s2, out or str(d2)[:220])
+          PY
