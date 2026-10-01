@@ -630,7 +630,7 @@ def build_digest(cands, catchup=False):
            "world": "Duniya ki khabar"}
     pool = []
     _skip = {"stale": 0, "casualty": 0, "class": 0, "conv": 0,
-             "qual": 0, "dup": 0, "fr": 0, "tag": 0, "mt": 0}
+             "qual": 0, "dup": 0, "fr": 0, "tag": 0, "mt": 0, "bank": 0}
 
     def _collect(minscore, maxage, minC):
             for c in cands:
@@ -748,6 +748,9 @@ def build_digest(cands, catchup=False):
             best = sorted((x for x in pool if x[0]["region"] == reg
                            and x not in picks), key=rank)
             for b in best:
+                if not b[2] and _line_h(b[1]) in _miss_bank:
+                    _skip["bank"] += 1
+                    continue  # banked (recently failed RU) - next story tries
                 if b not in picks and \
                    not any(_same_story(b[0]["title"], x[0]["title"]) for x in picks):
                     picks.append(b)
@@ -755,6 +758,9 @@ def build_digest(cands, catchup=False):
         for x in sorted(pool, key=rank):  # fill to 5, politics leading
             if len(picks) >= DIGEST_SIZE:
                 break
+            if not x[2] and _line_h(x[1]) in _miss_bank:
+                _skip["bank"] += 1
+                continue  # banked line: give the slot to a fresh story
             if x not in picks and \
                not any(_same_story(x[0]["title"], p[0]["title"]) for p in picks):
                 picks.append(x)
@@ -797,6 +803,9 @@ def build_digest(cands, catchup=False):
                 ur_line = writer.urdu_headline(c["title"])
                 if not ur_line or len(ur_line) > 118:
                     if lead and len(lead) <= 95 and _ru_on():
+                        if _line_h(lead) in _miss_bank:
+                            _skip["bank"] += 1
+                            continue  # 1 Oct: banked at selection time too
                         ur_line = ""    # roman_urdu fills after picks
                     else:
                         continue  # never publish a confusing Urdu mirror
@@ -825,6 +834,11 @@ def build_digest(cands, catchup=False):
         return picks
 
     picks = []
+    # 1 Oct fix: the miss bank is now consulted DURING selection (below),
+    # not after. Previously the same top-ranked repeat-echo lines were
+    # picked every cycle and only pruned AFTER _build_picks, so the run
+    # starved at <3 while dozens of clean stories sat one rank lower.
+    _miss_bank = _ru_miss_load()
     _stages = [(55, 12, 60), (50, 16, 55), (45, 20, 50),
                (45, 26, 50)]  # owner 27 Sep: every run finishes at the wide
                               # 26h window - nothing eligible left = wait, not
@@ -868,13 +882,9 @@ def build_digest(cands, catchup=False):
             if f" {w} " in tl:
                 out.add(v)
         return out
-    _miss_bank = _ru_miss_load()
-    if _miss_bank and picks:
-        _n0 = len(picks)
-        picks = [p for p in picks if _line_h(p[1]) not in _miss_bank]
-        if len(picks) < _n0:
-            log(f"[digest] ru-miss bank rotated out "
-                f"{_n0 - len(picks)} repeat-echo line(s)")
+    if _miss_bank:
+        log(f"[digest] ru-miss bank active: {len(_miss_bank)} line(s) "
+            f"held back at selection (next stories took their slots)")
     _pend = [i for i, p in enumerate(picks) if not p[2]]
     _RU_STATS.clear()
     _RU_STATS.update({"pre_ru_picks": len(picks), "to_translate": len(_pend)})
