@@ -68,8 +68,14 @@ def _real_paste(en, ur, n=4):
 # the model CAN translate, and give salvage a fallback-model chain (owner:
 # OpenRouter is funded - one model's bad hour must never stop the pipeline).
 _RU_MISS_TTL = 4 * 3600.0
+# 1 Oct: the pinned model + the whole 3-model chain echoed simultaneously;
+# more voices in the chain so ONE model's bad hour cannot starve the cycle.
+# Every returned line is still judged by the same hard gates - only the
+# chance-to-answer widens, never the bar.
 _RU_FALLBACK_MODELS = ("google/gemini-2.5-flash-lite", "openai/gpt-4o-mini",
-                       "anthropic/claude-3.5-haiku")
+                       "anthropic/claude-3.5-haiku", "deepseek/deepseek-chat",
+                       "mistralai/mistral-small-3.2-24b-instruct",
+                       "qwen/qwen3-30b-a3b")
 
 
 def _line_h(text):
@@ -932,7 +938,12 @@ def build_digest(cands, catchup=False):
         # translates where the batch echo'd. Capped at 4 lines/cycle: the API
         # is still spent only on lines that failed quality (owner 27 Sep).
         if _bad:
+            _sal_t0 = time.time()
             for i in sorted(_bad)[:4]:
+                if time.time() - _sal_t0 > 360:
+                    log("[digest] salvage budget (6 min) reached - "
+                        "remaining killed lines wait for the next cycle")
+                    break
                 _en2 = picks[i][1]
                 if not _en2:
                     continue
@@ -1263,6 +1274,7 @@ def _commit_memory():
             if check:
                 raise
             return None
+    br = os.environ.get("GITHUB_REF_NAME", "main")
     try:
         _git("add", "news_agent/state", "news_agent/stories", check=True)
         d = _git("diff", "--cached", "--quiet")
@@ -1271,11 +1283,22 @@ def _commit_memory():
         _git("-c", "user.name=azad-news-agent", "-c", "user.email=agent@localhost",
              "commit", "-m", f"relay cycle {datetime.now(IST).isoformat(timespec='seconds')}",
              check=True)
-        _git("pull", "--rebase", "origin", os.environ.get("GITHUB_REF_NAME", "main"))
-        _git("push", "origin", "HEAD", check=True)
+        _git("fetch", "origin", f"refs/heads/{br}")
+        _git("push", "origin", f"HEAD:refs/heads/{br}", check=True)
         log("[relay] memory pushed")
     except Exception as e:
-        log("[relay] memory push skipped:", str(e)[:120])
+        # 1 Oct: on rejection, rebase our commit on the remote tip ONCE and
+        # retry. No blind reset: that would silently drop this runner's
+        # cycle state (published.json/ru_misses dedupe).
+        try:
+            r = _git("rebase", f"origin/{br}")
+            if r is not None and r.returncode != 0:
+                _git("rebase", "--abort")  # conflicting state files: skip this
+                raise RuntimeError("rebase conflict")  # push; next cycle retries
+            _git("push", "origin", f"HEAD:refs/heads/{br}", check=True)
+            log("[relay] memory pushed (after rebase)")
+        except Exception as e2:
+            log("[relay] memory push skipped:", str(e2)[:120])
 
 
 if __name__ == "__main__":
