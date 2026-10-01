@@ -1286,7 +1286,34 @@ def main():
         if _dl and (time.time() - _t0) / 60.0 >= _dl - 8:
             log("relay deadline reached - handing off to the next queued run")
             return
-        time.sleep(_iv * 60)
+        _slp = _iv * 60
+        try:
+            # 1 Oct (credit outage): engine method 'fallback' + zero accepts
+            # == OpenRouter rejecting every call (402, empty wallet). Keep
+            # scanning (rule-Urdu cards still publish) but stop spending API
+            # calls every 10 min, and alert ONCE per 6 h so the owner sees
+            # the one manual action there is: add credits.
+            _eng = _RU_STATS.get("engine") or {}
+            if (_eng.get("method") == "fallback" and not _RU_STATS.get("accepted")
+                    and _RU_STATS.get("to_translate")):
+                _slp = max(_slp, 1200)
+                _cfile = os.path.join(STATE, "credit_alarm.json")
+                _last = 0.0
+                try:
+                    _last = float(json.load(open(_cfile)).get("at", 0))
+                except Exception:
+                    pass
+                if time.time() - _last > 6 * 3600:
+                    json.dump({"at": time.time()}, open(_cfile, "w"))
+                    alert("OpenRouter credits are exhausted - translator returns 402",
+                          "Cards paused on the Roman-Urdu step ONLY (quality gates "
+                          "refuse fallback pseudo-translation). Add ~$5 at "
+                          "openrouter.ai/credits - total spend to date was $0.20 - and "
+                          "full posting resumes automatically on the next cycle. "
+                          "Feeds keep scanning meanwhile; rule-Urdu cards still publish.")
+        except Exception:
+            pass
+        time.sleep(_slp)
 
 
 def _commit_memory():
