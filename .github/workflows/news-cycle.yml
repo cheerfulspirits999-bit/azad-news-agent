@@ -55,6 +55,8 @@ jobs:
           RU_MODEL: ${{ vars.RU_MODEL }}
           RU_BASE_URL: ${{ vars.RU_BASE_URL }}
           RU_TIMEOUT: 40
+          GEMINI_API_KEY: ${{ secrets.GEMINI_API_KEY }}
+          OPENAI_API_KEY: ${{ secrets.OPENAI_API_KEY }}
           DIGEST_CATCHUP: ${{ github.event.inputs.catchup || '0' }}
           DAEMON_INTERVAL_MIN: "10"
         run: python3 news_agent/autod.py --deadline=330   # relay: cycles every

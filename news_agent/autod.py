@@ -68,14 +68,68 @@ def _real_paste(en, ur, n=4):
 # the model CAN translate, and give salvage a fallback-model chain (owner:
 # OpenRouter is funded - one model's bad hour must never stop the pipeline).
 _RU_MISS_TTL = 4 * 3600.0
-# 1 Oct: the pinned model + the whole 3-model chain echoed simultaneously;
-# more voices in the chain so ONE model's bad hour cannot starve the cycle.
+# 1 Oct (2): the pinned model + the whole 3-model chain echoed simultaneously;
+# more voices so ONE model's bad hour cannot starve the cycle. 1 Oct (3):
+# wallet hit $0 (402s) - so the chain is ordered FREE-TIER FIRST (works at
+# $0), then the owner's DIRECT Gemini/OpenAI keys (used only when those
+# secrets exist in git; tuple = provider/model/ENV var), then paid OpenRouter
+# slugs that auto-revive the premium lane the moment credits come back.
 # Every returned line is still judged by the same hard gates - only the
 # chance-to-answer widens, never the bar.
-_RU_FALLBACK_MODELS = ("google/gemini-2.5-flash-lite", "openai/gpt-4o-mini",
-                       "anthropic/claude-3.5-haiku", "deepseek/deepseek-chat",
-                       "mistralai/mistral-small-3.2-24b-instruct",
-                       "qwen/qwen3-30b-a3b")
+_RU_FALLBACK_MODELS = (
+    "nvidia/nemotron-3-ultra-550b-a55b:free",
+    "qwen/qwen3.8-27b:free",
+    "nvidia/nemotron-3-super-120b-a12b:free",
+    "google/gemma-4-31b-it:free",
+    ("gemini", "gemini-2.5-flash", "GEMINI_API_KEY"),
+    ("openai", "gpt-4o-mini", "OPENAI_API_KEY"),
+    "openai/gpt-4o-mini",
+    "google/gemini-2.5-flash-lite",
+    "anthropic/claude-3.5-haiku",
+    "deepseek/deepseek-chat",
+    "mistralai/mistral-small-3.2-24b-instruct",
+    "qwen/qwen3-30b-a3b",
+)
+
+_RU_DAILY_CAP = int(os.environ.get("RU_DAILY_CAP", "46"))
+
+
+def _ru_spend(n=1):
+    """Consume n translator API calls from today's budget; False if out.
+    Free-tier models are capped (~50 req/day per key on a $0 wallet) - the
+    cap spreads the budget across the WHOLE day instead of burning it by
+    lunchtime; extra cycles then ride rule-Urdu or wait, never spam."""
+    bp = os.path.join(STATE, "ru_budget.json")
+    todayk = datetime.now(IST).date().isoformat()
+    try:
+        d = json.load(open(bp))
+    except Exception:
+        d = {}
+    if d.get("d") != todayk:
+        d = {"d": todayk, "n": 0}
+    if int(d.get("n", 0)) + n > _RU_DAILY_CAP:
+        return False
+    d["n"] = int(d.get("n", 0)) + n
+    try:
+        json.dump(d, open(bp, "w"))
+    except Exception:
+        pass
+    return True
+
+
+def _ru_attempts():
+    """(label, kwargs) salvage attempts: primary first (one-line prompts
+    translate where the batch echo'd), then free-tier, direct keys (skipped
+    silently until the owner's git secrets exist), then paid slugs."""
+    yield "primary", {}
+    for m in _RU_FALLBACK_MODELS:
+        if isinstance(m, tuple):
+            prov, mdl, envi = m
+            k = os.environ.get(envi, "")
+            if k:
+                yield mdl, {"provider": prov, "model": mdl, "api_key": k}
+        else:
+            yield m, {"model": m}
 
 
 def _line_h(text):
@@ -908,10 +962,16 @@ def build_digest(cands, catchup=False):
     def _killed(i, why):
         _kill.setdefault(why, []).append(i + 1)
     if _pend and _ru_on():
-        _ru_kw = {}
-        if 0 < _rot:
-            _ru_kw["model"] = _RU_FALLBACK_MODELS[(_rot - 1) % len(_RU_FALLBACK_MODELS)]
-        _res = roman_urdu.translate_lines([picks[i][1] for i in _pend], **_ru_kw)
+        if not _ru_spend():
+            _res = {"ok": False, "lines": [], "method": "budget",
+                    "problems": ["daily translator budget reached"]}
+        else:
+            _ru_kw = {}
+            if 0 < _rot:
+                _am = [x for x in _ru_attempts() if x[0] != "primary"]
+                if _am:
+                    _ru_kw = _am[(_rot - 1) % len(_am)][1]
+            _res = roman_urdu.translate_lines([picks[i][1] for i in _pend], **_ru_kw)
         _cand = _res.get("lines") or []
         _bad = set(_pend)
         _RU_STATS["engine"] = {"ok": bool(_res.get("ok")),
@@ -961,11 +1021,13 @@ def build_digest(cands, catchup=False):
                 _en2 = picks[i][1]
                 if not _en2:
                     continue
-                for _m2 in (None,) + _RU_FALLBACK_MODELS:
+                for _lbl2, _kw2 in _ru_attempts():
+                    if not _ru_spend():
+                        log("[digest] translator daily call budget reached - "
+                            "remaining salvage waits for the IST midnight reset")
+                        break
                     try:
-                        _r2 = (roman_urdu.translate_lines([_en2]) if not _m2
-                               else roman_urdu.translate_lines([_en2],
-                                                               model=_m2))
+                        _r2 = roman_urdu.translate_lines([_en2], **_kw2)
                     except Exception:
                         continue
                     _l2 = ((_r2.get("lines") or [""])[0] or "").strip()
@@ -980,8 +1042,7 @@ def build_digest(cands, catchup=False):
                     picks[i] = picks[i][:2] + (_l2,) + picks[i][3:]
                     _bad.discard(i)
                     _RU_STATS.setdefault("salvaged", []).append(i + 1)
-                    if _m2:
-                        _RU_STATS.setdefault("via", {})[str(i + 1)] = _m2
+                    _RU_STATS.setdefault("via", {})[str(i + 1)] = _lbl2
                     break
             _RU_STATS["accepted"] = len(_pend) - len(_bad)
         log(f"[digest] roman-urdu step: {len(_pend) - len(_bad)}/"
