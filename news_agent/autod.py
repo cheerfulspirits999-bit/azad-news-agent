@@ -916,6 +916,7 @@ def build_digest(cands, catchup=False):
         _bad = set(_pend)
         _RU_STATS["engine"] = {"ok": bool(_res.get("ok")),
                                "lines_in": len(_cand), "lines_want": len(_pend),
+                               "method": str(_res.get("method") or "?")[:16],
                                "problems": str(_res.get("problems") or [])[:160]}
         if len(_cand) != len(_pend):
             _RU_STATS["kills"] = {"count-mismatch": "all"}
@@ -988,8 +989,13 @@ def build_digest(cands, catchup=False):
             + ("" if not _res["problems"] else
                " (watch: " + str(_res["problems"][0])[:60] + ")"))
         if _bad:
+            _wipe = len(_bad) == len(_pend)  # nothing accepted at all
+            _ts = (time.time() - max(0, _RU_MISS_TTL - 1500)) if _wipe else time.time()
             for i in _bad:
-                _miss_bank[_line_h(picks[i][1])] = time.time()
+                _miss_bank[_line_h(picks[i][1])] = _ts
+            if _wipe:
+                log(f"[digest] wipeout cycle: {len(_bad)} lines banked with "
+                    f"25-min fuse (API/echo storm) instead of 4h")
             _ru_miss_save(_miss_bank)
             picks = [p for j, p in enumerate(picks) if j not in _bad]
         try:
@@ -1317,8 +1323,16 @@ def _commit_memory():
         try:
             r = _git("rebase", f"origin/{br}")
             if r is not None and r.returncode != 0:
-                _git("rebase", "--abort")  # conflicting state files: skip this
-                raise RuntimeError("rebase conflict")  # push; next cycle retries
+                # 1 Oct: a conflict here used to ABORT the rebase - the
+                # runner's HEAD stayed diverged and every later push was
+                # rejected too (all of #297's cycles were invisible).
+                # State files are owned by the runner mid-cycle: take OURS,
+                # finish the rebase, let the push through.
+                _git("checkout", "--theirs", "--", "news_agent/state")
+                _git("add", "news_agent/state")
+                c = _git("-c", "core.editor=true", "rebase", "--continue")
+                if c is not None and c.returncode != 0:
+                    _git("rebase", "--skip")
             _git("push", "origin", f"HEAD:refs/heads/{br}", check=True)
             log("[relay] memory pushed (after rebase)")
         except Exception as e2:
