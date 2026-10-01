@@ -845,6 +845,16 @@ def build_digest(cands, catchup=False):
     # picked every cycle and only pruned AFTER _build_picks, so the run
     # starved at <3 while dozens of clean stories sat one rank lower.
     _miss_bank = _ru_miss_load()
+    # 1 Oct (2nd outage same day): when the PRIMARY translator model has a
+    # multi-hour echo fit, every cycle died 0/N accepted and only salvage
+    # (4 attempts/line) fought it. Now a zero-accept cycle ROTATES the whole
+    # batch call to the next model in the chain - one model's bad hour can
+    # never freeze the page. Gates unchanged; only the voice asking changes.
+    _ROT_FILE = os.path.join(STATE, "ru_rot.json")
+    try:
+        _rot = int(json.load(open(_ROT_FILE)).get("i", 0) or 0)
+    except Exception:
+        _rot = 0
     _stages = [(55, 12, 60), (50, 16, 55), (45, 20, 50),
                (45, 26, 50)]  # owner 27 Sep: every run finishes at the wide
                               # 26h window - nothing eligible left = wait, not
@@ -898,7 +908,10 @@ def build_digest(cands, catchup=False):
     def _killed(i, why):
         _kill.setdefault(why, []).append(i + 1)
     if _pend and _ru_on():
-        _res = roman_urdu.translate_lines([picks[i][1] for i in _pend])
+        _ru_kw = {}
+        if 0 < _rot:
+            _ru_kw["model"] = _RU_FALLBACK_MODELS[(_rot - 1) % len(_RU_FALLBACK_MODELS)]
+        _res = roman_urdu.translate_lines([picks[i][1] for i in _pend], **_ru_kw)
         _cand = _res.get("lines") or []
         _bad = set(_pend)
         _RU_STATS["engine"] = {"ok": bool(_res.get("ok")),
@@ -979,6 +992,17 @@ def build_digest(cands, catchup=False):
                 _miss_bank[_line_h(picks[i][1])] = time.time()
             _ru_miss_save(_miss_bank)
             picks = [p for j, p in enumerate(picks) if j not in _bad]
+        try:
+            _acc = _RU_STATS.get("accepted", 0)
+            _new = 0 if _acc > 0 else (_rot + 1)
+            if _new != _rot:
+                json.dump({"i": _new, "at": time.time()}, open(_ROT_FILE, "w"))
+                if _new:
+                    log("[digest] RU engine rotation -> model #%d "
+                        "(zero-accept cycle; next try: %s)"
+                        % (_new, _RU_FALLBACK_MODELS[(_new - 1) % len(_RU_FALLBACK_MODELS)]))
+        except Exception:
+            pass
     picks = [p for p in picks if p[2]]   # never ship an empty Urdu mirror
     if len(picks) < 3:
         log("[digest] wait: <3 stories with publishable Urdu this cycle")
