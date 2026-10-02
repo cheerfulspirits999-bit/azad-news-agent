@@ -261,8 +261,20 @@ def main():
                   "(system user unassigned too?)", file=sys.stderr)
             return 3
     pid_hint = os.environ.get("FB_PAGE_ID", "")
-    if pid_hint and pid_hint in pages:
-        pid, ptok = pid_hint, pages[pid_hint]
+    if pid_hint:
+        if pid_hint in pages:
+            pid, ptok = pid_hint, pages[pid_hint]
+        else:
+            # Owner 2 Oct: "posts go to national" - the old silent
+            # first-page fallback let a renewal swap in ANY page the token
+            # sees when Azad Daily was absent, and the publisher then
+            # obediently posted there. A pinned page that is missing means
+            # the credential lost access to the REAL page: stop, stay loud,
+            # keep the last-good vault token. Never guess another page.
+            print("auth: REFUSED - pinned Page " + pid_hint + " is not among "
+                  "the token's pages " + str(sorted(pages)) + "; not deriving "
+                  "a token for a different page", file=sys.stderr)
+            return 2
     else:
         pid, ptok = next(iter(pages.items()))
     if "pages_manage_posts" not in (_debug(ptok) or {}).get("scopes", []):
