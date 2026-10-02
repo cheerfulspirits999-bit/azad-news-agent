@@ -182,10 +182,16 @@ def _visibility_check(tok, pid_hint=""):
 def main():
     _export_current()  # safety net first; renewed values overwrite below
     tok = os.environ.get("FB_PAGE_TOKEN", "")
+    # IG link must be resolved FIRST, before anything downstream can die:
+    # publish.py's piggyback reads state/ig_link.json, so a skipped or
+    # failed visibility/feed probe must never cost us the IG answer.
+    _ig_state(tok, os.environ.get("FB_PAGE_ID", ""))
     if not _need_renew(tok):
         print("auth: Page token healthy, nothing to do")
-        _visibility_check(tok)
-        _ig_state(tok, os.environ.get("FB_PAGE_ID", ""))
+        try:
+            _visibility_check(tok)
+        except Exception as _ve:
+            print(f"auth: visibility probe failed ({_ve}) - non-fatal")
         return 0
     app_id = os.environ.get("FB_APP_ID", "")
     app_secret = os.environ.get("FB_APP_SECRET", "")
