@@ -157,7 +157,23 @@ def verify_public(post_id, pg):
           f"feed_targeting={aud} post_id={post_id}")
 
 
+# owner 2 Oct: this pipeline posts to EXACTLY ONE page - Azad Daily.
+# Any other target (swapped secret, stale config, copied repo) is refused
+# structurally at the lowest layer, not by convention.
+AZAD_PAGE_ID = "1538679366414544"
+
+
+def _lock_page(page_id):
+    if str(page_id) != AZAD_PAGE_ID:
+        raise RuntimeError(
+            f"PUBLISH REFUSED: target page {page_id} is not Azad Daily "
+            f"({AZAD_PAGE_ID}). This agent must never post anywhere else - "
+            "fix FB_PAGE_ID/config, do not bypass this lock.")
+    return str(page_id)
+
+
 def graph_post_photo(page_id, token, caption, image_path, api_version):
+    page_id = _lock_page(page_id)
     """Upload the branded graphic with the caption as one Page post.
     Owner 28 Sep: publish with explicit PUBLIC audience (stream_visibility -
     accepted by Graph even for our unreviewed app; test2 proved it)."""
@@ -293,6 +309,7 @@ def zapier_post(webhook, caption, image_path, meta):
 
 
 def graph_post_text(page_id, token, message, api_version):
+    page_id = _lock_page(page_id)
     url = f"https://graph.facebook.com/{api_version}/{page_id}/feed"
     data = urllib.parse.urlencode({"message": message,
                                    "stream_visibility": "PUBLIC",
@@ -355,8 +372,10 @@ def run(story_path, do_publish):
         pg["facebook_page_id"] = os.environ["FB_PAGE_ID"]
     pub_cfg = CFG.get("publish", {})
     route = pub_cfg.get("route", "graph")
-    zap = (route == "zapier" and pub_cfg.get("zapier_webhook")
-           and pub_cfg.get("zapier_live", False))
+    if route == "zapier" or pub_cfg.get("zapier_webhook"):
+        print("PUBLISH: Zapier route is PERMANENTLY DISCONNECTED "
+              "(owner 2 Oct) - any webhook config is ignored; Graph only.")
+    zap = False  # permanently disconnected by owner order (26 Sep / 2 Oct)
     graph_ok = pg.get("facebook_page_id") and pg.get("page_access_token")
     if not (zap or graph_ok):
         print("\nBLOCKED - Facebook publishing is not connected.")
