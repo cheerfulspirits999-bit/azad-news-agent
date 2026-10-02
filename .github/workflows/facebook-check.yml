@@ -15,8 +15,14 @@ jobs:
       - uses: actions/setup-python@v5
         with:
           python-version: '3.11'
-      - name: deps (pillow for publish imports)
-        run: python3 -m pip install -q pillow
+      - name: deps (publisher imports)
+        # 2 Oct: this step used to install ONLY pillow, and publish.py imported
+        # the PIL-based card renderer at module load - a hiccup there crashed
+        # the patrol with a bare exit 1 that looked like a Facebook failure.
+        # publish.py now imports the renderer lazily, so the patrol runs with
+        # zero image deps; the full requirements are installed anyway so a
+        # manual publish from this workflow would also work.
+        run: python3 -m pip install -q -r requirements.txt
       - name: check Facebook Page connection (read-only)
         env:
           FB_PAGE_TOKEN: ${{ secrets.FB_PAGE_TOKEN }}
@@ -72,8 +78,8 @@ jobs:
                   headers={"Authorization": "Bearer " + pat,
                            "Accept": "application/vnd.github+json"})
               with urllib.request.urlopen(req, timeout=30) as _r:
-                _b = _r.read()
-            return json.loads(_b) if _b.strip() else {}
+                  _b = _r.read()
+              return json.loads(_b) if _b.strip() else {}
           IST = timezone(timedelta(hours=5))
           now = datetime.now(IST)
           q = api(f"https://api.github.com/repos/{repo}/contents/news_agent/state/quota.json?ref=main")
