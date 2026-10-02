@@ -40,6 +40,7 @@ jobs:
           FB_APP_ID: ${{ secrets.FB_APP_ID || secrets.FACEBOOK_APP_ID }}
           FB_APP_SECRET: ${{ secrets.FB_APP_SECRET }}
           FB_REFRESH_TOKEN: ${{ secrets.FB_REFRESH_TOKEN }}
+          FB_SU_TOKEN: ${{ secrets.FB_SU_TOKEN }}
           FB_PAGE_ID: ${{ secrets.FB_PAGE_ID }}
           GH_OWNER: ${{ github.repository_owner }}
           GH_REPO: ${{ github.event.repository.name }}
@@ -48,6 +49,7 @@ jobs:
         run: python3 news_agent/auth.py
       - name: run one monitor + publish cycle
         env:
+          IG_DUALPOST: ${{ vars.IG_DUALPOST }}
           FB_PAGE_TOKEN: ${{ secrets.FB_PAGE_TOKEN }}
           FB_PAGE_ID: ${{ secrets.FB_PAGE_ID }}
           FB_APP_SECRET: ${{ secrets.FB_APP_SECRET }}
