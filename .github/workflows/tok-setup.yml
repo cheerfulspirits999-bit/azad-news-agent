@@ -1,0 +1,85 @@
+name: tok-setup
+on:
+  workflow_dispatch: {}
+permissions:
+  contents: read
+  actions: write
+jobs:
+  setup:
+    runs-on: ubuntu-latest
+    env:
+      OWNER_TOKEN: ${{ secrets.OWNER_TOKEN }}
+      FB_APP_SECRET: *** secrets.FB_APP_SECRET }}
+      FACEBOOK_APP_ID: ${{ secrets.FACEBOOK_APP_ID }}
+      FB_PAGE_ID: ${{ secrets.FB_PAGE_ID }}
+      GH_OWNER: ${{ github.repository_owner }}
+      GH_REPO: ${{ github.event.repository.name }}
+      GITHUB_TOKEN: *** github.token }}
+      AGENT_PAT: *** secrets.AGENT_PAT }}
+    steps:
+      - uses: actions/checkout@v4
+      - run: pip install -q pynacl
+      - name: extend + vault tokens
+        run: |
+          python3 - <<'PY'
+          import os, sys, json, base64, urllib.request, urllib.parse, urllib.error
+          API = "https://graph.facebook.com/v21.0"
+          def g(url):
+              try:
+                  with urllib.request.urlopen(url, timeout=30) as r:
+                      return json.loads(r.read())
+              except urllib.error.HTTPError as e:
+                  return {"_err": e.code, "_body": e.read()[:240].decode(errors="ignore")}
+          short = os.environ["OWNER_TOKEN"].strip()
+          aid = os.environ["FACEBOOK_APP_ID"].strip()
+          sec = os.environ["FB_APP_SECRET"].strip()
+          pid = os.environ["FB_PAGE_ID"].strip()
+          app = f"{aid}|{sec}"
+          info = g(f"{API}/debug_token?input_token={short}&access_token={app}").get("data", {})
+          print("SHORT: valid=", info.get("is_valid"), "type=", info.get("type"),
+                "expires=", "never" if not info.get("expires_at") else round((info["expires_at"]-__import__('time').time())/60), "min")
+          lng = g(f"{API}/oauth/access_token?grant_type=fb_exchange_token&client_id={aid}&client_secret={sec}&fb_exchange_token={short}")
+          if "access_token" not in lng:
+              print("EXTEND-FAIL:", json.dumps(lng)[:240]); sys.exit(1)
+          long_tok = lng["access_token"]
+          li = g(f"{API}/debug_token?input_token={long_tok}&access_token={app}").get("data", {})
+          print("LONG: type=", li.get("type"), "expires=", "never" if not li.get("expires_at") else "yes",
+                "scopes=", ",".join(sorted(li.get("scopes", [])[:8])))
+          acct = g(f"{API}/me/accounts?access_token={long_tok}")
+          ptok = None
+          for p in acct.get("data", []):
+              if p.get("id") == pid:
+                  ptok = p.get("access_token")
+          if not ptok:
+              print("PAGE-MISSING from /me/accounts:", json.dumps(acct)[:200]); sys.exit(2)
+          pi = g(f"{API}/debug_token?input_token={ptok}&access_token={app}").get("data", {})
+          print("PAGE-TOKEN: app=", pi.get("application"), "type=", pi.get("type"),
+                "expires=", "never" if not pi.get("expires_at") else "yes",
+                "scopes=", ",".join(sorted(pi.get("scopes", []))))
+          ig = g(f"{API}/{pid}?fields=instagram_business_account.id,instagram_business_account.username&access_token={ptok}")
+          igb = ig.get("instagram_business_account") or {}
+          print("IG-LINK: id=", igb.get("id"), "user=", igb.get("username"), ("err=" + json.dumps(ig)[:160]) if not igb else "")
+          # ---- write vault secrets ----
+          sys.path.insert(0, "news_agent")
+          from nacl.public import PublicKey, SealedBox
+          import urllib.request as U
+          hdr = {"Authorization": "Bearer " + (os.environ.get("AGENT_PAT") or os.environ["GITHUB_TOKEN"]),
+                 "Accept": "application/vnd.github+json", "User-Agent": "tok-setup"}
+          base = f"https://api.github.com/repos/{os.environ['GH_OWNER']}/{os.environ['GH_REPO']}/actions/secrets"
+          pk = json.load(U.urlopen(U.Request(base + "/public-key", headers=hdr), timeout=30))
+          def put(name, val):
+              sealed = SealedBox(PublicKey(base64.b64decode(pk["key"]))).encrypt(val.encode())
+              body = json.dumps({"encrypted_value": base64.b64encode(sealed).decode(), "key_id": pk.get("key_id")}).encode()
+              r = U.Request(f"{base}/{name}", data=body, headers={**hdr, "Content-Type": "application/json"}, method="PUT")
+              U.urlopen(r, timeout=30)
+              print("VAULT: wrote", name)
+          put("FB_PAGE_TOKEN", ptok)
+          put("FB_REFRESH_TOKEN", long_tok)
+          d = U.Request(base + "/OWNER_TOKEN", headers=hdr, method="DELETE")
+          U.urlopen(d, timeout=30)
+          print("VAULT: deleted OWNER_TOKEN")
+          smry = os.environ.get("GITHUB_STEP_SUMMARY", "")
+          if smry:
+              open(smry, "a").write(f"**tok-setup**: page token scopes={','.join(sorted(pi.get('scopes', [])))}; IG link={igb.get('id') or 'NONE'}; vault updated + temp secret deleted\n")
+          print("DONE")
+          PY
