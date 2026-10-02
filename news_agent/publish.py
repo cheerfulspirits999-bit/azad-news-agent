@@ -422,8 +422,8 @@ def run(story_path, do_publish):
     pg = dict(CFG["page"])
     if os.environ.get("FB_PAGE_TOKEN"):
         pg["page_access_token"] = os.environ["FB_PAGE_TOKEN"]
-    if os.environ.get("FB_PAGE_ID"):
-        pg["facebook_page_id"] = os.environ["FB_PAGE_ID"]
+    if os.environ.get("FB_PAGE_ID", "").strip():
+        pg["facebook_page_id"] = os.environ["FB_PAGE_ID"].strip()
     pub_cfg = CFG.get("publish", {})
     route = pub_cfg.get("route", "graph")
     if route == "zapier" or pub_cfg.get("zapier_webhook"):
@@ -530,8 +530,8 @@ def check_fb():
     pg = dict(CFG["page"])
     if os.environ.get("FB_PAGE_TOKEN"):
         pg["page_access_token"] = os.environ["FB_PAGE_TOKEN"]
-    if os.environ.get("FB_PAGE_ID"):
-        pg["facebook_page_id"] = os.environ["FB_PAGE_ID"]
+    if os.environ.get("FB_PAGE_ID", "").strip():
+        pg["facebook_page_id"] = os.environ["FB_PAGE_ID"].strip()
     tok, pid = pg.get("page_access_token"), pg.get("facebook_page_id")
     if not (tok and pid):
         print("FB CHECK: Graph route on standby - Zapier bridge active. OK.")

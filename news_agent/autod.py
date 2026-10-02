@@ -409,8 +409,8 @@ def retry_pending():
     # 28 Sep: CI injects credentials via env (config.json keeps them blank)
     if os.environ.get("FB_PAGE_TOKEN"):
         pgc["page_access_token"] = os.environ["FB_PAGE_TOKEN"]
-    if os.environ.get("FB_PAGE_ID"):
-        pgc["facebook_page_id"] = os.environ["FB_PAGE_ID"]
+    if os.environ.get("FB_PAGE_ID", "").strip():
+        pgc["facebook_page_id"] = os.environ["FB_PAGE_ID"].strip()
     connected = (pub.get("route") == "zapier" and pub.get("zapier_webhook")
                  and pub.get("zapier_live", False)) or (
         pgc.get("facebook_page_id") and pgc.get("page_access_token"))

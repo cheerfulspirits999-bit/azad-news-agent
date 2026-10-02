@@ -101,8 +101,8 @@ def _export_current():
     token/pid from the vault env for THIS run; publish step stays loud if
     the token itself is dead."""
     gh_env = os.environ.get("GITHUB_ENV", "")
-    tok = os.environ.get("FB_PAGE_TOKEN", "")
-    pid = os.environ.get("FB_PAGE_ID", "")
+    tok = os.environ.get("FB_PAGE_TOKEN", "").strip()
+    pid = os.environ.get("FB_PAGE_ID", "").strip()
     if gh_env:
         with open(gh_env, "a", encoding="utf-8") as f:
             f.write(f"FB_PAGE_TOKEN={tok}\nFB_PAGE_ID={pid}\n")
@@ -113,7 +113,7 @@ def _su_pages():
     token (secret FB_SU_TOKEN) is never tied to a browser session, so its
     assigned page tokens are the most durable credential we can hold.
     Returns {page_id: page_access_token} - empty when unset/unassigned."""
-    su = os.environ.get("FB_SU_TOKEN", "")
+    su = os.environ.get("FB_SU_TOKEN", "").strip()
     if not su:
         return {}
     try:
@@ -186,7 +186,7 @@ def _visibility_check(tok, pid_hint=""):
             return
         app = str(d.get("app_id", ""))
         obj = str(d.get("id", "") or pid_hint or
-                os.environ.get("FB_PAGE_ID", ""))
+                os.environ.get("FB_PAGE_ID", "").strip())
         gated = bool(app) and app == obj
         mode = ("ROLE-GATED: publishing app is the Page auto-app (" + app +
                 "). Meta shows its posts only to app-role accounts - owner "
@@ -213,11 +213,11 @@ def _visibility_check(tok, pid_hint=""):
 
 def main():
     _export_current()  # safety net first; renewed values overwrite below
-    tok = os.environ.get("FB_PAGE_TOKEN", "")
+    tok = os.environ.get("FB_PAGE_TOKEN", "").strip()
     # IG link must be resolved FIRST, before anything downstream can die:
     # publish.py's piggyback reads state/ig_link.json, so a skipped or
     # failed visibility/feed probe must never cost us the IG answer.
-    _ig_state(tok, os.environ.get("FB_PAGE_ID", ""))
+    _ig_state(tok, os.environ.get("FB_PAGE_ID", "").strip())
     upgrade = False
     if not _need_renew(tok):
         d0 = _debug(tok) or {}
@@ -242,7 +242,7 @@ def main():
         app_id = (os.environ.get("FB_APP_ID", "")
                   or os.environ.get("FACEBOOK_APP_ID", ""))
         app_secret = os.environ.get("FB_APP_SECRET", "")
-        refresh = os.environ.get("FB_REFRESH_TOKEN", "")
+        refresh = os.environ.get("FB_REFRESH_TOKEN", "").strip()
         if not (app_id and app_secret and refresh):
             print("auth: renewal IMPOSSIBLE - set FB_APP_ID (or the alias "
                   "this repo actually uses, FACEBOOK_APP_ID) + FB_APP_SECRET "
@@ -260,7 +260,7 @@ def main():
             print("auth: no Page access from user token either "
                   "(system user unassigned too?)", file=sys.stderr)
             return 3
-    pid_hint = os.environ.get("FB_PAGE_ID", "")
+    pid_hint = os.environ.get("FB_PAGE_ID", "").strip()
     if pid_hint:
         if pid_hint in pages:
             pid, ptok = pid_hint, pages[pid_hint]
