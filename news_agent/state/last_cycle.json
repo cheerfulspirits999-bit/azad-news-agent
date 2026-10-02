@@ -1,57 +1,62 @@
 {
-  "cycle": "20261002-1435",
-  "at": "2026-10-02T14:35:58.142410+05:30",
+  "cycle": "20261002-1522",
+  "at": "2026-10-02T15:27:28.169252+05:30",
   "candidates": 120,
   "published_this_cycle": 0,
-  "digest": "REFUSED rc=5 - retrying next cycle",
+  "digest": "starved: <3 publishable Urdu lines",
   "ru": {
     "pre_ru_picks": 5,
     "to_translate": 5,
     "engine": {
-      "ok": true,
+      "ok": false,
       "lines_in": 5,
       "lines_want": 5,
-      "method": "llm",
-      "problems": "[]"
+      "method": "fallback",
+      "problems": "['Lines [1, 2, 3, 4, 5] copy 4+ consecutive English words verbatim into the Roman Urdu. Re-express those phrases in Urdu; keep only proper nouns/brands/technica"
     },
     "kills": {
-      "digits": [
+      "english-echo": [
+        1,
+        2
+      ],
+      "paste": [
         3,
+        4,
         5
       ]
     },
-    "accepted": 3
+    "accepted": 0
   },
   "tail": [
-    "[02 Oct 14:35:58] stale or low-score, skipped: Hyderabad: Man Found Dead Under Suspicious Circumstances in ",
-    "[02 Oct 14:35:58] stale or low-score, skipped: Woman Found Dead at Home Over Job Search Struggles in Hydera",
-    "[02 Oct 14:35:58] held for the next card: auto-major-explosion-reported-at-kl-university-central-library-in",
-    "[02 Oct 14:35:58] stale or low-score, skipped: Techie Held For ECIL Crash, 7 Injured",
-    "[02 Oct 14:35:58] queued for editorial pass (no safe auto frame): UN chief Guterres concerned over flydubai cockpit incident",
-    "[02 Oct 14:35:58] queued for editorial pass (no safe auto frame): ED summons Kadapa MP Avinash Reddy in money laundering case linked to ",
-    "[02 Oct 14:35:58] stale or low-score, skipped: Man Held for Killing Nursing Student for Refusing Marriage P",
-    "[02 Oct 14:35:58] stale or low-score, skipped: Banjara Hills: Youth Loses Control of Scorpio, Crashes Into ",
-    "[02 Oct 14:35:58] stale or low-score, skipped: Asaduddin Hails Capt Smit Machchhar's Courage After Flydubai",
-    "[02 Oct 14:35:58] stale or low-score, skipped: 'I Was Injured But Couldn't Let Passengers Die': Captain Smi",
-    "[02 Oct 14:35:58] stale or low-score, skipped: Brain-dead borewell businessman\u2019s organs donated to three ne",
-    "[02 Oct 14:35:58] stale or low-score, skipped: Saudi Arabia says flydubai co-pilot who tried to crash Israe",
-    "[02 Oct 14:35:58] stale or low-score, skipped: Osmania University PhD scholar found murdered in Kokapet",
-    "[02 Oct 14:35:58] stale or low-score, skipped: Christa Pike botched execution: How lethal injection is used",
-    "[02 Oct 14:35:58] stale or low-score, skipped: Aishwarya Faces Body-Shaming After Paris Week",
-    "[02 Oct 14:35:58] stale or low-score, skipped: Sena (UBT) Leader's Murder: Police Nab Shooter, Accomplice F",
-    "[02 Oct 14:35:58] stale or low-score, skipped: Smit Machchhar health update: Injured flydubai pilot shifted",
-    "[02 Oct 14:35:58] stale or low-score, skipped: flydubai Hero Indian Pilot Suffered Wounds To Limbs, Chest, ",
-    "[02 Oct 14:35:58] stale or low-score, skipped: Omani co-pilot who stabbed Indian captain talked about killi",
-    "[02 Oct 14:35:58] stale or low-score, skipped: Burnt Bike, Location Details: Andhra BJP Leader's Wife Plots",
-    "[02 Oct 14:35:58] stale or low-score, skipped: Captain Smit Machchhar: A steady hand, in and out of the coc",
-    "[02 Oct 14:35:58] stale or low-score, skipped: Flydubai incident | Complete coverage",
-    "[02 Oct 14:35:58] stale or low-score, skipped: United Nations chief condemns attack on FlyDubai flight",
-    "[02 Oct 14:35:58] stale or low-score, skipped: Flydubai \u2018hijack\u2019 attempt: Indian pilot Smit Machchhar haile",
-    "[02 Oct 14:35:58] stale or low-score, skipped: Five transgender persons held on \u2018extortion\u2019 charge",
-    "[02 Oct 14:35:58] stale or low-score, skipped: Karimnagar: Nursing student dies by suicide after alleged ha",
-    "[02 Oct 14:35:58] stale or low-score, skipped: Israel wants to probe terror angle in flydubai attack. Saudi",
-    "[02 Oct 14:35:58] stale or low-score, skipped: PM Modi speaks to 'hero' flydubai pilot Smit Machchaar, hear",
-    "[02 Oct 14:35:58] stale or low-score, skipped: JNTU-Hyderabad students raise concerns over poor hostel faci",
-    "[02 Oct 14:35:58] stale or low-score, skipped: Smit Machchhar averted major terror attack, will never forge"
+    "[02 Oct 15:27:28] stale or low-score, skipped: 1 killed in Russian strikes on Kyiv as drones hit school, br",
+    "[02 Oct 15:27:28] stale or low-score, skipped: Techie Held For ECIL Crash, 7 Injured",
+    "[02 Oct 15:27:28] queued for editorial pass (no safe auto frame): Bhupalpally Man Allegedly Murdered Over Wife\u2019s Extramarital Relationsh",
+    "[02 Oct 15:27:28] queued for editorial pass (no safe auto frame): UN chief Guterres concerned over flydubai cockpit incident",
+    "[02 Oct 15:27:28] queued for editorial pass (no safe auto frame): ED summons Kadapa MP Avinash Reddy in money laundering case linked to ",
+    "[02 Oct 15:27:28] queued for editorial pass (no safe auto frame): 20-Year-Old\u00a0Youth Crashes Mahindra Scorpio into Tree on Banjara Hills ",
+    "[02 Oct 15:27:28] stale or low-score, skipped: Man Held for Killing Nursing Student for Refusing Marriage P",
+    "[02 Oct 15:27:28] stale or low-score, skipped: Banjara Hills: Youth Loses Control of Scorpio, Crashes Into ",
+    "[02 Oct 15:27:28] stale or low-score, skipped: Asaduddin Hails Capt Smit Machchhar's Courage After Flydubai",
+    "[02 Oct 15:27:28] stale or low-score, skipped: The only two films Mahatma Gandhi reportedly ever watched",
+    "[02 Oct 15:27:28] stale or low-score, skipped: Sangareddy-Patancheru: A Nightmarish journey for road users",
+    "[02 Oct 15:27:28] stale or low-score, skipped: 'I Was Injured But Couldn't Let Passengers Die': Captain Smi",
+    "[02 Oct 15:27:28] stale or low-score, skipped: Brain-dead borewell businessman\u2019s organs donated to three ne",
+    "[02 Oct 15:27:28] stale or low-score, skipped: Congo\u2019s Ebola outbreak records more than 4,000 deaths",
+    "[02 Oct 15:27:28] stale or low-score, skipped: Saudi Arabia says flydubai co-pilot who tried to crash Israe",
+    "[02 Oct 15:27:28] stale or low-score, skipped: Osmania University PhD scholar found murdered in Kokapet",
+    "[02 Oct 15:27:28] stale or low-score, skipped: Christa Pike botched execution: How lethal injection is used",
+    "[02 Oct 15:27:28] stale or low-score, skipped: Aishwarya Faces Body-Shaming After Paris Week",
+    "[02 Oct 15:27:28] stale or low-score, skipped: 'Fake News': Saudi On 'Suicide Bomber' Video From Mecca Mosq",
+    "[02 Oct 15:27:28] stale or low-score, skipped: Sena (UBT) Leader's Murder: Police Nab Shooter, Accomplice F",
+    "[02 Oct 15:27:28] stale or low-score, skipped: flydubai Hero Indian Pilot Suffered Wounds To Limbs, Chest, ",
+    "[02 Oct 15:27:28] stale or low-score, skipped: Smit Machchhar health update: Injured flydubai pilot shifted",
+    "[02 Oct 15:27:28] stale or low-score, skipped: Flydubai incident | Complete coverage",
+    "[02 Oct 15:27:28] stale or low-score, skipped: Flydubai \u2018hijack\u2019 attempt: Indian pilot Smit Machchhar haile",
+    "[02 Oct 15:27:28] stale or low-score, skipped: Five transgender persons held on \u2018extortion\u2019 charge",
+    "[02 Oct 15:27:28] stale or low-score, skipped: Karimnagar: Nursing student dies by suicide after alleged ha",
+    "[02 Oct 15:27:28] stale or low-score, skipped: PM Modi speaks to 'hero' flydubai pilot Smit Machchaar, hear",
+    "[02 Oct 15:27:28] stale or low-score, skipped: JNTU-Hyderabad students raise concerns over poor hostel faci",
+    "[02 Oct 15:27:28] stale or low-score, skipped: Smit Machchhar averted major terror attack, will never forge",
+    "[02 Oct 15:27:28] stale or low-score, skipped: Dino Morea Appears Before Mumbai Police In Rs 65-Crore Mithi"
   ]
 }
