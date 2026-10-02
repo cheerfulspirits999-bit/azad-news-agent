@@ -225,6 +225,60 @@ def ensure_under_10mb(image_path):
     return jpg, buf.tell()
 
 
+def _ig_publish(png_path, slug, caption, pg):
+    """Owner 2 Oct: dual-publish the SAME card to the Page's linked
+    Instagram business account (azaddaily99), seconds after the FB post in
+    the same run. STRICTLY a piggyback: it never raises and never touches
+    the FB outcome - IG is additive only. Instagram needs a PUBLIC image
+    URL, so we reuse the azad-daily-cards public-repo push built for this."""
+    try:
+        link = json.load(open(os.path.join(STATE, "ig_link.json"),
+                              encoding="utf-8"))
+    except Exception:
+        print("IG: skipped (no state/ig_link.json yet - auth step writes it)")
+        return None
+    ig_id = link.get("ig_id")
+    if not ig_id:
+        print(f"IG: skipped ({link.get('reason') or 'no linked account'})")
+        return None
+    if "instagram_content_publish" not in (link.get("scopes") or []):
+        print("IG: skipped - page token lacks instagram_content_publish; "
+              "owner must re-authorize the token once with IG scopes")
+        return None
+    try:
+        pub_url = upload_card_public(png_path, slug)
+        if not pub_url:
+            print("IG: skipped (no public card URL)")
+            return None
+        ver = pg.get("api_version", "v21.0")
+        tok = pg["page_access_token"]
+        base = f"https://graph.facebook.com/{ver}"
+        body = urllib.parse.urlencode({"image_url": pub_url, "caption": caption,
+                                       "is_comment_enabled": "true",
+                                       "access_token": tok}).encode()
+        req = urllib.request.Request(f"{base}/{ig_id}/media", data=body,
+                                     method="POST")
+        with urllib.request.urlopen(req, timeout=60) as r:
+            cid = json.load(r).get("id")
+        if not cid:
+            print("IG: container creation returned no id - skipped")
+            return None
+        req2 = urllib.request.Request(
+            f"{base}/{ig_id}/media_publish?"
+            + urllib.parse.urlencode({"creation_id": cid, "access_token": tok}),
+            data=b"", method="POST")
+        with urllib.request.urlopen(req2, timeout=60) as r:
+            mid = json.load(r).get("id")
+        print(f"IG: published to @{link.get('username')} (media id {mid})")
+        return mid
+    except urllib.error.HTTPError as e:
+        print(f"IG: publish failed HTTP {e.code}: "
+              f"{e.read().decode(errors='replace')[:300]} - FB card unaffected")
+    except Exception as e:
+        print(f"IG: publish failed ({e}) - FB card unaffected")
+    return None
+
+
 def upload_card_public(png_path, slug):
     """Owner 24 Sep: Zapier's Facebook photo step errors on uploaded FILES -
     it needs a public image URL. We publish the branded card PNG to the
@@ -401,6 +455,7 @@ def run(story_path, do_publish):
     if do_publish and not (caption or "").strip():
         print("\nPUBLISH REFUSED: caption is empty - refusing to post a blank note.")
         return 6
+    ig_post_id = None
     try:
         if zap:
             _att = png if pub_cfg.get("attach_image", True) else ""
@@ -430,6 +485,7 @@ def run(story_path, do_publish):
                 verify_public(post_id, pg)
             except Exception as _ve:
                 print(f"VISIBILITY: check skipped ({_ve})")
+            ig_post_id = _ig_publish(png, slug, caption, pg)
     except urllib.error.HTTPError as e:
         print(f"\nPUBLISH ERROR {e.code}: {e.read().decode()[:600]}")
         return 5
@@ -449,6 +505,7 @@ def run(story_path, do_publish):
         "image": png,
         "image_url": image_url or "",
         "fb_post_id": post_id,
+        "ig_post_id": ig_post_id,
     }
     p = os.path.join(STATE, "published.json")
     pub = load(p) if os.path.exists(p) else []

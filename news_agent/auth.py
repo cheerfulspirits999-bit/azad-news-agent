@@ -108,6 +108,38 @@ def _export_current():
             f.write(f"FB_PAGE_TOKEN={tok}\nFB_PAGE_ID={pid}\n")
     return tok, pid
 
+def _ig_state(tok, pid):
+    """Owner 2 Oct: the page's linked Instagram gets the same card. This
+    resolves the link + the token's granted scopes ONCE PER RUN and drops
+    them in state/ig_link.json, which the relay commits (observable from
+    anywhere) and publish.py reads (no extra Graph round-trip at publish
+    time). Never fatal: no link or no scope just records the reason."""
+    out = {"at": time.strftime("%Y-%m-%dT%H:%M:%S%z"), "ig_id": None,
+           "username": None, "scopes": [], "reason": ""}
+    try:
+        d = _jget(f"{API}/{pid}?fields="
+                  "instagram_business_account.id,instagram_business_account.username"
+                  f"&access_token={tok}")
+        ig = d.get("instagram_business_account") or {}
+        out["ig_id"] = ig.get("id")
+        out["username"] = ig.get("username")
+        if not ig:
+            out["reason"] = "no linked IG business account visible to the page token"
+        pr = _jget(f"{API}/me/permissions?access_token={tok}")
+        out["scopes"] = sorted(x.get("permission", "") for x in pr.get("data", []))
+    except Exception as e:
+        out["reason"] = str(e)[:200]
+    try:
+        sd = os.path.join(os.path.dirname(os.path.abspath(__file__)), "state")
+        with open(os.path.join(sd, "ig_link.json"), "w", encoding="utf-8") as f:
+            json.dump(out, f, ensure_ascii=False, indent=1)
+    except Exception:
+        pass
+    print(f"auth: IG link -> ig_id={out['ig_id']} user={out['username']} "
+          f"scopes={','.join(out['scopes']) or '-'} {out['reason']}".rstrip())
+    return out
+
+
 def _visibility_check(tok, pid_hint=""):
     """Owner 28 Sep: posts must reach the PUBLIC, every cycle, verifiably.
     Meta renders posts published through a Page's own auto-app (app_id ==
@@ -153,6 +185,7 @@ def main():
     if not _need_renew(tok):
         print("auth: Page token healthy, nothing to do")
         _visibility_check(tok)
+        _ig_state(tok, os.environ.get("FB_PAGE_ID", ""))
         return 0
     app_id = os.environ.get("FB_APP_ID", "")
     app_secret = os.environ.get("FB_APP_SECRET", "")
@@ -179,6 +212,7 @@ def main():
             f.write(f"FB_PAGE_TOKEN={ptok}\nFB_PAGE_ID={pid}\n")
     print(f"auth: renewed page token for {pid}; written to $GITHUB_ENV")
     _visibility_check(ptok, pid)
+    _ig_state(ptok, pid)
     return 0
 
 
