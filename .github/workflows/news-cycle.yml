@@ -59,6 +59,13 @@ jobs:
           RU_MODEL: ${{ vars.RU_MODEL }}
           RU_BASE_URL: ${{ vars.RU_BASE_URL }}
           RU_TIMEOUT: 40
+          # 2 Oct night: push-now runs raised the shared daily translator budget
+          # to 200 while THIS workflow still defaulted to 46/150 - so the hourly
+          # relay froze at 200/150 ("HARD budget reached") for the rest of the
+          # day. Owner law: the budget must NEVER be the reason the pipeline
+          # goes silent. Align both workflows; the file resets at IST midnight.
+          RU_DAILY_CAP: 200
+          RU_DAILY_HARD: 220
           GEMINI_API_KEY: ${{ secrets.GEMINI_API_KEY }}
           OPENAI_API_KEY: ${{ secrets.OPENAI_API_KEY || secrets.OPENAI_API_KETS }}
           DIGEST_CATCHUP: ${{ github.event.inputs.catchup || '0' }}
