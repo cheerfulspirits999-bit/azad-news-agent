@@ -39,6 +39,22 @@ sys.path.insert(0, BASE)
 # (a Python traceback) even though the Facebook connection was fine. A real
 # Facebook failure prints "FB CHECK FAILED" and exits 5 - never confuse the
 # two again: the patrol must be able to test the Page with zero image deps.
+#
+# render.py (and therefore PIL) is reached ONLY through _render(), never at
+# module import time. dup_check() needs render.jaccard() too, and a lazy
+# `import render as R` inside run() alone left R undefined in dup_check ->
+# NameError -> every publish died with a traceback (2 Oct push-now run).
+R = None
+
+
+def _render():
+    """Lazily import the branded card renderer (PIL) and cache it."""
+    global R
+    if R is None:
+        import render as _r
+        R = _r
+    return R
+
 
 CFG = json.load(open(os.path.join(BASE, "config.json"), encoding="utf-8"))
 STATE = os.path.join(BASE, "state")
@@ -104,7 +120,7 @@ def dup_check(story, thresh):
                        for u in story.get("source_urls", [])
                        for ru in rec_urls)
         same_topic = rec.get("topic") == story.get("topic")
-        sim = R.jaccard(title, rec.get("headline", "")) if title else 0
+        sim = _render().jaccard(title, rec.get("headline", "")) if title else 0
         if same_url or (same_topic and sim >= thresh):
             hits.append(rec)
     return hits
@@ -401,7 +417,7 @@ def run(story_path, do_publish):
         return 3
 
     os.makedirs(OUT, exist_ok=True)
-    import render as R  # lazy: --check-fb must run without PIL (see note above)
+    R = _render()  # lazy: --check-fb must run without PIL (see note above)
     png = os.path.join(OUT, f"{slug}.png")
     path, meta = R.render(story, png)
     path, _sz = ensure_under_10mb(path)   # owner 23 Sep: post ONLY if < 10 MB
