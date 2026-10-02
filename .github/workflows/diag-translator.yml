@@ -1,0 +1,99 @@
+name: diag-translator
+on:
+  workflow_dispatch: {}
+permissions:
+  contents: read
+jobs:
+  probe:
+    runs-on: ubuntu-latest
+    timeout-minutes: 8
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with: { python-version: "3.11" }
+      - run: pip install -r requirements.txt -q
+      - name: probe every translator lane (read-only, posts nothing)
+        env:
+          RU_API_KEY: ${{ secrets.ROMAN_URDU_API_KEY }}
+          GEMINI_API_KEY: ${{ secrets.GEMINI_API_KEY }}
+          OPENAI_API_KEY: ${{ secrets.OPENAI_API_KEY || secrets.OPENAI_API_KETS }}
+          GROQ_API_KEY: ${{ secrets.GROQ_API_KEY }}
+          RU_BASE_URL: ${{ vars.RU_BASE_URL }}
+          RU_PROVIDER: ${{ vars.RU_PROVIDER }}
+          RU_MODEL: ${{ vars.RU_MODEL }}
+          RU_TIMEOUT: "30"
+        run: |
+          python3 - <<'PY'
+          import os, sys, json, urllib.request, urllib.error
+          sys.path.insert(0, "news_agent")
+          import roman_urdu
+          import roman_urdu_translator.roman_urdu as eng
+
+          def mask(k):
+              return f"set(len={len(k)})" if k else "MISSING"
+
+          print("=" * 68)
+          print("KEYS PRESENT (values never printed)")
+          print("=" * 68)
+          for v in ("RU_API_KEY", "GEMINI_API_KEY", "OPENAI_API_KEY", "GROQ_API_KEY"):
+              print(f"  {v:16s} {mask(os.environ.get(v, ''))}")
+          print(f"  RU_BASE_URL     {os.environ.get('RU_BASE_URL') or '(openai default)'}")
+          print(f"  openai endpoint {eng.ENDPOINTS['openai']}")
+
+          lines = ["Telangana government approves a new data centre policy",
+                   "Officials say the project will create five thousand jobs",
+                   "The cabinet also cleared a single-window clearance system"]
+
+          # ---- raw HTTP probe: does a :free model even answer with this key?
+          print()
+          print("=" * 68)
+          print("RAW HTTP PROBE - one OpenRouter :free model, real RU_API_KEY")
+          print("=" * 68)
+          body = json.dumps({
+              "model": "nvidia/nemotron-3-ultra-550b-a55b:free",
+              "messages": [{"role": "user", "content": "Reply with the single word OK"}],
+              "max_tokens": 8,
+          }).encode()
+          req = urllib.request.Request(
+              eng.ENDPOINTS["openai"], data=body, method="POST",
+              headers={"Authorization": "Bearer " + os.environ.get("RU_API_KEY", ""),
+                       "Content-Type": "application/json"})
+          try:
+              with urllib.request.urlopen(req, timeout=30) as r:
+                  print(f"  HTTP {r.status}: {r.read()[:200].decode('utf8', 'replace')}")
+          except urllib.error.HTTPError as e:
+              print(f"  HTTP {e.code}: {e.read()[:400].decode('utf8', 'replace')}")
+          except Exception as e:
+              print(f"  {type(e).__name__}: {e}")
+
+          # ---- engine-level result for the same free model
+          print()
+          print("=" * 68)
+          print("ENGINE - free model, few-shot ON (what the digest actually gets)")
+          print("=" * 68)
+          r = roman_urdu.translate_lines(
+              lines, model="nvidia/nemotron-3-ultra-550b-a55b:free", use_few_shot=True)
+          print("  method   :", r.get("method"))
+          print("  ok       :", r.get("ok"))
+          print("  problems :", str(r.get("problems"))[:300])
+          for l in (r.get("lines") or [])[:3]:
+              print("   line >", l[:100])
+
+          # ---- gemini lane, only when a key exists
+          print()
+          print("=" * 68)
+          print("GEMINI direct lane (free tier, own key)")
+          print("=" * 68)
+          gk = os.environ.get("GEMINI_API_KEY", "")
+          if gk:
+              r2 = roman_urdu.translate_lines(
+                  lines, provider="gemini", model="gemini-2.5-flash",
+                  api_key=gk, use_few_shot=True)
+              print("  method   :", r2.get("method"), "| ok:", r2.get("ok"))
+              print("  problems :", str(r2.get("problems"))[:300])
+              for l in (r2.get("lines") or [])[:3]:
+                  print("   line >", l[:100])
+          else:
+              print("  GEMINI_API_KEY secret is not set -> lane skipped.")
+              print("  This is the free lane that needs a key (aistudio.google.com/apikey).")
+          PY
