@@ -1304,7 +1304,21 @@ def one_cycle():
         f"{len(cyc['candidates'])} candidates scanned ===")
 
 
+def _pin_guard():
+    """2 Oct night (owner: "national reporter is also getting posted"): the
+    first line of defence. publish._lock_page already refuses a foreign page
+    at post time; this refuses BEFORE any work happens, so a wrong FB_PAGE_ID
+    can never even build a card. An empty pin is left to the publisher, which
+    reports 'not connected' instead of guessing."""
+    _pid = os.environ.get("FB_PAGE_ID", "").strip()
+    if _pid and _pid != publish.AZAD_PAGE_ID:
+        log("REFUSED: FB_PAGE_ID=" + _pid + " is not Azad Daily ("
+            + publish.AZAD_PAGE_ID + "); this agent never posts elsewhere")
+        raise SystemExit(9)
+
+
 def main():
+    _pin_guard()
     if "--once" in sys.argv:
         log("single-cycle mode (--once)")
         one_cycle()
