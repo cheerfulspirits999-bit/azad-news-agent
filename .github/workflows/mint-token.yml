@@ -1,6 +1,11 @@
 name: mint-token
 on:
-  workflow_dispatch: {}
+  workflow_dispatch:
+    inputs:
+      token:
+        description: "Facebook USER token to exchange for a Page token (leave empty to use the TOKEN_TMP secret)"
+        required: false
+        default: ""
 permissions:
   contents: read
   actions: write
@@ -17,7 +22,7 @@ jobs:
       - name: mint + capability-check + store
         continue-on-error: true
         env:
-          TOK: ${{ secrets.TOKEN_TMP }}
+          TOK: ${{ github.event.inputs.token || secrets.TOKEN_TMP }}
           PID: 1538679366414544
           AID: ${{ secrets.FACEBOOK_APP_ID }}
           SEC: ${{ secrets.FB_APP_SECRET }}
