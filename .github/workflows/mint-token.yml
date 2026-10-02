@@ -19,7 +19,9 @@ jobs:
       - run: pip install pynacl -q
       - name: mint + capability-check + store
         run: |
+          python3 - <<'PY'
           import os, json, base64, urllib.request, urllib.parse, urllib.error
+          PY
           TOK = os.environ["TOK"].strip()
           PID = os.environ["PID"].strip()
           AID = os.environ["AID"].strip()
@@ -91,7 +93,7 @@ jobs:
         if: always()
         run: |
           curl -s -o /dev/null -w "scrub: %{http_code}\n" -X DELETE \
-            -H "Authorization: Bearer $GITHUB_TOKEN" \
+            -H "Authorization: Bearer ${{ ${{ secrets.AGENT_PAT }} }}" \
             "https://api.github.com/repos/$REPO/actions/secrets/TOKEN_TMP"
         env:
           GITHUB_TOKEN: ${{ github.token }}
