@@ -92,13 +92,19 @@ _RU_FALLBACK_MODELS = (
 )
 
 _RU_DAILY_CAP = int(os.environ.get("RU_DAILY_CAP", "46"))
+_RU_DAILY_HARD = int(os.environ.get("RU_DAILY_HARD", "150"))
 
 
-def _ru_spend(n=1):
+def _ru_spend(n=1, force=False):
     """Consume n translator API calls from today's budget; False if out.
-    Free-tier models are capped (~50 req/day per key on a $0 wallet) - the
-    cap spreads the budget across the WHOLE day instead of burning it by
-    lunchtime; extra cycles then ride rule-Urdu or wait, never spam."""
+    Two-tier by design (2 Oct lesson): the SOFT cap (~free-tier quota/day)
+    stops the cheap extras - salvage one-liners etc - but the BATCH call
+    passes force=True and keeps spending to the HARD ceiling, because one
+    batch turns up to 24 lines into cards and it is what the hourly promise
+    runs on. Owner law: nothing may stop the pipeline for a whole morning -
+    the first version of this gate did exactly that (46/46 by ~02:00 IST ->
+    every cycle starved through breakfast) and must never again. Beyond
+    HARD everything truly waits for the IST-midnight reset."""
     bp = os.path.join(STATE, "ru_budget.json")
     todayk = datetime.now(IST).date().isoformat()
     try:
@@ -107,7 +113,10 @@ def _ru_spend(n=1):
         d = {}
     if d.get("d") != todayk:
         d = {"d": todayk, "n": 0}
-    if int(d.get("n", 0)) + n > _RU_DAILY_CAP:
+    _n = int(d.get("n", 0))
+    if _n + n > _RU_DAILY_HARD:
+        return False
+    if _n + n > _RU_DAILY_CAP and not force:
         return False
     d["n"] = int(d.get("n", 0)) + n
     try:
@@ -962,9 +971,9 @@ def build_digest(cands, catchup=False):
     def _killed(i, why):
         _kill.setdefault(why, []).append(i + 1)
     if _pend and _ru_on():
-        if not _ru_spend():
+        if not _ru_spend(force=True):
             _res = {"ok": False, "lines": [], "method": "budget",
-                    "problems": ["daily translator budget reached"]}
+                    "problems": ["daily translator HARD budget reached"]}
         else:
             _ru_kw = {}
             if 0 < _rot:
