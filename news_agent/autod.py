@@ -129,16 +129,27 @@ def _ru_spend(n=1, force=False):
 def _ru_attempts():
     """(label, kwargs) salvage attempts: primary first (one-line prompts
     translate where the batch echo'd), then free-tier, direct keys (skipped
-    silently until the owner's git secrets exist), then paid slugs."""
+    silently until the owner's git secrets exist), then paid slugs.
+
+    3 Oct: every free/salvage attempt now carries use_few_shot=True. The
+    owner will not top up OpenRouter ("free tier option only"), so the free
+    lane IS the pipeline - and it was answering with the English input
+    verbatim ("Lines [1,2,3,4] copy 4+ consecutive English words"), which our
+    own echo gate correctly kills, so the digest starved all night. The
+    engine ships few-shot examples that teach exactly the output contract
+    (same bullet count, names/numbers untouched, idiomatic Roman Urdu); the
+    shim had been forcing use_few_shot=False. A weak free model needs them.
+    The primary lane keeps its old setting."""
     yield "primary", {}
     for m in _RU_FALLBACK_MODELS:
         if isinstance(m, tuple):
             prov, mdl, envi = m
             k = os.environ.get(envi, "")
             if k:
-                yield mdl, {"provider": prov, "model": mdl, "api_key": k}
+                yield mdl, {"provider": prov, "model": mdl, "api_key": k,
+                            "use_few_shot": True}
         else:
-            yield m, {"model": m}
+            yield m, {"model": m, "use_few_shot": True}
 
 
 def _line_h(text):
