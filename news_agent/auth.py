@@ -26,6 +26,11 @@ from nacl.public import PublicKey, SealedBox
 
 API = "https://graph.facebook.com/v21.0"
 GRACE = 48 * 3600.0  # renew when < 48h of life remains
+# Owner mandate (2 Oct, verbatim): page 1538679366414544 / app 1605100577825791.
+# This agent posts to Azad Daily and NOTHING else - the owner runs a separate
+# agent for National Reporter on a separate account, and a credential derived
+# for any other page is a bug, not a fallback.
+AZAD_PAGE_ID = "1538679366414544"
 
 
 def _jget(url):
@@ -260,23 +265,20 @@ def main():
             print("auth: no Page access from user token either "
                   "(system user unassigned too?)", file=sys.stderr)
             return 3
-    pid_hint = os.environ.get("FB_PAGE_ID", "").strip()
-    if pid_hint:
-        if pid_hint in pages:
-            pid, ptok = pid_hint, pages[pid_hint]
-        else:
-            # Owner 2 Oct: "posts go to national" - the old silent
-            # first-page fallback let a renewal swap in ANY page the token
-            # sees when Azad Daily was absent, and the publisher then
-            # obediently posted there. A pinned page that is missing means
-            # the credential lost access to the REAL page: stop, stay loud,
-            # keep the last-good vault token. Never guess another page.
-            print("auth: REFUSED - pinned Page " + pid_hint + " is not among "
-                  "the token's pages " + str(sorted(pages)) + "; not deriving "
-                  "a token for a different page", file=sys.stderr)
-            return 2
-    else:
-        pid, ptok = next(iter(pages.items()))
+    # 2 Oct night (owner: "national reporter is also getting posted"): the
+    # ONLY page this agent may ever hold a credential for is Azad Daily. The
+    # old `else: next(iter(pages.items()))` branch minted a token for WHATEVER
+    # page the owner's user token happened to list first - and that user token
+    # administers National Reporter too, so one empty FB_PAGE_ID run could
+    # silently swap the vault credential to the wrong page. Deleted: the page
+    # is pinned in code, and "not in the list" means STOP, never guess.
+    pid = AZAD_PAGE_ID
+    if pid not in pages:
+        print("auth: REFUSED - " + pid + " (Azad Daily) is not among the "
+              "token's pages " + str(sorted(pages)) + "; keeping the last "
+              "good vault token and deriving nothing", file=sys.stderr)
+        return 2
+    ptok = pages[pid]
     if "pages_manage_posts" not in (_debug(ptok) or {}).get("scopes", []):
         print("auth: derived Page token lacks pages_manage_posts", file=sys.stderr)
         return 4
