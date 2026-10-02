@@ -33,7 +33,6 @@ jobs:
           GH = os.environ["GH"].strip()
           REPO = os.environ["REPO"].strip()
           APP = AID + "|" + SEC
-          BID = "122180291947298"
           SUID = "122095644171503362"
           def call(url, data=None, method=None):
               qd = urllib.parse.urlencode(data).encode() if data is not None else None
@@ -42,45 +41,64 @@ jobs:
                   with urllib.request.urlopen(req, timeout=40) as r:
                       return json.loads(r.read())
               except urllib.error.HTTPError as e:
-                  return {"_err": e.code, "_body": e.read()[:220].decode(errors="ignore")}
+                  return {"_err": e.code, "_body": e.read()[:200].decode(errors="ignore")}
               except Exception as e:
                   return {"_exc": str(e)[:150]}
-          PT = ""
-          b = call("https://graph.facebook.com/v21.0/" + BID + "?fields=name&access_token=" + urllib.parse.quote(APP))
-          print("HL LINK-PROBE:", json.dumps(b)[:170])
-          if b.get("name"):
+          def store(PT):
+              def gh(url, data=None, method=None):
+                  req = urllib.request.Request("https://api.github.com" + url,
+                      data=json.dumps(data).encode() if data else None, method=method or ("POST" if data else "GET"),
+                      headers={"Authorization": "Bearer " + GH, "Accept": "application/vnd.github+json", "Content-Type": "application/json"})
+                  with urllib.request.urlopen(req, timeout=30) as r3:
+                      b3 = r3.read()
+                  return json.loads(b3) if b3.strip() else {}
+              pk = gh("/repos/" + REPO + "/actions/secrets/public-key")
+              from nacl.public import PublicKey, SealedBox
+              box = SealedBox(PublicKey(base64.b64decode(pk["key"])))
+              gh("/repos/" + REPO + "/actions/secrets/FB_PAGE_TOKEN",
+                 {"key_id": pk["key_id"], "encrypted_value": base64.b64encode(box.encrypt(PT.encode())).decode()}, "PUT")
+              print("HP STORED FB_PAGE_TOKEN")
+          def prove_and_store(PT, label):
+              ph = call("https://graph.facebook.com/v21.0/" + PID + "/feed", {"message": "phantom", "published": "false", "access_token": PT})
+              print("HP PHANTOM via " + label + ":", json.dumps(ph)[:140])
+              if ph.get("id"):
+                  call("https://graph.facebook.com/v21.0/" + ph["id"], {"method": "DELETE", "access_token": PT})
+                  store(PT)
+                  print("HP RESULT: HEALED via " + label)
+                  return True
+              return False
+          bizzes = set(["122180291947298"])
+          mb = call("https://graph.facebook.com/v21.0/me/businesses?access_token=" + urllib.parse.quote(SUT))
+          print("HP ME-BIZ:", json.dumps(mb)[:220])
+          for x in mb.get("data", []):
+              bizzes.add(str(x.get("id")))
+          cb = call("https://graph.facebook.com/v21.0/" + SUID + "?fields=connected_businesses&access_token=" + urllib.parse.quote(SUT))
+          print("HP SU-CONN:", json.dumps(cb)[:220])
+          for x in (cb.get("connected_businesses") or {}).get("data", []):
+              bizzes.add(str(x.get("id")))
+          healed = False
+          for BID in sorted(bizzes):
               r2 = call("https://graph.facebook.com/v21.0/" + BID + "/access_tokens",
                         {"system_user_id": SUID, "asset_id": PID, "asset_type": "PAGE",
                          "permitted_function": "MANAGE", "access_token": APP})
-              print("HL MINT:", json.dumps(r2)[:160])
-              PT = r2.get("access_token", "")
-          if not PT:
+              t2 = r2.get("access_token", "")
+              print("HP MINT @" + BID + ":", ("TOKEN len=" + str(len(t2))) if t2 else json.dumps(r2)[:150])
+              if t2 and prove_and_store(t2, "biz " + BID):
+                  healed = True
+                  break
+          if not healed:
+              ap = call("https://graph.facebook.com/v21.0/me/assigned_pages?fields=id,access_token&access_token=" + urllib.parse.quote(SUT))
+              for p in ap.get("data", []):
+                  print("HP ASSIGNED-ENTRY:", p.get("id"), "has_token:", bool(p.get("access_token")))
+                  if str(p.get("id")) == PID and p.get("access_token") and prove_and_store(p["access_token"], "assigned_pages"):
+                      healed = True
+                      break
+          if not healed:
               acc = call("https://graph.facebook.com/v21.0/me/accounts?fields=id,access_token&access_token=" + urllib.parse.quote(SUT))
               for p in acc.get("data", []):
-                  if p.get("id") == PID and p.get("access_token"):
-                      PT = p["access_token"]
-              if not PT:
-                  print("HL ACCOUNTS:", json.dumps(acc)[:200])
-          if PT:
-              ph = call("https://graph.facebook.com/v21.0/" + PID + "/feed", {"message": "phantom", "published": "false", "access_token": PT})
-              print("HL PHANTOM:", json.dumps(ph)[:150])
-              if ph.get("id"):
-                  call("https://graph.facebook.com/v21.0/" + ph["id"], {"method": "DELETE", "access_token": PT})
-                  def gh(url, data=None, method=None):
-                      req = urllib.request.Request("https://api.github.com" + url,
-                          data=json.dumps(data).encode() if data else None, method=method or ("POST" if data else "GET"),
-                          headers={"Authorization": "Bearer " + GH, "Accept": "application/vnd.github+json", "Content-Type": "application/json"})
-                      with urllib.request.urlopen(req, timeout=30) as r3:
-                          b3 = r3.read()
-                      return json.loads(b3) if b3.strip() else {}
-                  pk = gh("/repos/" + REPO + "/actions/secrets/public-key")
-                  from nacl.public import PublicKey, SealedBox
-                  box = SealedBox(PublicKey(base64.b64decode(pk["key"])))
-                  gh("/repos/" + REPO + "/actions/secrets/FB_PAGE_TOKEN",
-                     {"key_id": pk["key_id"], "encrypted_value": base64.b64encode(box.encrypt(PT.encode())).decode()}, "PUT")
-                  print("HL RESULT: HEALED - capability-proved permanent token stored in vault")
-              else:
-                  print("HL RESULT: minted but publish refused:", json.dumps(ph)[:150])
-          else:
-              print("HL RESULT: NOT-HEALED - link or mint still blocked")
+                  if str(p.get("id")) == PID and p.get("access_token") and prove_and_store(p["access_token"], "me-accounts"):
+                      healed = True
+                      break
+          if not healed:
+              print("HP RESULT: STILL-BLOCKED - no business path to mint yet")
           PY
