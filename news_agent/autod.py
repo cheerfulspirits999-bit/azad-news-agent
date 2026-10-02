@@ -1140,7 +1140,7 @@ def one_cycle():
     # 28 Sep ~15:45 owner: "pls now post hourly" - catch-up draining is
     # over; steady hourly card rhythm from here, any hour of the day.
     # (55 so the 10-min cycle lands each hour without skipping a slot.)
-    _due = gap_min >= 55
+    _due = gap_min >= 55 or os.environ.get("DIGEST_FORCE") == "1"  # owner 2 Oct: manual push
     global _DIGEST_NOTE
     if not (ncards < cap and _due and posted != 5):
         _DIGEST_NOTE = (f"gate closed: ncards {ncards}/{cap}, gap {gap_min:.0f} min, "
