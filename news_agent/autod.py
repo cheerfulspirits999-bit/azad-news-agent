@@ -1447,12 +1447,32 @@ def main():
                     pass
                 if time.time() - _last > 6 * 3600:
                     json.dump({"at": time.time()}, open(_cfile, "w"))
-                    alert("OpenRouter credits are exhausted - translator returns 402",
-                          "Cards paused on the Roman-Urdu step ONLY (quality gates "
-                          "refuse fallback pseudo-translation). Add ~$5 at "
-                          "openrouter.ai/credits - total spend to date was $0.20 - and "
-                          "full posting resumes automatically on the next cycle. "
-                          "Feeds keep scanning meanwhile; rule-Urdu cards still publish.")
+                    # 3 Oct: the old text told the owner to "add ~$5 at
+                    # openrouter.ai/credits" - he has explicitly refused any
+                    # top-up ("free tier option only"), so the alert must name
+                    # the VERIFIED cause and the FREE ways out, not a purchase.
+                    # Verified by raw HTTP probe (news_agent/state/
+                    # free_lane_check.json, refreshed daily at 00:05 UTC):
+                    #   * OpenRouter :free tier = 50 requests/day on a $0
+                    #     wallet -> HTTP 429 until 00:00 UTC ("Add 10 credits
+                    #     to unlock 1000/day")
+                    #   * the owner's OpenAI key is VALID but has no credits
+                    #     -> HTTP 429 insufficient_quota
+                    #   * Gemini / Groq lanes have no key set
+                    alert("Roman-Urdu translator has no working free lane",
+                          "The hourly digest cannot translate, so it publishes 0. "
+                          "Verified causes (see news_agent/state/free_lane_check.json, "
+                          "refreshed daily): OpenRouter's free tier is capped at 50 "
+                          "requests/day and today's are used (HTTP 429 until 00:00 UTC); "
+                          "the OpenAI key is valid but has $0 credits. "
+                          "FREE fix, ~1 minute, no card: create a key at "
+                          "aistudio.google.com/apikey (or console.groq.com/keys) and "
+                          "store it as the repo secret GEMINI_API_KEY (or GROQ_API_KEY) "
+                          "- the code already tries that lane first. "
+                          "The free OpenRouter quota also returns at 00:00 UTC "
+                          "(05:30 IST) with 50 calls/day. "
+                          "Editorial inbox cards still publish immediately - they "
+                          "bypass the translator entirely.")
         except Exception:
             pass
         time.sleep(_slp)
