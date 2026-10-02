@@ -1,0 +1,61 @@
+# one-shot: owner-requested connection test - ONE real cycle, then stop.
+name: posttest
+on: { workflow_dispatch: {} }
+permissions: { contents: write, actions: write }
+concurrency:
+  group: news-cycle
+  cancel-in-progress: false
+jobs:
+  cycle:
+    runs-on: ubuntu-latest
+    timeout-minutes: 25
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with: { python-version: "3.11" }
+      - run: pip install -r requirements.txt
+      - name: token self-renewal (auth.py)
+        continue-on-error: true
+        env:
+          FB_PAGE_TOKEN: ${{ secrets.FB_PAGE_TOKEN }}
+          RU_API_KEY: ${{ secrets.ROMAN_URDU_API_KEY }}
+          RU_PROVIDER: ${{ vars.RU_PROVIDER }}
+          RU_MODEL: ${{ vars.RU_MODEL }}
+          RU_BASE_URL: ${{ vars.RU_BASE_URL }}
+          FB_APP_ID: ${{ secrets.FB_APP_ID || secrets.FACEBOOK_APP_ID }}
+          FB_APP_SECRET: ${{ secrets.FB_APP_SECRET }}
+          FB_REFRESH_TOKEN: ${{ secrets.FB_REFRESH_TOKEN }}
+          FB_SU_TOKEN: ${{ secrets.FB_SU_TOKEN }}
+          FB_PAGE_ID: ${{ secrets.FB_PAGE_ID }}
+          GH_OWNER: ${{ github.repository_owner }}
+          GH_REPO: ${{ github.event.repository.name }}
+          GITHUB_TOKEN: ${{ github.token }}
+          AGENT_PAT: ${{ secrets.AGENT_PAT }}
+        run: python3 news_agent/auth.py
+      - name: ONE cycle (publish if allowed)
+        env:
+          IG_DUALPOST: ${{ vars.IG_DUALPOST }}
+          FB_PAGE_TOKEN: ${{ secrets.FB_PAGE_TOKEN }}
+          FB_PAGE_ID: ${{ secrets.FB_PAGE_ID }}
+          FB_APP_SECRET: ${{ secrets.FB_APP_SECRET }}
+          FB_REFRESH_TOKEN: ${{ secrets.FB_REFRESH_TOKEN }}
+          RU_API_KEY: ${{ secrets.ROMAN_URDU_API_KEY }}
+          RU_PROVIDER: ${{ vars.RU_PROVIDER }}
+          RU_MODEL: ${{ vars.RU_MODEL }}
+          RU_BASE_URL: ${{ vars.RU_BASE_URL }}
+          RU_TIMEOUT: 40
+          GEMINI_API_KEY: ${{ secrets.GEMINI_API_KEY }}
+          OPENAI_API_KEY: ${{ secrets.OPENAI_API_KEY || secrets.OPENAI_API_KETS }}
+          DIGEST_CATCHUP: ${{ github.event.inputs.catchup || '0' }}
+        run: python3 news_agent/autod.py --once
+      - name: commit agent memory
+        if: always()
+        run: |
+          git config user.name "azad-news-agent"
+          git config user.email "agent@localhost"
+          git add news_agent/state news_agent/stories
+          if ! git diff --cached --quiet; then
+          git commit -m "posttest $(date -u +%FT%TZ)"
+          git pull --rebase origin "$GITHUB_REF_NAME" || true
+          git push || true
+          fi
