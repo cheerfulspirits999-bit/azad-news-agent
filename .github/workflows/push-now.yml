@@ -26,7 +26,7 @@ jobs:
           RU_PROVIDER: ${{ vars.RU_PROVIDER }}
           RU_MODEL: ${{ vars.RU_MODEL }}
           RU_BASE_URL: ${{ vars.RU_BASE_URL }}
-          RU_TIMEOUT: 40
+          RU_TIMEOUT: 12
           RU_DAILY_CAP: 200
           RU_DAILY_HARD: 220
           GEMINI_API_KEY: ${{ secrets.GEMINI_API_KEY }}
@@ -45,7 +45,7 @@ jobs:
           RU_PROVIDER: ${{ vars.RU_PROVIDER }}
           RU_MODEL: ${{ vars.RU_MODEL }}
           RU_BASE_URL: ${{ vars.RU_BASE_URL }}
-          RU_TIMEOUT: 40
+          RU_TIMEOUT: 12
           RU_DAILY_CAP: 200
           RU_DAILY_HARD: 220
           GEMINI_API_KEY: ${{ secrets.GEMINI_API_KEY }}

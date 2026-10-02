@@ -73,12 +73,39 @@ if _ENGINE_NAME == "owner-package":
     _orig_translate_lines = _mod.translate_lines
     _orig_translate_news = _mod.translate_news
 
+    _OPENAI_REAL = "https://api.openai.com/v1/chat/completions"
+
+    def _direct_openai(kw):
+        # 2 Oct (2): RU_BASE_URL points the openai provider at OpenRouter for
+        # the free-model primary. The owner's DIRECT OpenAI key attempts (the
+        # fallback chain's ("openai", model, OPENAI_API_KEY) tuple) inherit
+        # that base too, which 401s them at OpenRouter and silently wastes
+        # every storm-cycle retry. When - and only when - an attempt carries
+        # its own api_key, route it at the real OpenAI endpoint.
+        return bool(kw.get("api_key")) and str(kw.get("provider", "")).lower() == "openai"
+
     def translate_lines(lines, **kw):
         kw.setdefault("use_few_shot", False)
+        if _direct_openai(kw):
+            saved = _mod.ENDPOINTS.get("openai")
+            _mod.ENDPOINTS["openai"] = _OPENAI_REAL
+            try:
+                return _orig_translate_lines(lines, **kw)
+            finally:
+                if saved is not None:
+                    _mod.ENDPOINTS["openai"] = saved
         return _orig_translate_lines(lines, **kw)
 
     def translate_news(text, **kw):
         kw.setdefault("use_few_shot", False)
+        if _direct_openai(kw):
+            saved = _mod.ENDPOINTS.get("openai")
+            _mod.ENDPOINTS["openai"] = _OPENAI_REAL
+            try:
+                return _orig_translate_news(text, **kw)
+            finally:
+                if saved is not None:
+                    _mod.ENDPOINTS["openai"] = saved
         return _orig_translate_news(text, **kw)
 
     _mod.translate_lines = translate_lines
