@@ -108,6 +108,25 @@ def _export_current():
             f.write(f"FB_PAGE_TOKEN={tok}\nFB_PAGE_ID={pid}\n")
     return tok, pid
 
+def _su_pages():
+    """System-user path (owner 2 Oct): the Business-portfolio system user
+    token (secret FB_SU_TOKEN) is never tied to a browser session, so its
+    assigned page tokens are the most durable credential we can hold.
+    Returns {page_id: page_access_token} - empty when unset/unassigned."""
+    su = os.environ.get("FB_SU_TOKEN", "")
+    if not su:
+        return {}
+    try:
+        d = _jget(f"{API}/me/assigned_pages?fields=id,access_token&limit=20"
+                  f"&access_token={su}")
+        return {p["id"]: p["access_token"] for p in d.get("data", [])
+                if p.get("access_token")}
+    except Exception as e:
+        print(f"auth: system-user page list failed ({str(e)[:120]})",
+              file=sys.stderr)
+        return {}
+
+
 def _ig_state(tok, pid):
     """Owner 2 Oct: the page's linked Instagram gets the same card. This
     resolves the link + the token's granted scopes ONCE PER RUN and drops
@@ -129,6 +148,11 @@ def _ig_state(tok, pid):
         out["scopes"] = sorted(x.get("permission", "") for x in pr.get("data", []))
     except Exception as e:
         out["reason"] = str(e)[:200]
+    if not out["scopes"]:
+        # Page tokens (incl. system-user derived) cannot list /me/permissions;
+        # debug_token on themselves works and carries the same scope array.
+        d2 = _debug(tok) or {}
+        out["scopes"] = sorted(d2.get("scopes", []))
     try:
         sd = os.path.join(os.path.dirname(os.path.abspath(__file__)), "state")
         with open(os.path.join(sd, "ig_link.json"), "w", encoding="utf-8") as f:
@@ -194,30 +218,53 @@ def main():
     # publish.py's piggyback reads state/ig_link.json, so a skipped or
     # failed visibility/feed probe must never cost us the IG answer.
     _ig_state(tok, os.environ.get("FB_PAGE_ID", ""))
+    upgrade = False
     if not _need_renew(tok):
+        d0 = _debug(tok) or {}
+        if (os.environ.get("FB_SU_TOKEN")
+                and "instagram_basic" not in (d0.get("scopes") or [])):
+            upgrade = True
+            print("auth: page token valid but IG-blind - upgrading via "
+                  "system user")
+    if upgrade or _need_renew(tok):
+        pages = _su_pages()
+        if pages:
+            print(f"auth: system-user grants {len(pages)} page token(s)")
+    if not upgrade and not _need_renew(tok):
         print("auth: Page token healthy, nothing to do")
         try:
             _visibility_check(tok)
         except Exception as _ve:
             print(f"auth: visibility probe failed ({_ve}) - non-fatal")
         return 0
-    app_id = (os.environ.get("FB_APP_ID", "")
-              or os.environ.get("FACEBOOK_APP_ID", ""))
-    app_secret = os.environ.get("FB_APP_SECRET", "")
-    refresh = os.environ.get("FB_REFRESH_TOKEN", "")
-    if not (app_id and app_secret and refresh):
-        print("auth: renewal IMPOSSIBLE - set FB_APP_ID (or the alias this "
-              "repo actually uses, FACEBOOK_APP_ID) + FB_APP_SECRET + "
-              "FB_REFRESH_TOKEN; also confirm all three reach this step's env",
-              file=sys.stderr)
-        return 2
-    user = _exchange(refresh, app_id, app_secret)          # fresh 60d
-    pages = _page_tokens(user)
+    user = None
     if not pages:
-        print("auth: user token has no Page access (token from wrong app?)",
-              file=sys.stderr)
-        return 3
-    pid, ptok = next(iter(pages.items()))
+        app_id = (os.environ.get("FB_APP_ID", "")
+                  or os.environ.get("FACEBOOK_APP_ID", ""))
+        app_secret = os.environ.get("FB_APP_SECRET", "")
+        refresh = os.environ.get("FB_REFRESH_TOKEN", "")
+        if not (app_id and app_secret and refresh):
+            print("auth: renewal IMPOSSIBLE - set FB_APP_ID (or the alias "
+                  "this repo actually uses, FACEBOOK_APP_ID) + FB_APP_SECRET "
+                  "+ FB_REFRESH_TOKEN (or FB_SU_TOKEN); confirm they reach "
+                  "this step's env", file=sys.stderr)
+            return 2
+        try:
+            user = _exchange(refresh, app_id, app_secret)  # fresh 60d
+            pages = _page_tokens(user)
+        except Exception as _ue:
+            print(f"auth: user-token renewal failed ({str(_ue)[:140]})",
+                  file=sys.stderr)
+            pages = {}
+        if not pages:
+            print("auth: no Page access from user token either "
+                  "(system user unassigned too?)", file=sys.stderr)
+            return 3
+    pid_hint = os.environ.get("FB_PAGE_ID", "")
+    if pid_hint and pid_hint in pages:
+        pid, ptok = pid_hint, pages[pid_hint]
+    else:
+        pid, ptok = next(iter(pages.items()))
     if "pages_manage_posts" not in (_debug(ptok) or {}).get("scopes", []):
         print("auth: derived Page token lacks pages_manage_posts", file=sys.stderr)
         return 4
@@ -230,7 +277,10 @@ def main():
     # THIS job's publisher already relies on (2 Oct incident: old order let
     # a failed PUT strand a stale token in the vault while GITHUB_ENV never
     # got the new one; the step still looked green via continue-on-error).
-    for _n, _v in (("FB_PAGE_TOKEN", ptok), ("FB_REFRESH_TOKEN", user)):
+    _pairs = [("FB_PAGE_TOKEN", ptok)]
+    if user:
+        _pairs.append(("FB_REFRESH_TOKEN", user))
+    for _n, _v in _pairs:
         try:
             _set_secret(_n, _v)
         except Exception as _se:
