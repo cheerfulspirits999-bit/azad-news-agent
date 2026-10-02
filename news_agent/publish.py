@@ -485,7 +485,16 @@ def run(story_path, do_publish):
                 verify_public(post_id, pg)
             except Exception as _ve:
                 print(f"VISIBILITY: check skipped ({_ve})")
-            ig_post_id = _ig_publish(png, slug, caption, pg)
+            # Owner 2 Oct ~09:00 IST: page->IG auto-mirror switched ON in
+            # Meta's own settings; Meta now mirrors every page post to
+            # azaddaily99 by itself. The API piggyback stays OFF so we never
+            # double-post; flip IG_DUALPOST=1 (repo var) to take over from
+            # Meta's mirror - machinery is tested and ready.
+            if os.environ.get("IG_DUALPOST", "") == "1":
+                ig_post_id = _ig_publish(png, slug, caption, pg)
+            else:
+                print("IG: handled by Meta page-to-page auto-mirror (owner "
+                      "enabled 2 Oct) - API publish skipped on purpose.")
     except urllib.error.HTTPError as e:
         print(f"\nPUBLISH ERROR {e.code}: {e.read().decode()[:600]}")
         return 5
