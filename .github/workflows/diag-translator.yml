@@ -126,9 +126,9 @@ jobs:
                       print(f"  raw HTTP {r.status}: {r.read()[:200].decode('utf8','replace')}")
                       res["lanes"]["openai_direct_raw"] = {"http": r.status}
               except urllib.error.HTTPError as e:
-                  print(f"  raw HTTP {e.code}: {e.read()[:300].decode('utf8','replace')}")
-                  res["lanes"]["openai_direct_raw"] = {
-                      "http": e.code, "body": e.read()[:0] or ""}
+                  eb = e.read()[:300].decode("utf8", "replace")
+                  print(f"  raw HTTP {e.code}: {eb}")
+                  res["lanes"]["openai_direct_raw"] = {"http": e.code, "body": eb}
               except Exception as e:
                   print(f"  raw {type(e).__name__}: {e}")
                   res["lanes"]["openai_direct_raw"] = {"http": "ERR", "body": str(e)}
