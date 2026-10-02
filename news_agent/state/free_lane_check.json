@@ -1,5 +1,5 @@
 {
- "at": "2026-10-02T20:03:39Z",
+ "at": "2026-10-02T20:05:16Z",
  "keys": {
   "RU_API_KEY": "set(len=73)",
   "GEMINI_API_KEY": "MISSING",
@@ -15,6 +15,10 @@
   "openrouter_free_engine": {
    "skipped": true,
    "reason": "raw probe HTTP 429"
+  },
+  "openai_direct_raw": {
+   "http": 429,
+   "body": ""
   },
   "openai_direct": {
    "method": "fallback",
