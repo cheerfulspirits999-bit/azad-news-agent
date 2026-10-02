@@ -21,7 +21,6 @@ jobs:
           REPO: ${{ github.repository }}
         run: |
           python3 - <<'PY'
-          python3 - <<'PY'
           import os, json, base64, urllib.request, urllib.parse, urllib.error
           PY
           TOK = os.environ["TOK"].strip()
