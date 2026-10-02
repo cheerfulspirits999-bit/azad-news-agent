@@ -23,7 +23,6 @@ jobs:
           SEC: ${{ secrets.FB_APP_SECRET }}
           GH: ${{ secrets.AGENT_PAT }}
           REPO: ${{ github.repository }}
-      - name: run minter
         run: |
           python3 - <<'PY'
           import os, json, base64, urllib.request, urllib.parse, urllib.error
