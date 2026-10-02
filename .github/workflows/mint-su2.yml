@@ -1,0 +1,99 @@
+name: mint-su2
+on:
+  workflow_dispatch: {}
+permissions:
+  contents: read
+  actions: write
+jobs:
+  m:
+    runs-on: ubuntu-latest
+    timeout-minutes: 8
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+      - run: pip install pynacl -q
+      - name: mint via business or page link
+        continue-on-error: true
+        env:
+          SU: ${{ secrets.SU_TMP }}
+          PID: ${{ secrets.FB_PAGE_ID }}
+          AID: ${{ secrets.FACEBOOK_APP_ID }}
+          SEC: ${{ secrets.FB_APP_SECRET }}
+          GH: ${{ secrets.AGENT_PAT }}
+          REPO: ${{ github.repository }}
+        run: |
+          python3 - <<'PY'
+          import os, json, base64, urllib.request, urllib.parse, urllib.error
+          SU = os.environ["SU"].strip()
+          PID = os.environ["PID"].strip()
+          AID = os.environ["AID"].strip()
+          SEC = os.environ["SEC"].strip()
+          GH = os.environ["GH"].strip()
+          REPO = os.environ["REPO"].strip()
+          SUID = "122095644171503362"
+          BIDS = ["122180291947298", "122095644171503362"]
+          APP = AID + "|" + SEC
+          def call(url, data=None, method=None):
+              qd = urllib.parse.urlencode(data).encode() if data is not None else None
+              req = urllib.request.Request(url, data=qd, method=method or ("POST" if data else "GET"))
+              try:
+                  with urllib.request.urlopen(req, timeout=40) as r:
+                      return json.loads(r.read())
+              except urllib.error.HTTPError as e:
+                  return {"_err": e.code, "_body": e.read()[:240].decode(errors="ignore")}
+              except Exception as e:
+                  return {"_exc": str(e)[:180]}
+          for BID in BIDS:
+              b = call("https://graph.facebook.com/v21.0/" + BID + "?fields=name,created_time&access_token=" + urllib.parse.quote(APP))
+              print("C1 biz " + BID + ":", json.dumps(b)[:180])
+              if b.get("name"):
+                  r2 = call("https://graph.facebook.com/v21.0/" + BID + "/access_tokens",
+                            {"system_user_id": SUID, "asset_id": PID, "asset_type": "PAGE",
+                             "permitted_function": "MANAGE", "access_token": urllib.parse.quote(APP)})
+                  print("C2 mint-page-token:", json.dumps(r2)[:200])
+                  tok2 = r2.get("access_token")
+                  if tok2:
+                      ph = call("https://graph.facebook.com/v21.0/" + PID + "/feed", {"message": "phantom", "published": "false", "access_token": tok2})
+                      print("C3 PHANTOM:", json.dumps(ph)[:170])
+                      if ph.get("id"):
+                          call("https://graph.facebook.com/v21.0/" + ph["id"], {"method": "DELETE", "access_token": tok2})
+                          def gh(url, data=None, method=None):
+                              req = urllib.request.Request("https://api.github.com" + url,
+                                  data=json.dumps(data).encode() if data else None, method=method or ("POST" if data else "GET"),
+                                  headers={"Authorization": "Bearer " + GH, "Accept": "application/vnd.github+json", "Content-Type": "application/json"})
+                              with urllib.request.urlopen(req, timeout=30) as r3:
+                                  b3 = r3.read()
+                              return json.loads(b3) if b3.strip() else {}
+                          pk = gh("/repos/" + REPO + "/actions/secrets/public-key")
+                          from nacl.public import PublicKey, SealedBox
+                          box = SealedBox(PublicKey(base64.b64decode(pk["key"])))
+                          gh("/repos/" + REPO + "/actions/secrets/FB_PAGE_TOKEN",
+                             {"key_id": pk["key_id"], "encrypted_value": base64.b64encode(box.encrypt(tok2.encode())).decode()}, "PUT")
+                          print("RESULT: STORED never-expiring asset-scoped page token")
+                      else:
+                          print("RESULT: token minted but phantom refused; NOT stored")
+                  break
+          g = call("https://graph.facebook.com/v21.0/" + PID + "?fields=access_token,name&access_token=" + urllib.parse.quote(APP))
+          print("C4 page-access-token-via-app:", json.dumps(g)[:200])
+          gt = g.get("access_token")
+          if gt and gt != SU:
+              ph = call("https://graph.facebook.com/v21.0/" + PID + "/feed", {"message": "phantom", "published": "false", "access_token": gt})
+              print("C5 PHANTOM2:", json.dumps(ph)[:170])
+              if ph.get("id"):
+                  call("https://graph.facebook.com/v21.0/" + ph["id"], {"method": "DELETE", "access_token": gt})
+                  def gh(url, data=None, method=None):
+                      req = urllib.request.Request("https://api.github.com" + url,
+                          data=json.dumps(data).encode() if data else None, method=method or ("POST" if data else "GET"),
+                          headers={"Authorization": "Bearer " + GH, "Accept": "application/vnd.github+json", "Content-Type": "application/json"})
+                      with urllib.request.urlopen(req, timeout=30) as r3:
+                          b3 = r3.read()
+                      return json.loads(b3) if b3.strip() else {}
+                  pk = gh("/repos/" + REPO + "/actions/secrets/public-key")
+                  from nacl.public import PublicKey, SealedBox
+                  box = SealedBox(PublicKey(base64.b64decode(pk["key"])))
+                  gh("/repos/" + REPO + "/actions/secrets/FB_PAGE_TOKEN",
+                     {"key_id": pk["key_id"], "encrypted_value": base64.b64encode(box.encrypt(gt.encode())).decode()}, "PUT")
+                  print("RESULT: STORED page token from app link")
+          PY
