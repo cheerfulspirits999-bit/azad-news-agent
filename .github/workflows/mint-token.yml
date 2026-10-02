@@ -1,6 +1,6 @@
 name: mint-token
 on: { workflow_dispatch: {} }
-permissions: { contents: read, secrets: write, actions: read }
+permissions: { contents: read, actions: write }
 jobs:
   m:
     runs-on: ubuntu-latest
