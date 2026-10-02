@@ -32,7 +32,6 @@ jobs:
       - name: token self-renewal (auth.py)
         continue-on-error: true   # never block posting; publish fails loud if token dies
         env:
-          FB_PAGE_ID: ${{ secrets.FB_PAGE_ID }}
           FB_PAGE_TOKEN: ${{ secrets.FB_PAGE_TOKEN }}
           RU_API_KEY: ${{ secrets.ROMAN_URDU_API_KEY }}
           RU_PROVIDER: ${{ vars.RU_PROVIDER }}
