@@ -204,12 +204,21 @@ def main():
     if "pages_manage_posts" not in (_debug(ptok) or {}).get("scopes", []):
         print("auth: derived Page token lacks pages_manage_posts", file=sys.stderr)
         return 4
-    _set_secret("FB_PAGE_TOKEN", ptok)
-    _set_secret("FB_REFRESH_TOKEN", user)                   # keep the chain
     gh_env = os.environ.get("GITHUB_ENV", "")
     if gh_env:
         with open(gh_env, "a", encoding="utf-8") as f:
             f.write(f"FB_PAGE_TOKEN={ptok}\nFB_PAGE_ID={pid}\n")
+    # Vault writes are persistence for FUTURE jobs - a flaky secrets PUT
+    # (rate limit, secondary login, 403) must never abort the renewal that
+    # THIS job's publisher already relies on (2 Oct incident: old order let
+    # a failed PUT strand a stale token in the vault while GITHUB_ENV never
+    # got the new one; the step still looked green via continue-on-error).
+    for _n, _v in (("FB_PAGE_TOKEN", ptok), ("FB_REFRESH_TOKEN", user)):
+        try:
+            _set_secret(_n, _v)
+        except Exception as _se:
+            print(f"auth: secret {_n} not persisted this run ({_se}) - "
+                  "relying on the next run's renewal to retry", file=sys.stderr)
     print(f"auth: renewed page token for {pid}; written to $GITHUB_ENV")
     _visibility_check(ptok, pid)
     _ig_state(ptok, pid)
