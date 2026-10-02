@@ -40,9 +40,11 @@ jobs:
           FB_APP_ID: ${{ secrets.FB_APP_ID }}
           FB_APP_SECRET: ${{ secrets.FB_APP_SECRET }}
           FB_REFRESH_TOKEN: ${{ secrets.FB_REFRESH_TOKEN }}
+          FB_PAGE_ID: ${{ secrets.FB_PAGE_ID }}
           GH_OWNER: ${{ github.repository_owner }}
           GH_REPO: ${{ github.event.repository.name }}
           GITHUB_TOKEN: ${{ github.token }}
+          AGENT_PAT: ${{ secrets.AGENT_PAT }}
         run: python3 news_agent/auth.py
       - name: run one monitor + publish cycle
         env:
