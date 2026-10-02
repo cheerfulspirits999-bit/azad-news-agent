@@ -37,7 +37,7 @@ jobs:
           RU_PROVIDER: ${{ vars.RU_PROVIDER }}
           RU_MODEL: ${{ vars.RU_MODEL }}
           RU_BASE_URL: ${{ vars.RU_BASE_URL }}
-          FB_APP_ID: ${{ secrets.FB_APP_ID }}
+          FB_APP_ID: ${{ secrets.FB_APP_ID || secrets.FACEBOOK_APP_ID }}
           FB_APP_SECRET: ${{ secrets.FB_APP_SECRET }}
           FB_REFRESH_TOKEN: ${{ secrets.FB_REFRESH_TOKEN }}
           FB_PAGE_ID: ${{ secrets.FB_PAGE_ID }}
@@ -58,7 +58,7 @@ jobs:
           RU_BASE_URL: ${{ vars.RU_BASE_URL }}
           RU_TIMEOUT: 40
           GEMINI_API_KEY: ${{ secrets.GEMINI_API_KEY }}
-          OPENAI_API_KEY: ${{ secrets.OPENAI_API_KEY }}
+          OPENAI_API_KEY: ${{ secrets.OPENAI_API_KEY || secrets.OPENAI_API_KETS }}
           DIGEST_CATCHUP: ${{ github.event.inputs.catchup || '0' }}
           DAEMON_INTERVAL_MIN: "10"
         run: python3 news_agent/autod.py --deadline=330   # relay: cycles every

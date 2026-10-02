@@ -135,8 +135,16 @@ def _ig_state(tok, pid):
             json.dump(out, f, ensure_ascii=False, indent=1)
     except Exception:
         pass
-    print(f"auth: IG link -> ig_id={out['ig_id']} user={out['username']} "
-          f"scopes={','.join(out['scopes']) or '-'} {out['reason']}".rstrip())
+    line = (f"IG link: ig_id={out['ig_id']} user={out['username']} "
+            f"scopes={','.join(out['scopes']) or '-'} {out['reason']}".rstrip())
+    print("auth:", line)
+    smry = os.environ.get("GITHUB_STEP_SUMMARY", "")
+    if smry:
+        try:
+            with open(smry, "a", encoding="utf-8") as f:
+                f.write(f"**auth** - {line}\n")
+        except Exception:
+            pass
     return out
 
 
@@ -193,12 +201,15 @@ def main():
         except Exception as _ve:
             print(f"auth: visibility probe failed ({_ve}) - non-fatal")
         return 0
-    app_id = os.environ.get("FB_APP_ID", "")
+    app_id = (os.environ.get("FB_APP_ID", "")
+              or os.environ.get("FACEBOOK_APP_ID", ""))
     app_secret = os.environ.get("FB_APP_SECRET", "")
     refresh = os.environ.get("FB_REFRESH_TOKEN", "")
     if not (app_id and app_secret and refresh):
-        print("auth: renewal IMPOSSIBLE - owner must set FB_APP_ID, "
-              "FB_APP_SECRET and FB_REFRESH_TOKEN secrets once", file=sys.stderr)
+        print("auth: renewal IMPOSSIBLE - set FB_APP_ID (or the alias this "
+              "repo actually uses, FACEBOOK_APP_ID) + FB_APP_SECRET + "
+              "FB_REFRESH_TOKEN; also confirm all three reach this step's env",
+              file=sys.stderr)
         return 2
     user = _exchange(refresh, app_id, app_secret)          # fresh 60d
     pages = _page_tokens(user)
