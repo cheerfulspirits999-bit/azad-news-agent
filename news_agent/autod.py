@@ -135,6 +135,32 @@ def _ru_spend(n=1, force=False):
     return True
 
 
+# 3 Oct: lanes that answer 429 (OpenRouter's :free tier is hard-capped at
+# 50 requests/day on a $0 wallet) or 401/402 (key unfunded) must not be
+# retried - the salvage loop walked the WHOLE chain for every bad line, so a
+# single cycle could spend the entire daily free quota on dead lanes and
+# starve the pipeline for the next 24h. A hard-failed lane is parked for
+# _RU_LANE_COOLDOWN and skipped until then.
+_RU_LANE_DEAD = {}
+_RU_LANE_COOLDOWN = 1800.0
+_RU_HARD_FAIL = ("429", "401", "402", "rate limit", "insufficient credit",
+                 "quota", "no api key", "unauthorized", "forbidden")
+
+
+def _ru_lane_failed(label, problems):
+    """Park a lane that hard-failed (rate limit / no credits)."""
+    txt = " ".join(str(p) for p in (problems or [])).lower()
+    if any(h in txt for h in _RU_HARD_FAIL):
+        _RU_LANE_DEAD[label] = time.time()
+        return True
+    return False
+
+
+def _ru_lane_alive(label):
+    t = _RU_LANE_DEAD.get(label)
+    return not (t and (time.time() - t) < _RU_LANE_COOLDOWN)
+
+
 def _ru_attempts():
     """(label, kwargs) salvage attempts: primary first (one-line prompts
     translate where the batch echo'd), then free-tier, direct keys (skipped
@@ -142,22 +168,22 @@ def _ru_attempts():
 
     3 Oct: every free/salvage attempt now carries use_few_shot=True. The
     owner will not top up OpenRouter ("free tier option only"), so the free
-    lane IS the pipeline - and it was answering with the English input
-    verbatim ("Lines [1,2,3,4] copy 4+ consecutive English words"), which our
-    own echo gate correctly kills, so the digest starved all night. The
-    engine ships few-shot examples that teach exactly the output contract
-    (same bullet count, names/numbers untouched, idiomatic Roman Urdu); the
-    shim had been forcing use_few_shot=False. A weak free model needs them.
-    The primary lane keeps its old setting."""
+    lane IS the pipeline - and the engine was dropping to its deterministic
+    English passthrough, which our echo gate correctly kills. The engine
+    ships few-shot examples that teach exactly the output contract (same
+    bullet count, names/numbers untouched, idiomatic Roman Urdu); the shim
+    had been forcing use_few_shot=False. A weak free model needs them.
+    Lanes parked by _ru_lane_failed() are skipped. The primary keeps its
+    old setting."""
     yield "primary", {}
     for m in _RU_FALLBACK_MODELS:
         if isinstance(m, tuple):
             prov, mdl, envi = m
             k = os.environ.get(envi, "")
-            if k:
+            if k and _ru_lane_alive(mdl):
                 yield mdl, {"provider": prov, "model": mdl, "api_key": k,
                             "use_few_shot": True}
-        else:
+        elif _ru_lane_alive(m):
             yield m, {"model": m, "use_few_shot": True}
 
 
@@ -996,11 +1022,17 @@ def build_digest(cands, catchup=False):
                     "problems": ["daily translator HARD budget reached"]}
         else:
             _ru_kw = {}
+            _ru_lbl = "primary"
             if 0 < _rot:
                 _am = [x for x in _ru_attempts() if x[0] != "primary"]
                 if _am:
-                    _ru_kw = _am[(_rot - 1) % len(_am)][1]
+                    _ru_lbl, _ru_kw = _am[(_rot - 1) % len(_am)]
             _res = roman_urdu.translate_lines([picks[i][1] for i in _pend], **_ru_kw)
+            # 3 Oct: if this lane answered 429/401/402, park it so the salvage
+            # loop below does not spend the rest of the daily quota on it.
+            if _ru_lane_failed(_ru_lbl, _res.get("problems")):
+                log(f"[digest] lane '{_ru_lbl}' hard-failed "
+                    f"(rate limit/no credits) - parked for 30 min")
         _cand = _res.get("lines") or []
         _bad = set(_pend)
         _RU_STATS["engine"] = {"ok": bool(_res.get("ok")),
@@ -1058,6 +1090,12 @@ def build_digest(cands, catchup=False):
                     try:
                         _r2 = roman_urdu.translate_lines([_en2], **_kw2)
                     except Exception:
+                        continue
+                    # 3 Oct: a 429/401/402 here means this lane is dead, not
+                    # that the line is bad - park it and stop burning quota.
+                    if _ru_lane_failed(_lbl2, _r2.get("problems")):
+                        log(f"[digest] salvage lane '{_lbl2}' hard-failed "
+                            f"- parked for 30 min")
                         continue
                     _l2 = ((_r2.get("lines") or [""])[0] or "").strip()
                     if (not _l2 or len(_l2) > 118 or _NONROMAN_RE.search(_l2)
