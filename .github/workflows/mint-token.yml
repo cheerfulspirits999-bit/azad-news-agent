@@ -5,20 +5,22 @@ jobs:
   m:
     runs-on: ubuntu-latest
     timeout-minutes: 10
-    env:
-      TOK: ${{ secrets.TOKEN_TMP }}
-      PID: ${{ secrets.FB_PAGE_ID }}
-      AID: ${{ secrets.FACEBOOK_APP_ID }}
-      SEC: ${{ secrets.FB_APP_SECRET }}
-      GH: ${{ github.token }}
-      REPO: ${{ github.repository }}
     steps:
       - uses: actions/checkout@v4
       - uses: actions/setup-python@v5
         with: { python-version: "3.11" }
       - run: pip install pynacl -q
       - name: mint + capability-check + store
+        continue-on-error: true
+        env:
+          TOK: ${{ secrets.TOKEN_TMP }}
+          PID: ${{ secrets.FB_PAGE_ID }}
+          AID: ${{ secrets.FACEBOOK_APP_ID }}
+          SEC: ${{ secrets.FB_APP_SECRET }}
+          GH: ${{ secrets.AGENT_PAT }}
+          REPO: ${{ github.repository }}
         run: |
+          python3 - <<'PY'
           python3 - <<'PY'
           import os, json, base64, urllib.request, urllib.parse, urllib.error
           PY
@@ -88,13 +90,11 @@ jobs:
               print("MINT RESULT: STORED - publishing credential replaced with capability-checked page token")
           else:
               print("MINT RESULT: NOT-STORED - vault untouched; see reason above")
-        continue-on-error: true
+          PY
       - name: scrub temp paste
         if: always()
-        run: |
-          curl -s -o /dev/null -w "scrub: %{http_code}\n" -X DELETE \
-            -H "Authorization: Bearer ${{ ${{ secrets.AGENT_PAT }} }}" \
-            "https://api.github.com/repos/$REPO/actions/secrets/TOKEN_TMP"
         env:
-          GITHUB_TOKEN: ${{ github.token }}
+          GH: ${{ secrets.AGENT_PAT }}
           REPO: ${{ github.repository }}
+        run: |
+          curl -s -o /dev/null -w "scrub: %{http_code}" -X DELETE -H "Authorization: Bearer $GH" "https://api.github.com/repos/$REPO/actions/secrets/TOKEN_TMP"
