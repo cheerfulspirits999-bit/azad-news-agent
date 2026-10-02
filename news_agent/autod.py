@@ -77,12 +77,21 @@ _RU_MISS_TTL = 4 * 3600.0
 # Every returned line is still judged by the same hard gates - only the
 # chance-to-answer widens, never the bar.
 _RU_FALLBACK_MODELS = (
+    # 3 Oct: direct-key lanes FIRST. Proven with a raw HTTP probe (see the
+    # diag-translator workflow): OpenRouter's :free tier is hard-capped at
+    # 50 requests/day for a $0 wallet ("Add 10 credits to unlock 1000/day")
+    # and this account has already burned today's 50 -> every :free call
+    # answers 429 until 00:00 UTC. The owner refuses any top-up, so the
+    # direct keys are the only lanes with a real quota (Gemini free tier is
+    # ~1500/day). The rotation index picks ONE attempt per batch, so a
+    # working lane must be first or the digest waits ~5 dead rotations
+    # (~50 min) before it is even tried.
+    ("gemini", "gemini-2.5-flash", "GEMINI_API_KEY"),
+    ("openai", "gpt-4o-mini", "OPENAI_API_KEY"),
     "nvidia/nemotron-3-ultra-550b-a55b:free",
     "qwen/qwen3.8-27b:free",
     "nvidia/nemotron-3-super-120b-a12b:free",
     "google/gemma-4-31b-it:free",
-    ("gemini", "gemini-2.5-flash", "GEMINI_API_KEY"),
-    ("openai", "gpt-4o-mini", "OPENAI_API_KEY"),
     "openai/gpt-4o-mini",
     "google/gemini-2.5-flash-lite",
     "anthropic/claude-3.5-haiku",
