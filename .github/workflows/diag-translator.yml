@@ -111,6 +111,27 @@ jobs:
           print("=" * 68)
           ok_ = os.environ.get("OPENAI_API_KEY", "")
           if ok_:
+              # raw probe first: WHY does this lane fail? A 401 means the key
+              # itself is wrong (fixable), a 402/429 means billing/limits.
+              ob = json.dumps({
+                  "model": "gpt-4o-mini",
+                  "messages": [{"role": "user", "content": "Reply with the single word OK"}],
+                  "max_tokens": 8}).encode()
+              oreq = urllib.request.Request(
+                  "https://api.openai.com/v1/chat/completions", data=ob, method="POST",
+                  headers={"Authorization": "Bearer " + ok_,
+                           "Content-Type": "application/json"})
+              try:
+                  with urllib.request.urlopen(oreq, timeout=30) as r:
+                      print(f"  raw HTTP {r.status}: {r.read()[:200].decode('utf8','replace')}")
+                      res["lanes"]["openai_direct_raw"] = {"http": r.status}
+              except urllib.error.HTTPError as e:
+                  print(f"  raw HTTP {e.code}: {e.read()[:300].decode('utf8','replace')}")
+                  res["lanes"]["openai_direct_raw"] = {
+                      "http": e.code, "body": e.read()[:0] or ""}
+              except Exception as e:
+                  print(f"  raw {type(e).__name__}: {e}")
+                  res["lanes"]["openai_direct_raw"] = {"http": "ERR", "body": str(e)}
               r3 = roman_urdu.translate_lines(
                   LINES, provider="openai", model="gpt-4o-mini",
                   api_key=ok_, use_few_shot=True)
