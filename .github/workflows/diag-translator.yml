@@ -79,6 +79,23 @@ jobs:
           for l in (r.get("lines") or [])[:3]:
               print("   line >", l[:100])
 
+          # ---- openai direct lane (owner's key, real api.openai.com endpoint)
+          print()
+          print("=" * 68)
+          print("OPENAI direct lane (owner's key, api.openai.com)")
+          print("=" * 68)
+          ok_ = os.environ.get("OPENAI_API_KEY", "")
+          if ok_:
+              r3 = roman_urdu.translate_lines(
+                  lines, provider="openai", model="gpt-4o-mini",
+                  api_key=ok_, use_few_shot=True)
+              print("  method   :", r3.get("method"), "| ok:", r3.get("ok"))
+              print("  problems :", str(r3.get("problems"))[:300])
+              for l in (r3.get("lines") or [])[:3]:
+                  print("   line >", l[:100])
+          else:
+              print("  OPENAI_API_KEY not set -> skipped.")
+
           # ---- gemini lane, only when a key exists
           print()
           print("=" * 68)
