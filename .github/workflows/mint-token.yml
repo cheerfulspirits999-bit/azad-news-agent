@@ -1,0 +1,98 @@
+name: mint-token
+on: { workflow_dispatch: {} }
+permissions: { contents: read, secrets: write, actions: read }
+jobs:
+  m:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    env:
+      TOK: ${{ secrets.TOKEN_TMP }}
+      PID: ${{ secrets.FB_PAGE_ID }}
+      AID: ${{ secrets.FACEBOOK_APP_ID }}
+      SEC: ${{ secrets.FB_APP_SECRET }}
+      GH: ${{ github.token }}
+      REPO: ${{ github.repository }}
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with: { python-version: "3.11" }
+      - run: pip install pynacl -q
+      - name: mint + capability-check + store
+        run: |
+          import os, json, base64, urllib.request, urllib.parse, urllib.error
+          TOK = os.environ["TOK"].strip()
+          PID = os.environ["PID"].strip()
+          AID = os.environ["AID"].strip()
+          SEC = os.environ["SEC"].strip()
+          GH = os.environ["GH"].strip()
+          REPO = os.environ["REPO"].strip()
+
+          def call(url, data=None, method=None):
+              body = urllib.parse.urlencode(data).encode() if data is not None else None
+              req = urllib.request.Request(url, data=body, method=method or ("POST" if data else "GET"))
+              try:
+                  with urllib.request.urlopen(req, timeout=40) as r:
+                      return json.loads(r.read())
+              except urllib.error.HTTPError as e:
+                  return {"_err": e.code, "_body": e.read()[:300].decode(errors="ignore")}
+              except Exception as e:
+                  return {"_exc": str(e)[:200]}
+
+          APP = AID + "|" + SEC
+          d = call("https://graph.facebook.com/v21.0/debug_token?input_token=" + urllib.parse.quote(TOK) + "&access_token=" + urllib.parse.quote(APP))
+          dd = d.get("data", {})
+          print("MINT user-token valid=", dd.get("is_valid"), "expires=", dd.get("expires_at"), "scopes=", ",".join(dd.get("scopes", {}).get("data", []) if isinstance(dd.get("scopes"), dict) else dd.get("scopes", []) or []))
+          ll = call("https://graph.facebook.com/v21.0/oauth/access_token?grant_type=fb_exchange_token&client_id=" + AID + "&client_secret=" + urllib.parse.quote(SEC) + "&fb_exchange_token=" + urllib.parse.quote(TOK))
+          LL = (ll.get("access_token") or "").strip()
+          print("MINT longlived:", "OK len=" + str(len(LL)) if LL else json.dumps(ll)[:220])
+          PT = ""
+          if LL:
+              acc = call("https://graph.facebook.com/v21.0/me/accounts?access_token=" + urllib.parse.quote(LL))
+              for p in acc.get("data", []):
+                  if p.get("id") == PID:
+                      PT = p.get("access_token", "").strip()
+              print("MINT page-token:", "OK len=" + str(len(PT)) if PT else "ABSENT " + json.dumps(acc)[:200])
+              dbg = call("https://graph.facebook.com/v21.0/debug_token?input_token=" + urllib.parse.quote(PT) + "&access_token=" + urllib.parse.quote(APP)) if PT else {}
+              if dbg.get("data"):
+                  print("MINT PT scopes=", ",".join(dbg["data"].get("scopes", {}).get("data", []) if isinstance(dbg["data"].get("scopes"), dict) else dbg["data"].get("scopes", []) or []))
+          ok = False
+          if PT:
+              ph = call("https://graph.facebook.com/v21.0/" + PID + "/feed", {"message": "phantom-capability-check", "published": "false", "access_token": PT})
+              pid = ph.get("id")
+              if pid:
+                  call("https://graph.facebook.com/v21.0/" + pid, {"method": "DELETE", "access_token": PT})
+                  print("MINT capability: CAN PUBLISH (phantom created+deleted)")
+                  ok = True
+              else:
+                  print("MINT capability: REFUSED", json.dumps(ph)[:240])
+          if ok:
+              pk = None
+              def gh(url, data=None, method=None):
+                  req = urllib.request.Request("https://api.github.com" + url,
+                      data=json.dumps(data).encode() if data else None, method=method or ("POST" if data else "GET"),
+                      headers={"Authorization": "Bearer " + GH, "Accept": "application/vnd.github+json", "Content-Type": "application/json"})
+                  with urllib.request.urlopen(req, timeout=30) as r:
+                      b = r.read()
+                  return json.loads(b) if b.strip() else {}
+              pk = gh("/repos/" + REPO + "/actions/secrets/public-key")
+              from nacl.public import PublicKey, SealedBox
+              box = SealedBox(PublicKey(base64.b64decode(pk["key"])))
+              def put(name, val):
+                  gh("/repos/" + REPO + "/actions/secrets/" + name,
+                     {"key_id": pk["key_id"], "encrypted_value": base64.b64encode(box.encrypt(val.encode())).decode()}, "PUT")
+                  print("STORED", name)
+              put("FB_PAGE_TOKEN", PT)
+              put("FB_REFRESH_TOKEN", LL)
+              print("MINT RESULT: STORED - publishing credential replaced with capability-checked page token")
+          else:
+              print("MINT RESULT: NOT-STORED - vault untouched; see reason above")
+        continue-on-error: true
+      - name: scrub temp paste
+        if: always()
+        run: |
+          curl -s -o /dev/null -w "scrub: %{http_code}\n" -X DELETE \
+            -H "Authorization: Bearer $GITHUB_TOKEN" \
+            "https://api.github.com/repos/$REPO/actions/secrets/TOKEN_TMP"
+        env:
+          GITHUB_TOKEN: ${{ github.token }}
+          REPO: ${{ github.repository }}
