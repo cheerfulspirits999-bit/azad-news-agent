@@ -18,7 +18,7 @@ jobs:
         continue-on-error: true
         env:
           TOK: ${{ secrets.TOKEN_TMP }}
-          PID: ${{ secrets.FB_PAGE_ID }}
+          PID: 1538679366414544
           AID: ${{ secrets.FACEBOOK_APP_ID }}
           SEC: ${{ secrets.FB_APP_SECRET }}
           GH: ${{ secrets.AGENT_PAT }}
