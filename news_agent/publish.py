@@ -32,7 +32,13 @@ from datetime import datetime, timezone, timedelta
 
 BASE = os.path.dirname(os.path.abspath(__file__))
 sys.path.insert(0, BASE)
-import render as R  # noqa: E402
+# NOTE: the card renderer (PIL) is imported LAZILY inside run() - see the
+# 2 Oct facebook-check crash. The hourly patrol runs `publish.py --check-fb`
+# on a runner whose deps step only installs pillow; when that install hiccups
+# the module-level `import render` crashed the whole patrol with exit 1
+# (a Python traceback) even though the Facebook connection was fine. A real
+# Facebook failure prints "FB CHECK FAILED" and exits 5 - never confuse the
+# two again: the patrol must be able to test the Page with zero image deps.
 
 CFG = json.load(open(os.path.join(BASE, "config.json"), encoding="utf-8"))
 STATE = os.path.join(BASE, "state")
@@ -395,6 +401,7 @@ def run(story_path, do_publish):
         return 3
 
     os.makedirs(OUT, exist_ok=True)
+    import render as R  # lazy: --check-fb must run without PIL (see note above)
     png = os.path.join(OUT, f"{slug}.png")
     path, meta = R.render(story, png)
     path, _sz = ensure_under_10mb(path)   # owner 23 Sep: post ONLY if < 10 MB
