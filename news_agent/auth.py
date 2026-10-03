@@ -33,6 +33,25 @@ GRACE = 48 * 3600.0  # renew when < 48h of life remains
 AZAD_PAGE_ID = "1538679366414544"
 
 
+def _norm_pid(raw):
+    """A page id must always be an exact digit string.
+
+    3 Oct: an unquoted numeric env literal reaches the Actions runner as a
+    FLOAT ("1.53867936641454E+15"), and any comparison against the real id
+    then silently fails. Normalise float/exponent forms back to digits.
+    """
+    s = str(raw or "").strip()
+    if not s:
+        return ""
+    try:
+        f = float(s)
+        if f == int(f) and len(str(int(f))) >= 10:
+            return str(int(f))
+    except (TypeError, ValueError):
+        pass
+    return s
+
+
 def _jget(url):
     with urllib.request.urlopen(url, timeout=30) as r:
         return json.load(r)
@@ -111,7 +130,7 @@ def _export_current():
     the token itself is dead."""
     gh_env = os.environ.get("GITHUB_ENV", "")
     tok = os.environ.get("FB_PAGE_TOKEN", "").strip()
-    pid = os.environ.get("FB_PAGE_ID", "").strip()
+    pid = _norm_pid(os.environ.get("FB_PAGE_ID", ""))
     if gh_env:
         with open(gh_env, "a", encoding="utf-8") as f:
             f.write(f"FB_PAGE_TOKEN={tok}\nFB_PAGE_ID={pid}\n")
@@ -196,7 +215,7 @@ def _visibility_check(tok, pid_hint=""):
             return
         app = str(d.get("app_id", ""))
         obj = str(d.get("id", "") or pid_hint or
-                os.environ.get("FB_PAGE_ID", "").strip())
+                _norm_pid(os.environ.get("FB_PAGE_ID", "")))
         gated = bool(app) and app == obj
         mode = ("ROLE-GATED: publishing app is the Page auto-app (" + app +
                 "). Meta shows its posts only to app-role accounts - owner "
@@ -227,7 +246,7 @@ def main():
     # IG link must be resolved FIRST, before anything downstream can die:
     # publish.py's piggyback reads state/ig_link.json, so a skipped or
     # failed visibility/feed probe must never cost us the IG answer.
-    _ig_state(tok, os.environ.get("FB_PAGE_ID", "").strip())
+    _ig_state(tok, _norm_pid(os.environ.get("FB_PAGE_ID", "")))
     upgrade = False
     if not _need_renew(tok):
         d0 = _debug(tok) or {}
