@@ -1,0 +1,117 @@
+name: diag-fb
+on:
+  workflow_dispatch: {}
+permissions:
+  contents: read
+jobs:
+  probe:
+    runs-on: ubuntu-latest
+    timeout-minutes: 8
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with: { python-version: "3.11" }
+      - name: probe the stored Facebook credentials (read-only, posts nothing)
+        env:
+          FB_PAGE_TOKEN: ${{ secrets.FB_PAGE_TOKEN }}
+          FB_REFRESH_TOKEN: ${{ secrets.FB_REFRESH_TOKEN }}
+          FB_APP_ID: ${{ secrets.FACEBOOK_APP_ID || secrets.FB_APP_ID }}
+          FB_APP_SECRET: ${{ secrets.FB_APP_SECRET }}
+          FB_PAGE_ID: ${{ secrets.FB_PAGE_ID }}
+        run: |
+          python3 - <<'PY'
+          import os, json, urllib.request, urllib.parse, urllib.error, time
+
+          def call(url, data=None):
+              qd = urllib.parse.urlencode(data).encode() if data is not None else None
+              req = urllib.request.Request(url, data=qd,
+                  method=("POST" if data else "GET"))
+              try:
+                  with urllib.request.urlopen(req, timeout=40) as r:
+                      return r.status, json.loads(r.read())
+              except urllib.error.HTTPError as e:
+                  try: body = json.loads(e.read())
+                  except Exception: body = {}
+                  return e.code, body
+              except Exception as e:
+                  return "ERR", {"_exc": str(e)[:200]}
+
+          PT = os.environ.get("FB_PAGE_TOKEN", "").strip()
+          RT = os.environ.get("FB_REFRESH_TOKEN", "").strip()
+          AID = os.environ.get("FB_APP_ID", "").strip()
+          SEC = os.environ.get("FB_APP_SECRET", "").strip()
+          PID = os.environ.get("FB_PAGE_ID", "").strip() or "1538679366414544"
+          APP = AID + "|" + SEC
+
+          print("=" * 70)
+          print("STORED CREDENTIALS (values never printed)")
+          print("=" * 70)
+          for n, v in (("FB_PAGE_TOKEN", PT), ("FB_REFRESH_TOKEN", RT),
+                       ("FB_APP_ID", AID), ("FB_APP_SECRET", SEC), ("FB_PAGE_ID", PID)):
+              print(f"  {n:16s} {'set len=' + str(len(v)) if v else 'MISSING'}")
+
+          def show(label, d):
+              dd = d.get("data", d)
+              print(f"  {label}:")
+              print(f"     is_valid   = {dd.get('is_valid')}")
+              print(f"     expires_at = {dd.get('expires_at')} "
+                    f"({time.strftime('%Y-%m-%d %H:%M UTC', time.gmtime(dd['expires_at'])) if dd.get('expires_at') else 'never'})")
+              sc = dd.get("scopes", [])
+              if isinstance(sc, dict): sc = sc.get("data", [])
+              print(f"     scopes     = {','.join(sc or [])}")
+              if dd.get("error"): print(f"     error      = {dd.get('error')}")
+
+          print()
+          print("=" * 70)
+          print("1. debug_token on the stored PAGE token")
+          print("=" * 70)
+          s, d = call("https://graph.facebook.com/v21.0/debug_token?input_token="
+                      + urllib.parse.quote(PT) + "&access_token=" + urllib.parse.quote(APP))
+          show(f"HTTP {s}", d)
+
+          print()
+          print("=" * 70)
+          print("2. debug_token on the stored REFRESH (user) token")
+          print("=" * 70)
+          s, d = call("https://graph.facebook.com/v21.0/debug_token?input_token="
+                      + urllib.parse.quote(RT) + "&access_token=" + urllib.parse.quote(APP))
+          show(f"HTTP {s}", d)
+
+          print()
+          print("=" * 70)
+          print("3. exchange the refresh token for a LONG-LIVED user token")
+          print("=" * 70)
+          s, d = call("https://graph.facebook.com/v21.0/oauth/access_token?"
+                      + urllib.parse.urlencode({
+                          "grant_type": "fb_exchange_token", "client_id": AID,
+                          "client_secret": SEC, "fb_exchange_token": RT}))
+          print(f"  HTTP {s}")
+          if d.get("access_token"):
+              LL = d["access_token"]
+              print(f"  long-lived token OK len={len(LL)} expires_in={d.get('expires_in')}s "
+                    f"(~{int(d.get('expires_in', 0)) // 86400} days)")
+              print()
+              print("=" * 70)
+              print("4. derive the PAGE token from it (non-expiring)")
+              print("=" * 70)
+              s2, acc = call("https://graph.facebook.com/v21.0/me/accounts?access_token="
+                             + urllib.parse.quote(LL))
+              print(f"  HTTP {s2} - pages visible to this user token:")
+              for p in acc.get("data", []):
+                  print(f"     {p.get('id')}  {p.get('name')}  token_len={len(p.get('access_token',''))}")
+              match = [p for p in acc.get("data", []) if str(p.get("id")) == PID]
+              if match:
+                  pt2 = match[0].get("access_token", "")
+                  print(f"  >>> PAGE TOKEN DERIVED for {PID} (len {len(pt2)})")
+                  s3, dbg = call("https://graph.facebook.com/v21.0/debug_token?input_token="
+                                 + urllib.parse.quote(pt2) + "&access_token=" + urllib.parse.quote(APP))
+                  show(f"HTTP {s3}", dbg)
+                  print("  >>> VERDICT: a working page token CAN be derived from the stored")
+                  print("      refresh token - no new paste needed, just re-run the mint step.")
+              else:
+                  print(f"  >>> page {PID} is NOT in /me/accounts for this token")
+          else:
+              print(f"  EXCHANGE FAILED: {json.dumps(d)[:400]}")
+              print("  >>> VERDICT: the stored refresh token cannot be exchanged.")
+              print("      A fresh user token from the owner is required.")
+          PY
