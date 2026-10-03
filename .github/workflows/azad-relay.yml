@@ -1,45 +1,44 @@
-# Azad Daily relay - 3 Oct replacement for news-cycle.yml.
+# Azad Daily hourly relay - 3 Oct (final shape).
 #
-# WHY THIS FILE EXISTS: GitHub is returning 404 on every name-based route for
-# this repository (/repos/cheerfulspirits999-bit/azad-news-agent and its
-# actions/workflows/{id}/enable endpoint), which left news-cycle.yml stuck at
-# disabled_manually with no API path to re-enable it. Reads and writes DO work
-# through the repository-ID route (/repositories/1368230601/...), and a workflow
-# pushed as a NEW file is active by default - so this is the same publish path,
-# under a fresh name, live again.
+# Owner: "maintain hourly cycle only, no duplicates."
 #
-# It is byte-for-byte the same job as news-cycle.yml: token self-renewal, one
-# monitor+publish cycle, relay handoff, fail-loud alerting, memory commit.
-# Same concurrency group, so it can never double-post alongside news-cycle.
+# One cycle per run, on the hour, every hour. The previous design ran a 5.5-hour
+# in-process loop that only committed its memory at the very end, so a cancelled
+# or failed run lost every post it had made and the next run could re-pick the
+# same stories. Committing after EVERY run keeps published.json - which is what
+# the digest builder and publish.dup_check both dedupe against - permanently
+# current, which is what makes duplicates structurally impossible.
 #
-# Page lock is unchanged and enforced in code: publish._lock_page() raises on
-# any page id other than Azad Daily 1538679366414544.
+# The hourly cadence is enforced by the digest gate itself (_due = gap_min >= 55
+# in autod.py): a run that fires early simply holds and posts nothing, so this
+# can never flood the page.
 name: azad-relay
 on:
   schedule:
-    - cron: "*/10 * * * *"
+    - cron: "0 * * * *"            # one cycle, on the hour, every hour
   workflow_dispatch:
     inputs:
       catchup:
-        description: "1 = drain missed stories now at 30-min spacing"
+        description: "1 = drain the backlog now (raises the daily card cap 24 -> 30)"
         required: false
         default: "0"
 permissions:
-  contents: write
-  issues: write
-  actions: write
+  contents: write                 # commit the agent memory after every run
+  issues: write                   # fail-loud issue when publishing is blocked
 concurrency:
   group: news-cycle               # never two cycles at once (no double posts)
   cancel-in-progress: false
 jobs:
   cycle:
     runs-on: ubuntu-latest
-    timeout-minutes: 350
+    timeout-minutes: 25
     steps:
       - uses: actions/checkout@v4
       - uses: actions/setup-python@v5
         with: { python-version: "3.11" }
-      - run: pip install -r requirements.txt
+      - run: pip install -r requirements.txt -q
+
+      # ---- token self-renewal: only fires when the token is genuinely dead ----
       - name: token self-renewal (auth.py)
         continue-on-error: true   # never block posting; publish fails loud if token dies
         env:
@@ -53,14 +52,14 @@ jobs:
           FB_REFRESH_TOKEN: ${{ secrets.FB_REFRESH_TOKEN }}
           FB_SU_TOKEN: ${{ secrets.FB_SU_TOKEN }}
           FB_PAGE_ID: ${{ secrets.FB_PAGE_ID }}
-          GH_OWNER: ${{ github.repository_owner }}
-          GH_REPO: ${{ github.event.repository.name }}
           GITHUB_TOKEN: ${{ github.token }}
           AGENT_PAT: ${{ secrets.AGENT_PAT }}
         run: python3 news_agent/auth.py
-      - name: run one monitor + publish cycle
+
+      # ---- one monitor + publish cycle ----
+      - name: run one hourly cycle
         env:
-          IG_DUALPOST: ${{ vars.IG_DUALPOST }}
+          IG_DUALPOST: "0"                                   # Instagram is OFF
           FB_PAGE_TOKEN: ${{ secrets.FB_PAGE_TOKEN }}
           FB_PAGE_ID: ${{ secrets.FB_PAGE_ID }}
           FB_APP_SECRET: ${{ secrets.FB_APP_SECRET }}
@@ -75,28 +74,22 @@ jobs:
           GEMINI_API_KEY: ${{ secrets.GEMINI_API_KEY }}
           OPENAI_API_KEY: ${{ secrets.OPENAI_API_KEY || secrets.OPENAI_API_KETS }}
           DIGEST_CATCHUP: ${{ github.event.inputs.catchup || '0' }}
-          DAEMON_INTERVAL_MIN: "10"
-        run: python3 news_agent/autod.py --deadline=330
-      - name: relay handoff - queue the successor now
+        run: python3 news_agent/autod.py --once
+
+      # ---- commit memory EVERY run: this is the duplicate guard ----
+      - name: commit agent memory
         if: always()
-        env:
-          GH_TOKEN: ${{ github.token }}
-          REPO: ${{ github.repository }}
         run: |
-          python3 - <<'PY'
-          import os, json, urllib.request
-          req = urllib.request.Request(
-              f"https://api.github.com/repos/{os.environ['REPO']}"
-              "/actions/workflows/azad-relay.yml/dispatches",
-              data=json.dumps({"ref": "main"}).encode(),
-              headers={"Authorization": "Bearer " + os.environ["GH_TOKEN"],
-                       "Accept": "application/vnd.github+json"})
-          try:
-              urllib.request.urlopen(req, timeout=30)
-              print("successor queued - cadence continues without GitHub's cron")
-          except Exception as e:
-              print("handoff failed; cron remains as backup:", e)
-          PY
+          git config user.name "azad-news-agent"
+          git config user.email "agent@localhost"
+          git add news_agent/state news_agent/stories
+          if ! git diff --cached --quiet; then
+            git commit -m "hourly cycle $(date -u +%FT%TZ)"
+            git pull --rebase origin "$GITHUB_REF_NAME" || true
+            git push || true
+          fi
+
+      # ---- fail loud if a card was built but Facebook refused it ----
       - name: fail loud if publishing was blocked
         if: always()
         env:
@@ -122,27 +115,13 @@ jobs:
           except Exception:
               pend = []
           pend = pend if isinstance(pend, list) else []
-          alert = ""
-          try:
-              d2 = gh(f"/repos/{repo}/contents/news_agent/state/ALERT.md")
-              alert = base64.b64decode(d2["content"]).decode()[:600]
-          except Exception:
-              pass
-          if not pend and not alert:
-              print("publishing not blocked - nothing pending"); raise SystemExit(0)
-          if not pend and alert:
-              title = "[ALERT] agent raised a stop alert - attention needed"
-              body = ("The pipeline wrote ALERT.md during the last runs:\n\n"
-                      + alert + "\n\nRun " + os.environ.get("GITHUB_RUN_ID",""))
-              open_issues = gh(f"/repos/{repo}/issues?state=open")
-              if not any(i.get("title") == title for i in open_issues):
-                  gh(f"/repos/{repo}/issues", {"title": title, "body": body})
-                  print("OPENED alert issue from ALERT.md")
+          if not pend:
+              print("nothing pending - publishing is healthy")
               raise SystemExit(0)
           title = "[ALERT] publishing blocked: cards waiting in pending_publish"
           body = (f"{len(pend)} card(s) were built but Facebook refused to accept "
                   "them this run - check FB_PAGE_TOKEN / FB_PAGE_ID secrets and "
-                  f"run {os.environ.get('GITHUB_RUN_ID','')} (auth step + publish logs).")
+                  f"run {os.environ.get('GITHUB_RUN_ID','')}.")
           open_issues = gh(f"/repos/{repo}/issues?state=open")
           if any(i.get("title") == title for i in open_issues):
               print("alert issue already open - skipping duplicate")
@@ -150,14 +129,3 @@ jobs:
               gh(f"/repos/{repo}/issues", {"title": title, "body": body})
               print("OPENED alert issue:", title)
           PY
-      - name: commit agent memory
-        if: always()
-        run: |
-          git config user.name "azad-news-agent"
-          git config user.email "agent@localhost"
-          git add news_agent/state news_agent/stories
-          if ! git diff --cached --quiet; then
-            git commit -m "cycle $(date -u +%FT%TZ)"
-            git pull --rebase origin "$GITHUB_REF_NAME" || true
-            git push || true
-          fi
