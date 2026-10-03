@@ -337,6 +337,25 @@ def alert(reason, detail=""):
     log(detail[:400])
 
 
+def clear_alert():
+    """Remove a stale ALERT.md once publishing works again.
+
+    3 Oct: alert() only ever WROTE the file. Nothing cleared it, so after the
+    token recovered the page kept showing "AGENT STOPPED - ACTION NEEDED" from
+    hours earlier and the relay's fail-loud step opened a GitHub issue from it.
+    A healthy pipeline must not look broken.
+    """
+    path = os.path.join(STATE, "ALERT.md")
+    try:
+        if os.path.exists(path):
+            os.remove(path)
+            log("alert cleared - publishing is healthy again")
+            return True
+    except Exception as e:
+        log("could not clear ALERT.md:", str(e)[:120])
+    return False
+
+
 def slugify(t):
     t = re.sub(r"[^a-z0-9]+", "-", t.lower()).strip("-")
     return t[:60]
@@ -1327,6 +1346,7 @@ def one_cycle():
                 q["last_at"] = datetime.now(IST).isoformat()
             save_quota(q)
             log("published:", story["slug"])
+            clear_alert()
             time.sleep(POST_SPACING_SECONDS)  # avoid FB Page rate-limit errors
         elif rc == 3:
             log("duplicate suppressed:", story["slug"])
