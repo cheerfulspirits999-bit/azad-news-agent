@@ -1,6 +1,6 @@
 {
-  "cycle": "20261003-1851",
-  "at": "2026-10-03T18:52:12.560889+05:30",
+  "cycle": "20261003-1902",
+  "at": "2026-10-03T19:03:06.295645+05:30",
   "candidates": 120,
   "published_this_cycle": 0,
   "digest": "starved: <3 publishable Urdu lines",
@@ -9,46 +9,54 @@
     "to_translate": 5,
     "engine": {
       "ok": false,
-      "lines_in": 0,
+      "lines_in": 5,
       "lines_want": 5,
-      "method": "budget",
-      "problems": "['daily translator HARD budget reached']"
+      "method": "fallback",
+      "problems": "['Lines [1, 2, 3, 4, 5] copy 4+ consecutive English words verbatim into the Roman Urdu. Re-express those phrases in Urdu; keep only proper nouns/brands/technica"
     },
     "kills": {
-      "count-mismatch": "all"
+      "paste": [
+        1,
+        2,
+        3,
+        4
+      ],
+      "english-echo": [
+        5
+      ]
     },
     "accepted": 0
   },
   "tail": [
-    "[03 Oct 18:52:12] stale or low-score, skipped: 3 More Army Personnel among 7 Held In Bollarum Arms Theft Ca",
-    "[03 Oct 18:52:12] stale or low-score, skipped: Spain bar collapses: 11 injured after building traps 25-30 p",
-    "[03 Oct 18:52:12] stale or low-score, skipped: Sri City boiler blast: 5 workers killed, over 10 injured at ",
-    "[03 Oct 18:52:12] stale or low-score, skipped: At least 5,700 killed, wounded in Haiti gang crisis this yea",
-    "[03 Oct 18:52:12] stale or low-score, skipped: Unable to find work after moving back from UK, Hyderabad wom",
-    "[03 Oct 18:52:12] stale or low-score, skipped: Nushrratt Fractures Spine In Bali Accident",
-    "[03 Oct 18:52:12] stale or low-score, skipped: Telangana Govt Seeks Emergency US Visas for Family of Critic",
-    "[03 Oct 18:52:12] stale or low-score, skipped: CBI files charge sheet against RCom, others in \u20b93,750 crore ",
-    "[03 Oct 18:52:12] stale or low-score, skipped: CBI books Mumbai firm, officials in Rs 93.44 crore loan frau",
-    "[03 Oct 18:52:12] stale or low-score, skipped: Nestle India\u2019s \u2018low-fat dairy whitener\u2019 found \u2018unsafe, subst",
-    "[03 Oct 18:52:12] stale or low-score, skipped: Injured Indian flydubai pilot Smit Machchhar \u2018recovering wel",
-    "[03 Oct 18:52:12] stale or low-score, skipped: Flydubai co-pilot used crash axe: UAE probes \u2018terrorist act\u2019",
-    "[03 Oct 18:52:12] stale or low-score, skipped: Vikarabad Bus Accident: CM Revanth Orders Best Treatment for",
-    "[03 Oct 18:52:12] stale or low-score, skipped: Man Found Dead Near Tahsildar Office in Mahbubnagar",
-    "[03 Oct 18:52:12] stale or low-score, skipped: Mulugu: Pregnant Woman Dies After Consuming Pesticide",
-    "[03 Oct 18:52:12] stale or low-score, skipped: 7 Killed, 19 Injured as Truck Rams Pickup Van in Maharashtra",
-    "[03 Oct 18:52:12] stale or low-score, skipped: Naspur road accident: Death toll rises to six as another wom",
-    "[03 Oct 18:52:12] stale or low-score, skipped: BGUS seeks ex gratia for families who lost members during Ga",
-    "[03 Oct 18:52:12] stale or low-score, skipped: Nestle Low Fat Dairy Whitener sale banned: Why FSSAI called ",
-    "[03 Oct 18:52:12] stale or low-score, skipped: Flydubai co-pilot attacked pilot with axe, attempted \u2018terror",
-    "[03 Oct 18:52:12] stale or low-score, skipped: Anakapalli: 2 Killed as Mini-Van Rams Parked Trolley in Yala",
-    "[03 Oct 18:52:12] stale or low-score, skipped: Bollarum Arms Theft: Havildar Mallesh Had Links with Weapon ",
-    "[03 Oct 18:52:12] stale or low-score, skipped: Sri City Boiler Blast: Five Dead, 10 Injured",
-    "[03 Oct 18:52:12] stale or low-score, skipped: Female farm labourer dies, 12 hurt in road accident in Khamm",
-    "[03 Oct 18:52:12] stale or low-score, skipped: Omani co-pilot named in flydubai cockpit attack on Indian ca",
-    "[03 Oct 18:52:12] stale or low-score, skipped: AP Boiler Blast: Rs 50 Lakh Ex-gratia for Victims' Families",
-    "[03 Oct 18:52:12] stale or low-score, skipped: Dubai Crown Prince praises Indian pilot after cockpit attack",
-    "[03 Oct 18:52:12] stale or low-score, skipped: Andhra Man Attacks Lover With Sharp Weapon, Then Jumps To De",
-    "[03 Oct 18:52:12] stale or low-score, skipped: IRCTC hotel scam: Delhi court defers formal framing of charg",
-    "[03 Oct 18:52:12] stale or low-score, skipped: South Africa mass shootings: What\u2019s behind the sudden spike "
+    "[03 Oct 19:03:06] stale or low-score, skipped: Medical student checks into Hyderabad hotel with friend, fou",
+    "[03 Oct 19:03:06] stale or low-score, skipped: Hyderabad: PG medico found dead at Miyapur hotel; cab driver",
+    "[03 Oct 19:03:06] queued for editorial pass (no safe auto frame): Medico found dead in hotel room in Miyapur",
+    "[03 Oct 19:03:06] stale or low-score, skipped: Cauvery bridge on Tiruchi-Chennai Bypass to be reopened for ",
+    "[03 Oct 19:03:06] stale or low-score, skipped: 3 More Army Personnel among 7 Held In Bollarum Arms Theft Ca",
+    "[03 Oct 19:03:06] stale or low-score, skipped: Spain bar collapses: 11 injured after building traps 25-30 p",
+    "[03 Oct 19:03:06] stale or low-score, skipped: Sri City boiler blast: 5 workers killed, over 10 injured at ",
+    "[03 Oct 19:03:06] stale or low-score, skipped: At least 5,700 killed, wounded in Haiti gang crisis this yea",
+    "[03 Oct 19:03:06] stale or low-score, skipped: Unable to find work after moving back from UK, Hyderabad wom",
+    "[03 Oct 19:03:06] stale or low-score, skipped: Nushrratt Fractures Spine In Bali Accident",
+    "[03 Oct 19:03:06] stale or low-score, skipped: Telangana Govt Seeks Emergency US Visas for Family of Critic",
+    "[03 Oct 19:03:06] stale or low-score, skipped: CBI files charge sheet against RCom, others in \u20b93,750 crore ",
+    "[03 Oct 19:03:06] stale or low-score, skipped: CBI books Mumbai firm, officials in Rs 93.44 crore loan frau",
+    "[03 Oct 19:03:06] stale or low-score, skipped: Hyderabad: 49 foreign nationals identified for overstaying, ",
+    "[03 Oct 19:03:06] stale or low-score, skipped: Injured Indian flydubai pilot Smit Machchhar \u2018recovering wel",
+    "[03 Oct 19:03:06] stale or low-score, skipped: Flydubai co-pilot used crash axe: UAE probes \u2018terrorist act\u2019",
+    "[03 Oct 19:03:06] stale or low-score, skipped: Vikarabad Bus Accident: CM Revanth Orders Best Treatment for",
+    "[03 Oct 19:03:06] stale or low-score, skipped: Man Found Dead Near Tahsildar Office in Mahbubnagar",
+    "[03 Oct 19:03:06] stale or low-score, skipped: Mulugu: Pregnant Woman Dies After Consuming Pesticide",
+    "[03 Oct 19:03:06] stale or low-score, skipped: 7 Killed, 19 Injured as Truck Rams Pickup Van in Maharashtra",
+    "[03 Oct 19:03:06] stale or low-score, skipped: Naspur road accident: Death toll rises to six as another wom",
+    "[03 Oct 19:03:06] stale or low-score, skipped: BGUS seeks ex gratia for families who lost members during Ga",
+    "[03 Oct 19:03:06] stale or low-score, skipped: Nestle Low Fat Dairy Whitener sale banned: Why FSSAI called ",
+    "[03 Oct 19:03:06] stale or low-score, skipped: Anakapalli: 2 Killed as Mini-Van Rams Parked Trolley in Yala",
+    "[03 Oct 19:03:06] stale or low-score, skipped: Bollarum Arms Theft: Havildar Mallesh Had Links with Weapon ",
+    "[03 Oct 19:03:06] stale or low-score, skipped: Sri City Boiler Blast: Five Dead, 10 Injured",
+    "[03 Oct 19:03:06] stale or low-score, skipped: Female farm labourer dies, 12 hurt in road accident in Khamm",
+    "[03 Oct 19:03:06] stale or low-score, skipped: Omani co-pilot named in flydubai cockpit attack on Indian ca",
+    "[03 Oct 19:03:06] stale or low-score, skipped: AP Boiler Blast: Rs 50 Lakh Ex-gratia for Victims' Families",
+    "[03 Oct 19:03:06] stale or low-score, skipped: Andhra Man Attacks Lover With Sharp Weapon, Then Jumps To De"
   ]
 }
