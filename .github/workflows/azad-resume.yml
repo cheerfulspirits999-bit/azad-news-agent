@@ -1,0 +1,81 @@
+# One-shot resume - 3 Oct.
+#
+# Owner: "3 hours no posting". azad-relay.yml had its schedule block removed at
+# 22:17 IST (16:47 UTC) to pause the hourly cadence. This workflow fires once at
+# 19:50 UTC (01:20 IST, 4 Oct) - just past the 3-hour mark - puts the hourly
+# schedule back into azad-relay.yml, then deletes itself so nothing is left
+# running behind the owner's back.
+#
+# It is self-healing: it does not depend on this machine staying alive.
+name: azad-resume
+on:
+  schedule:
+    - cron: "50 19 * * *"          # one shot, 4 Oct 01:20 IST
+permissions:
+  contents: write
+jobs:
+  resume:
+    runs-on: ubuntu-latest
+    timeout-minutes: 8
+    steps:
+      - uses: actions/checkout@v4
+      - name: restore the hourly schedule in azad-relay.yml
+        env:
+          GH_TOKEN: ${{ github.token }}
+          REPO: ${{ github.repository }}
+        run: |
+          python3 - <<'PY'
+          import os, json, base64, urllib.request, urllib.error, time
+
+          TOK = os.environ["GH_TOKEN"]
+          REPO = os.environ["REPO"]
+          PATH_ = ".github/workflows/azad-relay.yml"
+          API = "https://api.github.com"
+
+          def gh(url, data=None, method=None, tries=12):
+              for a in range(tries):
+                  req = urllib.request.Request(
+                      API + url,
+                      data=json.dumps(data).encode() if data is not None else None,
+                      headers={"Authorization": "Bearer " + TOK,
+                               "Accept": "application/vnd.github+json",
+                               "Content-Type": "application/json"},
+                      method=method or ("POST" if data is not None else "GET"))
+                  try:
+                      with urllib.request.urlopen(req, timeout=45) as r:
+                          b = r.read()
+                          return json.loads(b) if b.strip() else {}
+                  except urllib.error.HTTPError as e:
+                      if e.code in (404, 409, 502, 503, 504) and a < tries - 1:
+                          time.sleep(4 * (a + 1)); continue
+                      raise
+              raise RuntimeError("github api kept failing")
+
+          cur = gh(f"/repos/{REPO}/contents/{PATH_}")
+          text = base64.b64decode(cur["content"]).decode()
+
+          if "schedule:" in text:
+              print("azad-relay.yml already has a schedule - nothing to restore")
+          else:
+              block = ('name: azad-relay\non:\n'
+                       '  schedule:\n'
+                       '    - cron: "0 * * * *"            # one cycle, on the hour, every hour\n')
+              new = text.replace("name: azad-relay\non:\n", block, 1)
+              if new == text:
+                  raise SystemExit("could not find the 'on:' anchor in azad-relay.yml")
+              gh(f"/repos/{REPO}/contents/{PATH_}",
+                 {"message": "resume: restore the hourly schedule after the 3-hour pause (3 Oct)",
+                  "content": base64.b64encode(new.encode()).decode(),
+                  "sha": cur["sha"], "branch": "main"}, "PUT")
+              print("RESTORED: azad-relay.yml is hourly again")
+
+          # delete ourselves so nothing is left scheduled behind the owner's back
+          try:
+              me = gh(f"/repos/{REPO}/contents/.github/workflows/azad-resume.yml")
+              gh(f"/repos/{REPO}/contents/.github/workflows/azad-resume.yml",
+                 {"message": "resume: done - removing the one-shot resume workflow (3 Oct)",
+                  "sha": me["sha"], "branch": "main"}, "DELETE")
+              print("REMOVED azad-resume.yml")
+          except Exception as e:
+              print("could not remove azad-resume.yml (harmless, it is one-shot):", e)
+          PY
