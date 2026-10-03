@@ -66,7 +66,17 @@ jobs:
                   # perfectly valid token was reported "page-token: ABSENT".
                   if str(p.get("id")) == PID:
                       PT = p.get("access_token", "").strip()
-              print("MINT page-token:", ("OK len=" + str(len(PT))) if PT else "ABSENT " + json.dumps(acc)[:200])
+              if PT:
+                  print("MINT page-token: OK len=" + str(len(PT)))
+              else:
+                  print("MINT page-token: ABSENT  wanted pid=" + PID)
+                  print("MINT pages: " + json.dumps([
+                      {"id": p.get("id"), "idtype": type(p.get("id")).__name__,
+                       "id_str": str(p.get("id")), "name": p.get("name"),
+                       "tok": len(p.get("access_token", ""))}
+                      for p in acc.get("data", [])]))
+                  print("MINT raw: " + json.dumps(acc)[:600])
+                  print("MINT err: " + json.dumps({k: v for k, v in acc.items() if k != "data"})[:300])
               if PT:
                   dbg = call("https://graph.facebook.com/v21.0/debug_token?input_token=" + urllib.parse.quote(PT) + "&access_token=" + urllib.parse.quote(APP))
                   if dbg.get("data"):
