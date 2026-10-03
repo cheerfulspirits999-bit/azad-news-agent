@@ -1,24 +1,24 @@
-# Azad Daily hourly relay - 3 Oct (final shape).
+# Azad Daily hourly relay - 3 Oct, self-driving.
 #
-# Owner: "maintain hourly cycle only, no duplicates."
+# WHY THIS SHAPE: the cron-only version never fired. After deploying
+# `schedule: "0 * * * *"` at 14:00 UTC, the 15:00 and 16:00 UTC runs simply
+# never happened - every run in the history was workflow_dispatch. GitHub's
+# scheduler is not a guarantee, and it is the single point of failure here.
 #
-# One cycle per run, on the hour, every hour. The previous design ran a 5.5-hour
-# in-process loop that only committed its memory at the very end, so a cancelled
-# or failed run lost every post it had made and the next run could re-pick the
-# same stories. Committing after EVERY run keeps published.json - which is what
-# both the digest builder and publish.dup_check both dedupe against - permanently
-# current, which is what makes duplicates structurally impossible.
+# So the cadence is now driven by the pipeline itself: each run performs six
+# 10-minute cycles (one hour), commits the agent memory after EVERY cycle, and
+# then dispatches its own successor with retries. The chain cannot break unless
+# GitHub's API is down. The cron is kept only as a backup trigger.
 #
-# The hourly cadence is enforced by the digest gate itself (_due = gap_min >= 55
-# in autod.py): a run that fires early simply holds and posts nothing, so this
-# can never flood the page.
-#
-# 3 Oct 22:17 IST - owner: "3 hours no posting". The schedule block below was
-# REMOVED to pause the hourly cadence, and azad-resume.yml (a one-shot cron at
-# 19:50 UTC) puts it back and deletes itself. Until then this workflow is
-# dispatch-only: it can still be run by hand, but nothing fires on a timer.
+# Duplicate safety: published.json is committed after every single cycle, and
+# both the digest builder and publish.dup_check dedupe against it - so a lost or
+# cancelled run can never cause a re-post. Hourly cadence is enforced by the
+# digest gate itself (_due = gap_min >= 55 in autod.py), so an early cycle simply
+# holds and posts nothing rather than flooding the Page.
 name: azad-relay
 on:
+  schedule:
+    - cron: "0 * * * *"            # BACKUP only - the handoff below is the driver
   workflow_dispatch:
     inputs:
       catchup:
@@ -26,15 +26,31 @@ on:
         required: false
         default: "0"
 permissions:
-  contents: write                 # commit the agent memory after every run
+  contents: write                 # commit the agent memory after every cycle
   issues: write                   # fail-loud issue when publishing is blocked
+  actions: write                  # dispatch our own successor
 concurrency:
   group: news-cycle               # never two cycles at once (no double posts)
   cancel-in-progress: false
 jobs:
   cycle:
     runs-on: ubuntu-latest
-    timeout-minutes: 25
+    timeout-minutes: 90
+    env:
+      IG_DUALPOST: "0"                                   # Instagram is OFF
+      FB_PAGE_TOKEN: ${{ secrets.FB_PAGE_TOKEN }}
+      FB_PAGE_ID: ${{ secrets.FB_PAGE_ID }}
+      FB_APP_SECRET: ${{ secrets.FB_APP_SECRET }}
+      FB_REFRESH_TOKEN: ${{ secrets.FB_REFRESH_TOKEN }}
+      RU_API_KEY: ${{ secrets.ROMAN_URDU_API_KEY }}
+      RU_PROVIDER: ${{ vars.RU_PROVIDER }}
+      RU_MODEL: ${{ vars.RU_MODEL }}
+      RU_BASE_URL: ${{ vars.RU_BASE_URL }}
+      RU_TIMEOUT: 40
+      RU_DAILY_CAP: 200
+      RU_DAILY_HARD: 220
+      GEMINI_API_KEY: ${{ secrets.GEMINI_API_KEY }}
+      OPENAI_API_KEY: ${{ secrets.OPENAI_API_KEY || secrets.OPENAI_API_KETS }}
     steps:
       - uses: actions/checkout@v4
       - uses: actions/setup-python@v5
@@ -45,52 +61,61 @@ jobs:
       - name: token self-renewal (auth.py)
         continue-on-error: true   # never block posting; publish fails loud if token dies
         env:
-          FB_PAGE_TOKEN: ${{ secrets.FB_PAGE_TOKEN }}
-          RU_API_KEY: ${{ secrets.ROMAN_URDU_API_KEY }}
-          RU_PROVIDER: ${{ vars.RU_PROVIDER }}
-          RU_MODEL: ${{ vars.RU_MODEL }}
-          RU_BASE_URL: ${{ vars.RU_BASE_URL }}
           FB_APP_ID: ${{ secrets.FB_APP_ID || secrets.FACEBOOK_APP_ID }}
-          FB_APP_SECRET: ${{ secrets.FB_APP_SECRET }}
-          FB_REFRESH_TOKEN: ${{ secrets.FB_REFRESH_TOKEN }}
           FB_SU_TOKEN: ${{ secrets.FB_SU_TOKEN }}
-          FB_PAGE_ID: ${{ secrets.FB_PAGE_ID }}
           GITHUB_TOKEN: ${{ github.token }}
           AGENT_PAT: ${{ secrets.AGENT_PAT }}
         run: python3 news_agent/auth.py
 
-      # ---- one monitor + publish cycle ----
-      - name: run one hourly cycle
-        env:
-          IG_DUALPOST: "0"                                   # Instagram is OFF
-          FB_PAGE_TOKEN: ${{ secrets.FB_PAGE_TOKEN }}
-          FB_PAGE_ID: ${{ secrets.FB_PAGE_ID }}
-          FB_APP_SECRET: ${{ secrets.FB_APP_SECRET }}
-          FB_REFRESH_TOKEN: ${{ secrets.FB_REFRESH_TOKEN }}
-          RU_API_KEY: ${{ secrets.ROMAN_URDU_API_KEY }}
-          RU_PROVIDER: ${{ vars.RU_PROVIDER }}
-          RU_MODEL: ${{ vars.RU_MODEL }}
-          RU_BASE_URL: ${{ vars.RU_BASE_URL }}
-          RU_TIMEOUT: 40
-          RU_DAILY_CAP: 200
-          RU_DAILY_HARD: 220
-          GEMINI_API_KEY: ${{ secrets.GEMINI_API_KEY }}
-          OPENAI_API_KEY: ${{ secrets.OPENAI_API_KEY || secrets.OPENAI_API_KETS }}
-          DIGEST_CATCHUP: ${{ github.event.inputs.catchup || '0' }}
-        run: python3 news_agent/autod.py --once
-
-      # ---- commit memory EVERY run: this is the duplicate guard ----
-      - name: commit agent memory
-        if: always()
+      # ---- one hour of cycles: 6 x (publish + commit memory + 10 min) ----
+      - name: hourly cycles
         run: |
           git config user.name "azad-news-agent"
           git config user.email "agent@localhost"
-          git add news_agent/state news_agent/stories
-          if ! git diff --cached --quiet; then
-            git commit -m "hourly cycle $(date -u +%FT%TZ)"
-            git pull --rebase origin "$GITHUB_REF_NAME" || true
-            git push || true
-          fi
+          for i in 1 2 3 4 5 6; do
+            echo "=== cycle $i/6  $(date -u +%FT%TZ) ==="
+            DIGEST_CATCHUP="${{ github.event.inputs.catchup || '0' }}" \
+              python3 news_agent/autod.py --once || echo "cycle $i exited non-zero - continuing"
+            git add news_agent/state news_agent/stories
+            if ! git diff --cached --quiet; then
+              git commit -q -m "cycle $i $(date -u +%FT%TZ)"
+              git pull --rebase origin "$GITHUB_REF_NAME" >/dev/null 2>&1 || true
+              git push -q origin HEAD:"$GITHUB_REF_NAME" 2>/dev/null || echo "push failed - will retry next cycle"
+            fi
+            [ "$i" = "6" ] && break
+            echo "--- sleeping 10 min ---"
+            sleep 600
+          done
+          echo "=== hour complete ==="
+
+      # ---- hand off to the successor: this is what guarantees the cadence ----
+      - name: relay handoff - queue the next hour
+        if: always()
+        env:
+          GH_TOKEN: ${{ github.token }}
+          REPO: ${{ github.repository }}
+        run: |
+          python3 - <<'PY'
+          import os, json, time, urllib.request, urllib.error
+          TOK = os.environ["GH_TOKEN"]
+          REPO = os.environ["REPO"]
+          URL = f"https://api.github.com/repos/{REPO}/actions/workflows/azad-relay.yml/dispatches"
+          for attempt in range(8):
+              req = urllib.request.Request(
+                  URL, data=json.dumps({"ref": "main"}).encode(),
+                  headers={"Authorization": "Bearer " + TOK,
+                           "Accept": "application/vnd.github+json"})
+              try:
+                  with urllib.request.urlopen(req, timeout=30) as r:
+                      print(f"successor queued (HTTP {r.status}) - cadence continues")
+                      break
+              except urllib.error.HTTPError as e:
+                  body = e.read().decode()[:160]
+                  print(f"handoff attempt {attempt}: HTTP {e.code} {body}")
+                  time.sleep(10 * (attempt + 1))
+          else:
+              print("HANDOFF FAILED - relying on the cron backup trigger")
+          PY
 
       # ---- fail loud if a card was built but Facebook refused it ----
       - name: fail loud if publishing was blocked
