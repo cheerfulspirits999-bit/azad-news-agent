@@ -67,7 +67,11 @@ def _exchange(refresh, app_id, app_secret):
 
 def _page_tokens(user_tok):
     d = _jget(f"{API}/me/accounts?fields=id,access_token&access_token={user_tok}")
-    return {p["id"]: p["access_token"] for p in d.get("data", [])}
+    # 3 Oct: Graph returns the page `id` as an INTEGER. Keying the dict with
+    # the raw value made every later `pid not in pages` lookup (pid is the
+    # string AZAD_PAGE_ID) fail - so a perfectly valid token was rejected with
+    # "no Page access from user token". Normalise to str.
+    return {str(p["id"]): p["access_token"] for p in d.get("data", [])}
 
 
 def _set_secret(name, value):
@@ -124,7 +128,8 @@ def _su_pages():
     try:
         d = _jget(f"{API}/me/assigned_pages?fields=id,access_token&limit=20"
                   f"&access_token={su}")
-        return {p["id"]: p["access_token"] for p in d.get("data", [])
+        # same int/str normalisation as _page_tokens (3 Oct)
+        return {str(p["id"]): p["access_token"] for p in d.get("data", [])
                 if p.get("access_token")}
     except Exception as e:
         print(f"auth: system-user page list failed ({str(e)[:120]})",
