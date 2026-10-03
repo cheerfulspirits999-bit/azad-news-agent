@@ -1,0 +1,78 @@
+name: fb-pages
+on:
+  workflow_dispatch:
+    inputs:
+      token:
+        description: "Facebook USER token - list every Page it administers"
+        required: true
+        default: ""
+permissions:
+  contents: read
+jobs:
+  p:
+    runs-on: ubuntu-latest
+    timeout-minutes: 6
+    steps:
+      - name: list every page this token administers
+        env:
+          TOK: ${{ github.event.inputs.token }}
+          AID: ${{ secrets.FACEBOOK_APP_ID }}
+          SEC: ${{ secrets.FB_APP_SECRET }}
+          PID: "1538679366414544"
+        run: |
+          python3 - <<'PY'
+          import os, json, urllib.request, urllib.parse, urllib.error
+          def call(url, data=None):
+              qd = urllib.parse.urlencode(data).encode() if data is not None else None
+              req = urllib.request.Request(url, data=qd,
+                  method=("POST" if data else "GET"))
+              try:
+                  with urllib.request.urlopen(req, timeout=40) as r:
+                      return json.loads(r.read())
+              except urllib.error.HTTPError as e:
+                  return {"__error": e.code, "body": e.read().decode()[:300]}
+              except Exception as e:
+                  return {"__exc": str(e)[:200]}
+
+          TOK = os.environ["TOK"].strip()
+          AID = os.environ["AID"].strip()
+          SEC = os.environ["SEC"].strip()
+          PID = os.environ["PID"].strip()
+
+          print("=" * 68)
+          print("EVERY PAGE THIS USER TOKEN ADMINISTERS")
+          print("=" * 68)
+          # use the long-lived exchange so we see what the pipeline would see
+          ll = call("https://graph.facebook.com/v21.0/oauth/access_token?"
+                    + urllib.parse.urlencode({
+                        "grant_type": "fb_exchange_token", "client_id": AID,
+                        "client_secret": SEC, "fb_exchange_token": TOK}))
+          LL = ll.get("access_token") or TOK
+          src = "long-lived exchange" if ll.get("access_token") else "raw token"
+          print(f"  token source: {src}")
+          print()
+          d = call("https://graph.facebook.com/v21.0/me/accounts?fields=id,name,access_token,tasks&access_token="
+                   + urllib.parse.quote(LL))
+          if "__error" in d or "__exc" in d:
+              print("  /me/accounts FAILED:", json.dumps(d)[:300])
+          else:
+              rows = d.get("data", [])
+              print(f"  pages visible: {len(rows)}")
+              for p in rows:
+                  mark = "  <== AZAD DAILY (the only page we may post to)" if str(p.get("id")) == PID else ""
+                  print(f"    id={p.get('id')}  name={p.get('name')!r}  "
+                        f"token_len={len(p.get('access_token',''))}{mark}")
+                  print(f"        tasks={p.get('tasks')}")
+              ids = [str(p.get("id")) for p in rows]
+              print()
+              if PID in ids:
+                  print(f"  VERDICT: {PID} IS present -> a page token CAN be derived.")
+              else:
+                  print(f"  VERDICT: {PID} (Azad Daily) is NOT in the list.")
+                  print("  The token must be regenerated with access to Azad Daily,")
+                  print("  or the owner must grant this app access to that Page.")
+          # who is the user?
+          me = call("https://graph.facebook.com/v21.0/me?access_token=" + urllib.parse.quote(LL))
+          print()
+          print(f"  token owner: id={me.get('id')} name={me.get('name')}")
+          PY
