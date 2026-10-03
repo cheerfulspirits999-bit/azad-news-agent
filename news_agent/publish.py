@@ -32,29 +32,7 @@ from datetime import datetime, timezone, timedelta
 
 BASE = os.path.dirname(os.path.abspath(__file__))
 sys.path.insert(0, BASE)
-# NOTE: the card renderer (PIL) is imported LAZILY inside run() - see the
-# 2 Oct facebook-check crash. The hourly patrol runs `publish.py --check-fb`
-# on a runner whose deps step only installs pillow; when that install hiccups
-# the module-level `import render` crashed the whole patrol with exit 1
-# (a Python traceback) even though the Facebook connection was fine. A real
-# Facebook failure prints "FB CHECK FAILED" and exits 5 - never confuse the
-# two again: the patrol must be able to test the Page with zero image deps.
-#
-# render.py (and therefore PIL) is reached ONLY through _render(), never at
-# module import time. dup_check() needs render.jaccard() too, and a lazy
-# `import render as R` inside run() alone left R undefined in dup_check ->
-# NameError -> every publish died with a traceback (2 Oct push-now run).
-R = None
-
-
-def _render():
-    """Lazily import the branded card renderer (PIL) and cache it."""
-    global R
-    if R is None:
-        import render as _r
-        R = _r
-    return R
-
+import render as R  # noqa: E402
 
 CFG = json.load(open(os.path.join(BASE, "config.json"), encoding="utf-8"))
 STATE = os.path.join(BASE, "state")
@@ -120,7 +98,7 @@ def dup_check(story, thresh):
                        for u in story.get("source_urls", [])
                        for ru in rec_urls)
         same_topic = rec.get("topic") == story.get("topic")
-        sim = _render().jaccard(title, rec.get("headline", "")) if title else 0
+        sim = R.jaccard(title, rec.get("headline", "")) if title else 0
         if same_url or (same_topic and sim >= thresh):
             hits.append(rec)
     return hits
@@ -417,7 +395,6 @@ def run(story_path, do_publish):
         return 3
 
     os.makedirs(OUT, exist_ok=True)
-    R = _render()  # lazy: --check-fb must run without PIL (see note above)
     png = os.path.join(OUT, f"{slug}.png")
     path, meta = R.render(story, png)
     path, _sz = ensure_under_10mb(path)   # owner 23 Sep: post ONLY if < 10 MB
@@ -445,8 +422,8 @@ def run(story_path, do_publish):
     pg = dict(CFG["page"])
     if os.environ.get("FB_PAGE_TOKEN"):
         pg["page_access_token"] = os.environ["FB_PAGE_TOKEN"]
-    if os.environ.get("FB_PAGE_ID", "").strip():
-        pg["facebook_page_id"] = os.environ["FB_PAGE_ID"].strip()
+    if os.environ.get("FB_PAGE_ID"):
+        pg["facebook_page_id"] = os.environ["FB_PAGE_ID"]
     pub_cfg = CFG.get("publish", {})
     route = pub_cfg.get("route", "graph")
     if route == "zapier" or pub_cfg.get("zapier_webhook"):
@@ -508,16 +485,7 @@ def run(story_path, do_publish):
                 verify_public(post_id, pg)
             except Exception as _ve:
                 print(f"VISIBILITY: check skipped ({_ve})")
-            # Owner 2 Oct ~09:00 IST: page->IG auto-mirror switched ON in
-            # Meta's own settings; Meta now mirrors every page post to
-            # azaddaily99 by itself. The API piggyback stays OFF so we never
-            # double-post; flip IG_DUALPOST=1 (repo var) to take over from
-            # Meta's mirror - machinery is tested and ready.
-            if os.environ.get("IG_DUALPOST", "") == "1":
-                ig_post_id = _ig_publish(png, slug, caption, pg)
-            else:
-                print("IG: handled by Meta page-to-page auto-mirror (owner "
-                      "enabled 2 Oct) - API publish skipped on purpose.")
+            ig_post_id = _ig_publish(png, slug, caption, pg)
     except urllib.error.HTTPError as e:
         print(f"\nPUBLISH ERROR {e.code}: {e.read().decode()[:600]}")
         return 5
@@ -553,8 +521,8 @@ def check_fb():
     pg = dict(CFG["page"])
     if os.environ.get("FB_PAGE_TOKEN"):
         pg["page_access_token"] = os.environ["FB_PAGE_TOKEN"]
-    if os.environ.get("FB_PAGE_ID", "").strip():
-        pg["facebook_page_id"] = os.environ["FB_PAGE_ID"].strip()
+    if os.environ.get("FB_PAGE_ID"):
+        pg["facebook_page_id"] = os.environ["FB_PAGE_ID"]
     tok, pid = pg.get("page_access_token"), pg.get("facebook_page_id")
     if not (tok and pid):
         print("FB CHECK: Graph route on standby - Zapier bridge active. OK.")
