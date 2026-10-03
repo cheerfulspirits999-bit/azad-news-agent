@@ -66,6 +66,49 @@ def _debug(token):
     return d if d.get("is_valid") else None
 
 
+# Graph codes that mean "this token will never work again" even though
+# debug_token still reports a future expiry for it.
+#   460 - session invalidated (user changed password / Facebook rotated it)
+#   463 - session expired
+#   102 - session expired (older wording)
+_DEAD_SUBCODES = {460, 463, 102}
+
+
+def _token_alive(tok, pid=""):
+    """Is this token ACTUALLY usable, as opposed to merely unexpired?
+
+    3 Oct: debug_token reported is_valid=True, expires_at=2026-12-02 for a
+    token Facebook had already invalidated (code 190 subcode 460). Because
+    _need_renew trusted that, auth.py printed "Page token healthy, nothing to
+    do" on every cycle while every single post failed rc=5 for nine cycles
+    straight and the only clue was ALERT.md. Only a REAL call proves liveness,
+    so make one and read the error instead of guessing.
+
+    Returns True when the token works, or when the answer is unknown (never
+    churn the vault on a transient network error).
+    """
+    target = pid or _norm_pid(os.environ.get("FB_PAGE_ID", "")) or AZAD_PAGE_ID
+    url = f"{API}/{target}?fields=id&access_token={urllib.parse.quote(tok)}"
+    try:
+        d = _jget(url)
+        return bool(d.get("id"))
+    except urllib.error.HTTPError as e:
+        try:
+            body = json.loads(e.read().decode() or "{}")
+        except Exception:
+            return True
+        err = body.get("error") or {}
+        code = err.get("code")
+        sub = err.get("error_subcode")
+        if code == 190 and sub in _DEAD_SUBCODES:
+            print(f"auth: token is DEAD - Graph code {code} subcode {sub}: "
+                  f"{(err.get('message') or '')[:160]}", file=sys.stderr)
+            return False
+        return True
+    except Exception:
+        return True
+
+
 def _need_renew(tok):
     if not tok:
         return True
@@ -73,7 +116,12 @@ def _need_renew(tok):
     if not d:
         return True
     exp = d.get("expires_at") or 0
-    return exp != 0 and exp - time.time() < GRACE
+    if exp != 0 and exp - time.time() < GRACE:
+        return True
+    # 3 Oct: an invalidated token can still report a far-future expiry, so the
+    # expiry check above alone let a dead credential sit in the vault while
+    # every post failed. Probe for real before calling it healthy.
+    return not _token_alive(tok)
 
 
 def _exchange(refresh, app_id, app_secret):
