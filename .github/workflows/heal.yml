@@ -18,7 +18,7 @@ jobs:
         continue-on-error: true
         env:
           SUT: ${{ secrets.FB_SU_TOKEN }}
-          PID: 1538679366414544
+          PID: "1538679366414544"
           AID: ${{ secrets.FACEBOOK_APP_ID }}
           SEC: ${{ secrets.FB_APP_SECRET }}
           GH: ${{ secrets.AGENT_PAT }}
@@ -27,7 +27,10 @@ jobs:
           python3 - <<'PY'
           import os, json, base64, urllib.request, urllib.parse, urllib.error
           SUT = os.environ["SUT"].strip()
-          PID = os.environ["PID"].strip()
+          # 3 Oct: an unquoted numeric env value reaches the runner as a FLOAT
+          # ("1.53867936641454E+15"); normalise back to the exact digit string.
+          _pid_raw = os.environ["PID"].strip()
+          PID = str(int(float(_pid_raw))) if _pid_raw.replace(".", "", 1).isdigit() else _pid_raw
           AID = os.environ["AID"].strip()
           SEC = os.environ["SEC"].strip()
           GH = os.environ["GH"].strip()
