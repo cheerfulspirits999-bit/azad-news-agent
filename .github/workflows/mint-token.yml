@@ -61,7 +61,10 @@ jobs:
           if LL:
               acc = call("https://graph.facebook.com/v21.0/me/accounts?access_token=" + urllib.parse.quote(LL))
               for p in acc.get("data", []):
-                  if p.get("id") == PID:
+                  # 3 Oct: Graph returns the page `id` as an INTEGER, so
+                  # `p.get("id") == PID` (a string) never matched and a
+                  # perfectly valid token was reported "page-token: ABSENT".
+                  if str(p.get("id")) == PID:
                       PT = p.get("access_token", "").strip()
               print("MINT page-token:", ("OK len=" + str(len(PT))) if PT else "ABSENT " + json.dumps(acc)[:200])
               if PT:
