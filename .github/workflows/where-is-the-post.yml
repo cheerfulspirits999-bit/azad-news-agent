@@ -1,0 +1,77 @@
+# One-shot: prove exactly which Page a post lives on - 3 Oct.
+#
+# The digest post 1538679366414544_1662268278793316 read back is_hidden=False, but
+# its Graph permalink_url pointed at 1657288895957921 (National Reporter). The
+# owner's 2 Oct standing order is that this agent must NEVER put anything on
+# National Reporter. Our code posts only to Azad Daily (publish._lock_page raises
+# on any other id), so if the post also exists there it is Meta-side
+# cross-posting/auto-mirror, not this repo. This checks both feeds directly.
+name: where-is-the-post
+on: { workflow_dispatch: {} }
+permissions: { contents: read }
+jobs:
+  probe:
+    runs-on: ubuntu-latest
+    timeout-minutes: 6
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with: { python-version: "3.11" }
+      - name: check both pages' feeds for the post id
+        env:
+          FB_PAGE_TOKEN: ${{ secrets.FB_PAGE_TOKEN }}
+          AZAD: "1538679366414544"
+          NATREP: "1657288895957921"
+          POST: "1662268278793316"
+        run: |
+          python3 - <<'PY'
+          import os, json, urllib.request, urllib.parse, urllib.error
+          V = "v21.0"
+          tok = os.environ["FB_PAGE_TOKEN"].strip()
+          AZAD = os.environ["AZAD"]; NATREP = os.environ["NATREP"]; POST = os.environ["POST"]
+
+          def get(url):
+              try:
+                  with urllib.request.urlopen(url, timeout=45) as r:
+                      return r.code, r.read().decode()
+              except urllib.error.HTTPError as e:
+                  return e.code, e.read().decode(errors="ignore")
+
+          # 0. what page does this token actually belong to?
+          c, b = get(f"https://graph.facebook.com/{V}/me?fields=id,name&access_token="
+                     + urllib.parse.quote(tok))
+          print("token's own page ->", c, b[:200])
+
+          for label, pid in (("AZAD DAILY", AZAD), ("NATIONAL REPORTER", NATREP)):
+              c, b = get(f"https://graph.facebook.com/{V}/{pid}/posts"
+                         "?fields=id,message,created_time,is_hidden&limit=8&access_token="
+                         + urllib.parse.quote(tok))
+              print(f"\n=== {label} ({pid}) recent posts -> {c}")
+              try:
+                  for p in json.loads(b).get("data", []):
+                      mark = "   <<< THE DIGEST POST" if p.get("id", "").endswith(POST) else ""
+                      print(f"    {p.get('id')}  {p.get('created_time')}{mark}")
+              except Exception:
+                  print("    ", b[:250])
+
+          # 1. read the post itself through the Azad Daily id
+          c, b = get(f"https://graph.facebook.com/{V}/{AZAD}_{POST}"
+                     "?fields=id,message,is_hidden,permalink_url&access_token="
+                     + urllib.parse.quote(tok))
+          print(f"\n=== post {AZAD}_{POST} -> {c}")
+          try:
+              d = json.loads(b)
+              print("    is_hidden     :", d.get("is_hidden"))
+              print("    permalink_url :", d.get("permalink_url"))
+          except Exception:
+              print("    ", b[:250])
+
+          # 2. try the same post id under the National Reporter page id
+          c, b = get(f"https://graph.facebook.com/{V}/{NATREP}_{POST}"
+                     "?fields=id,message&access_token=" + urllib.parse.quote(tok))
+          print(f"\n=== post {NATREP}_{POST} -> {c} {b[:160]}")
+          print("\n### VERDICT")
+          print("  if the digest id appears ONLY under Azad Daily, this repo is clean")
+          print("  and the National Reporter permalink is a Meta-side mirror that must")
+          print("  be switched off in Meta Business Suite.")
+          PY
