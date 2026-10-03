@@ -104,7 +104,20 @@ _RU_DAILY_CAP = int(os.environ.get("RU_DAILY_CAP", "46"))
 _RU_DAILY_HARD = int(os.environ.get("RU_DAILY_HARD", "150"))
 
 
-def _ru_spend(n=1, force=False):
+def _ru_is_free(kw):
+    """True when an attempt targets one of OpenRouter's :free slugs.
+
+    3 Oct: these cost $0, so they must never be charged against the paid
+    translator budget. The gate was built to cap SPEND, but it had become the
+    only thing stopping the pipeline: ru_budget sat at 220/220 while the free
+    lane was answering perfectly (proved by the daily probe at 05:07 UTC:
+    HTTP 200, ok=True, real Roman Urdu) - 12 hours of silence for a service
+    that costs nothing. Owner law: the budget must NEVER be the reason the
+    pipeline goes silent."""
+    return str((kw or {}).get("model", "")).endswith(":free")
+
+
+def _ru_spend(n=1, force=False, free=False):
     """Consume n translator API calls from today's budget; False if out.
     Two-tier by design (2 Oct lesson): the SOFT cap (~free-tier quota/day)
     stops the cheap extras - salvage one-liners etc - but the BATCH call
@@ -113,7 +126,13 @@ def _ru_spend(n=1, force=False):
     runs on. Owner law: nothing may stop the pipeline for a whole morning -
     the first version of this gate did exactly that (46/46 by ~02:00 IST ->
     every cycle starved through breakfast) and must never again. Beyond
-    HARD everything truly waits for the IST-midnight reset."""
+    HARD everything truly waits for the IST-midnight reset.
+
+    free=True (a :free OpenRouter slug) bypasses the gate entirely: it costs
+    nothing, and OpenRouter's own 50/day limit is enforced by them - our
+    _ru_lane_failed() parking already stops us hammering a 429'd lane."""
+    if free:
+        return True
     bp = os.path.join(STATE, "ru_budget.json")
     todayk = datetime.now(IST).date().isoformat()
     try:
@@ -1017,17 +1036,18 @@ def build_digest(cands, catchup=False):
     def _killed(i, why):
         _kill.setdefault(why, []).append(i + 1)
     if _pend and _ru_on():
-        if not _ru_spend(force=True):
+        _ru_kw = {}
+        _ru_lbl = "primary"
+        if 0 < _rot:
+            _am = [x for x in _ru_attempts() if x[0] != "primary"]
+            if _am:
+                _ru_lbl, _ru_kw = _am[(_rot - 1) % len(_am)]
+        if not _ru_spend(force=True, free=_ru_is_free(_ru_kw)):
             _res = {"ok": False, "lines": [], "method": "budget",
                     "problems": ["daily translator HARD budget reached"]}
         else:
-            _ru_kw = {}
-            _ru_lbl = "primary"
-            if 0 < _rot:
-                _am = [x for x in _ru_attempts() if x[0] != "primary"]
-                if _am:
-                    _ru_lbl, _ru_kw = _am[(_rot - 1) % len(_am)]
-            _res = roman_urdu.translate_lines([picks[i][1] for i in _pend], **_ru_kw)
+            _res = roman_urdu.translate_lines(
+                [picks[i][1] for i in _pend], **_ru_kw)
             # 3 Oct: if this lane answered 429/401/402, park it so the salvage
             # loop below does not spend the rest of the daily quota on it.
             if _ru_lane_failed(_ru_lbl, _res.get("problems")):
@@ -1083,7 +1103,7 @@ def build_digest(cands, catchup=False):
                 if not _en2:
                     continue
                 for _lbl2, _kw2 in _ru_attempts():
-                    if not _ru_spend():
+                    if not _ru_spend(free=_ru_is_free(_kw2)):
                         log("[digest] translator daily call budget reached - "
                             "remaining salvage waits for the IST midnight reset")
                         break
