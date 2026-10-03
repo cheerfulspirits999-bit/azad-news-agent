@@ -6,16 +6,19 @@
 # in-process loop that only committed its memory at the very end, so a cancelled
 # or failed run lost every post it had made and the next run could re-pick the
 # same stories. Committing after EVERY run keeps published.json - which is what
-# the digest builder and publish.dup_check both dedupe against - permanently
+# both the digest builder and publish.dup_check both dedupe against - permanently
 # current, which is what makes duplicates structurally impossible.
 #
 # The hourly cadence is enforced by the digest gate itself (_due = gap_min >= 55
 # in autod.py): a run that fires early simply holds and posts nothing, so this
 # can never flood the page.
+#
+# 3 Oct 22:17 IST - owner: "3 hours no posting". The schedule block below was
+# REMOVED to pause the hourly cadence, and azad-resume.yml (a one-shot cron at
+# 19:50 UTC) puts it back and deletes itself. Until then this workflow is
+# dispatch-only: it can still be run by hand, but nothing fires on a timer.
 name: azad-relay
 on:
-  schedule:
-    - cron: "0 * * * *"            # one cycle, on the hour, every hour
   workflow_dispatch:
     inputs:
       catchup:
