@@ -1,0 +1,103 @@
+# Forced multi-card push - 3 Oct.
+#
+# Owner: "Post more news, since morning no post - you posted one card 45 min
+# before." The digest gate (_due = gap_min >= 55) had closed 31 minutes after the
+# last card, so the relay was correctly holding. DIGEST_FORCE=1 is the owner's
+# documented manual-push override (2 Oct) and bypasses that gate.
+#
+# Every step runs `autod.py --once` in the SAME job so the steps share the
+# runner's working directory: each card writes published.json to disk before the
+# next step starts, so the digest builder's disk-based dedupe picks FRESH
+# stories instead of repeating the same headlines. No spacing rule applies to the
+# digest path (only the 55-min gate, which DIGEST_FORCE overrides).
+#
+# DIGEST_CATCHUP=1 also raises the daily card cap from 24 to 30 for this drain.
+name: azad-push
+on:
+  workflow_dispatch:
+    inputs:
+      cards:
+        description: "how many forced digest cards to push"
+        required: false
+        default: "4"
+permissions: { contents: write }
+concurrency:
+  group: azad-push
+  cancel-in-progress: false
+jobs:
+  push:
+    runs-on: ubuntu-latest
+    timeout-minutes: 60
+    env:
+      IG_DUALPOST: "0"
+      DIGEST_FORCE: "1"
+      DIGEST_CATCHUP: "1"
+      FB_PAGE_TOKEN: ${{ secrets.FB_PAGE_TOKEN }}
+      FB_PAGE_ID: ${{ secrets.FB_PAGE_ID }}
+      FB_APP_SECRET: ${{ secrets.FB_APP_SECRET }}
+      FB_REFRESH_TOKEN: ${{ secrets.FB_REFRESH_TOKEN }}
+      RU_API_KEY: ${{ secrets.ROMAN_URDU_API_KEY }}
+      RU_PROVIDER: ${{ vars.RU_PROVIDER }}
+      RU_MODEL: ${{ vars.RU_MODEL }}
+      RU_BASE_URL: ${{ vars.RU_BASE_URL }}
+      RU_TIMEOUT: 40
+      RU_DAILY_CAP: 200
+      RU_DAILY_HARD: 220
+      GEMINI_API_KEY: ${{ secrets.GEMINI_API_KEY }}
+      OPENAI_API_KEY: ${{ secrets.OPENAI_API_KEY || secrets.OPENAI_API_KETS }}
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with: { python-version: "3.11" }
+      - run: pip install -r requirements.txt -q
+
+      - name: forced card 1
+        continue-on-error: true
+        run: python3 news_agent/autod.py --once
+      - name: forced card 2
+        continue-on-error: true
+        run: python3 news_agent/autod.py --once
+      - name: forced card 3
+        continue-on-error: true
+        run: python3 news_agent/autod.py --once
+      - name: forced card 4
+        continue-on-error: true
+        run: python3 news_agent/autod.py --once
+      - name: retry anything still queued
+        continue-on-error: true
+        run: python3 news_agent/autod.py --once
+
+      - name: report what actually posted
+        if: always()
+        run: |
+          python3 - <<'PY'
+          import json, os
+          p = os.path.join("news_agent", "state", "published.json")
+          try:
+              rows = json.load(open(p, encoding="utf-8"))
+          except Exception as e:
+              print("no published.json:", e); raise SystemExit
+          print(f"published.json entries: {len(rows)}")
+          for r in rows[-6:]:
+              print(f"  {r.get('published_at','?')[:19]}  "
+                    f"fb={r.get('fb_post_id')}  ig={r.get('ig_post_id')}  "
+                    f"{(r.get('title') or '')[:60]}")
+          pend = os.path.join("news_agent", "state", "pending_publish.json")
+          try:
+              q = json.load(open(pend, encoding="utf-8"))
+              print(f"still pending: {len(q)}")
+          except Exception:
+              print("still pending: 0")
+          PY
+
+      - name: commit memory
+        if: always()
+        run: |
+          git config user.name "azad-news-agent"
+          git config user.email "agent@localhost"
+          git add news_agent/state news_agent/stories
+          if ! git diff --cached --quiet; then
+            git commit -m "push $(date -u +%FT%TZ)"
+            git pull --rebase origin "$GITHUB_REF_NAME" || true
+            git push || true
+          fi
