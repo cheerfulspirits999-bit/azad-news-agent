@@ -1,40 +1,74 @@
 {
-  "cycle": "20261006-0627",
-  "at": "2026-10-06T06:27:38.422949+05:30",
+  "cycle": "20261006-0637",
+  "at": "2026-10-06T06:45:43.612310+05:30",
   "candidates": 120,
   "published_this_cycle": 0,
-  "digest": "gate closed: ncards 4/24, gap 53 min, retry_pending=0",
-  "ru": {},
+  "digest": "PUBLISHED auto-digest-2026-10-06-s0644",
+  "ru": {
+    "pre_ru_picks": 5,
+    "to_translate": 5,
+    "engine": {
+      "ok": false,
+      "lines_in": 5,
+      "lines_want": 5,
+      "method": "fallback",
+      "problems": "['Lines [1, 2, 3, 4, 5] copy 4+ consecutive English words verbatim into the Roman Urdu. Re-express those phrases in Urdu; keep only proper nouns/brands/technica"
+    },
+    "kills": {
+      "english-echo": [
+        1,
+        2
+      ],
+      "paste": [
+        3,
+        4,
+        5
+      ]
+    },
+    "accepted": 4,
+    "salvaged": [
+      1,
+      2,
+      3,
+      4
+    ],
+    "via": {
+      "1": "nvidia/nemotron-3-ultra-550b-a55b:free",
+      "2": "nvidia/nemotron-3-ultra-550b-a55b:free",
+      "3": "primary",
+      "4": "nvidia/nemotron-3-super-120b-a12b:free"
+    }
+  },
   "tail": [
-    "[06 Oct 06:27:38] stale or low-score, skipped: Fire breaks out on reality show set at Goregaon Film City; n",
-    "[06 Oct 06:27:38] stale or low-score, skipped: Construction of Vaduthala railway overbridge, Perandoor-Vadu",
-    "[06 Oct 06:27:38] stale or low-score, skipped: Asian Games 2026: India\u2019s next-gen stars announce arrival",
-    "[06 Oct 06:27:38] stale or low-score, skipped: Forum for Constitutional Democracy slams Delhi Police over i",
-    "[06 Oct 06:27:38] stale or low-score, skipped: Man dies after RTC bus hits him while crossing road in Siddi",
-    "[06 Oct 06:27:38] stale or low-score, skipped: Nalgonda farmer dies of snakebite while checking paddy field",
-    "[06 Oct 06:27:38] stale or low-score, skipped: Nizamabad tea vendor attempts suicide at police station, all",
-    "[06 Oct 06:27:38] stale or low-score, skipped: 22 Telangana Pilgrims Injured as Bus Hits Truck in Bihar's B",
-    "[06 Oct 06:27:38] stale or low-score, skipped: Headmaster Allegedly Beats 12 Students with Water Pipe in Te",
-    "[06 Oct 06:27:38] stale or low-score, skipped: Mancherial: Woman dies after delivering stillborn baby, fami",
-    "[06 Oct 06:27:38] stale or low-score, skipped: Husnabad Road Accident: Two Killed, One Seriously Injured",
-    "[06 Oct 06:27:38] stale or low-score, skipped: Tragedy on Birthday: Girl, Relative Killed at Tank Bund",
-    "[06 Oct 06:27:38] stale or low-score, skipped: Pahalgam handler rallies LeT support via anti-Israel rhetori",
-    "[06 Oct 06:27:38] stale or low-score, skipped: New York declares disaster emergency over measles outbreak",
-    "[06 Oct 06:27:38] stale or low-score, skipped: Airstrikes, artillery hit north Ethiopia as government and r",
-    "[06 Oct 06:27:38] stale or low-score, skipped: Two dead after ship catches fire, sinks in Black Sea",
-    "[06 Oct 06:27:38] stale or low-score, skipped: Janhvi on AI Row",
-    "[06 Oct 06:27:38] stale or low-score, skipped: Telangana BC Commission to visit Nizamabad over social boyco",
-    "[06 Oct 06:27:38] stale or low-score, skipped: 2 Killed, Nearly 35 Injured in Georgia Neighborhood Block Pa",
-    "[06 Oct 06:27:38] stale or low-score, skipped: Jeffrey Archer, bestselling British novelist of 'Kane and Ab",
-    "[06 Oct 06:27:38] stale or low-score, skipped: Russia quarantines hospital after Siberian plague institute ",
-    "[06 Oct 06:27:38] stale or low-score, skipped: Actor Robert Kelker-Kelley, known for \u2018Days of Our Lives\u2019, d",
-    "[06 Oct 06:27:38] stale or low-score, skipped: Bengaluru Gym Trainer Killed After Argument Inside Client's ",
-    "[06 Oct 06:27:38] stale or low-score, skipped: Steel Flyover to Replace 14 Projects Around KBR Park",
-    "[06 Oct 06:27:38] stale or low-score, skipped: \u20b9687.5 Crore Released for Sunkishala, Water Works",
-    "[06 Oct 06:27:38] stale or low-score, skipped: Water Supply Briefly Hit In Parts Of Secretariat",
-    "[06 Oct 06:27:38] stale or low-score, skipped: Hyderabad cybercrime: Retired employee loses Rs 38 lakh in h",
-    "[06 Oct 06:27:38] stale or low-score, skipped: Two Killed, One Injured After Bike Rams into Waste Collectio",
-    "[06 Oct 06:27:38] stale or low-score, skipped: Hyderabad cybercrime alert: Beware of call-merging OTP fraud",
-    "[06 Oct 06:27:38] stale or low-score, skipped: U.S. military says latest strike on alleged drug-smuggling b"
+    "[06 Oct 06:45:43] stale or low-score, skipped: Fire breaks out on reality show set at Goregaon Film City; n",
+    "[06 Oct 06:45:43] stale or low-score, skipped: Construction of Vaduthala railway overbridge, Perandoor-Vadu",
+    "[06 Oct 06:45:43] stale or low-score, skipped: Asian Games 2026: India\u2019s next-gen stars announce arrival",
+    "[06 Oct 06:45:43] stale or low-score, skipped: Forum for Constitutional Democracy slams Delhi Police over i",
+    "[06 Oct 06:45:43] stale or low-score, skipped: Man dies after RTC bus hits him while crossing road in Siddi",
+    "[06 Oct 06:45:43] stale or low-score, skipped: Nalgonda farmer dies of snakebite while checking paddy field",
+    "[06 Oct 06:45:43] stale or low-score, skipped: Nizamabad tea vendor attempts suicide at police station, all",
+    "[06 Oct 06:45:43] stale or low-score, skipped: 22 Telangana Pilgrims Injured as Bus Hits Truck in Bihar's B",
+    "[06 Oct 06:45:43] stale or low-score, skipped: Headmaster Allegedly Beats 12 Students with Water Pipe in Te",
+    "[06 Oct 06:45:43] stale or low-score, skipped: Mancherial: Woman dies after delivering stillborn baby, fami",
+    "[06 Oct 06:45:43] stale or low-score, skipped: Husnabad Road Accident: Two Killed, One Seriously Injured",
+    "[06 Oct 06:45:43] stale or low-score, skipped: Tragedy on Birthday: Girl, Relative Killed at Tank Bund",
+    "[06 Oct 06:45:43] stale or low-score, skipped: Pahalgam handler rallies LeT support via anti-Israel rhetori",
+    "[06 Oct 06:45:43] stale or low-score, skipped: New York declares disaster emergency over measles outbreak",
+    "[06 Oct 06:45:43] stale or low-score, skipped: Airstrikes, artillery hit north Ethiopia as government and r",
+    "[06 Oct 06:45:43] stale or low-score, skipped: Two dead after ship catches fire, sinks in Black Sea",
+    "[06 Oct 06:45:43] stale or low-score, skipped: Janhvi on AI Row",
+    "[06 Oct 06:45:43] stale or low-score, skipped: Telangana BC Commission to visit Nizamabad over social boyco",
+    "[06 Oct 06:45:43] stale or low-score, skipped: 2 Killed, Nearly 35 Injured in Georgia Neighborhood Block Pa",
+    "[06 Oct 06:45:43] stale or low-score, skipped: Jeffrey Archer, bestselling British novelist of 'Kane and Ab",
+    "[06 Oct 06:45:43] stale or low-score, skipped: Russia quarantines hospital after Siberian plague institute ",
+    "[06 Oct 06:45:43] stale or low-score, skipped: Actor Robert Kelker-Kelley, known for \u2018Days of Our Lives\u2019, d",
+    "[06 Oct 06:45:43] stale or low-score, skipped: Bengaluru Gym Trainer Killed After Argument Inside Client's ",
+    "[06 Oct 06:45:43] stale or low-score, skipped: Steel Flyover to Replace 14 Projects Around KBR Park",
+    "[06 Oct 06:45:43] stale or low-score, skipped: \u20b9687.5 Crore Released for Sunkishala, Water Works",
+    "[06 Oct 06:45:43] stale or low-score, skipped: Water Supply Briefly Hit In Parts Of Secretariat",
+    "[06 Oct 06:45:43] stale or low-score, skipped: Hyderabad cybercrime: Retired employee loses Rs 38 lakh in h",
+    "[06 Oct 06:45:43] stale or low-score, skipped: Two Killed, One Injured After Bike Rams into Waste Collectio",
+    "[06 Oct 06:45:43] stale or low-score, skipped: Hyderabad cybercrime alert: Beware of call-merging OTP fraud",
+    "[06 Oct 06:45:43] stale or low-score, skipped: U.S. military says latest strike on alleged drug-smuggling b"
   ]
 }
