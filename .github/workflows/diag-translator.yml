@@ -155,7 +155,7 @@ jobs:
           gk = os.environ.get("GEMINI_API_KEY", "")
           if gk:
               r2 = roman_urdu.translate_lines(
-                  LINES, provider="gemini", model="gemini-2.5-flash",
+                  LINES, provider="gemini", model="gemini-3.8-flash",
                   api_key=gk, use_few_shot=True)
               print("  method   :", r2.get("method"), "| ok:", r2.get("ok"))
               print("  problems :", str(r2.get("problems"))[:300])
