@@ -1,9 +1,10 @@
-# One-shot: get the RAW error from the Gemini lane - 6 Oct.
+# One-shot: get the RAW Gemini error - 6 Oct (v2).
 #
-# The owner added GEMINI_API_KEY, but the probe reported method="fallback",
-# ok=False - translate_news() swallows call_llm()'s exception into its
-# deterministic dictionary passthrough, so the real reason never reaches the
-# log. This calls call_llm() directly and prints the exception verbatim.
+# v1 called roman_urdu.call_llm() - the SHIM (news_agent/roman_urdu.py) does not
+# expose call_llm, so every model raised AttributeError before any HTTP call was
+# made. This calls the ENGINE (roman_urdu_translator.roman_urdu) directly, and
+# also does a raw HTTP POST to Gemini so the exact status/body is visible even
+# if the engine mangles it.
 name: gemini-raw-error
 on:
   workflow_dispatch: {}
@@ -23,57 +24,78 @@ jobs:
           RU_API_KEY: ${{ secrets.ROMAN_URDU_API_KEY }}
         run: |
           python3 - <<'PY'
-          import os, sys, traceback
+          import os, sys, json, urllib.request, urllib.error
           sys.path.insert(0, "news_agent")
-          import roman_urdu
-          import roman_urdu_translator.roman_urdu as eng
+          import roman_urdu                                  # the shim
+          import roman_urdu_translator.roman_urdu as eng     # the engine
 
           gk = os.environ.get("GEMINI_API_KEY", "")
           print("GEMINI_API_KEY:", f"set(len={len(gk)})" if gk else "MISSING")
-          print("endpoint      :", eng.ENDPOINTS["gemini"])
-          print("API_KEYS[gem] :", repr(eng.API_KEYS.get("gemini"))[:40])
+          print("shim ENGINE   :", getattr(roman_urdu, "ENGINE", "?"))
+          print("engine has call_llm:", callable(getattr(eng, "call_llm", None)))
           print()
 
           LINES = ["Telangana government approves a new data centre policy",
                    "Officials say the project will create five thousand jobs",
                    "The cabinet also cleared a single-window clearance system"]
 
-          # 1. configured()?  (the engine's version, not the shim's 0-arg one)
-          print("configured(gemini, key):",
-                eng.configured("gemini", gk))
-          # which key would the engine use if the caller passed NONE?
-          resolved = eng.API_KEYS.get("gemini", "")
-          print("engine default key for gemini:",
-                "OpenRouter key!" if resolved.startswith("sk-or-")
-                else ("gemini key" if resolved == gk else repr(resolved[:12])))
-          print("RU_API_KEY set:", bool(os.environ.get("RU_API_KEY")))
-          print("GEMINI_API_KEY set:", bool(gk))
-          import inspect
-          print("translate_news params:",
-                list(inspect.signature(eng.translate_news).parameters))
-
-          # 2. the raw call_llm - this is what actually raises
+          # ---- 1. raw HTTP straight at Gemini, no engine in the way --------
+          print("=" * 64)
+          print("1. RAW HTTP to generativelanguage.googleapis.com")
+          print("=" * 64)
           for model in ("gemini-2.5-flash", "gemini-2.0-flash",
-                        "gemini-2.5-flash-lite", "gemini-flash-latest"):
-              print("=" * 60)
-              print("MODEL:", model)
+                        "gemini-2.5-flash-lite"):
+              url = (f"https://generativelanguage.googleapis.com/v1beta/models/"
+                     f"{model}:generateContent?key={gk}")
+              body = json.dumps({"contents": [{"role": "user", "parts": [
+                  {"text": "Reply with the single word OK"}]}]}).encode()
+              req = urllib.request.Request(url, data=body, method="POST",
+                      headers={"Content-Type": "application/json"})
               try:
-                  out = roman_urdu.call_llm(
-                      "\n".join(LINES), provider="gemini", model=model,
-                      api_key=gk, use_few_shot=True)
-                  print("  OK ->", repr(out[:220]))
+                  with urllib.request.urlopen(req, timeout=40) as r:
+                      print(f"  {model:26s} HTTP {r.status}: {r.read()[:200].decode()}")
+              except urllib.error.HTTPError as e:
+                  print(f"  {model:26s} HTTP {e.code}: {e.read()[:300].decode('utf8','replace')}")
               except Exception as e:
-                  print("  RAISED:", type(e).__name__)
-                  print("  MSG   :", str(e)[:400])
+                  print(f"  {model:26s} ERR {type(e).__name__}: {e}")
 
-          # 3. and the engine path the pipeline actually uses
-          print("=" * 60)
-          print("translate_lines(provider=gemini, model=gemini-2.5-flash)")
+          # ---- 2. the engine's call_llm - the real path --------------------
+          print()
+          print("=" * 64)
+          print("2. ENGINE call_llm(provider=gemini)")
+          print("=" * 64)
+          try:
+              out = eng.call_llm("\n".join(LINES), provider="gemini",
+                                 model="gemini-2.5-flash", api_key=gk,
+                                 use_few_shot=True)
+              print("  OK ->", repr(out[:260]))
+          except Exception as e:
+              print("  RAISED:", type(e).__name__)
+              print("  MSG   :", str(e)[:500])
+
+          # ---- 3. the shim path the pipeline actually uses ----------------
+          print()
+          print("=" * 64)
+          print("3. SHIM translate_lines(provider=gemini, model=gemini-2.5-flash)")
+          print("=" * 64)
           r = roman_urdu.translate_lines(
               LINES, provider="gemini", model="gemini-2.5-flash",
               api_key=gk, use_few_shot=True)
           for k in ("ok", "method", "problems", "warning"):
-              print(f"  {k}: {str(r.get(k))[:220]}")
+              print(f"  {k}: {str(r.get(k))[:200]}")
           for l in (r.get("lines") or [])[:3]:
+              print("   line >", str(l)[:110])
+
+          # ---- 4. and with few-shot OFF (the shim's own default) ----------
+          print()
+          print("=" * 64)
+          print("4. SHIM translate_lines(use_few_shot=False)")
+          print("=" * 64)
+          r2 = roman_urdu.translate_lines(
+              LINES, provider="gemini", model="gemini-2.5-flash",
+              api_key=gk, use_few_shot=False)
+          print("  ok:", r2.get("ok"), "| method:", r2.get("method"))
+          print("  problems:", str(r2.get("problems"))[:200])
+          for l in (r2.get("lines") or [])[:3]:
               print("   line >", str(l)[:110])
           PY
