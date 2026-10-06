@@ -86,7 +86,16 @@ _RU_FALLBACK_MODELS = (
     # ~1500/day). The rotation index picks ONE attempt per batch, so a
     # working lane must be first or the digest waits ~5 dead rotations
     # (~50 min) before it is even tried.
-    ("gemini", "gemini-2.5-flash", "GEMINI_API_KEY"),
+    # 6 Oct: gemini-2.5-flash returns HTTP 404 "no longer available to new
+    # users" - Google names gemini-3.8-flash as the replacement. The owner's
+    # GEMINI_API_KEY (aistudio, free ~1500 req/day) is now the pipeline's
+    # primary free lane, so the chain leads with it and falls through the
+    # current flash family when one model 503s.
+    ("gemini", "gemini-3.8-flash", "GEMINI_API_KEY"),
+    ("gemini", "gemini-flash-latest", "GEMINI_API_KEY"),
+    ("gemini", "gemini-3.7-flash", "GEMINI_API_KEY"),
+    ("gemini", "gemini-3.5-flash", "GEMINI_API_KEY"),
+    ("gemini", "gemini-flash-lite-latest", "GEMINI_API_KEY"),
     ("openai", "gpt-4o-mini", "OPENAI_API_KEY"),
     "nvidia/nemotron-3-ultra-550b-a55b:free",
     "qwen/qwen3.8-27b:free",
@@ -121,7 +130,13 @@ def _ru_is_free(kw):
     # batch call was refused for "budget" while a $0 model was idle. Owner law:
     # the budget must never be the reason the pipeline goes silent.
     m = str((kw or {}).get("model") or os.environ.get("RU_MODEL") or "")
-    return m.endswith(":free")
+    if m.endswith(":free"):
+        return True
+    # 6 Oct: the owner's GEMINI_API_KEY is the aistudio FREE tier (~1500
+    # requests/day, $0). Same owner law as the :free slugs - a lane that costs
+    # nothing must never be the reason the pipeline goes silent.
+    return (str((kw or {}).get("provider", "")).lower() == "gemini"
+            and bool((kw or {}).get("api_key")))
 
 
 def _ru_spend(n=1, force=False, free=False):
@@ -1064,10 +1079,19 @@ def build_digest(cands, catchup=False):
     if _pend and _ru_on():
         _ru_kw = {}
         _ru_lbl = "primary"
-        if 0 < _rot:
-            _am = [x for x in _ru_attempts() if x[0] != "primary"]
-            if _am:
-                _ru_lbl, _ru_kw = _am[(_rot - 1) % len(_am)]
+        _am = [x for x in _ru_attempts() if x[0] != "primary"]
+        if _am:
+            # 6 Oct: prefer the first LIVE lane. The rotation index only
+            # exists to stop us hammering a lane that just failed - it must
+            # never outrank a lane that is answering. Gemini leads the chain,
+            # so a normal cycle lands on it; the index still rotates when the
+            # head of the chain is parked by _ru_lane_failed().
+            _head = _am[0]
+            if 0 < _rot and not _ru_lane_alive(_head[0]):
+                _lbl2, _kw2 = _am[(_rot - 1) % len(_am)]
+                if _ru_lane_alive(_lbl2):
+                    _head = (_lbl2, _kw2)
+            _ru_lbl, _ru_kw = _head
         if not _ru_spend(force=True, free=_ru_is_free(_ru_kw)):
             _res = {"ok": False, "lines": [], "method": "budget",
                     "problems": ["daily translator HARD budget reached"]}
