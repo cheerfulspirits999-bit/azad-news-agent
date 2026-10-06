@@ -1,40 +1,74 @@
 {
-  "cycle": "20261007-0120",
-  "at": "2026-10-07T01:20:51.620263+05:30",
+  "cycle": "20261007-0130",
+  "at": "2026-10-07T01:37:32.733200+05:30",
   "candidates": 120,
   "published_this_cycle": 0,
-  "digest": "gate closed: ncards 1/24, gap 54 min, retry_pending=0",
-  "ru": {},
+  "digest": "PUBLISHED auto-digest-2026-10-07-s0136",
+  "ru": {
+    "pre_ru_picks": 5,
+    "to_translate": 5,
+    "engine": {
+      "ok": false,
+      "lines_in": 5,
+      "lines_want": 5,
+      "method": "fallback",
+      "problems": "['Lines [1, 2, 3, 4, 5] copy 4+ consecutive English words verbatim into the Roman Urdu. Re-express those phrases in Urdu; keep only proper nouns/brands/technica"
+    },
+    "kills": {
+      "english-echo": [
+        1,
+        2,
+        4,
+        5
+      ],
+      "paste": [
+        3
+      ]
+    },
+    "accepted": 4,
+    "salvaged": [
+      1,
+      2,
+      3,
+      4
+    ],
+    "via": {
+      "1": "gemini-flash-lite-latest",
+      "2": "gemini-flash-lite-latest",
+      "3": "gemini-flash-lite-latest",
+      "4": "gemini-flash-lite-latest"
+    }
+  },
   "tail": [
-    "[07 Oct 01:20:51] queued for editorial pass (no safe auto frame): Evening news wrap: MEA condemns attacks on seafarers, IAF gets new chi",
-    "[07 Oct 01:20:51] queued for editorial pass (no safe auto frame): FSSAI licences of nine restaurants in Telangana\u2019s Medak, Kamareddy and",
-    "[07 Oct 01:20:51] stale or low-score, skipped: Tea Stall Owner Dies After Suicide Attempt At Bheemgal Polic",
-    "[07 Oct 01:20:51] queued for editorial pass (no safe auto frame): India condemns attack on commercial vessel in Black Sea",
-    "[07 Oct 01:20:51] held for the next card: auto-2-killed-in-israeli-strike-in-gaza-as-demolitions-continue",
-    "[07 Oct 01:20:51] stale or low-score, skipped: Hyderabad: BTech student dies by suicide at women\u2019s hostel i",
-    "[07 Oct 01:20:51] queued for editorial pass (no safe auto frame): Hyderabad Hitech City flyover street light raises safety concerns",
-    "[07 Oct 01:20:51] stale or low-score, skipped: \u2018Targeting of commercial shipping must end\u2019: India condemns ",
-    "[07 Oct 01:20:51] stale or low-score, skipped: Licensed firearms under scrutiny after two Hyderabad inciden",
-    "[07 Oct 01:20:51] stale or low-score, skipped: Kachiguda: Major Fire Erupts in Chappal Bazar",
-    "[07 Oct 01:20:51] stale or low-score, skipped: Fire at Berry Alloys factory in Vizianagaram, one worker inj",
-    "[07 Oct 01:20:51] stale or low-score, skipped: Bacteria in cocktail: Food Safety dept. files case against o",
-    "[07 Oct 01:20:51] stale or low-score, skipped: 11 Indian crew injured after ship hit by projectile in Strai",
-    "[07 Oct 01:20:51] stale or low-score, skipped: India condemns attack on commercial vessel off Oman as 11 In",
-    "[07 Oct 01:20:51] stale or low-score, skipped: 65-year-old farmer ends life over mounting debts in Adilabad",
-    "[07 Oct 01:20:51] stale or low-score, skipped: 5 injured in accident on Pune-Mumbai Expressway\u2019s Missing Li",
-    "[07 Oct 01:20:51] stale or low-score, skipped: U.S. envoy holds rare meeting with Sudan\u2019s top general in pu",
-    "[07 Oct 01:20:51] stale or low-score, skipped: In Dehradun Triple Murder, Couple And House Help Killed With",
-    "[07 Oct 01:20:51] stale or low-score, skipped: Telangana approves new KBR Park steel flyover, scraps earlie",
-    "[07 Oct 01:20:51] stale or low-score, skipped: KBR Park one-way traffic slows water tankers; HMWSSB plans m",
-    "[07 Oct 01:20:51] stale or low-score, skipped: Mancherial: Fire Erupts After AC Compressor Explosion at Pri",
-    "[07 Oct 01:20:51] stale or low-score, skipped: Five injured as land dispute sparks farmers\u2019 clash in Jogula",
-    "[07 Oct 01:20:51] stale or low-score, skipped: Fire breaks out in dialysis room of private hospital in Manc",
-    "[07 Oct 01:20:51] stale or low-score, skipped: Bellampalli: 19-Year-Old Woman Dies After Being Hit by Train",
-    "[07 Oct 01:20:51] stale or low-score, skipped: RPF, Nemili police seize 16 kg of ganja in separate cases; f",
-    "[07 Oct 01:20:51] stale or low-score, skipped: Police Clarify Minor Girls\u2019 Disappearance Case",
-    "[07 Oct 01:20:51] stale or low-score, skipped: 11 Indians injured after ship hit by projectile in Hormuz",
-    "[07 Oct 01:20:51] stale or low-score, skipped: Saudi Arabia says three people injured in attacks on two air",
-    "[07 Oct 01:20:51] stale or low-score, skipped: 1 killed in strike on Turkish vessel with Indian crew",
-    "[07 Oct 01:20:51] stale or low-score, skipped: UP Woman Kills Husband With Boyfriend, Phone Chat Exposes Mu"
+    "[07 Oct 01:37:32] queued for editorial pass (no safe auto frame): Evening news wrap: MEA condemns attacks on seafarers, IAF gets new chi",
+    "[07 Oct 01:37:32] queued for editorial pass (no safe auto frame): FSSAI licences of nine restaurants in Telangana\u2019s Medak, Kamareddy and",
+    "[07 Oct 01:37:32] stale or low-score, skipped: Tea Stall Owner Dies After Suicide Attempt At Bheemgal Polic",
+    "[07 Oct 01:37:32] queued for editorial pass (no safe auto frame): India condemns attack on commercial vessel in Black Sea",
+    "[07 Oct 01:37:32] held for the next card: auto-2-killed-in-israeli-strike-in-gaza-as-demolitions-continue",
+    "[07 Oct 01:37:32] stale or low-score, skipped: Hyderabad: BTech student dies by suicide at women\u2019s hostel i",
+    "[07 Oct 01:37:32] queued for editorial pass (no safe auto frame): Hyderabad Hitech City flyover street light raises safety concerns",
+    "[07 Oct 01:37:32] stale or low-score, skipped: Licensed firearms under scrutiny after two Hyderabad inciden",
+    "[07 Oct 01:37:32] stale or low-score, skipped: Kachiguda: Major Fire Erupts in Chappal Bazar",
+    "[07 Oct 01:37:32] stale or low-score, skipped: Fire at Berry Alloys factory in Vizianagaram, one worker inj",
+    "[07 Oct 01:37:32] stale or low-score, skipped: Bacteria in cocktail: Food Safety dept. files case against o",
+    "[07 Oct 01:37:32] stale or low-score, skipped: 11 Indian crew injured after ship hit by projectile in Strai",
+    "[07 Oct 01:37:32] stale or low-score, skipped: India condemns attack on commercial vessel off Oman as 11 In",
+    "[07 Oct 01:37:32] stale or low-score, skipped: 65-year-old farmer ends life over mounting debts in Adilabad",
+    "[07 Oct 01:37:32] stale or low-score, skipped: 5 injured in accident on Pune-Mumbai Expressway\u2019s Missing Li",
+    "[07 Oct 01:37:32] stale or low-score, skipped: U.S. envoy holds rare meeting with Sudan\u2019s top general in pu",
+    "[07 Oct 01:37:32] stale or low-score, skipped: In Dehradun Triple Murder, Couple And House Help Killed With",
+    "[07 Oct 01:37:32] stale or low-score, skipped: Telangana approves new KBR Park steel flyover, scraps earlie",
+    "[07 Oct 01:37:32] stale or low-score, skipped: \u2018Targeting of commercial shipping must end\u2019: India condemns ",
+    "[07 Oct 01:37:32] stale or low-score, skipped: KBR Park one-way traffic slows water tankers; HMWSSB plans m",
+    "[07 Oct 01:37:32] stale or low-score, skipped: Mancherial: Fire Erupts After AC Compressor Explosion at Pri",
+    "[07 Oct 01:37:32] stale or low-score, skipped: Five injured as land dispute sparks farmers\u2019 clash in Jogula",
+    "[07 Oct 01:37:32] stale or low-score, skipped: Fire breaks out in dialysis room of private hospital in Manc",
+    "[07 Oct 01:37:32] stale or low-score, skipped: Bellampalli: 19-Year-Old Woman Dies After Being Hit by Train",
+    "[07 Oct 01:37:32] stale or low-score, skipped: RPF, Nemili police seize 16 kg of ganja in separate cases; f",
+    "[07 Oct 01:37:32] stale or low-score, skipped: 11 Indians injured after ship hit by projectile in Hormuz",
+    "[07 Oct 01:37:32] stale or low-score, skipped: Saudi Arabia says three people injured in attacks on two air",
+    "[07 Oct 01:37:32] stale or low-score, skipped: 1 killed in strike on Turkish vessel with Indian crew",
+    "[07 Oct 01:37:32] stale or low-score, skipped: UP Woman Kills Husband With Boyfriend, Phone Chat Exposes Mu",
+    "[07 Oct 01:37:32] stale or low-score, skipped: Hyderabad: Why Has the One-Way Traffic System Around KBR Par"
   ]
 }
