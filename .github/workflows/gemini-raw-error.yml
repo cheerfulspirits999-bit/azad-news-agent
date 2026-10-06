@@ -39,12 +39,30 @@ jobs:
                    "Officials say the project will create five thousand jobs",
                    "The cabinet also cleared a single-window clearance system"]
 
+          # ---- 0. list every model this key can actually use --------------
+          print("=" * 64)
+          print("0. GET /v1beta/models - what is available to THIS key")
+          print("=" * 64)
+          try:
+              lu = f"https://generativelanguage.googleapis.com/v1beta/models?key={gk}"
+              with urllib.request.urlopen(lu, timeout=40) as r:
+                  md = json.loads(r.read().decode())
+              names = [m.get("name", "") for m in md.get("models", [])]
+              print("  total models:", len(names))
+              for n in names:
+                  if "flash" in n or "pro" in n:
+                      print("   ", n)
+          except urllib.error.HTTPError as e:
+              print("  HTTP", e.code, e.read()[:250].decode("utf8", "replace"))
+          except Exception as e:
+              print("  ERR", type(e).__name__, e)
+
           # ---- 1. raw HTTP straight at Gemini, no engine in the way --------
           print("=" * 64)
           print("1. RAW HTTP to generativelanguage.googleapis.com")
           print("=" * 64)
-          for model in ("gemini-2.5-flash", "gemini-2.0-flash",
-                        "gemini-2.5-flash-lite"):
+          for model in ("gemini-3.8-flash", "gemini-3.8-flash-lite",
+                        "gemini-2.5-flash", "gemini-2.0-flash"):
               url = (f"https://generativelanguage.googleapis.com/v1beta/models/"
                      f"{model}:generateContent?key={gk}")
               body = json.dumps({"contents": [{"role": "user", "parts": [
