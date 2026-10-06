@@ -1,40 +1,74 @@
 {
-  "cycle": "20261006-1008",
-  "at": "2026-10-06T10:08:24.095946+05:30",
+  "cycle": "20261006-1018",
+  "at": "2026-10-06T10:23:52.452762+05:30",
   "candidates": 120,
   "published_this_cycle": 0,
-  "digest": "gate closed: ncards 7/24, gap 53 min, retry_pending=0",
-  "ru": {},
+  "digest": "PUBLISHED auto-digest-2026-10-06-s1022",
+  "ru": {
+    "pre_ru_picks": 5,
+    "to_translate": 5,
+    "engine": {
+      "ok": false,
+      "lines_in": 5,
+      "lines_want": 5,
+      "method": "fallback",
+      "problems": "['Lines [1, 2, 3, 4, 5] copy 4+ consecutive English words verbatim into the Roman Urdu. Re-express those phrases in Urdu; keep only proper nouns/brands/technica"
+    },
+    "kills": {
+      "paste": [
+        1,
+        2,
+        3,
+        5
+      ],
+      "english-echo": [
+        4
+      ]
+    },
+    "accepted": 4,
+    "salvaged": [
+      1,
+      2,
+      3,
+      4
+    ],
+    "via": {
+      "1": "primary",
+      "2": "primary",
+      "3": "primary",
+      "4": "primary"
+    }
+  },
   "tail": [
-    "[06 Oct 10:08:24] stale or low-score, skipped: Telangana government faces citizens\u2019 ire over Hyderabad\u2019s KB",
-    "[06 Oct 10:08:24] stale or low-score, skipped: Youth held for extorting \u20b938 lakh from 70-year-old man in ho",
-    "[06 Oct 10:08:24] stale or low-score, skipped: Bank robbery videos, Army insiders and arms dealers: Bolarum",
-    "[06 Oct 10:08:24] stale or low-score, skipped: 20 Injured, Woman Rescued After Three Hours as Madurai-Bound",
-    "[06 Oct 10:08:24] stale or low-score, skipped: Anantapur Poultry Farm Hit by Bird Flu, 2,500 Hens Dead",
-    "[06 Oct 10:08:24] stale or low-score, skipped: Birthday celebration turns tragic, 3 friends killed in high-",
-    "[06 Oct 10:08:24] stale or low-score, skipped: Two Dead After RTC Bus, Bolero Collide in Nallamala Forest",
-    "[06 Oct 10:08:24] stale or low-score, skipped: Teenager loses hand picking up grenade in France school prot",
-    "[06 Oct 10:08:24] stale or low-score, skipped: Fire breaks out on reality show set at Goregaon Film City; n",
-    "[06 Oct 10:08:24] stale or low-score, skipped: Man dies after RTC bus hits him while crossing road in Siddi",
-    "[06 Oct 10:08:24] stale or low-score, skipped: Nalgonda farmer dies of snakebite while checking paddy field",
-    "[06 Oct 10:08:24] stale or low-score, skipped: Nizamabad tea vendor attempts suicide at police station, all",
-    "[06 Oct 10:08:24] stale or low-score, skipped: 22 Telangana Pilgrims Injured as Bus Hits Truck in Bihar's B",
-    "[06 Oct 10:08:24] stale or low-score, skipped: Headmaster Allegedly Beats 12 Students with Water Pipe in Te",
-    "[06 Oct 10:08:24] stale or low-score, skipped: Mancherial: Woman dies after delivering stillborn baby, fami",
-    "[06 Oct 10:08:24] stale or low-score, skipped: Massive fire breaks out near sets of two popular reality sho",
-    "[06 Oct 10:08:24] stale or low-score, skipped: DVAC launches probe into the alleged sand mining scam during",
-    "[06 Oct 10:08:24] stale or low-score, skipped: Airstrikes, artillery hit north Ethiopia as government and r",
-    "[06 Oct 10:08:24] stale or low-score, skipped: Two dead after ship catches fire, sinks in Black Sea",
-    "[06 Oct 10:08:24] stale or low-score, skipped: Asian Games 2026: India\u2019s next-gen stars announce arrival",
-    "[06 Oct 10:08:24] stale or low-score, skipped: Forum for Constitutional Democracy slams Delhi Police over i",
-    "[06 Oct 10:08:24] stale or low-score, skipped: Video: Staffer washes utensils in toilet at sweet shop; food",
-    "[06 Oct 10:08:24] stale or low-score, skipped: Bestselling novelist and former politician Jeffrey Archer di",
-    "[06 Oct 10:08:24] stale or low-score, skipped: Best-Selling British Author Jeffrey Archer Dies Aged 86",
-    "[06 Oct 10:08:24] stale or low-score, skipped: Construction of Vaduthala railway overbridge, Perandoor-Vadu",
-    "[06 Oct 10:08:24] stale or low-score, skipped: Steel Flyover to Replace 14 Projects Around KBR Park",
-    "[06 Oct 10:08:24] stale or low-score, skipped: Before triple murder, Bengaluru techie used AI to \u2018rehearse\u2019",
-    "[06 Oct 10:08:24] stale or low-score, skipped: \u20b9687.5 Crore Released for Sunkishala, Water Works",
-    "[06 Oct 10:08:24] stale or low-score, skipped: Janhvi on AI Row",
-    "[06 Oct 10:08:24] stale or low-score, skipped: Telangana BC Commission to visit Nizamabad over social boyco"
+    "[06 Oct 10:23:52] stale or low-score, skipped: Youth held for extorting \u20b938 lakh from 70-year-old man in ho",
+    "[06 Oct 10:23:52] stale or low-score, skipped: Bank robbery videos, Army insiders and arms dealers: Bolarum",
+    "[06 Oct 10:23:52] stale or low-score, skipped: 20 Injured, Woman Rescued After Three Hours as Madurai-Bound",
+    "[06 Oct 10:23:52] stale or low-score, skipped: Jeffrey Archer dies at 86, a day before release of his final",
+    "[06 Oct 10:23:52] stale or low-score, skipped: Anantapur Poultry Farm Hit by Bird Flu, 2,500 Hens Dead",
+    "[06 Oct 10:23:52] stale or low-score, skipped: Birthday celebration turns tragic, 3 friends killed in high-",
+    "[06 Oct 10:23:52] stale or low-score, skipped: Two Dead After RTC Bus, Bolero Collide in Nallamala Forest",
+    "[06 Oct 10:23:52] stale or low-score, skipped: Teenager loses hand picking up grenade in France school prot",
+    "[06 Oct 10:23:52] stale or low-score, skipped: Man dies after RTC bus hits him while crossing road in Siddi",
+    "[06 Oct 10:23:52] stale or low-score, skipped: Nalgonda farmer dies of snakebite while checking paddy field",
+    "[06 Oct 10:23:52] stale or low-score, skipped: Nizamabad tea vendor attempts suicide at police station, all",
+    "[06 Oct 10:23:52] stale or low-score, skipped: 22 Telangana Pilgrims Injured as Bus Hits Truck in Bihar's B",
+    "[06 Oct 10:23:52] stale or low-score, skipped: Headmaster Allegedly Beats 12 Students with Water Pipe in Te",
+    "[06 Oct 10:23:52] stale or low-score, skipped: Mancherial: Woman dies after delivering stillborn baby, fami",
+    "[06 Oct 10:23:52] stale or low-score, skipped: Massive fire breaks out near sets of two popular reality sho",
+    "[06 Oct 10:23:52] stale or low-score, skipped: DVAC launches probe into the alleged sand mining scam during",
+    "[06 Oct 10:23:52] stale or low-score, skipped: Airstrikes, artillery hit north Ethiopia as government and r",
+    "[06 Oct 10:23:52] stale or low-score, skipped: Two dead after ship catches fire, sinks in Black Sea",
+    "[06 Oct 10:23:52] stale or low-score, skipped: Asian Games 2026: India\u2019s next-gen stars announce arrival",
+    "[06 Oct 10:23:52] stale or low-score, skipped: Forum for Constitutional Democracy slams Delhi Police over i",
+    "[06 Oct 10:23:52] stale or low-score, skipped: Video: Staffer washes utensils in toilet at sweet shop; food",
+    "[06 Oct 10:23:52] stale or low-score, skipped: Bestselling novelist and former politician Jeffrey Archer di",
+    "[06 Oct 10:23:52] stale or low-score, skipped: Best-Selling British Author Jeffrey Archer Dies Aged 86",
+    "[06 Oct 10:23:52] stale or low-score, skipped: Fire breaks out on reality show set at Goregaon Film City; n",
+    "[06 Oct 10:23:52] stale or low-score, skipped: Construction of Vaduthala railway overbridge, Perandoor-Vadu",
+    "[06 Oct 10:23:52] stale or low-score, skipped: Steel Flyover to Replace 14 Projects Around KBR Park",
+    "[06 Oct 10:23:52] stale or low-score, skipped: Before triple murder, Bengaluru techie used AI to \u2018rehearse\u2019",
+    "[06 Oct 10:23:52] stale or low-score, skipped: \u20b9687.5 Crore Released for Sunkishala, Water Works",
+    "[06 Oct 10:23:52] stale or low-score, skipped: Janhvi on AI Row",
+    "[06 Oct 10:23:52] stale or low-score, skipped: Telangana BC Commission to visit Nizamabad over social boyco"
   ]
 }
