@@ -114,7 +114,14 @@ def _ru_is_free(kw):
     HTTP 200, ok=True, real Roman Urdu) - 12 hours of silence for a service
     that costs nothing. Owner law: the budget must NEVER be the reason the
     pipeline goes silent."""
-    return str((kw or {}).get("model", "")).endswith(":free")
+    # 6 Oct: resolve the EFFECTIVE model, not just the kwarg. The primary lane
+    # is yielded as ("primary", {}) - it takes its model from RU_MODEL - so the
+    # old check saw an empty dict and called a :free slug "paid". The free lane
+    # was then charged against the paid budget, which sat at 220/220, so the
+    # batch call was refused for "budget" while a $0 model was idle. Owner law:
+    # the budget must never be the reason the pipeline goes silent.
+    m = str((kw or {}).get("model") or os.environ.get("RU_MODEL") or "")
+    return m.endswith(":free")
 
 
 def _ru_spend(n=1, force=False, free=False):
