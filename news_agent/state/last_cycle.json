@@ -1,40 +1,72 @@
 {
-  "cycle": "20261006-1918",
-  "at": "2026-10-06T19:18:54.035601+05:30",
+  "cycle": "20261006-1928",
+  "at": "2026-10-06T19:37:26.168398+05:30",
   "candidates": 120,
   "published_this_cycle": 0,
-  "digest": "gate closed: ncards 9/24, gap 53 min, retry_pending=0",
-  "ru": {},
+  "digest": "PUBLISHED auto-digest-2026-10-06-s1936",
+  "ru": {
+    "pre_ru_picks": 5,
+    "to_translate": 5,
+    "engine": {
+      "ok": false,
+      "lines_in": 5,
+      "lines_want": 5,
+      "method": "fallback",
+      "problems": "['Lines [1, 2, 3, 4, 5] copy 4+ consecutive English words verbatim into the Roman Urdu. Re-express those phrases in Urdu; keep only proper nouns/brands/technica"
+    },
+    "kills": {
+      "paste": [
+        1,
+        2,
+        4,
+        5
+      ],
+      "english-echo": [
+        3
+      ]
+    },
+    "accepted": 3,
+    "salvaged": [
+      1,
+      2,
+      3
+    ],
+    "via": {
+      "1": "gemini-flash-lite-latest",
+      "2": "gemini-flash-lite-latest",
+      "3": "gemini-flash-lite-latest"
+    }
+  },
   "tail": [
-    "[06 Oct 19:18:54] stale or low-score, skipped: Kachiguda: Major Fire Erupts in Chappal Bazar",
-    "[06 Oct 19:18:54] stale or low-score, skipped: Tank Bund Safety Lapses Exposed After Fatal Accident",
-    "[06 Oct 19:18:54] stale or low-score, skipped: Hyderabad: Why Has the One-Way Traffic System Around KBR Par",
-    "[06 Oct 19:18:54] stale or low-score, skipped: Man, teen girl die by suicide in Gujarat forest; act livestr",
-    "[06 Oct 19:18:54] stale or low-score, skipped: Mancherial: Fire Erupts After AC Compressor Explosion at Pri",
-    "[06 Oct 19:18:54] stale or low-score, skipped: Hyderabad's 'Elevated Corridor' Plan To Ease Traffic Around ",
-    "[06 Oct 19:18:54] stale or low-score, skipped: 5 injured in accident on Pune-Mumbai Expressway\u2019s Missing Li",
-    "[06 Oct 19:18:54] stale or low-score, skipped: Grave concern: India condemns attack on ship carrying Indian",
-    "[06 Oct 19:18:54] stale or low-score, skipped: Saudi Arabia says three people injured in attacks on two air",
-    "[06 Oct 19:18:54] stale or low-score, skipped: Jeffrey Archer, bestselling British novelist, dies at 86",
-    "[06 Oct 19:18:54] stale or low-score, skipped: Mentally challenged man goes on rampage in Bengal village; m",
-    "[06 Oct 19:18:54] stale or low-score, skipped: Five injured as land dispute sparks farmers\u2019 clash in Jogula",
-    "[06 Oct 19:18:54] stale or low-score, skipped: Fire breaks out in dialysis room of private hospital in Manc",
-    "[06 Oct 19:18:54] stale or low-score, skipped: Bellampalli: 19-Year-Old Woman Dies After Being Hit by Train",
-    "[06 Oct 19:18:54] stale or low-score, skipped: Youth held for extorting \u20b938 lakh from 70-year-old man in ho",
-    "[06 Oct 19:18:54] stale or low-score, skipped: U.S. envoy holds rare meeting with Sudan\u2019s top general in pu",
-    "[06 Oct 19:18:54] stale or low-score, skipped: 2,000-year-old Buddhist site in Kashmir faces \u201chigh risk of ",
-    "[06 Oct 19:18:54] stale or low-score, skipped: Russian Lab Worker Dies Amid Plague Fears; Over 190 Quaranti",
-    "[06 Oct 19:18:54] stale or low-score, skipped: AR constable suffers serious injuries in service rifle misfi",
-    "[06 Oct 19:18:54] stale or low-score, skipped: 30-year-old Meerut man dies, wife claims natural death; now ",
-    "[06 Oct 19:18:54] stale or low-score, skipped: Russia says nearly 900 Ukrainian drones downed, Moscow regio",
-    "[06 Oct 19:18:54] stale or low-score, skipped: 'Attacks must end': MEA says 11 Indian crew members injured ",
-    "[06 Oct 19:18:54] stale or low-score, skipped: Birthday Tragedy Exposes Contradictions Of Tank Bund Celebra",
-    "[06 Oct 19:18:54] stale or low-score, skipped: Telangana government faces citizens\u2019 ire over Hyderabad\u2019s KB",
-    "[06 Oct 19:18:54] stale or low-score, skipped: London arrest deepens RAF Fairford terror probe over suspect",
-    "[06 Oct 19:18:54] stale or low-score, skipped: France student protests turn violent: Teen loses hand after ",
-    "[06 Oct 19:18:54] stale or low-score, skipped: Trump approves firing squad execution for Fort Hood shooter ",
-    "[06 Oct 19:18:54] stale or low-score, skipped: Shamshabad ATM Robbery: Burglars Use Gas Cutters to Steal Rs",
-    "[06 Oct 19:18:54] stale or low-score, skipped: Hyderabad: Begum Bazar Businessman Attacked, Robbed of Rs 9.",
-    "[06 Oct 19:18:54] stale or low-score, skipped: 'Cyber-fraud trap\u2019: HMWSSB warns Hyderabad consumers about f"
+    "[06 Oct 19:37:26] stale or low-score, skipped: Kachiguda: Major Fire Erupts in Chappal Bazar",
+    "[06 Oct 19:37:26] stale or low-score, skipped: Tank Bund Safety Lapses Exposed After Fatal Accident",
+    "[06 Oct 19:37:26] stale or low-score, skipped: Hyderabad: Why Has the One-Way Traffic System Around KBR Par",
+    "[06 Oct 19:37:26] stale or low-score, skipped: Man, teen girl die by suicide in Gujarat forest; act livestr",
+    "[06 Oct 19:37:26] stale or low-score, skipped: Mancherial: Fire Erupts After AC Compressor Explosion at Pri",
+    "[06 Oct 19:37:26] stale or low-score, skipped: Hyderabad's 'Elevated Corridor' Plan To Ease Traffic Around ",
+    "[06 Oct 19:37:26] stale or low-score, skipped: 5 injured in accident on Pune-Mumbai Expressway\u2019s Missing Li",
+    "[06 Oct 19:37:26] stale or low-score, skipped: Grave concern: India condemns attack on ship carrying Indian",
+    "[06 Oct 19:37:26] stale or low-score, skipped: 11 Indians injured after ship hit by projectile in Hormuz",
+    "[06 Oct 19:37:26] stale or low-score, skipped: Saudi Arabia says three people injured in attacks on two air",
+    "[06 Oct 19:37:26] stale or low-score, skipped: Jeffrey Archer, bestselling British novelist, dies at 86",
+    "[06 Oct 19:37:26] stale or low-score, skipped: Five injured as land dispute sparks farmers\u2019 clash in Jogula",
+    "[06 Oct 19:37:26] stale or low-score, skipped: Fire breaks out in dialysis room of private hospital in Manc",
+    "[06 Oct 19:37:26] stale or low-score, skipped: Bellampalli: 19-Year-Old Woman Dies After Being Hit by Train",
+    "[06 Oct 19:37:26] stale or low-score, skipped: U.S. envoy holds rare meeting with Sudan\u2019s top general in pu",
+    "[06 Oct 19:37:26] stale or low-score, skipped: 2,000-year-old Buddhist site in Kashmir faces \u201chigh risk of ",
+    "[06 Oct 19:37:26] stale or low-score, skipped: Russian Lab Worker Dies Amid Plague Fears; Over 190 Quaranti",
+    "[06 Oct 19:37:26] stale or low-score, skipped: AR constable suffers serious injuries in service rifle misfi",
+    "[06 Oct 19:37:26] stale or low-score, skipped: 30-year-old Meerut man dies, wife claims natural death; now ",
+    "[06 Oct 19:37:26] stale or low-score, skipped: 'Attacks must end': MEA says 11 Indian crew members injured ",
+    "[06 Oct 19:37:26] stale or low-score, skipped: Birthday Tragedy Exposes Contradictions Of Tank Bund Celebra",
+    "[06 Oct 19:37:26] stale or low-score, skipped: Telangana government faces citizens\u2019 ire over Hyderabad\u2019s KB",
+    "[06 Oct 19:37:26] stale or low-score, skipped: \u2018Deranged and dangerous\u2019, \u2018He gave terrorists targets\u2019: Trum",
+    "[06 Oct 19:37:26] stale or low-score, skipped: London arrest deepens RAF Fairford terror probe over suspect",
+    "[06 Oct 19:37:26] stale or low-score, skipped: Trump approves firing squad execution for Fort Hood shooter ",
+    "[06 Oct 19:37:26] stale or low-score, skipped: Shamshabad ATM Robbery: Burglars Use Gas Cutters to Steal Rs",
+    "[06 Oct 19:37:26] stale or low-score, skipped: Hyderabad: Begum Bazar Businessman Attacked, Robbed of Rs 9.",
+    "[06 Oct 19:37:26] stale or low-score, skipped: 'Cyber-fraud trap\u2019: HMWSSB warns Hyderabad consumers about f",
+    "[06 Oct 19:37:26] stale or low-score, skipped: 1 killed in strike on Turkish vessel with Indian crew",
+    "[06 Oct 19:37:26] stale or low-score, skipped: Forum for Constitutional Democracy slams Delhi Police over i"
   ]
 }
