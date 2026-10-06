@@ -38,9 +38,19 @@ jobs:
                    "Officials say the project will create five thousand jobs",
                    "The cabinet also cleared a single-window clearance system"]
 
-          # 1. configured()?
+          # 1. configured()?  (the engine's version, not the shim's 0-arg one)
           print("configured(gemini, key):",
-                roman_urdu.configured("gemini", gk))
+                eng.configured("gemini", gk))
+          # which key would the engine use if the caller passed NONE?
+          resolved = eng.API_KEYS.get("gemini", "")
+          print("engine default key for gemini:",
+                "OpenRouter key!" if resolved.startswith("sk-or-")
+                else ("gemini key" if resolved == gk else repr(resolved[:12])))
+          print("RU_API_KEY set:", bool(os.environ.get("RU_API_KEY")))
+          print("GEMINI_API_KEY set:", bool(gk))
+          import inspect
+          print("translate_news params:",
+                list(inspect.signature(eng.translate_news).parameters))
 
           # 2. the raw call_llm - this is what actually raises
           for model in ("gemini-2.5-flash", "gemini-2.0-flash",
