@@ -1,8 +1,8 @@
 {
- "at": "2026-10-06T11:57:24Z",
+ "at": "2026-10-06T12:20:43Z",
  "keys": {
   "RU_API_KEY": "set(len=73)",
-  "GEMINI_API_KEY": "MISSING",
+  "GEMINI_API_KEY": "set(len=53)",
   "OPENAI_API_KEY": "set(len=164)",
   "GROQ_API_KEY": "MISSING"
  },
@@ -31,8 +31,14 @@
    ]
   },
   "gemini_direct": {
-   "skipped": true,
-   "reason": "no key"
+   "method": "fallback",
+   "ok": false,
+   "problems": "['Lines [2, 3] copy 4+ consecutive English words verbatim into the Roman Urdu. Re-express those phrases in Urdu; keep only proper nouns/brands/technical terms in English.', 'Output looks mostly untranslated (90% of words identical to English). Translate the sentences into natural Roman Urdu, keeping",
+   "lines": [
+    "Telangana hukumat approves a naya data centre policy",
+    "Officials say the project will create five thousand jobs",
+    "The cabinet also cleared a single-window clearance system"
+   ]
   }
  }
 }
