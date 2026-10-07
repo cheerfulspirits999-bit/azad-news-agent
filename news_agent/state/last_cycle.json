@@ -1,40 +1,72 @@
 {
-  "cycle": "20261007-1911",
-  "at": "2026-10-07T19:12:14.908004+05:30",
+  "cycle": "20261007-1922",
+  "at": "2026-10-07T19:32:24.966526+05:30",
   "candidates": 120,
   "published_this_cycle": 0,
-  "digest": "gate closed: ncards 15/24, gap 53 min, retry_pending=0",
-  "ru": {},
+  "digest": "PUBLISHED auto-digest-2026-10-07-s1931",
+  "ru": {
+    "pre_ru_picks": 5,
+    "to_translate": 5,
+    "engine": {
+      "ok": false,
+      "lines_in": 5,
+      "lines_want": 5,
+      "method": "fallback",
+      "problems": "['Lines [1, 2, 3, 4, 5] copy 4+ consecutive English words verbatim into the Roman Urdu. Re-express those phrases in Urdu; keep only proper nouns/brands/technica"
+    },
+    "kills": {
+      "english-echo": [
+        1,
+        2
+      ],
+      "paste": [
+        3,
+        4,
+        5
+      ]
+    },
+    "accepted": 3,
+    "salvaged": [
+      1,
+      2,
+      3
+    ],
+    "via": {
+      "1": "gemini-flash-lite-latest",
+      "2": "gemini-flash-lite-latest",
+      "3": "gemini-flash-lite-latest"
+    }
+  },
   "tail": [
-    "[07 Oct 19:12:14] queued for editorial pass (no safe auto frame): Palestinian teen, civil defence medic killed in Israeli strikes",
-    "[07 Oct 19:12:14] queued for editorial pass (no safe auto frame): Retired Air Force officer dies as boulder falls on moving car on Ooty ",
-    "[07 Oct 19:12:14] stale or low-score, skipped: Hyderabad: Rs 500 Cr Real Estate Scam In Name Of Free Launch",
-    "[07 Oct 19:12:14] stale or low-score, skipped: Four Hyderabad pharmacies face show-cause notices",
-    "[07 Oct 19:12:14] stale or low-score, skipped: Rangareddy: Farmer Dies After Coming Into Contact With Live ",
-    "[07 Oct 19:12:14] stale or low-score, skipped: Hyderabad: Woman\u2019s burnt body found near Thatti Annaram, pol",
-    "[07 Oct 19:12:14] stale or low-score, skipped: Family Tragedy: Couple, Son Killed in Rangareddy Road Accide",
-    "[07 Oct 19:12:14] stale or low-score, skipped: Missing Madhya Pradesh teen found beheaded in forest, lover ",
-    "[07 Oct 19:12:14] stale or low-score, skipped: Several Trapped As Building Collapses In Delhi Month After H",
-    "[07 Oct 19:12:14] stale or low-score, skipped: Indian Oil Official Went To Seal Petrol Pump In Maharashtra,",
-    "[07 Oct 19:12:14] stale or low-score, skipped: Four-storey building collapses in Delhi's Seemapuri, several",
-    "[07 Oct 19:12:14] stale or low-score, skipped: 101 held in TGCSB\u2019s six-State sweep, \u20b917 crore cyber fraud t",
-    "[07 Oct 19:12:14] stale or low-score, skipped: Pedestrians Left at Mercy of Traffic as Motorists Disregard ",
-    "[07 Oct 19:12:14] stale or low-score, skipped: Hyderabad property sold and mortgaged repeatedly, cheating 5",
-    "[07 Oct 19:12:14] stale or low-score, skipped: Hyderabad police form special teams to probe Rs 4.50-cr prop",
-    "[07 Oct 19:12:14] stale or low-score, skipped: Pakistan security forces kill 18 terrorists in Khyber Pakhtu",
-    "[07 Oct 19:12:14] stale or low-score, skipped: 7 policemen injured in attack in northwest Pakistan",
-    "[07 Oct 19:12:14] stale or low-score, skipped: Warangal: 3-Year-Old Killed in School Bus Accident",
-    "[07 Oct 19:12:14] stale or low-score, skipped: Warangal: Three-year-old child killed after being run over b",
-    "[07 Oct 19:12:14] stale or low-score, skipped: Adilabad tenant farmer allegedly dies by suicide over mounti",
-    "[07 Oct 19:12:14] stale or low-score, skipped: Asifabad: Five Injured After Anganwadi Centre Roof Collapses",
-    "[07 Oct 19:12:14] stale or low-score, skipped: Jagtial: Youth Dies Suddenly After Suffering Seizure on Trac",
-    "[07 Oct 19:12:14] stale or low-score, skipped: FSSAI licences of nine restaurants in Telangana\u2019s Medak, Kam",
-    "[07 Oct 19:12:14] stale or low-score, skipped: Five injured, several feared trapped after 5-storey building",
-    "[07 Oct 19:12:14] stale or low-score, skipped: IOC Takes up Officer's Death With Authorities After Maharash",
-    "[07 Oct 19:12:14] stale or low-score, skipped: Tea Stall Owner Dies After Suicide Attempt At Bheemgal Polic",
-    "[07 Oct 19:12:14] stale or low-score, skipped: Terror Accused in Poonch Grenade Case Declared Offender",
-    "[07 Oct 19:12:14] stale or low-score, skipped: India slams OIC's \u2018willful blindness\u2019 at UN, defends action ",
-    "[07 Oct 19:12:14] stale or low-score, skipped: New terror wave coming: Israeli envoy warns India, Israel af",
-    "[07 Oct 19:12:14] stale or low-score, skipped: \u2018Targeting of commercial shipping must end\u2019: India condemns "
+    "[07 Oct 19:32:24] stale or low-score, skipped: Hyderabad homebuyers allege Rs 500-crore fraud in Tellapur p",
+    "[07 Oct 19:32:24] queued for editorial pass (no safe auto frame): Palestinian teen, civil defence medic killed in Israeli strikes",
+    "[07 Oct 19:32:24] queued for editorial pass (no safe auto frame): Retired Air Force officer dies as boulder falls on moving car on Ooty ",
+    "[07 Oct 19:32:24] stale or low-score, skipped: Hyderabad: Rs 500 Cr Real Estate Scam In Name Of Free Launch",
+    "[07 Oct 19:32:24] stale or low-score, skipped: Four Hyderabad pharmacies face show-cause notices",
+    "[07 Oct 19:32:24] stale or low-score, skipped: Rangareddy: Farmer Dies After Coming Into Contact With Live ",
+    "[07 Oct 19:32:24] stale or low-score, skipped: Hyderabad: Woman\u2019s burnt body found near Thatti Annaram, pol",
+    "[07 Oct 19:32:24] stale or low-score, skipped: Family Tragedy: Couple, Son Killed in Rangareddy Road Accide",
+    "[07 Oct 19:32:24] stale or low-score, skipped: Missing Madhya Pradesh teen found beheaded in forest, lover ",
+    "[07 Oct 19:32:24] stale or low-score, skipped: Several Trapped As Building Collapses In Delhi Month After H",
+    "[07 Oct 19:32:24] stale or low-score, skipped: Indian Oil Official Went To Seal Petrol Pump In Maharashtra,",
+    "[07 Oct 19:32:24] stale or low-score, skipped: 101 held in TGCSB\u2019s six-State sweep, \u20b917 crore cyber fraud t",
+    "[07 Oct 19:32:24] stale or low-score, skipped: Pedestrians Left at Mercy of Traffic as Motorists Disregard ",
+    "[07 Oct 19:32:24] stale or low-score, skipped: Hyderabad property sold and mortgaged repeatedly, cheating 5",
+    "[07 Oct 19:32:24] stale or low-score, skipped: Hyderabad police form special teams to probe Rs 4.50-cr prop",
+    "[07 Oct 19:32:24] stale or low-score, skipped: Pakistan security forces kill 18 terrorists in Khyber Pakhtu",
+    "[07 Oct 19:32:24] stale or low-score, skipped: 7 policemen injured in attack in northwest Pakistan",
+    "[07 Oct 19:32:24] stale or low-score, skipped: Warangal: 3-Year-Old Killed in School Bus Accident",
+    "[07 Oct 19:32:24] stale or low-score, skipped: Warangal: Three-year-old child killed after being run over b",
+    "[07 Oct 19:32:24] stale or low-score, skipped: Adilabad tenant farmer allegedly dies by suicide over mounti",
+    "[07 Oct 19:32:24] stale or low-score, skipped: Asifabad: Five Injured After Anganwadi Centre Roof Collapses",
+    "[07 Oct 19:32:24] stale or low-score, skipped: Jagtial: Youth Dies Suddenly After Suffering Seizure on Trac",
+    "[07 Oct 19:32:24] stale or low-score, skipped: FSSAI licences of nine restaurants in Telangana\u2019s Medak, Kam",
+    "[07 Oct 19:32:24] stale or low-score, skipped: Five injured, several feared trapped after 5-storey building",
+    "[07 Oct 19:32:24] stale or low-score, skipped: IOC Takes up Officer's Death With Authorities After Maharash",
+    "[07 Oct 19:32:24] stale or low-score, skipped: Tea Stall Owner Dies After Suicide Attempt At Bheemgal Polic",
+    "[07 Oct 19:32:24] stale or low-score, skipped: Terror Accused in Poonch Grenade Case Declared Offender",
+    "[07 Oct 19:32:24] stale or low-score, skipped: New terror wave coming: Israeli envoy warns India, Israel af",
+    "[07 Oct 19:32:24] stale or low-score, skipped: \u2018Targeting of commercial shipping must end\u2019: India condemns ",
+    "[07 Oct 19:32:24] stale or low-score, skipped: Three Injured as Boulders Fall on Moving Car in Nilgiris Dis"
   ]
 }
