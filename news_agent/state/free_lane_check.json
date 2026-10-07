@@ -1,43 +1,39 @@
 {
- "at": "2026-10-06T12:20:43Z",
+ "at": "2026-10-07T05:44:27Z",
  "keys": {
   "RU_API_KEY": "set(len=73)",
   "GEMINI_API_KEY": "set(len=53)",
-  "OPENAI_API_KEY": "set(len=164)",
+  "OPENAI_API_KEY": "MISSING",
   "GROQ_API_KEY": "MISSING"
  },
  "endpoint": "https://openrouter.ai/api/v1/chat/completions",
  "lanes": {
   "openrouter_free_raw": {
-   "http": 429,
-   "body": "{\"error\":{\"message\":\"Rate limit exceeded: free-models-per-day. Add 10 credits to unlock 1000 free model requests per day\",\"code\":429,\"metadata\":{\"headers\":{\"X-RateLimit-Limit\":\"50\",\"X-RateLimit-Remaining\":\"0\",\"X-RateLimit-Reset\":\"1791331200000\"},\"limit_source\":\"openrouter_free_tier_daily\",\"remedy_hi"
+   "http": 200,
+   "body": "\n         \n{\"id\":\"gen-1791351868-URh3qBenKFxXTjWFV9Ho\",\"object\":\"chat.completion\",\"created\":1791351868,\"model\":\"nvidia/nemotron-3-ultra-550b-a55b:free\",\"provider\":\"Nvidia\",\"system_fingerprint\":null,\"service_tier\":null,\"choices\":[{\"index\":0,\"logprobs\":null,\"finish_reason\":\"length\",\"native_finish_reas"
   },
   "openrouter_free_engine": {
-   "skipped": true,
-   "reason": "raw probe HTTP 429"
-  },
-  "openai_direct_raw": {
-   "http": 429,
-   "body": "{\n    \"error\": {\n        \"message\": \"You have no credits remaining. Add credits to continue using the API at https://platform.openai.com/settings/organization/billing/.\",\n        \"type\": \"insufficient_quota\",\n        \"param\": null,\n        \"code\": \"credit_balance_exhausted\"\n    }\n}\n"
-  },
-  "openai_direct": {
-   "method": "fallback",
-   "ok": false,
-   "problems": "['Lines [2, 3] copy 4+ consecutive English words verbatim into the Roman Urdu. Re-express those phrases in Urdu; keep only proper nouns/brands/technical terms in English.', 'Output looks mostly untranslated (90% of words identical to English). Translate the sentences into natural Roman Urdu, keeping",
+   "method": "llm",
+   "ok": true,
+   "problems": "[]",
    "lines": [
-    "Telangana hukumat approves a naya data centre policy",
-    "Officials say the project will create five thousand jobs",
-    "The cabinet also cleared a single-window clearance system"
+    "Telangana hukumat nayi data centre policy manzoor kar di",
+    "Afsaron ke mutabiq yeh project paanch hazaar rozgar paida karega",
+    "Cabinet ne bhi single-window clearance system ko manzoori de di"
    ]
   },
+  "openai_direct": {
+   "skipped": true,
+   "reason": "no key"
+  },
   "gemini_direct": {
-   "method": "fallback",
-   "ok": false,
-   "problems": "['Lines [2, 3] copy 4+ consecutive English words verbatim into the Roman Urdu. Re-express those phrases in Urdu; keep only proper nouns/brands/technical terms in English.', 'Output looks mostly untranslated (90% of words identical to English). Translate the sentences into natural Roman Urdu, keeping",
+   "method": "llm",
+   "ok": true,
+   "problems": "[]",
    "lines": [
-    "Telangana hukumat approves a naya data centre policy",
-    "Officials say the project will create five thousand jobs",
-    "The cabinet also cleared a single-window clearance system"
+    "Telangana hukumat ne nayi data centre policy manzoor kar li",
+    "Hukkam ka kehna hai ke is mansoobay se 5,000 mulazmatein peda hon gi",
+    "Cabinet ne single-window clearance system ki bhi manzoori de di"
    ]
   }
  }
