@@ -1,40 +1,71 @@
 {
-  "cycle": "20261007-0942",
-  "at": "2026-10-07T09:42:49.423370+05:30",
+  "cycle": "20261007-0952",
+  "at": "2026-10-07T10:00:46.284137+05:30",
   "candidates": 120,
   "published_this_cycle": 0,
-  "digest": "gate closed: ncards 7/24, gap 53 min, retry_pending=0",
-  "ru": {},
+  "digest": "PUBLISHED auto-digest-2026-10-07-s0959",
+  "ru": {
+    "pre_ru_picks": 5,
+    "to_translate": 4,
+    "engine": {
+      "ok": false,
+      "lines_in": 4,
+      "lines_want": 4,
+      "method": "fallback",
+      "problems": "['Lines [1, 2, 3, 4] copy 4+ consecutive English words verbatim into the Roman Urdu. Re-express those phrases in Urdu; keep only proper nouns/brands/technical t"
+    },
+    "kills": {
+      "paste": [
+        1,
+        2,
+        4
+      ],
+      "english-echo": [
+        3
+      ]
+    },
+    "accepted": 3,
+    "salvaged": [
+      2,
+      3,
+      4
+    ],
+    "via": {
+      "2": "primary",
+      "3": "primary",
+      "4": "primary"
+    }
+  },
   "tail": [
-    "[07 Oct 09:42:49] stale or low-score, skipped: India tells UN OIC backs fiction over facts on Pakistan-link",
-    "[07 Oct 09:42:49] stale or low-score, skipped: Fire Breaks Out At Delhi University's North Campus Office",
-    "[07 Oct 09:42:49] stale or low-score, skipped: Plague spread risk \u2018very low\u2019 amid global concerns: WHO",
-    "[07 Oct 09:42:49] stale or low-score, skipped: School auditorium collapses in wind near Kothamangalam in Ke",
-    "[07 Oct 09:42:49] stale or low-score, skipped: FSSAI licences of nine restaurants in Telangana\u2019s Medak, Kam",
-    "[07 Oct 09:42:49] stale or low-score, skipped: Oscar-Winning Actress Eva Marie Saint Dies at 102",
-    "[07 Oct 09:42:49] stale or low-score, skipped: 'Student Will Be Heard First': IIT Bombay Draft Rules On Che",
-    "[07 Oct 09:42:49] stale or low-score, skipped: Grandfather shoots lawyer grandson dead: How blood splatters",
-    "[07 Oct 09:42:49] stale or low-score, skipped: Delhi Issues Traffic Advisory For BJP Event To Mark PM's 25 ",
-    "[07 Oct 09:42:49] stale or low-score, skipped: Tea Stall Owner Dies After Suicide Attempt At Bheemgal Polic",
-    "[07 Oct 09:42:49] stale or low-score, skipped: India condemns attack on commercial vessel in Black Sea",
-    "[07 Oct 09:42:49] stale or low-score, skipped: 11 Indian crew injured after ship hit by projectile in Strai",
-    "[07 Oct 09:42:49] stale or low-score, skipped: India condemns attack on commercial vessel off Oman as 11 In",
-    "[07 Oct 09:42:49] stale or low-score, skipped: 65-year-old farmer ends life over mounting debts in Adilabad",
-    "[07 Oct 09:42:49] stale or low-score, skipped: Five injured as land dispute sparks farmers\u2019 clash in Jogula",
-    "[07 Oct 09:42:49] stale or low-score, skipped: Fire breaks out in dialysis room of private hospital in Manc",
-    "[07 Oct 09:42:49] stale or low-score, skipped: Bellampalli: 19-Year-Old Woman Dies After Being Hit by Train",
-    "[07 Oct 09:42:49] stale or low-score, skipped: Delhi Police seeks urgent Barapullah Phase-III redesign as n",
-    "[07 Oct 09:42:49] stale or low-score, skipped: \u2018Targeting of commercial shipping must end\u2019: India condemns ",
-    "[07 Oct 09:42:49] stale or low-score, skipped: KBR Park one-way traffic slows water tankers; HMWSSB plans m",
-    "[07 Oct 09:42:49] stale or low-score, skipped: Mancherial: Fire Erupts After AC Compressor Explosion at Pri",
-    "[07 Oct 09:42:49] stale or low-score, skipped: Kids love making timetables but struggle to follow them: Her",
-    "[07 Oct 09:42:49] stale or low-score, skipped: Captured, Chained, Filmed: Gujarat Woman Gang-Raped Under Pu",
-    "[07 Oct 09:42:49] stale or low-score, skipped: AI Tool Used On National Highways May Help States Spot Crash",
-    "[07 Oct 09:42:49] stale or low-score, skipped: 11 Indians injured after ship hit by projectile in Hormuz",
-    "[07 Oct 09:42:49] stale or low-score, skipped: Saudi Arabia says three people injured in attacks on two air",
-    "[07 Oct 09:42:49] stale or low-score, skipped: Trump approves firing squad execution for Fort Hood shooter ",
-    "[07 Oct 09:42:49] stale or low-score, skipped: Shamshabad ATM Robbery: Burglars Use Gas Cutters to Steal Rs",
-    "[07 Oct 09:42:49] stale or low-score, skipped: Hyderabad: Begum Bazar Businessman Attacked, Robbed of Rs 9.",
-    "[07 Oct 09:42:49] stale or low-score, skipped: Man Jumps From Kovvur Railway Bridge Into Godavari River"
+    "[07 Oct 10:00:46] stale or low-score, skipped: Hyderabad: BTech student dies by suicide at women\u2019s hostel i",
+    "[07 Oct 10:00:46] stale or low-score, skipped: India tells UN OIC backs fiction over facts on Pakistan-link",
+    "[07 Oct 10:00:46] stale or low-score, skipped: Fire Breaks Out At Delhi University's North Campus Office",
+    "[07 Oct 10:00:46] stale or low-score, skipped: School auditorium collapses in wind near Kothamangalam in Ke",
+    "[07 Oct 10:00:46] stale or low-score, skipped: FSSAI licences of nine restaurants in Telangana\u2019s Medak, Kam",
+    "[07 Oct 10:00:46] stale or low-score, skipped: Oscar-Winning Actress Eva Marie Saint Dies at 102",
+    "[07 Oct 10:00:46] stale or low-score, skipped: 'Student Will Be Heard First': IIT Bombay Draft Rules On Che",
+    "[07 Oct 10:00:46] stale or low-score, skipped: Grandfather shoots grandson dead: How blood splatters expose",
+    "[07 Oct 10:00:46] stale or low-score, skipped: Tea Stall Owner Dies After Suicide Attempt At Bheemgal Polic",
+    "[07 Oct 10:00:46] stale or low-score, skipped: India condemns attack on commercial vessel in Black Sea",
+    "[07 Oct 10:00:46] stale or low-score, skipped: 11 Indian crew injured after ship hit by projectile in Strai",
+    "[07 Oct 10:00:46] stale or low-score, skipped: India condemns attack on commercial vessel off Oman as 11 In",
+    "[07 Oct 10:00:46] stale or low-score, skipped: 65-year-old farmer ends life over mounting debts in Adilabad",
+    "[07 Oct 10:00:46] stale or low-score, skipped: Five injured as land dispute sparks farmers\u2019 clash in Jogula",
+    "[07 Oct 10:00:46] stale or low-score, skipped: Fire breaks out in dialysis room of private hospital in Manc",
+    "[07 Oct 10:00:46] stale or low-score, skipped: Delhi Police seeks urgent Barapullah Phase-III redesign as n",
+    "[07 Oct 10:00:46] stale or low-score, skipped: Plague spread risk \u2018very low\u2019 amid global concerns: WHO",
+    "[07 Oct 10:00:46] stale or low-score, skipped: \u2018Targeting of commercial shipping must end\u2019: India condemns ",
+    "[07 Oct 10:00:46] stale or low-score, skipped: KBR Park one-way traffic slows water tankers; HMWSSB plans m",
+    "[07 Oct 10:00:46] stale or low-score, skipped: Mancherial: Fire Erupts After AC Compressor Explosion at Pri",
+    "[07 Oct 10:00:46] stale or low-score, skipped: Kids love making timetables but struggle to follow them: Her",
+    "[07 Oct 10:00:46] stale or low-score, skipped: Delhi Issues Traffic Advisory For BJP Event To Mark PM's 25 ",
+    "[07 Oct 10:00:46] stale or low-score, skipped: AI Tool Used On National Highways May Help States Spot Crash",
+    "[07 Oct 10:00:46] stale or low-score, skipped: 11 Indians injured after ship hit by projectile in Hormuz",
+    "[07 Oct 10:00:46] stale or low-score, skipped: Saudi Arabia says three people injured in attacks on two air",
+    "[07 Oct 10:00:46] stale or low-score, skipped: Trump approves firing squad execution for Fort Hood shooter ",
+    "[07 Oct 10:00:46] stale or low-score, skipped: Shamshabad ATM Robbery: Burglars Use Gas Cutters to Steal Rs",
+    "[07 Oct 10:00:46] stale or low-score, skipped: Hyderabad: Begum Bazar Businessman Attacked, Robbed of Rs 9.",
+    "[07 Oct 10:00:46] stale or low-score, skipped: Man Jumps From Kovvur Railway Bridge Into Godavari River",
+    "[07 Oct 10:00:46] stale or low-score, skipped: Legal Heirs Cannot Invalidate Lok Adalat Award Post-Parent\u2019s"
   ]
 }
