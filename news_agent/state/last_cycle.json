@@ -1,40 +1,74 @@
 {
-  "cycle": "20261009-0118",
-  "at": "2026-10-09T01:18:42.694792+05:30",
+  "cycle": "20261009-0128",
+  "at": "2026-10-09T01:35:26.358106+05:30",
   "candidates": 120,
   "published_this_cycle": 0,
-  "digest": "gate closed: ncards 1/24, gap 53 min, retry_pending=0",
-  "ru": {},
+  "digest": "PUBLISHED auto-digest-2026-10-09-s0134",
+  "ru": {
+    "pre_ru_picks": 5,
+    "to_translate": 5,
+    "engine": {
+      "ok": false,
+      "lines_in": 5,
+      "lines_want": 5,
+      "method": "fallback",
+      "problems": "['Lines [1, 2, 3, 4, 5] copy 4+ consecutive English words verbatim into the Roman Urdu. Re-express those phrases in Urdu; keep only proper nouns/brands/technica"
+    },
+    "kills": {
+      "paste": [
+        1,
+        3,
+        4,
+        5
+      ],
+      "english-echo": [
+        2
+      ]
+    },
+    "accepted": 4,
+    "salvaged": [
+      1,
+      2,
+      3,
+      4
+    ],
+    "via": {
+      "1": "gemini-flash-lite-latest",
+      "2": "gemini-flash-lite-latest",
+      "3": "gemini-flash-lite-latest",
+      "4": "gemini-flash-lite-latest"
+    }
+  },
   "tail": [
-    "[09 Oct 01:18:42] stale or low-score, skipped: Tamil Nadu may encounter El Ni\u00f1o differently from rest of In",
-    "[09 Oct 01:18:42] stale or low-score, skipped: Son allegedly kills 70-year-old father over property dispute",
-    "[09 Oct 01:18:42] stale or low-score, skipped: ED searches 17 locations in Keralam over alleged coop. bank ",
-    "[09 Oct 01:18:42] stale or low-score, skipped: IT Ministry advises social media platforms to take down \u2018man",
-    "[09 Oct 01:18:42] stale or low-score, skipped: Scanty rainfall, financial crisis cause distress among Adila",
-    "[09 Oct 01:18:42] stale or low-score, skipped: Lorry rams into two vehicles in Mulugu, CRPF jawan killed",
-    "[09 Oct 01:18:42] stale or low-score, skipped: Food safety officials inspect 12 pheni units in Hyderabad",
-    "[09 Oct 01:18:42] stale or low-score, skipped: CRPF Jawan Killed as Sand-Laden Lorry Hits Van in Mulugu",
-    "[09 Oct 01:18:42] stale or low-score, skipped: Tiruchanur Elephant Attack Turns Fatal, Mahout Dies",
-    "[09 Oct 01:18:42] stale or low-score, skipped: Punjab student dies by suicide; was harassed regularly while",
-    "[09 Oct 01:18:42] stale or low-score, skipped: \u2018Fighting for our future\u2019: France high school students vow n",
-    "[09 Oct 01:18:42] stale or low-score, skipped: 16 seafarers killed in Gulf, Black Sea; Saudi calls sea seiz",
-    "[09 Oct 01:18:42] stale or low-score, skipped: Ratan Tata\u2019s beloved pet dog 'Goa' survives car accident out",
-    "[09 Oct 01:18:42] stale or low-score, skipped: Veteran actor Nana Patekar dies of cardiac arrest: Why every",
-    "[09 Oct 01:18:42] stale or low-score, skipped: Bihar: Masked man removes jewellery from dead body, calmly w",
-    "[09 Oct 01:18:42] stale or low-score, skipped: Hyderabad faces water crunch risk as monsoon rainfall falls ",
-    "[09 Oct 01:18:42] stale or low-score, skipped: Saudi Arabia says 3 killed in airport attacks claimed by Hou",
-    "[09 Oct 01:18:42] stale or low-score, skipped: Editorial: Cosmos to human brain\u2014let there be light",
-    "[09 Oct 01:18:42] stale or low-score, skipped: ISIS module accused threatens NIA judge, court shifts hearin",
-    "[09 Oct 01:18:42] stale or low-score, skipped: Wait Till You Discover the Other Guy: Rahul Gandhi Weighs In",
-    "[09 Oct 01:18:42] stale or low-score, skipped: Death toll from Russian bus strike in eastern Ukraine jumps ",
-    "[09 Oct 01:18:42] stale or low-score, skipped: Five Children Among 28 Killed in Russian Strikes on Ukraine",
-    "[09 Oct 01:18:42] stale or low-score, skipped: Two months after Meta fiasco, Meity advisory claims public o",
-    "[09 Oct 01:18:42] stale or low-score, skipped: FSSAI send notices to Dr Reddy's, Nestle Health Science, Ama",
-    "[09 Oct 01:18:42] stale or low-score, skipped: Six-year-old boy drowns in Godavari at Pusur in Mulugu",
-    "[09 Oct 01:18:42] stale or low-score, skipped: C\u2019garh; Court Sentences 3 To Death, Another To Life Imprison",
-    "[09 Oct 01:18:42] stale or low-score, skipped: \"Shinzo Abe Had Many Plans For World\": Wife Breaks Down At N",
-    "[09 Oct 01:18:42] stale or low-score, skipped: 'Stay indoors': India advisory for citizens after Houthi att",
-    "[09 Oct 01:18:42] stale or low-score, skipped: Kumram Bheem Asifabad: 65-year-old killed, two injured as tw",
-    "[09 Oct 01:18:42] stale or low-score, skipped: India condemns Houthi attacks targeting Saudi Arabia airport"
+    "[09 Oct 01:35:26] stale or low-score, skipped: 'Lot Of Men Around Me': Last Text By Assam Dancer Found Dead",
+    "[09 Oct 01:35:26] stale or low-score, skipped: Patient Dead As Ambulance Oxygen Cylinder Explodes At Odisha",
+    "[09 Oct 01:35:26] stale or low-score, skipped: Isarda dam project work being expedited to meet water supply",
+    "[09 Oct 01:35:26] stale or low-score, skipped: 5 injured after gas cylinder explodes at workers\u2019 shed on II",
+    "[09 Oct 01:35:26] stale or low-score, skipped: Tamil Nadu may encounter El Ni\u00f1o differently from rest of In",
+    "[09 Oct 01:35:26] stale or low-score, skipped: Son allegedly kills 70-year-old father over property dispute",
+    "[09 Oct 01:35:26] stale or low-score, skipped: ED searches 17 locations in Keralam over alleged coop. bank ",
+    "[09 Oct 01:35:26] stale or low-score, skipped: IT Ministry advises social media platforms to take down \u2018man",
+    "[09 Oct 01:35:26] stale or low-score, skipped: Scanty rainfall, financial crisis cause distress among Adila",
+    "[09 Oct 01:35:26] stale or low-score, skipped: Lorry rams into two vehicles in Mulugu, CRPF jawan killed",
+    "[09 Oct 01:35:26] stale or low-score, skipped: Food safety officials inspect 12 pheni units in Hyderabad",
+    "[09 Oct 01:35:26] stale or low-score, skipped: CRPF Jawan Killed as Sand-Laden Lorry Hits Van in Mulugu",
+    "[09 Oct 01:35:26] stale or low-score, skipped: Tiruchanur Elephant Attack Turns Fatal, Mahout Dies",
+    "[09 Oct 01:35:26] stale or low-score, skipped: Punjab student dies by suicide; was harassed regularly while",
+    "[09 Oct 01:35:26] stale or low-score, skipped: \u2018Fighting for our future\u2019: France high school students vow n",
+    "[09 Oct 01:35:26] stale or low-score, skipped: 16 seafarers killed in Gulf, Black Sea; Saudi calls sea seiz",
+    "[09 Oct 01:35:26] stale or low-score, skipped: Ratan Tata\u2019s beloved pet dog 'Goa' survives car accident out",
+    "[09 Oct 01:35:26] stale or low-score, skipped: Veteran actor Nana Patekar dies of cardiac arrest: Why every",
+    "[09 Oct 01:35:26] stale or low-score, skipped: Bihar: Masked man removes jewellery from dead body, calmly w",
+    "[09 Oct 01:35:26] stale or low-score, skipped: Hyderabad faces water crunch risk as monsoon rainfall falls ",
+    "[09 Oct 01:35:26] stale or low-score, skipped: Saudi Arabia says 3 killed in airport attacks claimed by Hou",
+    "[09 Oct 01:35:26] stale or low-score, skipped: ISIS module accused threatens NIA judge, court shifts hearin",
+    "[09 Oct 01:35:26] stale or low-score, skipped: Wait Till You Discover the Other Guy: Rahul Gandhi Weighs In",
+    "[09 Oct 01:35:26] stale or low-score, skipped: Death toll from Russian bus strike in eastern Ukraine jumps ",
+    "[09 Oct 01:35:26] stale or low-score, skipped: Five Children Among 28 Killed in Russian Strikes on Ukraine",
+    "[09 Oct 01:35:26] stale or low-score, skipped: Six-year-old boy drowns in Godavari at Pusur in Mulugu",
+    "[09 Oct 01:35:26] stale or low-score, skipped: C\u2019garh; Court Sentences 3 To Death, Another To Life Imprison",
+    "[09 Oct 01:35:26] stale or low-score, skipped: 'Stay indoors': India advisory for citizens after Houthi att",
+    "[09 Oct 01:35:26] stale or low-score, skipped: Kumram Bheem Asifabad: 65-year-old killed, two injured as tw",
+    "[09 Oct 01:35:26] stale or low-score, skipped: India condemns Houthi attacks targeting Saudi Arabia airport"
   ]
 }
