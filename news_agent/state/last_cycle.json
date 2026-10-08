@@ -1,40 +1,70 @@
 {
-  "cycle": "20261008-1527",
-  "at": "2026-10-08T15:27:57.181837+05:30",
+  "cycle": "20261008-1537",
+  "at": "2026-10-08T15:46:51.040203+05:30",
   "candidates": 120,
   "published_this_cycle": 0,
-  "digest": "gate closed: ncards 13/24, gap 53 min, retry_pending=0",
-  "ru": {},
+  "digest": "starved: <3 publishable Urdu lines",
+  "ru": {
+    "pre_ru_picks": 5,
+    "to_translate": 5,
+    "engine": {
+      "ok": false,
+      "lines_in": 5,
+      "lines_want": 5,
+      "method": "fallback",
+      "problems": "['Lines [1, 2, 3, 4, 5] copy 4+ consecutive English words verbatim into the Roman Urdu. Re-express those phrases in Urdu; keep only proper nouns/brands/technica"
+    },
+    "kills": {
+      "english-echo": [
+        1,
+        3,
+        4
+      ],
+      "paste": [
+        2,
+        5
+      ]
+    },
+    "accepted": 2,
+    "salvaged": [
+      2,
+      3
+    ],
+    "via": {
+      "2": "gemini-3.7-flash",
+      "3": "gemini-3.5-flash"
+    }
+  },
   "tail": [
-    "[08 Oct 15:27:57] stale or low-score, skipped: Saudi Arabia says 3 killed in airport attacks claimed by Hou",
-    "[08 Oct 15:27:57] queued for editorial pass (no safe auto frame): Couple and six-year-old child killed in Chevella hit-and-run accident,",
-    "[08 Oct 15:27:57] queued for editorial pass (no safe auto frame): Show cause notice issued to 111 medical shops in Hyderabad over illega",
-    "[08 Oct 15:27:57] stale or low-score, skipped: Telangana identifies 48 accident corridors, 230 fatality hot",
-    "[08 Oct 15:27:57] stale or low-score, skipped: India condemns Houthi attacks targeting Saudi Arabia airport",
-    "[08 Oct 15:27:57] stale or low-score, skipped: Rat triggers switchboard blast near bengaluru Amazon office,",
-    "[08 Oct 15:27:57] stale or low-score, skipped: Who is ACP Vivek Bhagat? Delhi cop accused of sexual harassm",
-    "[08 Oct 15:27:57] stale or low-score, skipped: Bihar CM sparks controversy again over remark on molestation",
-    "[08 Oct 15:27:57] stale or low-score, skipped: 'Unacceptable': India condemns Houthis attack on Riyadh airp",
-    "[08 Oct 15:27:57] stale or low-score, skipped: Evil dead: Tanushree Dutta reacts to Nana Patekar\u2019s death",
-    "[08 Oct 15:27:57] stale or low-score, skipped: Pregnant woman, 2 children among 3 killed as building collap",
-    "[08 Oct 15:27:57] stale or low-score, skipped: Transformers Explode In Bengaluru At Two Places, 5 Injured",
-    "[08 Oct 15:27:57] stale or low-score, skipped: 3 killed, several injured in Delhi building collapse, many f",
-    "[08 Oct 15:27:57] stale or low-score, skipped: Stock Market Crash Impact: \u0936\u0947\u092f\u0930 \u092c\u093e\u091c\u093e\u0930 \u092e\u0947\u0902 \u0910\u0938\u093e \u092d\u0942\u091a\u093e\u0932... \u0926\u0947\u0916\u0924\u0947",
-    "[08 Oct 15:27:57] stale or low-score, skipped: Bengaluru: Petrol Pump Catches Fire After Jaguar Car Crashes",
-    "[08 Oct 15:27:57] stale or low-score, skipped: After recent PG doctor suicide, NMC seeks report on harassme",
-    "[08 Oct 15:27:57] stale or low-score, skipped: Delhi Building Collapse: Death Toll Rises to Four",
-    "[08 Oct 15:27:57] stale or low-score, skipped: Five Children Among 28 Killed in Russian Strikes on Ukraine",
-    "[08 Oct 15:27:57] stale or low-score, skipped: Health Condition Of 3 Students, Mothers Injured In Slab Coll",
-    "[08 Oct 15:27:57] stale or low-score, skipped: Two-Year-Old Dies On Being Run Over By School Bus In Waranga",
-    "[08 Oct 15:27:57] stale or low-score, skipped: Smoke triggers panic on Sirpur Kaghaznagar Express near Bibi",
-    "[08 Oct 15:27:57] stale or low-score, skipped: Amazon Makes Fresh Job Cuts, Mainly in Retail Division",
-    "[08 Oct 15:27:57] stale or low-score, skipped: UP woman, her 5-year-old daughter die after fire breaks out ",
-    "[08 Oct 15:27:57] stale or low-score, skipped: 54 victims lose \u20b94.5 crore in property fraud",
-    "[08 Oct 15:27:57] stale or low-score, skipped: Two held with 35 kg ganja in Amangal",
-    "[08 Oct 15:27:57] stale or low-score, skipped: Punjab's drug problem not as big as it is made out to be: CM",
-    "[08 Oct 15:27:57] stale or low-score, skipped: Delhi Court Frames Charges Against Bus Driver, Conductor In ",
-    "[08 Oct 15:27:57] stale or low-score, skipped: CRPF jawan killed, several injured in sand-laden lorry crash",
-    "[08 Oct 15:27:57] stale or low-score, skipped: Nana Patekar dies at 75: What is cardiac arrest, how it's di",
-    "[08 Oct 15:27:57] stale or low-score, skipped: Toll collection on NH 66 at Nattika in Keralam suspended ami"
+    "[08 Oct 15:46:51] stale or low-score, skipped: Food safety officials inspect 12 pheni units in Hyderabad",
+    "[08 Oct 15:46:51] stale or low-score, skipped: Saudi Arabia says 3 killed in airport attacks claimed by Hou",
+    "[08 Oct 15:46:51] stale or low-score, skipped: Son allegedly kills 70-year-old father over property dispute",
+    "[08 Oct 15:46:51] queued for editorial pass (no safe auto frame): Couple and six-year-old child killed in Chevella hit-and-run accident,",
+    "[08 Oct 15:46:51] queued for editorial pass (no safe auto frame): Show cause notice issued to 111 medical shops in Hyderabad over illega",
+    "[08 Oct 15:46:51] stale or low-score, skipped: Telangana identifies 48 accident corridors, 230 fatality hot",
+    "[08 Oct 15:46:51] stale or low-score, skipped: India condemns Houthi attacks targeting Saudi Arabia airport",
+    "[08 Oct 15:46:51] stale or low-score, skipped: Rat triggers switchboard blast near bengaluru Amazon office,",
+    "[08 Oct 15:46:51] stale or low-score, skipped: India, Cote d'Ivoire discuss defence, anti-terror and trade ",
+    "[08 Oct 15:46:51] stale or low-score, skipped: Who is ACP Vivek Bhagat? Delhi cop accused of sexual harassm",
+    "[08 Oct 15:46:51] stale or low-score, skipped: Bihar CM sparks controversy again over remark on molestation",
+    "[08 Oct 15:46:51] stale or low-score, skipped: Evil dead: Tanushree Dutta reacts to Nana Patekar\u2019s death",
+    "[08 Oct 15:46:51] stale or low-score, skipped: Pregnant woman, 2 children among 3 killed as building collap",
+    "[08 Oct 15:46:51] stale or low-score, skipped: Transformers Explode In Bengaluru At Two Places, 5 Injured",
+    "[08 Oct 15:46:51] stale or low-score, skipped: 3 killed, several injured in Delhi building collapse, many f",
+    "[08 Oct 15:46:51] stale or low-score, skipped: Stock Market Crash Impact: \u0936\u0947\u092f\u0930 \u092c\u093e\u091c\u093e\u0930 \u092e\u0947\u0902 \u0910\u0938\u093e \u092d\u0942\u091a\u093e\u0932... \u0926\u0947\u0916\u0924\u0947",
+    "[08 Oct 15:46:51] stale or low-score, skipped: Bengaluru: Petrol Pump Catches Fire After Jaguar Car Crashes",
+    "[08 Oct 15:46:51] stale or low-score, skipped: After recent PG doctor suicide, NMC seeks report on harassme",
+    "[08 Oct 15:46:51] stale or low-score, skipped: Five Children Among 28 Killed in Russian Strikes on Ukraine",
+    "[08 Oct 15:46:51] stale or low-score, skipped: Health Condition Of 3 Students, Mothers Injured In Slab Coll",
+    "[08 Oct 15:46:51] stale or low-score, skipped: Two-Year-Old Dies On Being Run Over By School Bus In Waranga",
+    "[08 Oct 15:46:51] stale or low-score, skipped: Smoke triggers panic on Sirpur Kaghaznagar Express near Bibi",
+    "[08 Oct 15:46:51] stale or low-score, skipped: Amazon Makes Fresh Job Cuts, Mainly in Retail Division",
+    "[08 Oct 15:46:51] stale or low-score, skipped: 'Unacceptable': India condemns Houthis attack on Riyadh airp",
+    "[08 Oct 15:46:51] stale or low-score, skipped: 54 victims lose \u20b94.5 crore in property fraud",
+    "[08 Oct 15:46:51] stale or low-score, skipped: Two held with 35 kg ganja in Amangal",
+    "[08 Oct 15:46:51] stale or low-score, skipped: Punjab's drug problem not as big as it is made out to be: CM",
+    "[08 Oct 15:46:51] stale or low-score, skipped: Delhi Court Frames Charges Against Bus Driver, Conductor In ",
+    "[08 Oct 15:46:51] stale or low-score, skipped: CRPF jawan killed, several injured in sand-laden lorry crash",
+    "[08 Oct 15:46:51] stale or low-score, skipped: Nana Patekar dies at 75: What is cardiac arrest, how it's di"
   ]
 }
