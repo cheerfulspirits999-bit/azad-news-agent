@@ -1,40 +1,74 @@
 {
-  "cycle": "20261008-1914",
-  "at": "2026-10-08T19:14:42.660380+05:30",
+  "cycle": "20261008-1924",
+  "at": "2026-10-08T19:31:06.278193+05:30",
   "candidates": 120,
   "published_this_cycle": 0,
-  "digest": "gate closed: ncards 16/24, gap 53 min, retry_pending=0",
-  "ru": {},
+  "digest": "PUBLISHED auto-digest-2026-10-08-s1929",
+  "ru": {
+    "pre_ru_picks": 5,
+    "to_translate": 5,
+    "engine": {
+      "ok": false,
+      "lines_in": 5,
+      "lines_want": 5,
+      "method": "fallback",
+      "problems": "['Lines [1, 2, 3, 4, 5] copy 4+ consecutive English words verbatim into the Roman Urdu. Re-express those phrases in Urdu; keep only proper nouns/brands/technica"
+    },
+    "kills": {
+      "english-echo": [
+        1,
+        3,
+        4,
+        5
+      ],
+      "paste": [
+        2
+      ]
+    },
+    "accepted": 4,
+    "salvaged": [
+      1,
+      2,
+      3,
+      4
+    ],
+    "via": {
+      "1": "gemini-3.7-flash",
+      "2": "gemini-3.5-flash",
+      "3": "gemini-3.5-flash",
+      "4": "gemini-3.5-flash"
+    }
+  },
   "tail": [
-    "[08 Oct 19:14:42] stale or low-score, skipped: Food safety officials inspect 12 pheni units in Hyderabad",
-    "[08 Oct 19:14:42] stale or low-score, skipped: CRPF Jawan Killed as Sand-Laden Lorry Hits Van in Mulugu",
-    "[08 Oct 19:14:42] stale or low-score, skipped: Son allegedly kills 70-year-old father over property dispute",
-    "[08 Oct 19:14:42] queued for editorial pass (no safe auto frame): Couple and six-year-old child killed in Chevella hit-and-run accident,",
-    "[08 Oct 19:14:42] stale or low-score, skipped: Telangana identifies 48 accident corridors, 230 fatality hot",
-    "[08 Oct 19:14:42] stale or low-score, skipped: Over 30 killed as Russia's glide bomb attack targets two civ",
-    "[08 Oct 19:14:42] stale or low-score, skipped: Hyderabad faces water crunch risk as monsoon rainfall falls ",
-    "[08 Oct 19:14:42] stale or low-score, skipped: Saudi Arabia says 3 killed in airport attacks claimed by Hou",
-    "[08 Oct 19:14:42] stale or low-score, skipped: Air India Delhi-Riyadh flight makes U-turn after Houthi atta",
-    "[08 Oct 19:14:42] stale or low-score, skipped: Death toll from Russian bus strike in eastern Ukraine jumps ",
-    "[08 Oct 19:14:42] stale or low-score, skipped: Pregnant woman, 2 children among 3 killed as building collap",
-    "[08 Oct 19:14:42] stale or low-score, skipped: Transformers Explode In Bengaluru At Two Places, 5 Injured",
-    "[08 Oct 19:14:42] stale or low-score, skipped: 20-year-old dies after alleged assault in Talabkatta",
-    "[08 Oct 19:14:42] stale or low-score, skipped: The Rahul Gandhi show and the Congress\u2019s INDIA bloc dilemma",
-    "[08 Oct 19:14:42] stale or low-score, skipped: Nana Patekar, the Natsamrat who ruled the screen, dies at 75",
-    "[08 Oct 19:14:42] stale or low-score, skipped: Ayodhya's Ram Mandir to get FSSAI 'Eat Right Place' tag, say",
-    "[08 Oct 19:14:42] stale or low-score, skipped: 'Head, Hands Almost Severed': Dentist Treats Indian Pilot On",
-    "[08 Oct 19:14:42] stale or low-score, skipped: Death Count In Delhi's Seemapuri Building Collapse Rises To ",
-    "[08 Oct 19:14:42] stale or low-score, skipped: 17-year-old rents Audi crashes into 3 vehicles in Delhi, kil",
-    "[08 Oct 19:14:42] stale or low-score, skipped: India condemns Houthi attacks targeting Saudi Arabia airport",
-    "[08 Oct 19:14:42] stale or low-score, skipped: Health Condition Of 3 Students, Mothers Injured In Slab Coll",
-    "[08 Oct 19:14:42] stale or low-score, skipped: Two-Year-Old Dies On Being Run Over By School Bus In Waranga",
-    "[08 Oct 19:14:42] stale or low-score, skipped: BJP slams TVK-led govt. over sexual assault on five-year-old",
-    "[08 Oct 19:14:42] stale or low-score, skipped: Pneumonic plague outbreak in Russia? What we know so far",
-    "[08 Oct 19:14:42] stale or low-score, skipped: 'Criminal conspiracy to hijack India': Rahul ups the ante ag",
-    "[08 Oct 19:14:42] stale or low-score, skipped: 'Targeting civilian infrastructure unacceptable': India cond",
-    "[08 Oct 19:14:42] stale or low-score, skipped: Five Children Among 28 Killed in Russian Strikes on Ukraine",
-    "[08 Oct 19:14:42] stale or low-score, skipped: 54 victims lose \u20b94.5 crore in property fraud",
-    "[08 Oct 19:14:42] stale or low-score, skipped: Two held with 35 kg ganja in Amangal",
-    "[08 Oct 19:14:42] stale or low-score, skipped: Mint Explainer: What do we know about Russia\u2019s suspected pla"
+    "[08 Oct 19:31:06] stale or low-score, skipped: CRPF Jawan Killed as Sand-Laden Lorry Hits Van in Mulugu",
+    "[08 Oct 19:31:06] stale or low-score, skipped: Son allegedly kills 70-year-old father over property dispute",
+    "[08 Oct 19:31:06] queued for editorial pass (no safe auto frame): Couple and six-year-old child killed in Chevella hit-and-run accident,",
+    "[08 Oct 19:31:06] stale or low-score, skipped: Telangana identifies 48 accident corridors, 230 fatality hot",
+    "[08 Oct 19:31:06] stale or low-score, skipped: Over 30 killed as Russia's glide bomb attack targets two civ",
+    "[08 Oct 19:31:06] stale or low-score, skipped: Hyderabad faces water crunch risk as monsoon rainfall falls ",
+    "[08 Oct 19:31:06] stale or low-score, skipped: Saudi Arabia says 3 killed in airport attacks claimed by Hou",
+    "[08 Oct 19:31:06] stale or low-score, skipped: Air India Delhi-Riyadh flight makes U-turn after Houthi atta",
+    "[08 Oct 19:31:06] stale or low-score, skipped: Death toll from Russian bus strike in eastern Ukraine jumps ",
+    "[08 Oct 19:31:06] stale or low-score, skipped: Pregnant woman, 2 children among 3 killed as building collap",
+    "[08 Oct 19:31:06] stale or low-score, skipped: Transformers Explode In Bengaluru At Two Places, 5 Injured",
+    "[08 Oct 19:31:06] stale or low-score, skipped: 20-year-old dies after alleged assault in Talabkatta",
+    "[08 Oct 19:31:06] stale or low-score, skipped: The Rahul Gandhi show and the Congress\u2019s INDIA bloc dilemma",
+    "[08 Oct 19:31:06] stale or low-score, skipped: Nana Patekar, the Natsamrat who ruled the screen, dies at 75",
+    "[08 Oct 19:31:06] stale or low-score, skipped: Ayodhya's Ram Mandir to get FSSAI 'Eat Right Place' tag, say",
+    "[08 Oct 19:31:06] stale or low-score, skipped: Death Count In Delhi's Seemapuri Building Collapse Rises To ",
+    "[08 Oct 19:31:06] stale or low-score, skipped: 17-year-old rents Audi crashes into 3 vehicles in Delhi, kil",
+    "[08 Oct 19:31:06] stale or low-score, skipped: India condemns Houthi attacks targeting Saudi Arabia airport",
+    "[08 Oct 19:31:06] stale or low-score, skipped: Health Condition Of 3 Students, Mothers Injured In Slab Coll",
+    "[08 Oct 19:31:06] stale or low-score, skipped: Two-Year-Old Dies On Being Run Over By School Bus In Waranga",
+    "[08 Oct 19:31:06] stale or low-score, skipped: VIF hosts discussion on evolution of Maoist insurgency in In",
+    "[08 Oct 19:31:06] stale or low-score, skipped: BJP slams TVK-led govt. over sexual assault on five-year-old",
+    "[08 Oct 19:31:06] stale or low-score, skipped: Pneumonic plague outbreak in Russia? What we know so far",
+    "[08 Oct 19:31:06] stale or low-score, skipped: 'Criminal conspiracy to hijack India': Rahul ups the ante ag",
+    "[08 Oct 19:31:06] stale or low-score, skipped: 'Targeting civilian infrastructure unacceptable': India cond",
+    "[08 Oct 19:31:06] stale or low-score, skipped: Five Children Among 28 Killed in Russian Strikes on Ukraine",
+    "[08 Oct 19:31:06] stale or low-score, skipped: 54 victims lose \u20b94.5 crore in property fraud",
+    "[08 Oct 19:31:06] stale or low-score, skipped: Two held with 35 kg ganja in Amangal",
+    "[08 Oct 19:31:06] stale or low-score, skipped: Mint Explainer: What do we know about Russia\u2019s suspected pla",
+    "[08 Oct 19:31:06] stale or low-score, skipped: 'Head, Hands Almost Severed': Dentist Treats Indian Pilot On"
   ]
 }
