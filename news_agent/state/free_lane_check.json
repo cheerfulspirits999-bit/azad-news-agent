@@ -1,5 +1,5 @@
 {
- "at": "2026-10-08T05:51:33Z",
+ "at": "2026-10-09T05:56:56Z",
  "keys": {
   "RU_API_KEY": "set(len=73)",
   "GEMINI_API_KEY": "set(len=53)",
@@ -10,16 +10,16 @@
  "lanes": {
   "openrouter_free_raw": {
    "http": 200,
-   "body": "\n         \n{\"id\":\"gen-1791438693-vCNp3Khv9HmFFqIByyFQ\",\"object\":\"chat.completion\",\"created\":1791438693,\"model\":\"nvidia/nemotron-3-ultra-550b-a55b:free\",\"provider\":\"Nvidia\",\"system_fingerprint\":null,\"service_tier\":null,\"choices\":[{\"index\":0,\"logprobs\":null,\"finish_reason\":\"length\",\"native_finish_reas"
+   "body": "\n         \n{\"id\":\"gen-1791525416-2J6rP7glVNTr6fZKE5hQ\",\"object\":\"chat.completion\",\"created\":1791525416,\"model\":\"nvidia/nemotron-3-ultra-550b-a55b:free\",\"provider\":\"Nvidia\",\"system_fingerprint\":null,\"service_tier\":null,\"choices\":[{\"index\":0,\"logprobs\":null,\"finish_reason\":\"length\",\"native_finish_reas"
   },
   "openrouter_free_engine": {
    "method": "llm",
    "ok": true,
    "problems": "[]",
    "lines": [
-    "Telangana hukumat nayi data centre policy manzoor kar di",
-    "Afsaron ke mutabiq yeh project paanch hazaar rozgar paida karega",
-    "Cabinet ne bhi single-window clearance system manzoor kar diya"
+    "Telangana hukumat ne nayi data centre policy manzoor kar di",
+    "Officials ke mutabiq yeh project paanch hazar rozgar paida karega",
+    "Cabinet ne bhi single-window clearance system ko manzoori de di"
    ]
   },
   "openai_direct": {
