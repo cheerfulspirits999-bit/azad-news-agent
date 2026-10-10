@@ -1,74 +1,40 @@
 {
-  "cycle": "20261011-0220",
-  "at": "2026-10-11T02:26:55.635479+05:30",
+  "cycle": "20261011-0236",
+  "at": "2026-10-11T02:37:11.480862+05:30",
   "candidates": 120,
   "published_this_cycle": 0,
-  "digest": "PUBLISHED auto-digest-2026-10-11-s0225",
-  "ru": {
-    "pre_ru_picks": 5,
-    "to_translate": 5,
-    "engine": {
-      "ok": false,
-      "lines_in": 5,
-      "lines_want": 5,
-      "method": "fallback",
-      "problems": "['Lines [1, 2, 3, 4] copy 4+ consecutive English words verbatim into the Roman Urdu. Re-express those phrases in Urdu; keep only proper nouns/brands/technical t"
-    },
-    "kills": {
-      "paste": [
-        1,
-        2
-      ],
-      "english-echo": [
-        3,
-        4,
-        5
-      ]
-    },
-    "accepted": 4,
-    "salvaged": [
-      1,
-      2,
-      3,
-      4
-    ],
-    "via": {
-      "1": "gemini-3.5-flash",
-      "2": "gemini-flash-lite-latest",
-      "3": "gemini-3.5-flash",
-      "4": "gemini-flash-lite-latest"
-    }
-  },
+  "digest": "gate closed: ncards 3/24, gap 12 min, retry_pending=0",
+  "ru": {},
   "tail": [
-    "[11 Oct 02:26:55] stale or low-score, skipped: Five-Year-Old Boy Grievously Injured In Stray Dog Attack In ",
-    "[11 Oct 02:26:55] stale or low-score, skipped: Hyderabad BTech student drowns in quarry while shooting Inst",
-    "[11 Oct 02:26:55] stale or low-score, skipped: Rodent-damaged wiring may have triggered fatal RIMS Adilabad",
-    "[11 Oct 02:26:55] stale or low-score, skipped: 9 killed, 14 homes torched in 24 hours as fresh violence gri",
-    "[11 Oct 02:26:55] queued for editorial pass (no safe auto frame): 25-year-old woman dies after being run over by bus in Malakpet",
-    "[11 Oct 02:26:55] stale or low-score, skipped: CM Revanth Sounds Alarm Over Looming Power, Water Crisis in ",
-    "[11 Oct 02:26:55] stale or low-score, skipped: Lorry Driver Dies By Suicide In Khammam; Family Alleges Fina",
-    "[11 Oct 02:26:55] stale or low-score, skipped: Khammam home guard dies by suicide after jumping before trai",
-    "[11 Oct 02:26:55] stale or low-score, skipped: Mother allegedly throws two children into well, dies by suic",
-    "[11 Oct 02:26:55] queued for editorial pass (no safe auto frame): At least five killed in fresh Manipur violence",
-    "[11 Oct 02:26:55] stale or low-score, skipped: \u2018Alive but marked dead\u2019: Musheerabad voters flag errors in S",
-    "[11 Oct 02:26:55] stale or low-score, skipped: 2 Killed, 8 Lakh Left Without Power In 3 US States As Hurric",
-    "[11 Oct 02:26:55] stale or low-score, skipped: Maoist Doctor Rafiq Remains Elusive As Agencies Continue Sea",
-    "[11 Oct 02:26:55] stale or low-score, skipped: TOLICHOWKI POLICE ARREST EIGHT ACCUSED IN RAPE-POCSO AND IMM",
-    "[11 Oct 02:26:55] stale or low-score, skipped: Hyderabad: Infant Dies After Ingesting Chemical In Gold Shop",
-    "[11 Oct 02:26:55] stale or low-score, skipped: Medchal: Youth Dies While Returning Home from Gym",
-    "[11 Oct 02:26:55] stale or low-score, skipped: Hyderabad: Woman Found Dead in Chaderghat",
-    "[11 Oct 02:26:55] stale or low-score, skipped: Instagram Reels Trip Turns Tragic as Student Dies After Fall",
-    "[11 Oct 02:26:55] stale or low-score, skipped: Police recover arms, ammunition from north Kashmir forests",
-    "[11 Oct 02:26:55] stale or low-score, skipped: Rights group says paramilitary drone strike in Sudan killed ",
-    "[11 Oct 02:26:55] stale or low-score, skipped: Eight killed in shooting at Pennsylvania home: local media",
-    "[11 Oct 02:26:55] stale or low-score, skipped: Truck owner found dead in lorry cabin in Khammam; police inv",
-    "[11 Oct 02:26:55] stale or low-score, skipped: Reel With Snake Turns Fatal, Man Dies of Snakebite in Odisha",
-    "[11 Oct 02:26:55] stale or low-score, skipped: Man Enters US Home, Kills 8, Barricades Himself Before Dying",
-    "[11 Oct 02:26:55] stale or low-score, skipped: NIA to probe mid-air attack on Indian pilot Smit Machchhar o",
-    "[11 Oct 02:26:55] stale or low-score, skipped: Pennsylvania shooting: 9 killed in Erie mass shooting, inclu",
-    "[11 Oct 02:26:55] stale or low-score, skipped: Vikarabad: Woman Dies After Facing Harassment by Youth",
-    "[11 Oct 02:26:55] stale or low-score, skipped: Huge Cache Of Arms, Ammunition Recovered From Cave In Jammu ",
-    "[11 Oct 02:26:55] stale or low-score, skipped: The chance encounter that took Maleesha Kharwa from Mumbai's",
-    "[11 Oct 02:26:55] stale or low-score, skipped: Malakpet Road Accident Newlywed Woman Dies After Falling Und"
+    "[11 Oct 02:37:11] stale or low-score, skipped: Motorcyclist killed after bike rams gas tanker in Medchal",
+    "[11 Oct 02:37:11] stale or low-score, skipped: Rodent-damaged wiring may have triggered fatal RIMS Adilabad",
+    "[11 Oct 02:37:11] stale or low-score, skipped: 5 Killed in Fresh Clashes Between Armed Groups in Manipur",
+    "[11 Oct 02:37:11] stale or low-score, skipped: 9 killed, 14 homes torched in 24 hours as fresh violence gri",
+    "[11 Oct 02:37:11] queued for editorial pass (no safe auto frame): 25-year-old woman dies after being run over by bus in Malakpet",
+    "[11 Oct 02:37:11] stale or low-score, skipped: Lorry Driver Dies By Suicide In Khammam; Family Alleges Fina",
+    "[11 Oct 02:37:11] stale or low-score, skipped: Khammam home guard dies by suicide after jumping before trai",
+    "[11 Oct 02:37:11] stale or low-score, skipped: Mother allegedly throws two children into well, dies by suic",
+    "[11 Oct 02:37:11] queued for editorial pass (no safe auto frame): At least five killed in fresh Manipur violence",
+    "[11 Oct 02:37:11] stale or low-score, skipped: Hyderabad BTech student drowns in quarry while shooting Inst",
+    "[11 Oct 02:37:11] stale or low-score, skipped: 2 Killed, 8 Lakh Left Without Power In 3 US States As Hurric",
+    "[11 Oct 02:37:11] stale or low-score, skipped: Maoist Doctor Rafiq Remains Elusive As Agencies Continue Sea",
+    "[11 Oct 02:37:11] stale or low-score, skipped: TOLICHOWKI POLICE ARREST EIGHT ACCUSED IN RAPE-POCSO AND IMM",
+    "[11 Oct 02:37:11] stale or low-score, skipped: Hyderabad: Infant Dies After Ingesting Chemical In Gold Shop",
+    "[11 Oct 02:37:11] stale or low-score, skipped: Medchal: Youth Dies While Returning Home from Gym",
+    "[11 Oct 02:37:11] stale or low-score, skipped: Hyderabad: Woman Found Dead in Chaderghat",
+    "[11 Oct 02:37:11] stale or low-score, skipped: Instagram Reels Trip Turns Tragic as Student Dies After Fall",
+    "[11 Oct 02:37:11] stale or low-score, skipped: CM Revanth Sounds Alarm Over Looming Power, Water Crisis in ",
+    "[11 Oct 02:37:11] stale or low-score, skipped: Rights group says paramilitary drone strike in Sudan killed ",
+    "[11 Oct 02:37:11] stale or low-score, skipped: Eight killed in shooting at Pennsylvania home: local media",
+    "[11 Oct 02:37:11] stale or low-score, skipped: Truck owner found dead in lorry cabin in Khammam; police inv",
+    "[11 Oct 02:37:11] stale or low-score, skipped: Reel With Snake Turns Fatal, Man Dies of Snakebite in Odisha",
+    "[11 Oct 02:37:11] stale or low-score, skipped: NIA to probe mid-air attack on Indian pilot Smit Machchhar o",
+    "[11 Oct 02:37:11] stale or low-score, skipped: Pennsylvania shooting: 9 killed in Erie mass shooting, inclu",
+    "[11 Oct 02:37:11] stale or low-score, skipped: Vikarabad: Woman Dies After Facing Harassment by Youth",
+    "[11 Oct 02:37:11] stale or low-score, skipped: Police recover arms, ammunition from north Kashmir forests",
+    "[11 Oct 02:37:11] stale or low-score, skipped: Huge Cache Of Arms, Ammunition Recovered From Cave In Jammu ",
+    "[11 Oct 02:37:11] stale or low-score, skipped: The chance encounter that took Maleesha Kharwa from Mumbai's",
+    "[11 Oct 02:37:11] stale or low-score, skipped: Malakpet Road Accident Newlywed Woman Dies After Falling Und",
+    "[11 Oct 02:37:11] stale or low-score, skipped: Man Enters US Home, Kills 8, Barricades Himself Before Dying"
   ]
 }
