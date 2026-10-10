@@ -1,40 +1,71 @@
 {
-  "cycle": "20261010-1200",
-  "at": "2026-10-10T12:00:14.588065+05:30",
+  "cycle": "20261010-1210",
+  "at": "2026-10-10T12:18:33.488084+05:30",
   "candidates": 120,
   "published_this_cycle": 0,
-  "digest": "gate closed: ncards 10/24, gap 53 min, retry_pending=0",
-  "ru": {},
+  "digest": "PUBLISHED auto-digest-2026-10-10-s1217",
+  "ru": {
+    "pre_ru_picks": 5,
+    "to_translate": 4,
+    "engine": {
+      "ok": false,
+      "lines_in": 4,
+      "lines_want": 4,
+      "method": "fallback",
+      "problems": "['Lines [1, 2, 3, 4] copy 4+ consecutive English words verbatim into the Roman Urdu. Re-express those phrases in Urdu; keep only proper nouns/brands/technical t"
+    },
+    "kills": {
+      "paste": [
+        1,
+        2,
+        4
+      ],
+      "english-echo": [
+        5
+      ]
+    },
+    "accepted": 3,
+    "salvaged": [
+      1,
+      2,
+      4
+    ],
+    "via": {
+      "1": "primary",
+      "2": "primary",
+      "4": "primary"
+    }
+  },
   "tail": [
-    "[10 Oct 12:00:14] queued for editorial pass (no safe auto frame): No permission for CJP protest in Jantar Mantar \u2014 Delhi Police cites \u2018s",
-    "[10 Oct 12:00:14] queued for editorial pass (no safe auto frame): 'New Delhi modelled after new J&K': Omar Abdullah on internet curbs fo",
-    "[10 Oct 12:00:14] queued for editorial pass (no safe auto frame): Delhi Police Issues Advisory Ahead Of CJP Protest. Check Routes To Avo",
-    "[10 Oct 12:00:14] queued for editorial pass (no safe auto frame): More Than 250 Trains Cancelled Ahead Of CJP Protest In Delhi Today",
-    "[10 Oct 12:00:14] queued for editorial pass (no safe auto frame): Home Ministry asks states to stop people heading to Delhi for CJP prot",
-    "[10 Oct 12:00:14] queued for editorial pass (no safe auto frame): At least 1000 detained overnight in Delhi ahead of today\u2019s CJP protest",
-    "[10 Oct 12:00:14] queued for editorial pass (no safe auto frame): CJP protest: Is travel from Noida, Gurugram to Delhi affected today? C",
-    "[10 Oct 12:00:14] queued for editorial pass (no safe auto frame): Delhi Metro Closes 45 Stations Due To CJP Protest Today: Full List",
-    "[10 Oct 12:00:14] queued for editorial pass (no safe auto frame): \u2018Zimmedari uthao badalne ki\u2019: Dipke to reach Delhi around 10am for Jan",
-    "[10 Oct 12:00:14] queued for editorial pass (no safe auto frame): \u2018300+ calls and counting\u2019: Saurav Das alleges Delhi Police leaked his ",
-    "[10 Oct 12:00:14] queued for editorial pass (no safe auto frame): Delhi Qila ahead of CJP\u2019s \u2018Jantar Mantar 2.0\u2019: 35,000-strong force in ",
-    "[10 Oct 12:00:14] queued for editorial pass (no safe auto frame): LIVE: Dipke Detained at Delhi Airport Ahead of CJP Protest",
-    "[10 Oct 12:00:14] held for the next card: auto-cjp-protest-live-updates-cjp-says-jantar-mantar-protest-will",
-    "[10 Oct 12:00:14] queued for editorial pass (no safe auto frame): Woman shot dead in Manipur's Kamjong, prohibitory orders imposed",
-    "[10 Oct 12:00:14] stale or low-score, skipped: Vikarabad: Woman Dies After Facing Harassment by Youth",
-    "[10 Oct 12:00:14] stale or low-score, skipped: Hyderabad: Woman Found Dead in Chaderghat",
-    "[10 Oct 12:00:14] stale or low-score, skipped: Instagram Reels Trip Turns Tragic as Student Dies After Fall",
-    "[10 Oct 12:00:14] stale or low-score, skipped: Hyderabad Woman Stabbed To Death After Argument, Accused On ",
-    "[10 Oct 12:00:14] stale or low-score, skipped: Woman shot dead in Manipur's Kamjong, Kuki-Naga firing conti",
-    "[10 Oct 12:00:14] stale or low-score, skipped: 2 killed, 21 injured as canter bus crashes in Jammu and Kash",
-    "[10 Oct 12:00:14] stale or low-score, skipped: Three of a family drown in lake in Sangareddy",
-    "[10 Oct 12:00:14] stale or low-score, skipped: Asifabad road accident: Death toll rises to two after injure",
-    "[10 Oct 12:00:14] stale or low-score, skipped: India advises nationals in Saudi Arabia to remain vigilant a",
-    "[10 Oct 12:00:14] stale or low-score, skipped: Lawyer\u00a0who represented Mehul Choksi\u00a0faces rape charges in U.",
-    "[10 Oct 12:00:14] stale or low-score, skipped: Indian man jailed in Paris over leading online child abuse r",
-    "[10 Oct 12:00:14] stale or low-score, skipped: flydubai co-pilot intended to crash plane into Tel Aviv airp",
-    "[10 Oct 12:00:14] stale or low-score, skipped: Dharwad: 4 Killed in Car-Goods Vehicle Collision",
-    "[10 Oct 12:00:14] stale or low-score, skipped: How Anthropic AI Bot's False Murder Tip Troubled US Cops For",
-    "[10 Oct 12:00:14] stale or low-score, skipped: Inside the IIT student suicide data: Patterns hidden behind ",
-    "[10 Oct 12:00:14] stale or low-score, skipped: Flydubai co-pilot who attacked Smit Machchhar, inspired by 9"
+    "[10 Oct 12:18:33] queued for editorial pass (no safe auto frame): Delhi Police Deploys 35,000 Personnel With Bodycams Ahead Of CJP Prote",
+    "[10 Oct 12:18:33] queued for editorial pass (no safe auto frame): Watch: Drones take to Delhi skies ahead of CJP protest against CEC Gya",
+    "[10 Oct 12:18:33] queued for editorial pass (no safe auto frame): Delhi protest today: Which political parties will join CJP and which a",
+    "[10 Oct 12:18:33] queued for editorial pass (no safe auto frame): No permission for CJP protest in Jantar Mantar \u2014 Delhi Police cites \u2018s",
+    "[10 Oct 12:18:33] queued for editorial pass (no safe auto frame): 'New Delhi modelled after new J&K': Omar Abdullah on internet curbs fo",
+    "[10 Oct 12:18:33] queued for editorial pass (no safe auto frame): Delhi Police Issues Advisory Ahead Of CJP Protest. Check Routes To Avo",
+    "[10 Oct 12:18:33] queued for editorial pass (no safe auto frame): More Than 250 Trains Cancelled Ahead Of CJP Protest In Delhi Today",
+    "[10 Oct 12:18:33] queued for editorial pass (no safe auto frame): Home Ministry asks states to stop people heading to Delhi for CJP prot",
+    "[10 Oct 12:18:33] queued for editorial pass (no safe auto frame): At least 1000 detained overnight in Delhi ahead of today\u2019s CJP protest",
+    "[10 Oct 12:18:33] queued for editorial pass (no safe auto frame): CJP protest: Is travel from Noida, Gurugram to Delhi affected today? C",
+    "[10 Oct 12:18:33] queued for editorial pass (no safe auto frame): Delhi Metro Closes 45 Stations Due To CJP Protest Today: Full List",
+    "[10 Oct 12:18:33] queued for editorial pass (no safe auto frame): \u2018Zimmedari uthao badalne ki\u2019: Dipke to reach Delhi around 10am for Jan",
+    "[10 Oct 12:18:33] queued for editorial pass (no safe auto frame): \u2018300+ calls and counting\u2019: Saurav Das alleges Delhi Police leaked his ",
+    "[10 Oct 12:18:33] queued for editorial pass (no safe auto frame): Woman shot dead in Manipur's Kamjong, prohibitory orders imposed",
+    "[10 Oct 12:18:33] stale or low-score, skipped: Vikarabad: Woman Dies After Facing Harassment by Youth",
+    "[10 Oct 12:18:33] stale or low-score, skipped: Hyderabad: Woman Found Dead in Chaderghat",
+    "[10 Oct 12:18:33] stale or low-score, skipped: Instagram Reels Trip Turns Tragic as Student Dies After Fall",
+    "[10 Oct 12:18:33] stale or low-score, skipped: Hyderabad Woman Stabbed To Death After Argument, Accused On ",
+    "[10 Oct 12:18:33] stale or low-score, skipped: Debt deal for Anil Ambani\u2019s Mumbai Metro 1 collapses, longer",
+    "[10 Oct 12:18:33] stale or low-score, skipped: 2 killed, 21 injured as canter bus crashes in Jammu and Kash",
+    "[10 Oct 12:18:33] stale or low-score, skipped: Woman shot dead in Manipur's Kamjong, Kuki-Naga firing conti",
+    "[10 Oct 12:18:33] stale or low-score, skipped: Three of a family drown in lake in Sangareddy",
+    "[10 Oct 12:18:33] stale or low-score, skipped: Asifabad road accident: Death toll rises to two after injure",
+    "[10 Oct 12:18:33] stale or low-score, skipped: India advises nationals in Saudi Arabia to remain vigilant a",
+    "[10 Oct 12:18:33] stale or low-score, skipped: Lawyer\u00a0who represented Mehul Choksi\u00a0faces rape charges in U.",
+    "[10 Oct 12:18:33] stale or low-score, skipped: Indian man jailed in Paris over leading online child abuse r",
+    "[10 Oct 12:18:33] stale or low-score, skipped: flydubai co-pilot intended to crash plane into Tel Aviv airp",
+    "[10 Oct 12:18:33] stale or low-score, skipped: Dharwad: 4 Killed in Car-Goods Vehicle Collision",
+    "[10 Oct 12:18:33] stale or low-score, skipped: How Anthropic AI Bot's False Murder Tip Troubled US Cops For",
+    "[10 Oct 12:18:33] stale or low-score, skipped: Inside the IIT student suicide data: Patterns hidden behind "
   ]
 }
