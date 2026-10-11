@@ -1,5 +1,5 @@
 {
- "at": "2026-10-10T05:39:39Z",
+ "at": "2026-10-11T05:34:58Z",
  "keys": {
   "RU_API_KEY": "set(len=73)",
   "GEMINI_API_KEY": "set(len=53)",
@@ -10,16 +10,16 @@
  "lanes": {
   "openrouter_free_raw": {
    "http": 200,
-   "body": "\n         \n{\"id\":\"gen-1791610779-BTqLfhnelGZQG8WuYUiB\",\"object\":\"chat.completion\",\"created\":1791610779,\"model\":\"nvidia/nemotron-3-ultra-550b-a55b:free\",\"provider\":\"Nvidia\",\"system_fingerprint\":null,\"service_tier\":null,\"choices\":[{\"index\":0,\"logprobs\":null,\"finish_reason\":\"length\",\"native_finish_reas"
+   "body": "\n         \n{\"id\":\"gen-1791696898-3BZmkPSJ1YKQeKnBV1pH\",\"object\":\"chat.completion\",\"created\":1791696898,\"model\":\"nvidia/nemotron-3-ultra-550b-a55b:free\",\"provider\":\"Nvidia\",\"system_fingerprint\":null,\"service_tier\":null,\"choices\":[{\"index\":0,\"logprobs\":null,\"finish_reason\":\"length\",\"native_finish_reas"
   },
   "openrouter_free_engine": {
-   "method": "llm",
+   "method": "retry",
    "ok": true,
    "problems": "[]",
    "lines": [
-    "Telangana hukumat ne nayi data centre policy manzoor kar di",
-    "Afsaron ke mutabiq yeh project paanch hazar rozgar ke mauqay paida karega",
-    "Cabinet ne bhi single-window clearance system ko manzoori de di"
+    "Telangana hukumat ne nayi data centre policy ko manzoori de di",
+    "Adhikaron ka kehna hai ke project 5 hazar rozgar paida kare ga",
+    "Cabinet ne single-window clearance system ko bhi manzoor kar liya"
    ]
   },
   "openai_direct": {
