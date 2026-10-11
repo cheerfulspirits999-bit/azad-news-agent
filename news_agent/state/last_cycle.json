@@ -1,40 +1,73 @@
 {
-  "cycle": "20261011-2252",
-  "at": "2026-10-11T22:53:10.412325+05:30",
+  "cycle": "20261011-2303",
+  "at": "2026-10-11T23:07:22.433378+05:30",
   "candidates": 120,
   "published_this_cycle": 0,
-  "digest": "gate closed: ncards 21/24, gap 53 min, retry_pending=0",
-  "ru": {},
+  "digest": "PUBLISHED auto-digest-2026-10-11-s2306",
+  "ru": {
+    "pre_ru_picks": 5,
+    "to_translate": 4,
+    "engine": {
+      "ok": false,
+      "lines_in": 4,
+      "lines_want": 4,
+      "method": "fallback",
+      "problems": "['Lines [1, 2, 3, 4] copy 4+ consecutive English words verbatim into the Roman Urdu. Re-express those phrases in Urdu; keep only proper nouns/brands/technical t"
+    },
+    "kills": {
+      "paste": [
+        1,
+        2
+      ],
+      "english-echo": [
+        3,
+        5
+      ]
+    },
+    "accepted": 4,
+    "salvaged": [
+      1,
+      2,
+      3,
+      5
+    ],
+    "via": {
+      "1": "primary",
+      "2": "primary",
+      "3": "primary",
+      "5": "primary"
+    }
+  },
   "tail": [
-    "[11 Oct 22:53:10] stale or low-score, skipped: Doctor dies by suicide in Mumbai hospital hostel room after ",
-    "[11 Oct 22:53:10] stale or low-score, skipped: Fresh strike hits Riyadh airport, fire breaks out at Termina",
-    "[11 Oct 22:53:10] stale or low-score, skipped: Goan\u00a0drug\u00a0supplier\u00a0held;\u00a0\u20b948.4\u00a0lakh\u00a0trail\u00a0exposes\u00a0suspected\u00a0",
-    "[11 Oct 22:53:10] stale or low-score, skipped: Hyderabad: Youth Critically Injured in Knife Attack at Golco",
-    "[11 Oct 22:53:10] stale or low-score, skipped: Hyderabad: Six-year-old missing girl found dead in Bollarum",
-    "[11 Oct 22:53:10] stale or low-score, skipped: Motorcyclist killed after bike rams gas tanker in Medchal",
-    "[11 Oct 22:53:10] stale or low-score, skipped: Five-year-old abducted during Bathukamma festivities found m",
-    "[11 Oct 22:53:10] stale or low-score, skipped: Alleged sale of spoiled fish: authorities to intensify scrut",
-    "[11 Oct 22:53:10] stale or low-score, skipped: Goa-based alleged supplier held in Hyderabad drug case; poli",
-    "[11 Oct 22:53:10] stale or low-score, skipped: Belagavi: Three killed as truck rams tractor carrying Durga ",
-    "[11 Oct 22:53:10] stale or low-score, skipped: Mancherial: Constable Killed in Hit-and-Run Accident",
-    "[11 Oct 22:53:10] stale or low-score, skipped: India condemns attack on King Khalid International Airport i",
-    "[11 Oct 22:53:10] stale or low-score, skipped: 5 Killed in Fresh Clashes Between Armed Groups in Manipur",
-    "[11 Oct 22:53:10] stale or low-score, skipped: World condemns Houthi strike on Riyadh airport that killed 1",
-    "[11 Oct 22:53:10] stale or low-score, skipped: Riyadh airport attack kills Indian national in Saudi Arabia,",
-    "[11 Oct 22:53:10] stale or low-score, skipped: Indian dies after Riyadh airport attack; 11 others injured",
-    "[11 Oct 22:53:10] stale or low-score, skipped: Firecracker Sparks Blaze At Temple Pandal",
-    "[11 Oct 22:53:10] stale or low-score, skipped: Delhi govt acts against 1,046 illegal, unsafe properties aft",
-    "[11 Oct 22:53:10] stale or low-score, skipped: Delhi man dies after fight over senior citizen seat he was a",
-    "[11 Oct 22:53:10] stale or low-score, skipped: 1 Indian killed, his 2 children injured in Houthis attack on",
-    "[11 Oct 22:53:10] stale or low-score, skipped: Four-Year-Old Girl Killed As Gas Cylinder Explodes In Odisha",
-    "[11 Oct 22:53:10] stale or low-score, skipped: Kochi Crash at 2 am Claims Lives of 2 Malayalis, 1 Karnataka",
-    "[11 Oct 22:53:10] stale or low-score, skipped: Three Killed, Over 10 Injured as Truck Rams Into Procession ",
-    "[11 Oct 22:53:10] stale or low-score, skipped: Bollaram Horror: Six-Year-Old Child Killed, Security Guard S",
-    "[11 Oct 22:53:10] stale or low-score, skipped: Five-Year-Old Boy Grievously Injured In Stray Dog Attack In ",
-    "[11 Oct 22:53:10] stale or low-score, skipped: Lorry Driver Dies By Suicide In Khammam; Family Alleges Fina",
-    "[11 Oct 22:53:10] stale or low-score, skipped: Khammam home guard dies by suicide after jumping before trai",
-    "[11 Oct 22:53:10] stale or low-score, skipped: Exclusive: Why Israel Scrambled Jets To Tackle flydubai Plan",
-    "[11 Oct 22:53:10] stale or low-score, skipped: Did Abhijeet Dipke refuse to call his father after grandmoth",
-    "[11 Oct 22:53:10] stale or low-score, skipped: India Condemns Attack On Saudi Airport"
+    "[11 Oct 23:07:22] stale or low-score, skipped: Doctor dies by suicide in Mumbai hospital hostel room after ",
+    "[11 Oct 23:07:22] stale or low-score, skipped: Fresh strike hits Riyadh airport, fire breaks out at Termina",
+    "[11 Oct 23:07:22] stale or low-score, skipped: Goan\u00a0drug\u00a0supplier\u00a0held;\u00a0\u20b948.4\u00a0lakh\u00a0trail\u00a0exposes\u00a0suspected\u00a0",
+    "[11 Oct 23:07:22] stale or low-score, skipped: Hyderabad: Youth Critically Injured in Knife Attack at Golco",
+    "[11 Oct 23:07:22] stale or low-score, skipped: Hyderabad: Six-year-old missing girl found dead in Bollarum",
+    "[11 Oct 23:07:22] stale or low-score, skipped: Motorcyclist killed after bike rams gas tanker in Medchal",
+    "[11 Oct 23:07:22] stale or low-score, skipped: Five-year-old abducted during Bathukamma festivities found m",
+    "[11 Oct 23:07:22] stale or low-score, skipped: Alleged sale of spoiled fish: authorities to intensify scrut",
+    "[11 Oct 23:07:22] stale or low-score, skipped: Goa-based alleged supplier held in Hyderabad drug case; poli",
+    "[11 Oct 23:07:22] stale or low-score, skipped: Belagavi: Three killed as truck rams tractor carrying Durga ",
+    "[11 Oct 23:07:22] stale or low-score, skipped: Mancherial: Constable Killed in Hit-and-Run Accident",
+    "[11 Oct 23:07:22] stale or low-score, skipped: India condemns attack on King Khalid International Airport i",
+    "[11 Oct 23:07:22] stale or low-score, skipped: 5 Killed in Fresh Clashes Between Armed Groups in Manipur",
+    "[11 Oct 23:07:22] stale or low-score, skipped: World condemns Houthi strike on Riyadh airport that killed 1",
+    "[11 Oct 23:07:22] stale or low-score, skipped: Riyadh airport attack kills Indian national in Saudi Arabia,",
+    "[11 Oct 23:07:22] stale or low-score, skipped: Indian dies after Riyadh airport attack; 11 others injured",
+    "[11 Oct 23:07:22] stale or low-score, skipped: Firecracker Sparks Blaze At Temple Pandal",
+    "[11 Oct 23:07:22] stale or low-score, skipped: Delhi govt acts against 1,046 illegal, unsafe properties aft",
+    "[11 Oct 23:07:22] stale or low-score, skipped: Delhi man dies after fight over senior citizen seat he was a",
+    "[11 Oct 23:07:22] stale or low-score, skipped: 1 Indian killed, his 2 children injured in Houthis attack on",
+    "[11 Oct 23:07:22] stale or low-score, skipped: Four-Year-Old Girl Killed As Gas Cylinder Explodes In Odisha",
+    "[11 Oct 23:07:22] stale or low-score, skipped: Kochi Crash at 2 am Claims Lives of 2 Malayalis, 1 Karnataka",
+    "[11 Oct 23:07:22] stale or low-score, skipped: Three Killed, Over 10 Injured as Truck Rams Into Procession ",
+    "[11 Oct 23:07:22] stale or low-score, skipped: Bollaram Horror: Six-Year-Old Child Killed, Security Guard S",
+    "[11 Oct 23:07:22] stale or low-score, skipped: Five-Year-Old Boy Grievously Injured In Stray Dog Attack In ",
+    "[11 Oct 23:07:22] stale or low-score, skipped: Lorry Driver Dies By Suicide In Khammam; Family Alleges Fina",
+    "[11 Oct 23:07:22] stale or low-score, skipped: Khammam home guard dies by suicide after jumping before trai",
+    "[11 Oct 23:07:22] stale or low-score, skipped: Exclusive: Why Israel Scrambled Jets To Tackle flydubai Plan",
+    "[11 Oct 23:07:22] stale or low-score, skipped: Did Abhijeet Dipke refuse to call his father after grandmoth",
+    "[11 Oct 23:07:22] stale or low-score, skipped: India Condemns Attack On Saudi Airport"
   ]
 }
