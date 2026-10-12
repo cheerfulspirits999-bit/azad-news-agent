@@ -1,9 +1,9 @@
 {
-  "cycle": "20261012-1917",
-  "at": "2026-10-12T19:23:50.217608+05:30",
+  "cycle": "20261012-1933",
+  "at": "2026-10-12T19:42:57.378599+05:30",
   "candidates": 120,
   "published_this_cycle": 0,
-  "digest": "starved: <3 publishable Urdu lines",
+  "digest": "PUBLISHED auto-digest-2026-10-12-s1941",
   "ru": {
     "pre_ru_picks": 5,
     "to_translate": 5,
@@ -12,57 +12,63 @@
       "lines_in": 5,
       "lines_want": 5,
       "method": "fallback",
-      "problems": "['Lines [1, 2, 3, 5] copy 4+ consecutive English words verbatim into the Roman Urdu. Re-express those phrases in Urdu; keep only proper nouns/brands/technical t"
+      "problems": "['Lines [1, 2, 3, 4, 5] copy 4+ consecutive English words verbatim into the Roman Urdu. Re-express those phrases in Urdu; keep only proper nouns/brands/technica"
     },
     "kills": {
-      "english-echo": [
+      "paste": [
         1,
+        3
+      ],
+      "english-echo": [
         2,
         4,
         5
-      ],
-      "paste": [
-        3
       ]
     },
-    "accepted": 1,
+    "accepted": 4,
     "salvaged": [
-      2
+      1,
+      2,
+      3,
+      4
     ],
     "via": {
-      "2": "gemini-flash-lite-latest"
+      "1": "gemini-3.5-flash",
+      "2": "gemini-3.5-flash",
+      "3": "gemini-3.5-flash",
+      "4": "gemini-3.5-flash"
     }
   },
   "tail": [
-    "[12 Oct 19:23:50] queued for editorial pass (no safe auto frame): Priest killed in suspected leopard attack in Magadi; villagers demand ",
-    "[12 Oct 19:23:50] queued for editorial pass (no safe auto frame): Waste management facility facing closure gutted in Kochi",
-    "[12 Oct 19:23:50] queued for editorial pass (no safe auto frame): Hyderabad man killed in Riyadh airport attack, two sons injured",
-    "[12 Oct 19:23:50] queued for editorial pass (no safe auto frame): No autopsy until Naga man\u2019s missing head is found, Manipur governement",
-    "[12 Oct 19:23:50] stale or low-score, skipped: Hyderabad: Car hits road divider, catches fire; No one injur",
-    "[12 Oct 19:23:50] stale or low-score, skipped: Hyderabad: Techie allegedly ends life in Kondapur by inhalin",
-    "[12 Oct 19:23:50] stale or low-score, skipped: Hyderabad techie Yousuf Ali injured in Saudi airport attack ",
-    "[12 Oct 19:23:50] queued for editorial pass (no safe auto frame): Five-year-old found dead in gated community after ransom demand; forme",
-    "[12 Oct 19:23:50] stale or low-score, skipped: 52-Year-Old Woman Allegedly Killed Over Witchcraft Suspicion",
-    "[12 Oct 19:23:50] stale or low-score, skipped: Rising Sexual Assault Cases Against Boys in Telangana Raise ",
-    "[12 Oct 19:23:50] stale or low-score, skipped: 26 Injured as Govt Bus Rams Into Stationary Private Bus Near",
-    "[12 Oct 19:23:50] stale or low-score, skipped: \u20b945 lakh for old \u20b91 note: Hyderabad cyber fraud probe uncove",
-    "[12 Oct 19:23:50] stale or low-score, skipped: Toll in Djibouti boat sinking rises to 139 dead, with 30 mor",
-    "[12 Oct 19:23:50] stale or low-score, skipped: Cyber fraud alert: Sajjanar warns customers against replying",
-    "[12 Oct 19:23:50] stale or low-score, skipped: Fresh attack on Riyadh airport kills Pakistani, injures 11",
-    "[12 Oct 19:23:50] stale or low-score, skipped: Two class 6 students drown while collecting lotus flowers in",
-    "[12 Oct 19:23:50] stale or low-score, skipped: Turkiye, Pakistan, Egypt, Saudi Arabia condemn Houthi attack",
-    "[12 Oct 19:23:50] stale or low-score, skipped: Karimnagar Dairy Employee Dies After Suffering Burns While R",
-    "[12 Oct 19:23:50] stale or low-score, skipped: Kamareddy Man Feared Dead Near Russia\u2013Ukraine Border",
-    "[12 Oct 19:23:50] stale or low-score, skipped: Rayadurgam Techie Dies After Inhaling Helium Gas",
-    "[12 Oct 19:23:50] stale or low-score, skipped: Ground report: Rs 2-crore villas, but where is safety? Kowko",
-    "[12 Oct 19:23:50] stale or low-score, skipped: Pakistani Military Aircraft Crashes In Balochistan, Both Pil",
-    "[12 Oct 19:23:50] stale or low-score, skipped: Jaipur Gang Rape Survivor's Father Refused To Drop Case, Kil",
-    "[12 Oct 19:23:50] stale or low-score, skipped: NIA attaches property linked to Pakistani LeT terrorists in ",
-    "[12 Oct 19:23:50] stale or low-score, skipped: Maitri Committee Member Stabbed in Golconda",
-    "[12 Oct 19:23:50] stale or low-score, skipped: Nine injured in a hit and run case on NH-65 near Sangareddy",
-    "[12 Oct 19:23:50] stale or low-score, skipped: SBI ATM robbery in Kamareddy: Burglars use gas cutters and e",
-    "[12 Oct 19:23:50] stale or low-score, skipped: LeT conspiracy case: NIA attaches Srinagar property used to ",
-    "[12 Oct 19:23:50] stale or low-score, skipped: BJP is Ravan, Congress is Ram, says Revanth in Goa",
-    "[12 Oct 19:23:50] stale or low-score, skipped: Houthi attack on Saudi Arabia\u2019s Riyadh airport; 1 Indian kil"
+    "[12 Oct 19:42:57] queued for editorial pass (no safe auto frame): \"Attacking Foundations Of Democracy\": Himanta Sarma Hits Out At Rahul ",
+    "[12 Oct 19:42:57] queued for editorial pass (no safe auto frame): Riyadh airport extends shutdown after deadly attacks",
+    "[12 Oct 19:42:57] queued for editorial pass (no safe auto frame): Wayanad bus accident: Two dead, several injured as Munnar tour vehicle",
+    "[12 Oct 19:42:57] queued for editorial pass (no safe auto frame): Priest killed in suspected leopard attack in Magadi; villagers demand ",
+    "[12 Oct 19:42:57] queued for editorial pass (no safe auto frame): Waste management facility facing closure gutted in Kochi",
+    "[12 Oct 19:42:57] queued for editorial pass (no safe auto frame): Hyderabad man killed in Riyadh airport attack, two sons injured",
+    "[12 Oct 19:42:57] stale or low-score, skipped: Hyderabad: Car hits road divider, catches fire; No one injur",
+    "[12 Oct 19:42:57] stale or low-score, skipped: Hyderabad: Techie allegedly ends life in Kondapur by inhalin",
+    "[12 Oct 19:42:57] stale or low-score, skipped: Hyderabad techie Yousuf Ali injured in Saudi airport attack ",
+    "[12 Oct 19:42:57] stale or low-score, skipped: 52-Year-Old Woman Allegedly Killed Over Witchcraft Suspicion",
+    "[12 Oct 19:42:57] stale or low-score, skipped: Rising Sexual Assault Cases Against Boys in Telangana Raise ",
+    "[12 Oct 19:42:57] stale or low-score, skipped: 26 Injured as Govt Bus Rams Into Stationary Private Bus Near",
+    "[12 Oct 19:42:57] stale or low-score, skipped: \u20b945 lakh for old \u20b91 note: Hyderabad cyber fraud probe uncove",
+    "[12 Oct 19:42:57] stale or low-score, skipped: Cyber fraud alert: Sajjanar warns customers against replying",
+    "[12 Oct 19:42:57] stale or low-score, skipped: Fresh attack on Riyadh airport kills Pakistani, injures 11",
+    "[12 Oct 19:42:57] stale or low-score, skipped: Turkiye, Pakistan, Egypt, Saudi Arabia condemn Houthi attack",
+    "[12 Oct 19:42:57] stale or low-score, skipped: Karimnagar Dairy Employee Dies After Suffering Burns While R",
+    "[12 Oct 19:42:57] stale or low-score, skipped: Kamareddy Man Feared Dead Near Russia\u2013Ukraine Border",
+    "[12 Oct 19:42:57] stale or low-score, skipped: Rayadurgam Techie Dies After Inhaling Helium Gas",
+    "[12 Oct 19:42:57] stale or low-score, skipped: Key attacker who shot Punjab cop injured in encounter, polic",
+    "[12 Oct 19:42:57] stale or low-score, skipped: Ground report: Rs 2-crore villas, but where is safety? Kowko",
+    "[12 Oct 19:42:57] stale or low-score, skipped: Pakistani Military Aircraft Crashes In Balochistan, Both Pil",
+    "[12 Oct 19:42:57] stale or low-score, skipped: Jaipur Gang Rape Survivor's Father Refused To Drop Case, Kil",
+    "[12 Oct 19:42:57] stale or low-score, skipped: NIA attaches property linked to Pakistani LeT terrorists in ",
+    "[12 Oct 19:42:57] stale or low-score, skipped: Maitri Committee Member Stabbed in Golconda",
+    "[12 Oct 19:42:57] stale or low-score, skipped: QR code tags help trace missing children during Dasara Utsav",
+    "[12 Oct 19:42:57] stale or low-score, skipped: SBI ATM robbery in Kamareddy: Burglars use gas cutters and e",
+    "[12 Oct 19:42:57] stale or low-score, skipped: LeT conspiracy case: NIA attaches Srinagar property used to ",
+    "[12 Oct 19:42:57] stale or low-score, skipped: BJP is Ravan, Congress is Ram, says Revanth in Goa",
+    "[12 Oct 19:42:57] stale or low-score, skipped: Houthi attack on Saudi Arabia\u2019s Riyadh airport; 1 Indian kil"
   ]
 }
