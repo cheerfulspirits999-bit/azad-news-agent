@@ -1,5 +1,5 @@
 {
- "at": "2026-10-11T05:34:58Z",
+ "at": "2026-10-12T05:45:04Z",
  "keys": {
   "RU_API_KEY": "set(len=73)",
   "GEMINI_API_KEY": "set(len=53)",
@@ -10,16 +10,16 @@
  "lanes": {
   "openrouter_free_raw": {
    "http": 200,
-   "body": "\n         \n{\"id\":\"gen-1791696898-3BZmkPSJ1YKQeKnBV1pH\",\"object\":\"chat.completion\",\"created\":1791696898,\"model\":\"nvidia/nemotron-3-ultra-550b-a55b:free\",\"provider\":\"Nvidia\",\"system_fingerprint\":null,\"service_tier\":null,\"choices\":[{\"index\":0,\"logprobs\":null,\"finish_reason\":\"length\",\"native_finish_reas"
+   "body": "\n         \n\n         \n\n         \n\n         \n{\"id\":\"gen-1791783904-NOAvBK9PDVumayI4CsH7\",\"object\":\"chat.completion\",\"created\":1791783904,\"model\":\"nvidia/nemotron-3-ultra-550b-a55b:free\",\"provider\":\"Nvidia\",\"system_fingerprint\":null,\"service_tier\":null,\"choices\":[{\"index\":0,\"logprobs\":null,\"finish_rea"
   },
   "openrouter_free_engine": {
-   "method": "retry",
+   "method": "llm",
    "ok": true,
    "problems": "[]",
    "lines": [
-    "Telangana hukumat ne nayi data centre policy ko manzoori de di",
-    "Adhikaron ka kehna hai ke project 5 hazar rozgar paida kare ga",
-    "Cabinet ne single-window clearance system ko bhi manzoor kar liya"
+    "Telangana hukumat ne nayi data centre policy manzoor kar di",
+    "Afsaron ka kehna hai ke yeh project paanch hazaar rozgar paida karega",
+    "Cabinet ne bhi single-window clearance system ko manzoori de di"
    ]
   },
   "openai_direct": {
@@ -27,13 +27,13 @@
    "reason": "no key"
   },
   "gemini_direct": {
-   "method": "fallback",
-   "ok": false,
-   "problems": "['Lines [2, 3] copy 4+ consecutive English words verbatim into the Roman Urdu. Re-express those phrases in Urdu; keep only proper nouns/brands/technical terms in English.', 'Output looks mostly untranslated (90% of words identical to English). Translate the sentences into natural Roman Urdu, keeping",
+   "method": "llm",
+   "ok": true,
+   "problems": "[]",
    "lines": [
-    "Telangana hukumat approves a naya data centre policy",
-    "Officials say the project will create five thousand jobs",
-    "The cabinet also cleared a single-window clearance system"
+    "Telangana hukumat ne nayi data centre policy manzoor kar li",
+    "Hukkam ke mutabiq is mansoobay se paanch hazar mulazmatein paida hongi",
+    "Cabinet ne single-window clearance system ki bhi manzoori de di"
    ]
   }
  }
