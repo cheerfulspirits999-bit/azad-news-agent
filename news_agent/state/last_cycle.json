@@ -1,40 +1,74 @@
 {
-  "cycle": "20261013-1336",
-  "at": "2026-10-13T13:36:16.919903+05:30",
+  "cycle": "20261013-1346",
+  "at": "2026-10-13T13:50:55.993699+05:30",
   "candidates": 120,
   "published_this_cycle": 0,
-  "digest": "gate closed: ncards 12/24, gap 53 min, retry_pending=0",
-  "ru": {},
+  "digest": "PUBLISHED auto-digest-2026-10-13-s1349",
+  "ru": {
+    "pre_ru_picks": 5,
+    "to_translate": 5,
+    "engine": {
+      "ok": false,
+      "lines_in": 5,
+      "lines_want": 5,
+      "method": "fallback",
+      "problems": "['Lines [1, 2, 3, 4, 5] copy 4+ consecutive English words verbatim into the Roman Urdu. Re-express those phrases in Urdu; keep only proper nouns/brands/technica"
+    },
+    "kills": {
+      "paste": [
+        1,
+        3,
+        5
+      ],
+      "english-echo": [
+        2,
+        4
+      ]
+    },
+    "accepted": 4,
+    "salvaged": [
+      1,
+      2,
+      3,
+      4
+    ],
+    "via": {
+      "1": "primary",
+      "2": "primary",
+      "3": "primary",
+      "4": "primary"
+    }
+  },
   "tail": [
-    "[13 Oct 13:36:16] queued for editorial pass (no safe auto frame): Trump attacks immigrants from Somalia and Haiti while rallying in Ohio",
-    "[13 Oct 13:36:16] stale or low-score, skipped: Nizamabad Blast: Woman Killed, Police Probe Underway",
-    "[13 Oct 13:36:16] stale or low-score, skipped: Kowkoor girl murder: Residential colonies issue safety advis",
-    "[13 Oct 13:36:16] held for the next card: auto-five-killed-30-injured-as-passenger-train-derails-in-pakista",
-    "[13 Oct 13:36:16] stale or low-score, skipped: Hyderabad man killed in Riyadh airport attack laid to rest i",
-    "[13 Oct 13:36:16] queued for editorial pass (no safe auto frame): \u2018Breaking Bad\u2019 actor RJ Mitte dies by suicide at 34",
-    "[13 Oct 13:36:16] queued for editorial pass (no safe auto frame): Anti-drug activist shot dead by medical store owner in Punjab's Mansa",
-    "[13 Oct 13:36:16] queued for editorial pass (no safe auto frame): Several hurt, one in 'cardiac arrest' in South Korea market stabbing",
-    "[13 Oct 13:36:16] queued for editorial pass (no safe auto frame): Software Employee Dies by Suicide After Jumping from 30th Floor in Nan",
-    "[13 Oct 13:36:16] queued for editorial pass (no safe auto frame): Family, residents seek speedy trial, death penalty to accused in Kowko",
-    "[13 Oct 13:36:16] stale or low-score, skipped: HMWSSB Warns Public Against Fake Message on Water Supply Res",
-    "[13 Oct 13:36:16] stale or low-score, skipped: Doval speaks to Iran NSA, discusses \u2018latest developments\u2019 af",
-    "[13 Oct 13:36:16] stale or low-score, skipped: Australia will do \u2018anything we can\u2019 to stop U.S. execution b",
-    "[13 Oct 13:36:16] stale or low-score, skipped: The Rise of Digital Decluttering",
-    "[13 Oct 13:36:16] stale or low-score, skipped: Hyderabad: Woman stabbed in Kukatpally dies during treatment",
-    "[13 Oct 13:36:16] stale or low-score, skipped: India calls for terror acts meeting threshold to be recognis",
-    "[13 Oct 13:36:16] stale or low-score, skipped: Now, an electoral roll cyber scam rocks Maharashtra",
-    "[13 Oct 13:36:16] stale or low-score, skipped: Hyderabad: How criminals posing as cops duped 72-year-old wo",
-    "[13 Oct 13:36:16] stale or low-score, skipped: Hyderabad: Power Cut in Several Areas Today",
-    "[13 Oct 13:36:16] stale or low-score, skipped: Riyadh airport attack sparks anxiety among Hyderabad familie",
-    "[13 Oct 13:36:16] stale or low-score, skipped: Riyadh airport extends shutdown after deadly attacks",
-    "[13 Oct 13:36:16] stale or low-score, skipped: Dead drops emerge as security blind spot, aid targeted killi",
-    "[13 Oct 13:36:16] stale or low-score, skipped: At least four killed, several injured after passenger train ",
-    "[13 Oct 13:36:16] stale or low-score, skipped: \u2018They punched him like boxers do\u2019: Mother of man killed in D",
-    "[13 Oct 13:36:16] stale or low-score, skipped: Man Stabs Married Woman To Death For Rejecting Marriage Prop",
-    "[13 Oct 13:36:16] stale or low-score, skipped: Guard Befriended Child, Killed Her For Ransom",
-    "[13 Oct 13:36:16] stale or low-score, skipped: Workshop on \u2018From research to reach\u2019 held at BRIC-CDFD",
-    "[13 Oct 13:36:16] stale or low-score, skipped: Smoke From HCU Electric Bus; Massive Traffic Jam at Begumpet",
-    "[13 Oct 13:36:16] stale or low-score, skipped: Attacking rights of poor while invoking Lord Ram: Congress s",
-    "[13 Oct 13:36:16] stale or low-score, skipped: Puttur man loses Rs 1.31 crore in digital arrest scam"
+    "[13 Oct 13:50:55] queued for editorial pass (no safe auto frame): Trump attacks immigrants from Somalia and Haiti while rallying in Ohio",
+    "[13 Oct 13:50:55] stale or low-score, skipped: Nizamabad Blast: Woman Killed, Police Probe Underway",
+    "[13 Oct 13:50:55] stale or low-score, skipped: Kowkoor girl murder: Residential colonies issue safety advis",
+    "[13 Oct 13:50:55] held for the next card: auto-five-killed-30-injured-as-passenger-train-derails-in-pakista",
+    "[13 Oct 13:50:55] stale or low-score, skipped: Hyderabad man killed in Riyadh airport attack laid to rest i",
+    "[13 Oct 13:50:55] queued for editorial pass (no safe auto frame): RPF Constable Reena Kumari Saves Man and Child from Falling While Boar",
+    "[13 Oct 13:50:55] queued for editorial pass (no safe auto frame): \u2018Breaking Bad\u2019 actor RJ Mitte dies by suicide at 34",
+    "[13 Oct 13:50:55] queued for editorial pass (no safe auto frame): Anti-drug activist shot dead by medical store owner in Punjab's Mansa",
+    "[13 Oct 13:50:55] queued for editorial pass (no safe auto frame): Several hurt, one in 'cardiac arrest' in South Korea market stabbing",
+    "[13 Oct 13:50:55] queued for editorial pass (no safe auto frame): Software Employee Dies by Suicide After Jumping from 30th Floor in Nan",
+    "[13 Oct 13:50:55] queued for editorial pass (no safe auto frame): Family, residents seek speedy trial, death penalty to accused in Kowko",
+    "[13 Oct 13:50:55] stale or low-score, skipped: HMWSSB Warns Public Against Fake Message on Water Supply Res",
+    "[13 Oct 13:50:55] stale or low-score, skipped: Doval speaks to Iran NSA, discusses \u2018latest developments\u2019 af",
+    "[13 Oct 13:50:55] stale or low-score, skipped: Australia will do \u2018anything we can\u2019 to stop U.S. execution b",
+    "[13 Oct 13:50:55] stale or low-score, skipped: The Rise of Digital Decluttering",
+    "[13 Oct 13:50:55] stale or low-score, skipped: Hyderabad: Woman stabbed in Kukatpally dies during treatment",
+    "[13 Oct 13:50:55] stale or low-score, skipped: India calls for terror acts meeting threshold to be recognis",
+    "[13 Oct 13:50:55] stale or low-score, skipped: Now, an electoral roll cyber scam rocks Maharashtra",
+    "[13 Oct 13:50:55] stale or low-score, skipped: Hyderabad: How criminals posing as cops duped 72-year-old wo",
+    "[13 Oct 13:50:55] stale or low-score, skipped: Hyderabad: Power Cut in Several Areas Today",
+    "[13 Oct 13:50:55] stale or low-score, skipped: Riyadh airport attack sparks anxiety among Hyderabad familie",
+    "[13 Oct 13:50:55] stale or low-score, skipped: Riyadh airport extends shutdown after deadly attacks",
+    "[13 Oct 13:50:55] stale or low-score, skipped: Dead drops emerge as security blind spot, aid targeted killi",
+    "[13 Oct 13:50:55] stale or low-score, skipped: At least four killed, several injured after passenger train ",
+    "[13 Oct 13:50:55] stale or low-score, skipped: Man Stabs Married Woman To Death For Rejecting Marriage Prop",
+    "[13 Oct 13:50:55] stale or low-score, skipped: Guard Befriended Child, Killed Her For Ransom",
+    "[13 Oct 13:50:55] stale or low-score, skipped: Workshop on \u2018From research to reach\u2019 held at BRIC-CDFD",
+    "[13 Oct 13:50:55] stale or low-score, skipped: Smoke From HCU Electric Bus; Massive Traffic Jam at Begumpet",
+    "[13 Oct 13:50:55] stale or low-score, skipped: Attacking rights of poor while invoking Lord Ram: Congress s",
+    "[13 Oct 13:50:55] stale or low-score, skipped: Puttur man loses Rs 1.31 crore in digital arrest scam"
   ]
 }
