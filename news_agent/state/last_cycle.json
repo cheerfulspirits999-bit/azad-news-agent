@@ -1,74 +1,40 @@
 {
-  "cycle": "20261014-2259",
-  "at": "2026-10-14T23:07:07.276954+05:30",
+  "cycle": "20261014-2317",
+  "at": "2026-10-14T23:17:23.670270+05:30",
   "candidates": 120,
   "published_this_cycle": 0,
-  "digest": "PUBLISHED auto-digest-2026-10-14-s2305",
-  "ru": {
-    "pre_ru_picks": 5,
-    "to_translate": 5,
-    "engine": {
-      "ok": false,
-      "lines_in": 5,
-      "lines_want": 5,
-      "method": "fallback",
-      "problems": "['Lines [1, 2, 3, 4] copy 4+ consecutive English words verbatim into the Roman Urdu. Re-express those phrases in Urdu; keep only proper nouns/brands/technical t"
-    },
-    "kills": {
-      "paste": [
-        1,
-        2,
-        4
-      ],
-      "english-echo": [
-        3,
-        5
-      ]
-    },
-    "accepted": 4,
-    "salvaged": [
-      1,
-      2,
-      3,
-      4
-    ],
-    "via": {
-      "1": "gemini-flash-lite-latest",
-      "2": "gemini-flash-lite-latest",
-      "3": "gemini-flash-lite-latest",
-      "4": "gemini-flash-lite-latest"
-    }
-  },
+  "digest": "gate closed: ncards 20/24, gap 12 min, retry_pending=0",
+  "ru": {},
   "tail": [
-    "[14 Oct 23:07:07] queued for editorial pass (no safe auto frame): Karnataka: Ballari woman, 2 kids dead, dowry harassment alleged",
-    "[14 Oct 23:07:07] queued for editorial pass (no safe auto frame): Aluva DySP Baiju Paulose to investigate Nedumbassery car accident case",
-    "[14 Oct 23:07:07] stale or low-score, skipped: Injured Monkey Left Unattended For Hours In Adibatla",
-    "[14 Oct 23:07:07] queued for editorial pass (no safe auto frame): BJP worker killed in Bengaluru as high-end car rams gas tanker near De",
-    "[14 Oct 23:07:07] stale or low-score, skipped: Against All Odds, a New Kidney",
-    "[14 Oct 23:07:07] stale or low-score, skipped: Child among 6 killed in small plane crash in Wisconsin; FAA,",
-    "[14 Oct 23:07:07] queued for editorial pass (no safe auto frame): 72-year-old Hyderabad woman loses \u20b92.2 crore in digital arrest scam",
-    "[14 Oct 23:07:07] queued for editorial pass (no safe auto frame): FSSAI licence of seven restaurants in three Telangana districts suspen",
-    "[14 Oct 23:07:07] queued for editorial pass (no safe auto frame): Four Food Establishments Face FSSAI Licence Suspension in Hyderabad Af",
-    "[14 Oct 23:07:07] queued for editorial pass (no safe auto frame): Riyadh airport attack: 2 Indians remain in  ICU, flights suspended",
-    "[14 Oct 23:07:07] stale or low-score, skipped: Hyderabad: Chhattisgarh migrant worker found dead under susp",
-    "[14 Oct 23:07:07] stale or low-score, skipped: \u2018Stay indoors during aerial attacks\u2019: India issues fresh adv",
-    "[14 Oct 23:07:07] stale or low-score, skipped: One dead in firing at Ulhasnagar railway station near Mumbai",
-    "[14 Oct 23:07:07] stale or low-score, skipped: Blue drum murder case: Meet 2 young IPS officers who unravel",
-    "[14 Oct 23:07:07] stale or low-score, skipped: Hyderabad: Senior citizen loses Rs 2.20 crore in fake CBI ca",
-    "[14 Oct 23:07:07] stale or low-score, skipped: Medak Farmer Dies by Suicide After Borewell Failure, Crop Lo",
-    "[14 Oct 23:07:07] stale or low-score, skipped: Jagtial: Two construction workers from Andhra Pradesh drown ",
-    "[14 Oct 23:07:07] stale or low-score, skipped: Wisconsin plane crash kills six, including child \u2014 What happ",
-    "[14 Oct 23:07:07] stale or low-score, skipped: Rahul & Priyanka meet Ankita Bhandari's parents at India Gat",
-    "[14 Oct 23:07:07] stale or low-score, skipped: Cheruvayal Raman, Preserver of Over 45 Rice Varieties Of Ker",
-    "[14 Oct 23:07:07] stale or low-score, skipped: Medak Farmer Found Dead in Agricultural Field",
-    "[14 Oct 23:07:07] stale or low-score, skipped: Karimnagar Home Guard Saves Life Of Aged Man",
-    "[14 Oct 23:07:07] stale or low-score, skipped: Future City Police nabs interstate drug peddlers from Kerala",
-    "[14 Oct 23:07:07] stale or low-score, skipped: What does RBI's new Consolidated Account Statement measure b",
-    "[14 Oct 23:07:07] stale or low-score, skipped: ED Attaches Assets worth Rs. 129.85 Cr in TTD Ghee Adulterat",
-    "[14 Oct 23:07:07] stale or low-score, skipped: 'Four Indians still in ICU': MEA condemns attack on Saudi ai",
-    "[14 Oct 23:07:07] stale or low-score, skipped: TG SAFE suspends licences of seven restaurants in Telangana ",
-    "[14 Oct 23:07:07] stale or low-score, skipped: Saudi says Houthi attacks sparked Aramco fire, wounded 4 in ",
-    "[14 Oct 23:07:07] stale or low-score, skipped: Woman Found Dead 4 Days After Fatal Fall At Mylapore Railway",
-    "[14 Oct 23:07:07] stale or low-score, skipped: Lorry Overturns on NH-44, Triggers Massive Traffic Jam"
+    "[14 Oct 23:17:23] queued for editorial pass (no safe auto frame): Karnataka: Ballari woman, 2 kids dead, dowry harassment alleged",
+    "[14 Oct 23:17:23] queued for editorial pass (no safe auto frame): Aluva DySP Baiju Paulose to investigate Nedumbassery car accident case",
+    "[14 Oct 23:17:23] stale or low-score, skipped: Injured Monkey Left Unattended For Hours In Adibatla",
+    "[14 Oct 23:17:23] stale or low-score, skipped: Against All Odds, a New Kidney",
+    "[14 Oct 23:17:23] queued for editorial pass (no safe auto frame): Delhi-bound Air India flight issues \u2018squawk\u2019 hijack alert, diverted to",
+    "[14 Oct 23:17:23] stale or low-score, skipped: Child among 6 killed in small plane crash in Wisconsin; FAA,",
+    "[14 Oct 23:17:23] queued for editorial pass (no safe auto frame): 72-year-old Hyderabad woman loses \u20b92.2 crore in digital arrest scam",
+    "[14 Oct 23:17:23] queued for editorial pass (no safe auto frame): FSSAI licence of seven restaurants in three Telangana districts suspen",
+    "[14 Oct 23:17:23] queued for editorial pass (no safe auto frame): Four Food Establishments Face FSSAI Licence Suspension in Hyderabad Af",
+    "[14 Oct 23:17:23] queued for editorial pass (no safe auto frame): Riyadh airport attack: 2 Indians remain in  ICU, flights suspended",
+    "[14 Oct 23:17:23] queued for editorial pass (no safe auto frame): BJP worker killed in Bengaluru as high-end car rams gas tanker near De",
+    "[14 Oct 23:17:23] stale or low-score, skipped: Hyderabad: Chhattisgarh migrant worker found dead under susp",
+    "[14 Oct 23:17:23] stale or low-score, skipped: \u2018Stay indoors during aerial attacks\u2019: India issues fresh adv",
+    "[14 Oct 23:17:23] stale or low-score, skipped: One dead in firing at Ulhasnagar railway station near Mumbai",
+    "[14 Oct 23:17:23] stale or low-score, skipped: Medak Farmer Dies by Suicide After Borewell Failure, Crop Lo",
+    "[14 Oct 23:17:23] stale or low-score, skipped: Jagtial: Two construction workers from Andhra Pradesh drown ",
+    "[14 Oct 23:17:23] stale or low-score, skipped: Punjab gangster threatens revenge for Parvinder Singh Jhota'",
+    "[14 Oct 23:17:23] stale or low-score, skipped: Wisconsin plane crash kills six, including child \u2014 What happ",
+    "[14 Oct 23:17:23] stale or low-score, skipped: Rahul & Priyanka meet Ankita Bhandari's parents at India Gat",
+    "[14 Oct 23:17:23] stale or low-score, skipped: Cheruvayal Raman, Preserver of Over 45 Rice Varieties Of Ker",
+    "[14 Oct 23:17:23] stale or low-score, skipped: Medak Farmer Found Dead in Agricultural Field",
+    "[14 Oct 23:17:23] stale or low-score, skipped: Karimnagar Home Guard Saves Life Of Aged Man",
+    "[14 Oct 23:17:23] stale or low-score, skipped: Future City Police nabs interstate drug peddlers from Kerala",
+    "[14 Oct 23:17:23] stale or low-score, skipped: What does RBI's new Consolidated Account Statement measure b",
+    "[14 Oct 23:17:23] stale or low-score, skipped: ED Attaches Assets worth Rs. 129.85 Cr in TTD Ghee Adulterat",
+    "[14 Oct 23:17:23] stale or low-score, skipped: 'Four Indians still in ICU': MEA condemns attack on Saudi ai",
+    "[14 Oct 23:17:23] stale or low-score, skipped: Hyderabad: Senior citizen loses Rs 2.20 crore in fake CBI ca",
+    "[14 Oct 23:17:23] stale or low-score, skipped: TG SAFE suspends licences of seven restaurants in Telangana ",
+    "[14 Oct 23:17:23] stale or low-score, skipped: Saudi says Houthi attacks sparked Aramco fire, wounded 4 in ",
+    "[14 Oct 23:17:23] stale or low-score, skipped: Woman Found Dead 4 Days After Fatal Fall At Mylapore Railway"
   ]
 }
