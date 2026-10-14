@@ -1,13 +1,13 @@
 {
-  "cycle_id": "20261014-0625",
-  "generated_at": "2026-10-14T06:25:17.925853+05:30",
+  "cycle_id": "20261014-0638",
+  "generated_at": "2026-10-14T06:38:37.098763+05:30",
   "feeds_ok": 10,
   "errors": [],
   "counts": {
-    "fetched": 1881,
+    "fetched": 1882,
     "fresh": 913,
     "candidates": 120,
-    "duplicates_suppressed": 7
+    "duplicates_suppressed": 8
   },
   "candidates": [
     {
@@ -22,7 +22,7 @@
       "source": "Munsif Daily",
       "source_preferred": true,
       "published_at": "2026-10-13T21:18:59+05:30",
-      "age_hours": 9.11,
+      "age_hours": 9.33,
       "categories": [
         "accident_casualty",
         "police_operation"
@@ -42,7 +42,7 @@
       "source": "Munsif Daily",
       "source_preferred": true,
       "published_at": "2026-10-13T20:56:48+05:30",
-      "age_hours": 9.47,
+      "age_hours": 9.7,
       "categories": [
         "accident_casualty"
       ],
@@ -51,6 +51,25 @@
     },
     {
       "rank": 3,
+      "class": "C",
+      "score": 76,
+      "region": "india",
+      "region_confidence": 1.0,
+      "suggested_headline": "📰 LATEST NEWS — INDIA",
+      "title": "Over a dozen children dead after boat capsizes in Bihar’s Vaishali",
+      "url": "https://www.thehindu.com/news/national/bihar/several-killed-after-boat-capsizes-in-bihar-vaishali-october-13-2026/article71581066.ece",
+      "source": "The Hindu",
+      "source_preferred": true,
+      "published_at": "2026-10-14T06:33:34+05:30",
+      "age_hours": 0.08,
+      "categories": [
+        "accident_casualty"
+      ],
+      "excerpt": "District Magistrate says all the children on the boat were aged 15 or younger; PM Modi, Bihar CM announce ex-gratia",
+      "corroboration": []
+    },
+    {
+      "rank": 4,
       "class": "C",
       "score": 74,
       "region": "telangana",
@@ -61,7 +80,7 @@
       "source": "Munsif Daily",
       "source_preferred": true,
       "published_at": "2026-10-13T19:03:09+05:30",
-      "age_hours": 11.37,
+      "age_hours": 11.59,
       "categories": [
         "fire_explosion",
         "accident_casualty"
@@ -70,7 +89,7 @@
       "corroboration": []
     },
     {
-      "rank": 4,
+      "rank": 5,
       "class": "C",
       "score": 73,
       "region": "hyderabad",
@@ -81,34 +100,12 @@
       "source": "Telangana Today",
       "source_preferred": false,
       "published_at": "2026-10-13T10:26:13+05:30",
-      "age_hours": 19.98,
+      "age_hours": 20.21,
       "categories": [
         "fire_explosion"
       ],
       "excerpt": "A major fire broke out at a furniture manufacturing and storage godown in Dattatreya Nagar, Tappachabutra, Hyderabad, destroying a large quantity of furniture. Six fire engines brought the blaze under control, while police registered a case.",
       "corroboration": []
-    },
-    {
-      "rank": 5,
-      "class": "C",
-      "score": 72,
-      "region": "world",
-      "region_confidence": 1.0,
-      "suggested_headline": "🌍 LATEST — WORLD",
-      "title": "Ex-gang leader sentenced to 40 years to life in prison for Tupac Shakur murder",
-      "url": "https://www.thehindu.com/news/international/ex-gang-leader-sentenced-to-40-years-to-life-in-prison-for-tupac-shakur-murder/article71581327.ece",
-      "source": "The Hindu",
-      "source_preferred": true,
-      "published_at": "2026-10-14T04:25:33+05:30",
-      "age_hours": 2.0,
-      "categories": [
-        "accident_casualty",
-        "court_judgment"
-      ],
-      "excerpt": "Duane 'Keffe D' Davis convicted of leading drive-by shooting; killing stemmed from hostilities between two LA street gangs",
-      "corroboration": [
-        "India Today"
-      ]
     },
     {
       "rank": 6,
@@ -122,7 +119,7 @@
       "source": "The Hindu",
       "source_preferred": true,
       "published_at": "2026-10-14T03:09:09+05:30",
-      "age_hours": 3.27,
+      "age_hours": 3.49,
       "categories": [
         "accident_casualty",
         "court_judgment"
@@ -134,45 +131,6 @@
       "rank": 7,
       "class": "C",
       "score": 72,
-      "region": "india",
-      "region_confidence": 1.0,
-      "suggested_headline": "📰 LATEST NEWS — INDIA",
-      "title": "Over a dozen children dead after boat capsizes in Bihar’s Vaishali",
-      "url": "https://www.thehindu.com/news/national/bihar/several-killed-after-boat-capsizes-in-bihar-vaishali-october-13-2026/article71581066.ece",
-      "source": "The Hindu",
-      "source_preferred": true,
-      "published_at": "2026-10-14T01:26:19+05:30",
-      "age_hours": 4.98,
-      "categories": [
-        "accident_casualty"
-      ],
-      "excerpt": "District Magistrate says all the children on the boat were aged 15 or younger; PM Modi, Bihar CM announce ex-gratia",
-      "corroboration": []
-    },
-    {
-      "rank": 8,
-      "class": "C",
-      "score": 72,
-      "region": "hyderabad",
-      "region_confidence": 1.0,
-      "suggested_headline": "📰 LATEST NEWS — HYDERABAD",
-      "title": "Hyderabad: Road Work on Toli Mosque Waqf Land Draws Protest",
-      "url": "https://www.deccanchronicle.com/southern-states/telangana/hyderabad-road-work-on-toli-mosque-waqf-land-draws-protest-1995649",
-      "source": "Deccan Chronicle",
-      "source_preferred": false,
-      "published_at": "2026-10-14T00:36:30+05:30",
-      "age_hours": 5.81,
-      "categories": [
-        "political_major",
-        "protest_major"
-      ],
-      "excerpt": "Road construction on Waqf land belonging to Toli Mosque in Karwan has raised concerns, with activists alleging that the property has faced encroachment for the past 25 years.",
-      "corroboration": []
-    },
-    {
-      "rank": 9,
-      "class": "C",
-      "score": 72,
       "region": "world",
       "region_confidence": 1.0,
       "suggested_headline": "🌍 LATEST — WORLD",
@@ -181,7 +139,7 @@
       "source": "The Hindu",
       "source_preferred": true,
       "published_at": "2026-10-13T21:52:08+05:30",
-      "age_hours": 8.55,
+      "age_hours": 8.77,
       "categories": [
         "accident_casualty"
       ],
@@ -189,7 +147,7 @@
       "corroboration": []
     },
     {
-      "rank": 10,
+      "rank": 8,
       "class": "C",
       "score": 72,
       "region": "telangana",
@@ -200,7 +158,7 @@
       "source": "The Hindu",
       "source_preferred": true,
       "published_at": "2026-10-13T21:02:54+05:30",
-      "age_hours": 9.37,
+      "age_hours": 9.6,
       "categories": [
         "police_operation"
       ],
@@ -208,7 +166,7 @@
       "corroboration": []
     },
     {
-      "rank": 11,
+      "rank": 9,
       "class": "C",
       "score": 72,
       "region": "hyderabad",
@@ -219,7 +177,7 @@
       "source": "The Hindu",
       "source_preferred": true,
       "published_at": "2026-10-13T19:48:31+05:30",
-      "age_hours": 10.61,
+      "age_hours": 10.84,
       "categories": [
         "infrastructure_failure"
       ],
@@ -227,7 +185,7 @@
       "corroboration": []
     },
     {
-      "rank": 12,
+      "rank": 10,
       "class": "C",
       "score": 72,
       "region": "hyderabad",
@@ -238,7 +196,7 @@
       "source": "Munsif Daily",
       "source_preferred": true,
       "published_at": "2026-10-13T16:24:40+05:30",
-      "age_hours": 14.01,
+      "age_hours": 14.23,
       "categories": [
         "public_safety_warning"
       ],
@@ -246,27 +204,7 @@
       "corroboration": []
     },
     {
-      "rank": 13,
-      "class": "C",
-      "score": 70,
-      "region": "hyderabad",
-      "region_confidence": 1.0,
-      "suggested_headline": "📰 LATEST NEWS — HYDERABAD",
-      "title": "Hyderabad Cyber Frauds: Three Victims Lose Rs 5.35 Crore in One Day",
-      "url": "https://telanganatoday.com/hyderabad-cyber-frauds-three-victims-lose-rs-5-35-crore-in-one-day",
-      "source": "Telangana Today",
-      "source_preferred": false,
-      "published_at": "2026-10-14T00:28:20+05:30",
-      "age_hours": 5.95,
-      "categories": [
-        "major_crime",
-        "economic_major"
-      ],
-      "excerpt": "Three cyber fraud cases in Hyderabad caused losses of Rs 5.35 crore in a day, involving a fake CEO scam, digital arrest fraud and an investment scheme. Police Commissioner V.C. Sajjanar urged vigilance and immediate reporting through helpline 1930",
-      "corroboration": []
-    },
-    {
-      "rank": 14,
+      "rank": 11,
       "class": "C",
       "score": 70,
       "region": "india",
@@ -277,7 +215,7 @@
       "source": "NDTV",
       "source_preferred": false,
       "published_at": "2026-10-14T00:14:52+05:30",
-      "age_hours": 6.17,
+      "age_hours": 6.4,
       "categories": [
         "accident_casualty",
         "political_major"
@@ -286,7 +224,7 @@
       "corroboration": []
     },
     {
-      "rank": 15,
+      "rank": 12,
       "class": "C",
       "score": 70,
       "region": "india",
@@ -297,7 +235,7 @@
       "source": "LiveMint",
       "source_preferred": false,
       "published_at": "2026-10-13T23:28:32+05:30",
-      "age_hours": 6.95,
+      "age_hours": 7.17,
       "categories": [
         "accident_casualty",
         "missing_person"
@@ -306,7 +244,27 @@
       "corroboration": []
     },
     {
-      "rank": 16,
+      "rank": 13,
+      "class": "C",
+      "score": 70,
+      "region": "india",
+      "region_confidence": 1.0,
+      "suggested_headline": "📰 LATEST NEWS — INDIA",
+      "title": "13 dead as boat capsizes in Ganga in Bihar’s Vaishali, several missing",
+      "url": "https://timesofindia.indiatimes.com/city/patna/several-feared-dead-after-boat-capsizes-in-bihars-vaishali/articleshow/134923081.cms",
+      "source": "Times of India",
+      "source_preferred": false,
+      "published_at": "2026-10-13T22:40:29+05:30",
+      "age_hours": 7.97,
+      "categories": [
+        "accident_casualty",
+        "missing_person"
+      ],
+      "excerpt": "In a heart-wrenching event in the Raghopur Diara vicinity of Vaishali district, a boat capsized, tragically involving many children. The local community is in distress, with RJD leader Tejashwi Yadav voicing his grief and urging immediate rescue actions. The administration is actively working to hasten relief efforts and support victims, while officials keep a vigilant watch on the unfolding situation.",
+      "corroboration": []
+    },
+    {
+      "rank": 14,
       "class": "C",
       "score": 70,
       "region": "telangana",
@@ -317,7 +275,7 @@
       "source": "The Hindu",
       "source_preferred": true,
       "published_at": "2026-10-13T21:38:39+05:30",
-      "age_hours": 8.78,
+      "age_hours": 9.0,
       "categories": [
         "political_major"
       ],
@@ -325,7 +283,7 @@
       "corroboration": []
     },
     {
-      "rank": 17,
+      "rank": 15,
       "class": "C",
       "score": 70,
       "region": "hyderabad",
@@ -336,7 +294,7 @@
       "source": "The Hindu",
       "source_preferred": true,
       "published_at": "2026-10-13T20:48:35+05:30",
-      "age_hours": 9.61,
+      "age_hours": 9.83,
       "categories": [
         "major_crime"
       ],
@@ -344,7 +302,7 @@
       "corroboration": []
     },
     {
-      "rank": 18,
+      "rank": 16,
       "class": "C",
       "score": 70,
       "region": "telangana",
@@ -355,7 +313,7 @@
       "source": "The Hindu",
       "source_preferred": true,
       "published_at": "2026-10-13T20:02:30+05:30",
-      "age_hours": 10.38,
+      "age_hours": 10.6,
       "categories": [
         "political_major"
       ],
@@ -363,26 +321,7 @@
       "corroboration": []
     },
     {
-      "rank": 19,
-      "class": "C",
-      "score": 70,
-      "region": "telangana",
-      "region_confidence": 1.0,
-      "suggested_headline": "📰 LATEST NEWS — TELANGANA",
-      "title": "Hold camps for 1st-time voters: Telangana CEO to poll officials",
-      "url": "https://www.siasat.com/eci-sets-limits-on-form-7-applications-during-sir-in-telangana-3557480/",
-      "source": "Munsif Daily",
-      "source_preferred": true,
-      "published_at": "2026-10-13T18:36:12+05:30",
-      "age_hours": 11.82,
-      "categories": [
-        "political_major"
-      ],
-      "excerpt": "Hyderabad: A day after saying that there was a cap on the number of Form 7 filings per voter, Telangana Chief Electoral Officer (CEO) C Sudharsan Reddy on Tuesday, October 13, directed district election officials to organise special camps at every polling station for enrolment of left-out and first-time voters, and to conduct a special …",
-      "corroboration": []
-    },
-    {
-      "rank": 20,
+      "rank": 17,
       "class": "C",
       "score": 70,
       "region": "hyderabad",
@@ -393,7 +332,7 @@
       "source": "Munsif Daily",
       "source_preferred": true,
       "published_at": "2026-10-13T17:28:30+05:30",
-      "age_hours": 12.95,
+      "age_hours": 13.17,
       "categories": [
         "court_judgment"
       ],
@@ -401,7 +340,7 @@
       "corroboration": []
     },
     {
-      "rank": 21,
+      "rank": 18,
       "class": "C",
       "score": 70,
       "region": "hyderabad",
@@ -412,7 +351,7 @@
       "source": "Deccan Chronicle",
       "source_preferred": false,
       "published_at": "2026-10-13T11:49:20+05:30",
-      "age_hours": 18.6,
+      "age_hours": 18.82,
       "categories": [
         "accident_casualty"
       ],
@@ -420,7 +359,7 @@
       "corroboration": []
     },
     {
-      "rank": 22,
+      "rank": 19,
       "class": "C",
       "score": 70,
       "region": "hyderabad",
@@ -431,7 +370,7 @@
       "source": "Newsmeter",
       "source_preferred": false,
       "published_at": "2026-10-13T10:52:44+05:30",
-      "age_hours": 19.54,
+      "age_hours": 19.76,
       "categories": [
         "accident_casualty"
       ],
@@ -439,7 +378,7 @@
       "corroboration": []
     },
     {
-      "rank": 23,
+      "rank": 20,
       "class": "C",
       "score": 70,
       "region": "hyderabad",
@@ -450,7 +389,7 @@
       "source": "Deccan Chronicle",
       "source_preferred": false,
       "published_at": "2026-10-13T09:41:32+05:30",
-      "age_hours": 20.73,
+      "age_hours": 20.95,
       "categories": [
         "accident_casualty"
       ],
@@ -458,7 +397,7 @@
       "corroboration": []
     },
     {
-      "rank": 24,
+      "rank": 21,
       "class": "C",
       "score": 70,
       "region": "hyderabad",
@@ -469,7 +408,7 @@
       "source": "Telangana Today",
       "source_preferred": false,
       "published_at": "2026-10-13T08:19:09+05:30",
-      "age_hours": 22.1,
+      "age_hours": 22.32,
       "categories": [
         "accident_casualty"
       ],
@@ -477,7 +416,7 @@
       "corroboration": []
     },
     {
-      "rank": 25,
+      "rank": 22,
       "class": "C",
       "score": 68,
       "region": "world",
@@ -488,7 +427,7 @@
       "source": "The Hindu",
       "source_preferred": true,
       "published_at": "2026-10-14T06:19:09+05:30",
-      "age_hours": 0.1,
+      "age_hours": 0.32,
       "categories": [
         "political_major"
       ],
@@ -496,7 +435,29 @@
       "corroboration": []
     },
     {
-      "rank": 26,
+      "rank": 23,
+      "class": "C",
+      "score": 68,
+      "region": "world",
+      "region_confidence": 1.0,
+      "suggested_headline": "🌍 LATEST — WORLD",
+      "title": "Ex-gang leader sentenced to 40 years to life in prison for Tupac Shakur murder",
+      "url": "https://www.thehindu.com/news/international/ex-gang-leader-sentenced-to-40-years-to-life-in-prison-for-tupac-shakur-murder/article71581327.ece",
+      "source": "The Hindu",
+      "source_preferred": true,
+      "published_at": "2026-10-14T04:25:33+05:30",
+      "age_hours": 2.22,
+      "categories": [
+        "accident_casualty",
+        "court_judgment"
+      ],
+      "excerpt": "Duane 'Keffe D' Davis convicted of leading drive-by shooting; killing stemmed from hostilities between two LA street gangs",
+      "corroboration": [
+        "India Today"
+      ]
+    },
+    {
+      "rank": 24,
       "class": "C",
       "score": 68,
       "region": "india",
@@ -507,7 +468,7 @@
       "source": "The Hindu",
       "source_preferred": true,
       "published_at": "2026-10-14T04:12:51+05:30",
-      "age_hours": 2.21,
+      "age_hours": 2.43,
       "categories": [
         "political_major"
       ],
@@ -515,7 +476,7 @@
       "corroboration": []
     },
     {
-      "rank": 27,
+      "rank": 25,
       "class": "C",
       "score": 68,
       "region": "india",
@@ -526,7 +487,7 @@
       "source": "The Hindu",
       "source_preferred": true,
       "published_at": "2026-10-14T01:49:53+05:30",
-      "age_hours": 4.59,
+      "age_hours": 4.81,
       "categories": [
         "political_major"
       ],
@@ -534,7 +495,7 @@
       "corroboration": []
     },
     {
-      "rank": 28,
+      "rank": 26,
       "class": "C",
       "score": 68,
       "region": "india",
@@ -545,7 +506,7 @@
       "source": "The Hindu",
       "source_preferred": true,
       "published_at": "2026-10-14T00:52:11+05:30",
-      "age_hours": 5.55,
+      "age_hours": 5.77,
       "categories": [
         "political_major"
       ],
@@ -553,7 +514,7 @@
       "corroboration": []
     },
     {
-      "rank": 29,
+      "rank": 27,
       "class": "C",
       "score": 68,
       "region": "india",
@@ -564,7 +525,7 @@
       "source": "The Hindu",
       "source_preferred": true,
       "published_at": "2026-10-14T00:51:57+05:30",
-      "age_hours": 5.56,
+      "age_hours": 5.78,
       "categories": [
         "accident_casualty"
       ],
@@ -572,66 +533,27 @@
       "corroboration": []
     },
     {
-      "rank": 30,
+      "rank": 28,
       "class": "C",
       "score": 68,
-      "region": "india",
+      "region": "hyderabad",
       "region_confidence": 1.0,
-      "suggested_headline": "📰 LATEST NEWS — INDIA",
-      "title": "NH works not gaining pace in Keralam: Minister",
-      "url": "https://www.thehindu.com/news/national/kerala/pwd-minister-pk-basheer-laments-slow-pace-of-nh-works-in-keralam/article71579439.ece",
-      "source": "The Hindu",
-      "source_preferred": true,
-      "published_at": "2026-10-14T00:34:00+05:30",
-      "age_hours": 5.85,
-      "categories": [
-        "political_major"
-      ],
-      "excerpt": "",
-      "corroboration": []
-    },
-    {
-      "rank": 31,
-      "class": "C",
-      "score": 68,
-      "region": "india",
-      "region_confidence": 0.4,
-      "suggested_headline": "📰 LATEST NEWS — INDIA",
-      "title": "Anger mounts in Punjab after anti-drug crusader killed in broad daylight",
-      "url": "https://www.thehindu.com/news/national/punjab/anger-mounts-in-punjab-after-anti-drug-crusaderkilled-in-broad-daylight/article71579922.ece",
-      "source": "The Hindu",
-      "source_preferred": true,
-      "published_at": "2026-10-14T00:28:00+05:30",
-      "age_hours": 5.95,
-      "categories": [
-        "accident_casualty",
-        "major_crime"
-      ],
-      "excerpt": "Confronted over illegal sale of addictive substances, medical store owner shoots down activist; Mansa residents stage massive protests; family refuses to cremate body; Oppn. corners AAP govt.",
-      "corroboration": []
-    },
-    {
-      "rank": 32,
-      "class": "C",
-      "score": 68,
-      "region": "india",
-      "region_confidence": 1.0,
-      "suggested_headline": "📰 LATEST NEWS — INDIA",
-      "title": "Woman Circle Officer slaps advocate amid row over parking, apologises after lawyers stage protest in Ajmer",
-      "url": "https://www.thehindu.com/news/national/rajasthan/woman-circle-officer-slaps-advocate-amid-row-over-parking-apologises-after-lawyers-stage-protest-inajmer/article71579638.ece",
-      "source": "The Hindu",
-      "source_preferred": true,
-      "published_at": "2026-10-14T00:27:08+05:30",
-      "age_hours": 5.97,
+      "suggested_headline": "📰 LATEST NEWS — HYDERABAD",
+      "title": "Hyderabad: Road Work on Toli Mosque Waqf Land Draws Protest",
+      "url": "https://www.deccanchronicle.com/southern-states/telangana/hyderabad-road-work-on-toli-mosque-waqf-land-draws-protest-1995649",
+      "source": "Deccan Chronicle",
+      "source_preferred": false,
+      "published_at": "2026-10-14T00:36:30+05:30",
+      "age_hours": 6.04,
       "categories": [
         "political_major",
         "protest_major"
       ],
-      "excerpt": "",
+      "excerpt": "Road construction on Waqf land belonging to Toli Mosque in Karwan has raised concerns, with activists alleging that the property has faced encroachment for the past 25 years.",
       "corroboration": []
     },
     {
-      "rank": 33,
+      "rank": 29,
       "class": "C",
       "score": 68,
       "region": "telangana",
@@ -642,7 +564,7 @@
       "source": "Deccan Chronicle",
       "source_preferred": false,
       "published_at": "2026-10-14T00:05:43+05:30",
-      "age_hours": 6.33,
+      "age_hours": 6.55,
       "categories": [
         "accident_casualty"
       ],
@@ -650,7 +572,7 @@
       "corroboration": []
     },
     {
-      "rank": 34,
+      "rank": 30,
       "class": "C",
       "score": 68,
       "region": "india",
@@ -661,7 +583,7 @@
       "source": "The Hindu",
       "source_preferred": true,
       "published_at": "2026-10-13T23:14:46+05:30",
-      "age_hours": 7.18,
+      "age_hours": 7.4,
       "categories": [
         "accident_casualty"
       ],
@@ -669,7 +591,7 @@
       "corroboration": []
     },
     {
-      "rank": 35,
+      "rank": 31,
       "class": "C",
       "score": 68,
       "region": "india",
@@ -680,7 +602,7 @@
       "source": "The Hindu",
       "source_preferred": true,
       "published_at": "2026-10-13T23:13:09+05:30",
-      "age_hours": 7.2,
+      "age_hours": 7.42,
       "categories": [
         "accident_casualty",
         "court_judgment"
@@ -689,7 +611,7 @@
       "corroboration": []
     },
     {
-      "rank": 36,
+      "rank": 32,
       "class": "C",
       "score": 68,
       "region": "india",
@@ -700,7 +622,7 @@
       "source": "The Hindu",
       "source_preferred": true,
       "published_at": "2026-10-13T22:59:46+05:30",
-      "age_hours": 7.43,
+      "age_hours": 7.65,
       "categories": [
         "accident_casualty"
       ],
@@ -708,7 +630,7 @@
       "corroboration": []
     },
     {
-      "rank": 37,
+      "rank": 33,
       "class": "C",
       "score": 68,
       "region": "india",
@@ -719,7 +641,7 @@
       "source": "The Hindu",
       "source_preferred": true,
       "published_at": "2026-10-13T22:48:45+05:30",
-      "age_hours": 7.61,
+      "age_hours": 7.83,
       "categories": [
         "accident_casualty"
       ],
@@ -727,7 +649,7 @@
       "corroboration": []
     },
     {
-      "rank": 38,
+      "rank": 34,
       "class": "C",
       "score": 68,
       "region": "telangana",
@@ -738,7 +660,7 @@
       "source": "Deccan Chronicle",
       "source_preferred": false,
       "published_at": "2026-10-13T21:25:54+05:30",
-      "age_hours": 8.99,
+      "age_hours": 9.21,
       "categories": [
         "accident_casualty"
       ],
@@ -746,26 +668,7 @@
       "corroboration": []
     },
     {
-      "rank": 39,
-      "class": "C",
-      "score": 68,
-      "region": "hyderabad",
-      "region_confidence": 1.0,
-      "suggested_headline": "📰 LATEST NEWS — HYDERABAD",
-      "title": "Hyderabad: 4 held for illegal sale of tickets of India-WI T20",
-      "url": "https://www.siasat.com/hyderabad-4-held-for-illegal-sale-of-tickets-of-india-wi-t20-3557536/",
-      "source": "Munsif Daily",
-      "source_preferred": true,
-      "published_at": "2026-10-13T20:50:18+05:30",
-      "age_hours": 9.58,
-      "categories": [
-        "police_operation"
-      ],
-      "excerpt": "Hyderabad: A Hyderabad Cricket Association (HCA) member and his son, along with two others, were arrested by the Goshamahal police on Tuesday, October 13, for allegedly selling complimentary tickets for the India-West Indies fourth T20 International cricket match on the black market at exorbitant prices. The match is scheduled to be held on Wednesday, October …",
-      "corroboration": []
-    },
-    {
-      "rank": 40,
+      "rank": 35,
       "class": "C",
       "score": 68,
       "region": "hyderabad",
@@ -776,7 +679,7 @@
       "source": "Telangana Today",
       "source_preferred": false,
       "published_at": "2026-10-13T20:45:19+05:30",
-      "age_hours": 9.67,
+      "age_hours": 9.89,
       "categories": [
         "public_safety_warning",
         "missing_person"
@@ -787,7 +690,7 @@
       ]
     },
     {
-      "rank": 41,
+      "rank": 36,
       "class": "C",
       "score": 68,
       "region": "hyderabad",
@@ -798,7 +701,7 @@
       "source": "The Hindu",
       "source_preferred": true,
       "published_at": "2026-10-13T20:24:27+05:30",
-      "age_hours": 10.01,
+      "age_hours": 10.24,
       "categories": [
         "police_operation"
       ],
@@ -806,7 +709,7 @@
       "corroboration": []
     },
     {
-      "rank": 42,
+      "rank": 37,
       "class": "C",
       "score": 68,
       "region": "hyderabad",
@@ -817,7 +720,7 @@
       "source": "Newsmeter",
       "source_preferred": false,
       "published_at": "2026-10-13T20:13:53+05:30",
-      "age_hours": 10.19,
+      "age_hours": 10.41,
       "categories": [
         "public_safety_warning"
       ],
@@ -825,7 +728,7 @@
       "corroboration": []
     },
     {
-      "rank": 43,
+      "rank": 38,
       "class": "C",
       "score": 68,
       "region": "hyderabad",
@@ -836,7 +739,7 @@
       "source": "Munsif Daily",
       "source_preferred": true,
       "published_at": "2026-10-13T20:04:38+05:30",
-      "age_hours": 10.34,
+      "age_hours": 10.57,
       "categories": [
         "police_operation"
       ],
@@ -846,7 +749,7 @@
       ]
     },
     {
-      "rank": 44,
+      "rank": 39,
       "class": "C",
       "score": 68,
       "region": "hyderabad",
@@ -857,7 +760,7 @@
       "source": "The Hindu",
       "source_preferred": true,
       "published_at": "2026-10-13T20:03:08+05:30",
-      "age_hours": 10.37,
+      "age_hours": 10.59,
       "categories": [
         "police_operation"
       ],
@@ -867,7 +770,7 @@
       ]
     },
     {
-      "rank": 45,
+      "rank": 40,
       "class": "C",
       "score": 68,
       "region": "hyderabad",
@@ -878,7 +781,7 @@
       "source": "Telangana Today",
       "source_preferred": false,
       "published_at": "2026-10-13T19:25:46+05:30",
-      "age_hours": 10.99,
+      "age_hours": 11.21,
       "categories": [
         "public_safety_warning"
       ],
@@ -886,7 +789,7 @@
       "corroboration": []
     },
     {
-      "rank": 46,
+      "rank": 41,
       "class": "C",
       "score": 68,
       "region": "hyderabad",
@@ -897,7 +800,7 @@
       "source": "The Hindu",
       "source_preferred": true,
       "published_at": "2026-10-13T19:05:54+05:30",
-      "age_hours": 11.32,
+      "age_hours": 11.55,
       "categories": [
         "traffic_disruption"
       ],
@@ -905,7 +808,26 @@
       "corroboration": []
     },
     {
-      "rank": 47,
+      "rank": 42,
+      "class": "C",
+      "score": 68,
+      "region": "telangana",
+      "region_confidence": 1.0,
+      "suggested_headline": "📰 LATEST NEWS — TELANGANA",
+      "title": "Hold camps for 1st-time voters: Telangana CEO to poll officials",
+      "url": "https://www.siasat.com/eci-sets-limits-on-form-7-applications-during-sir-in-telangana-3557480/",
+      "source": "Munsif Daily",
+      "source_preferred": true,
+      "published_at": "2026-10-13T18:36:12+05:30",
+      "age_hours": 12.04,
+      "categories": [
+        "political_major"
+      ],
+      "excerpt": "Hyderabad: A day after saying that there was a cap on the number of Form 7 filings per voter, Telangana Chief Electoral Officer (CEO) C Sudharsan Reddy on Tuesday, October 13, directed district election officials to organise special camps at every polling station for enrolment of left-out and first-time voters, and to conduct a special …",
+      "corroboration": []
+    },
+    {
+      "rank": 43,
       "class": "C",
       "score": 68,
       "region": "telangana",
@@ -916,7 +838,7 @@
       "source": "The Hindu",
       "source_preferred": true,
       "published_at": "2026-10-13T18:02:18+05:30",
-      "age_hours": 12.38,
+      "age_hours": 12.61,
       "categories": [
         "political_major"
       ],
@@ -924,7 +846,7 @@
       "corroboration": []
     },
     {
-      "rank": 48,
+      "rank": 44,
       "class": "C",
       "score": 68,
       "region": "telangana",
@@ -935,7 +857,7 @@
       "source": "Munsif Daily",
       "source_preferred": true,
       "published_at": "2026-10-13T17:59:25+05:30",
-      "age_hours": 12.43,
+      "age_hours": 12.65,
       "categories": [
         "political_major"
       ],
@@ -943,7 +865,7 @@
       "corroboration": []
     },
     {
-      "rank": 49,
+      "rank": 45,
       "class": "C",
       "score": 68,
       "region": "hyderabad",
@@ -954,7 +876,7 @@
       "source": "Munsif Daily",
       "source_preferred": true,
       "published_at": "2026-10-13T17:18:58+05:30",
-      "age_hours": 13.11,
+      "age_hours": 13.33,
       "categories": [
         "major_crime",
         "police_operation"
@@ -963,7 +885,7 @@
       "corroboration": []
     },
     {
-      "rank": 50,
+      "rank": 46,
       "class": "C",
       "score": 68,
       "region": "telangana",
@@ -974,7 +896,7 @@
       "source": "Munsif Daily",
       "source_preferred": true,
       "published_at": "2026-10-13T16:49:48+05:30",
-      "age_hours": 13.59,
+      "age_hours": 13.81,
       "categories": [
         "political_major"
       ],
@@ -982,7 +904,7 @@
       "corroboration": []
     },
     {
-      "rank": 51,
+      "rank": 47,
       "class": "C",
       "score": 68,
       "region": "telangana",
@@ -993,7 +915,7 @@
       "source": "Munsif Daily",
       "source_preferred": true,
       "published_at": "2026-10-13T16:03:29+05:30",
-      "age_hours": 14.36,
+      "age_hours": 14.59,
       "categories": [
         "political_major"
       ],
@@ -1001,7 +923,7 @@
       "corroboration": []
     },
     {
-      "rank": 52,
+      "rank": 48,
       "class": "C",
       "score": 68,
       "region": "telangana",
@@ -1012,7 +934,7 @@
       "source": "The Hindu",
       "source_preferred": true,
       "published_at": "2026-10-13T14:48:14+05:30",
-      "age_hours": 15.62,
+      "age_hours": 15.84,
       "categories": [
         "political_major"
       ],
@@ -1020,7 +942,7 @@
       "corroboration": []
     },
     {
-      "rank": 53,
+      "rank": 49,
       "class": "C",
       "score": 67,
       "region": "telangana",
@@ -1031,7 +953,7 @@
       "source": "Deccan Chronicle",
       "source_preferred": false,
       "published_at": "2026-10-14T00:21:57+05:30",
-      "age_hours": 6.06,
+      "age_hours": 6.28,
       "categories": [
         "economic_major"
       ],
@@ -1039,7 +961,7 @@
       "corroboration": []
     },
     {
-      "rank": 54,
+      "rank": 50,
       "class": "C",
       "score": 67,
       "region": "india",
@@ -1050,7 +972,7 @@
       "source": "Deccan Chronicle",
       "source_preferred": false,
       "published_at": "2026-10-13T19:34:31+05:30",
-      "age_hours": 10.85,
+      "age_hours": 11.07,
       "categories": [
         "accident_casualty",
         "political_major"
@@ -1059,7 +981,26 @@
       "corroboration": []
     },
     {
-      "rank": 55,
+      "rank": 51,
+      "class": "C",
+      "score": 66,
+      "region": "india",
+      "region_confidence": 1.0,
+      "suggested_headline": "📰 LATEST NEWS — INDIA",
+      "title": "CJP legal head says Delhi Police arrested Saurav Das, Ashutosh Ranka in Jantar Mantar case",
+      "url": "https://www.thehindu.com/news/national/cjp-anto-cec-protest-jantar-mantar-case-saurav-das-ashutosh-ranka-rrest-update/article71582061.ece",
+      "source": "The Hindu",
+      "source_preferred": true,
+      "published_at": "2026-10-14T06:34:59+05:30",
+      "age_hours": 0.06,
+      "categories": [
+        "police_operation"
+      ],
+      "excerpt": "Delhi Police filed an FIR against Saurav Das, Ashutosh Ranka and other CJP members for allegedly trespassing into the Jantar Mantar area without authorisation",
+      "corroboration": []
+    },
+    {
+      "rank": 52,
       "class": "C",
       "score": 66,
       "region": "india",
@@ -1070,7 +1011,7 @@
       "source": "Indian Express",
       "source_preferred": false,
       "published_at": "2026-10-14T05:26:46+05:30",
-      "age_hours": 0.98,
+      "age_hours": 1.2,
       "categories": [
         "political_major"
       ],
@@ -1078,7 +1019,7 @@
       "corroboration": []
     },
     {
-      "rank": 56,
+      "rank": 53,
       "class": "C",
       "score": 66,
       "region": "india",
@@ -1089,7 +1030,7 @@
       "source": "Times of India",
       "source_preferred": false,
       "published_at": "2026-10-14T04:58:06+05:30",
-      "age_hours": 1.45,
+      "age_hours": 1.68,
       "categories": [
         "political_major",
         "economic_major"
@@ -1098,7 +1039,26 @@
       "corroboration": []
     },
     {
-      "rank": 57,
+      "rank": 54,
+      "class": "C",
+      "score": 66,
+      "region": "india",
+      "region_confidence": 1.0,
+      "suggested_headline": "📰 LATEST NEWS — INDIA",
+      "title": "SC/ST voices condemn Karnataka Hight Court verdict striking down enhanced reservation",
+      "url": "https://www.thehindu.com/news/cities/bangalore/scst-voices-condemn-karnataka-hight-court-verdict-striking-down-enhanced-reservation/article71580352.ece",
+      "source": "The Hindu",
+      "source_preferred": true,
+      "published_at": "2026-10-14T04:10:25+05:30",
+      "age_hours": 2.47,
+      "categories": [
+        "court_judgment"
+      ],
+      "excerpt": "Various individuals and organisations representing Scheduled Castes and Scheduled Tribes communities in the State expressed deep disappointment with the Karnataka High Court verdict that struck down the enhanced reservation",
+      "corroboration": []
+    },
+    {
+      "rank": 55,
       "class": "C",
       "score": 66,
       "region": "india",
@@ -1109,7 +1069,7 @@
       "source": "The Hindu",
       "source_preferred": true,
       "published_at": "2026-10-14T03:36:18+05:30",
-      "age_hours": 2.82,
+      "age_hours": 3.04,
       "categories": [
         "court_judgment"
       ],
@@ -1117,7 +1077,7 @@
       "corroboration": []
     },
     {
-      "rank": 58,
+      "rank": 56,
       "class": "C",
       "score": 66,
       "region": "india",
@@ -1128,7 +1088,7 @@
       "source": "The Hindu",
       "source_preferred": true,
       "published_at": "2026-10-14T03:21:11+05:30",
-      "age_hours": 3.07,
+      "age_hours": 3.29,
       "categories": [
         "court_judgment"
       ],
@@ -1136,7 +1096,7 @@
       "corroboration": []
     },
     {
-      "rank": 59,
+      "rank": 57,
       "class": "C",
       "score": 66,
       "region": "india",
@@ -1147,7 +1107,7 @@
       "source": "Times of India",
       "source_preferred": false,
       "published_at": "2026-10-14T03:15:33+05:30",
-      "age_hours": 3.16,
+      "age_hours": 3.38,
       "categories": [
         "accident_casualty"
       ],
@@ -1155,7 +1115,7 @@
       "corroboration": []
     },
     {
-      "rank": 60,
+      "rank": 58,
       "class": "C",
       "score": 66,
       "region": "india",
@@ -1166,7 +1126,7 @@
       "source": "India Today",
       "source_preferred": false,
       "published_at": "2026-10-14T01:45:56+05:30",
-      "age_hours": 4.66,
+      "age_hours": 4.88,
       "categories": [
         "accident_casualty"
       ],
@@ -1174,7 +1134,7 @@
       "corroboration": []
     },
     {
-      "rank": 61,
+      "rank": 59,
       "class": "C",
       "score": 66,
       "region": "telangana",
@@ -1185,7 +1145,7 @@
       "source": "Telangana Today",
       "source_preferred": false,
       "published_at": "2026-10-14T00:43:57+05:30",
-      "age_hours": 5.69,
+      "age_hours": 5.91,
       "categories": [
         "govt_announcement"
       ],
@@ -1193,7 +1153,27 @@
       "corroboration": []
     },
     {
-      "rank": 62,
+      "rank": 60,
+      "class": "C",
+      "score": 66,
+      "region": "hyderabad",
+      "region_confidence": 1.0,
+      "suggested_headline": "📰 LATEST NEWS — HYDERABAD",
+      "title": "Hyderabad Cyber Frauds: Three Victims Lose Rs 5.35 Crore in One Day",
+      "url": "https://telanganatoday.com/hyderabad-cyber-frauds-three-victims-lose-rs-5-35-crore-in-one-day",
+      "source": "Telangana Today",
+      "source_preferred": false,
+      "published_at": "2026-10-14T00:28:20+05:30",
+      "age_hours": 6.17,
+      "categories": [
+        "major_crime",
+        "economic_major"
+      ],
+      "excerpt": "Three cyber fraud cases in Hyderabad caused losses of Rs 5.35 crore in a day, involving a fake CEO scam, digital arrest fraud and an investment scheme. Police Commissioner V.C. Sajjanar urged vigilance and immediate reporting through helpline 1930",
+      "corroboration": []
+    },
+    {
+      "rank": 61,
       "class": "C",
       "score": 66,
       "region": "india",
@@ -1204,7 +1184,7 @@
       "source": "The Hindu",
       "source_preferred": true,
       "published_at": "2026-10-13T23:07:33+05:30",
-      "age_hours": 7.3,
+      "age_hours": 7.52,
       "categories": [
         "security_terror",
         "govt_announcement",
@@ -1214,7 +1194,7 @@
       "corroboration": []
     },
     {
-      "rank": 63,
+      "rank": 62,
       "class": "C",
       "score": 66,
       "region": "hyderabad",
@@ -1225,7 +1205,7 @@
       "source": "Telangana Today",
       "source_preferred": false,
       "published_at": "2026-10-13T19:06:08+05:30",
-      "age_hours": 11.32,
+      "age_hours": 11.54,
       "categories": [
         "infrastructure_failure"
       ],
@@ -1233,27 +1213,7 @@
       "corroboration": []
     },
     {
-      "rank": 64,
-      "class": "C",
-      "score": 66,
-      "region": "telangana",
-      "region_confidence": 1.0,
-      "suggested_headline": "📰 LATEST NEWS — TELANGANA",
-      "title": "KTR accuses Telangana government of negligence over RIMS fire deaths",
-      "url": "https://telanganatoday.com/ktr-accuses-telangana-government-of-negligence-over-rims-fire-deaths",
-      "source": "Telangana Today",
-      "source_preferred": false,
-      "published_at": "2026-10-13T18:31:47+05:30",
-      "age_hours": 11.89,
-      "categories": [
-        "fire_explosion",
-        "political_major"
-      ],
-      "excerpt": "BRS working president KT Rama Rao accused the Telangana government of negligence after five infants died in a fire at Adilabad’s RIMS newborn care unit. He questioned an inquiry report reportedly blaming rats chewing AC wires and demanded accountability.",
-      "corroboration": []
-    },
-    {
-      "rank": 65,
+      "rank": 63,
       "class": "C",
       "score": 66,
       "region": "telangana",
@@ -1264,7 +1224,7 @@
       "source": "Telangana Today",
       "source_preferred": false,
       "published_at": "2026-10-13T16:06:49+05:30",
-      "age_hours": 14.31,
+      "age_hours": 14.53,
       "categories": [
         "accident_casualty"
       ],
@@ -1272,7 +1232,7 @@
       "corroboration": []
     },
     {
-      "rank": 66,
+      "rank": 64,
       "class": "C",
       "score": 66,
       "region": "telangana",
@@ -1283,7 +1243,7 @@
       "source": "Telangana Today",
       "source_preferred": false,
       "published_at": "2026-10-13T14:49:40+05:30",
-      "age_hours": 15.59,
+      "age_hours": 15.82,
       "categories": [
         "accident_casualty",
         "missing_person"
@@ -1292,7 +1252,7 @@
       "corroboration": []
     },
     {
-      "rank": 67,
+      "rank": 65,
       "class": "C",
       "score": 66,
       "region": "telangana",
@@ -1303,7 +1263,7 @@
       "source": "Deccan Chronicle",
       "source_preferred": false,
       "published_at": "2026-10-13T13:30:37+05:30",
-      "age_hours": 16.91,
+      "age_hours": 17.13,
       "categories": [
         "fire_explosion",
         "accident_casualty"
@@ -1312,7 +1272,7 @@
       "corroboration": []
     },
     {
-      "rank": 68,
+      "rank": 66,
       "class": "C",
       "score": 66,
       "region": "telangana",
@@ -1323,7 +1283,7 @@
       "source": "Deccan Chronicle",
       "source_preferred": false,
       "published_at": "2026-10-13T11:19:42+05:30",
-      "age_hours": 19.09,
+      "age_hours": 19.32,
       "categories": [
         "accident_casualty",
         "police_operation"
@@ -1332,7 +1292,7 @@
       "corroboration": []
     },
     {
-      "rank": 69,
+      "rank": 67,
       "class": "C",
       "score": 66,
       "region": "telangana",
@@ -1343,7 +1303,7 @@
       "source": "Telangana Today",
       "source_preferred": false,
       "published_at": "2026-10-13T09:19:54+05:30",
-      "age_hours": 21.09,
+      "age_hours": 21.31,
       "categories": [
         "accident_casualty",
         "political_major",
@@ -1353,7 +1313,7 @@
       "corroboration": []
     },
     {
-      "rank": 70,
+      "rank": 68,
       "class": "C",
       "score": 66,
       "region": "telangana",
@@ -1364,7 +1324,7 @@
       "source": "Deccan Chronicle",
       "source_preferred": false,
       "published_at": "2026-10-13T07:32:45+05:30",
-      "age_hours": 22.88,
+      "age_hours": 23.1,
       "categories": [
         "accident_casualty"
       ],
@@ -1372,7 +1332,7 @@
       "corroboration": []
     },
     {
-      "rank": 71,
+      "rank": 69,
       "class": "C",
       "score": 65,
       "region": "india",
@@ -1383,7 +1343,7 @@
       "source": "The Hindu",
       "source_preferred": true,
       "published_at": "2026-10-13T22:27:49+05:30",
-      "age_hours": 7.96,
+      "age_hours": 8.18,
       "categories": [
         "protest_major"
       ],
@@ -1391,7 +1351,7 @@
       "corroboration": []
     },
     {
-      "rank": 72,
+      "rank": 70,
       "class": "C",
       "score": 64,
       "region": "world",
@@ -1402,7 +1362,7 @@
       "source": "The Hindu",
       "source_preferred": true,
       "published_at": "2026-10-14T04:01:42+05:30",
-      "age_hours": 2.39,
+      "age_hours": 2.62,
       "categories": [
         "political_major"
       ],
@@ -1410,7 +1370,7 @@
       "corroboration": []
     },
     {
-      "rank": 73,
+      "rank": 71,
       "class": "C",
       "score": 64,
       "region": "india",
@@ -1421,11 +1381,50 @@
       "source": "Times of India",
       "source_preferred": false,
       "published_at": "2026-10-14T03:30:14+05:30",
-      "age_hours": 2.92,
+      "age_hours": 3.14,
       "categories": [
         "security_terror"
       ],
       "excerpt": "",
+      "corroboration": []
+    },
+    {
+      "rank": 72,
+      "class": "C",
+      "score": 64,
+      "region": "india",
+      "region_confidence": 1.0,
+      "suggested_headline": "📰 LATEST NEWS — INDIA",
+      "title": "NH works not gaining pace in Keralam: Minister",
+      "url": "https://www.thehindu.com/news/national/kerala/pwd-minister-pk-basheer-laments-slow-pace-of-nh-works-in-keralam/article71579439.ece",
+      "source": "The Hindu",
+      "source_preferred": true,
+      "published_at": "2026-10-14T00:34:00+05:30",
+      "age_hours": 6.08,
+      "categories": [
+        "political_major"
+      ],
+      "excerpt": "",
+      "corroboration": []
+    },
+    {
+      "rank": 73,
+      "class": "C",
+      "score": 64,
+      "region": "india",
+      "region_confidence": 0.4,
+      "suggested_headline": "📰 LATEST NEWS — INDIA",
+      "title": "Anger mounts in Punjab after anti-drug crusader killed in broad daylight",
+      "url": "https://www.thehindu.com/news/national/punjab/anger-mounts-in-punjab-after-anti-drug-crusaderkilled-in-broad-daylight/article71579922.ece",
+      "source": "The Hindu",
+      "source_preferred": true,
+      "published_at": "2026-10-14T00:28:00+05:30",
+      "age_hours": 6.18,
+      "categories": [
+        "accident_casualty",
+        "major_crime"
+      ],
+      "excerpt": "Confronted over illegal sale of addictive substances, medical store owner shoots down activist; Mansa residents stage massive protests; family refuses to cremate body; Oppn. corners AAP govt.",
       "corroboration": []
     },
     {
@@ -1435,39 +1434,21 @@
       "region": "india",
       "region_confidence": 1.0,
       "suggested_headline": "📰 LATEST NEWS — INDIA",
-      "title": "Explosives and weapons smuggled from Pakistan recovered in Rajasthan, 2 arrested",
-      "url": "https://www.indiatoday.in/india/story/explosives-and-weapons-smuggled-from-pakistan-via-drone-recovered-in-rajasthans-rawla-2-arrested-3016783-2026-10-14?utm_source=rss",
-      "source": "India Today",
-      "source_preferred": false,
-      "published_at": "2026-10-14T01:06:05+05:30",
-      "age_hours": 5.32,
+      "title": "Woman Circle Officer slaps advocate amid row over parking, apologises after lawyers stage protest in Ajmer",
+      "url": "https://www.thehindu.com/news/national/rajasthan/woman-circle-officer-slaps-advocate-amid-row-over-parking-apologises-after-lawyers-stage-protest-inajmer/article71579638.ece",
+      "source": "The Hindu",
+      "source_preferred": true,
+      "published_at": "2026-10-14T00:27:08+05:30",
+      "age_hours": 6.19,
       "categories": [
-        "police_operation"
+        "political_major",
+        "protest_major"
       ],
-      "excerpt": "Explosives and weapons smuggled from Pakistan recovered in Rajasthan arrested",
+      "excerpt": "",
       "corroboration": []
     },
     {
       "rank": 75,
-      "class": "C",
-      "score": 64,
-      "region": "india",
-      "region_confidence": 0.4,
-      "suggested_headline": "📰 LATEST NEWS — INDIA",
-      "title": "Amit Shah slams SIR protests, says Congress will suffer its fourth consecutive defeat in 2029",
-      "url": "https://www.thehindu.com/news/national/amit-shah-slams-sir-protests-says-congress-will-suffer-its-fourth-consecutive-defeat-in-2029/article71580933.ece",
-      "source": "The Hindu",
-      "source_preferred": true,
-      "published_at": "2026-10-14T00:28:00+05:30",
-      "age_hours": 5.95,
-      "categories": [
-        "political_major"
-      ],
-      "excerpt": "The trust of people cannot be earned through manufactured media events and the echo of falsehoods, says Home Minister",
-      "corroboration": []
-    },
-    {
-      "rank": 76,
       "class": "C",
       "score": 64,
       "region": "telangana",
@@ -1478,7 +1459,7 @@
       "source": "Deccan Chronicle",
       "source_preferred": false,
       "published_at": "2026-10-14T00:24:22+05:30",
-      "age_hours": 6.02,
+      "age_hours": 6.24,
       "categories": [
         "political_major"
       ],
@@ -1486,7 +1467,7 @@
       "corroboration": []
     },
     {
-      "rank": 77,
+      "rank": 76,
       "class": "C",
       "score": 64,
       "region": "telangana",
@@ -1497,7 +1478,7 @@
       "source": "Telangana Today",
       "source_preferred": false,
       "published_at": "2026-10-13T23:59:45+05:30",
-      "age_hours": 6.43,
+      "age_hours": 6.65,
       "categories": [
         "political_major"
       ],
@@ -1505,7 +1486,7 @@
       "corroboration": []
     },
     {
-      "rank": 78,
+      "rank": 77,
       "class": "C",
       "score": 64,
       "region": "india",
@@ -1516,7 +1497,7 @@
       "source": "The Hindu",
       "source_preferred": true,
       "published_at": "2026-10-13T23:58:10+05:30",
-      "age_hours": 6.45,
+      "age_hours": 6.67,
       "categories": [
         "accident_casualty",
         "major_crime"
@@ -1525,7 +1506,7 @@
       "corroboration": []
     },
     {
-      "rank": 79,
+      "rank": 78,
       "class": "C",
       "score": 64,
       "region": "telangana",
@@ -1536,7 +1517,7 @@
       "source": "Deccan Chronicle",
       "source_preferred": false,
       "published_at": "2026-10-13T23:55:59+05:30",
-      "age_hours": 6.49,
+      "age_hours": 6.71,
       "categories": [
         "political_major",
         "protest_major"
@@ -1545,7 +1526,7 @@
       "corroboration": []
     },
     {
-      "rank": 80,
+      "rank": 79,
       "class": "C",
       "score": 64,
       "region": "india",
@@ -1556,7 +1537,7 @@
       "source": "The Hindu",
       "source_preferred": true,
       "published_at": "2026-10-13T23:37:46+05:30",
-      "age_hours": 6.79,
+      "age_hours": 7.01,
       "categories": [
         "political_major"
       ],
@@ -1564,7 +1545,7 @@
       "corroboration": []
     },
     {
-      "rank": 81,
+      "rank": 80,
       "class": "C",
       "score": 64,
       "region": "telangana",
@@ -1575,7 +1556,7 @@
       "source": "Telangana Today",
       "source_preferred": false,
       "published_at": "2026-10-13T23:27:37+05:30",
-      "age_hours": 6.96,
+      "age_hours": 7.18,
       "categories": [
         "court_judgment",
         "political_major"
@@ -1584,7 +1565,7 @@
       "corroboration": []
     },
     {
-      "rank": 82,
+      "rank": 81,
       "class": "C",
       "score": 64,
       "region": "telangana",
@@ -1595,7 +1576,7 @@
       "source": "Deccan Chronicle",
       "source_preferred": false,
       "published_at": "2026-10-13T23:10:15+05:30",
-      "age_hours": 7.25,
+      "age_hours": 7.47,
       "categories": [
         "traffic_disruption",
         "political_major",
@@ -1605,7 +1586,7 @@
       "corroboration": []
     },
     {
-      "rank": 83,
+      "rank": 82,
       "class": "C",
       "score": 64,
       "region": "india",
@@ -1616,7 +1597,7 @@
       "source": "The Hindu",
       "source_preferred": true,
       "published_at": "2026-10-13T23:03:09+05:30",
-      "age_hours": 7.37,
+      "age_hours": 7.59,
       "categories": [
         "accident_casualty"
       ],
@@ -1624,7 +1605,7 @@
       "corroboration": []
     },
     {
-      "rank": 84,
+      "rank": 83,
       "class": "C",
       "score": 64,
       "region": "india",
@@ -1635,7 +1616,7 @@
       "source": "The Hindu",
       "source_preferred": true,
       "published_at": "2026-10-13T22:53:03+05:30",
-      "age_hours": 7.54,
+      "age_hours": 7.76,
       "categories": [
         "police_operation",
         "govt_announcement",
@@ -1646,7 +1627,7 @@
       "corroboration": []
     },
     {
-      "rank": 85,
+      "rank": 84,
       "class": "C",
       "score": 64,
       "region": "india",
@@ -1657,7 +1638,7 @@
       "source": "The Hindu",
       "source_preferred": true,
       "published_at": "2026-10-13T22:30:09+05:30",
-      "age_hours": 7.92,
+      "age_hours": 8.14,
       "categories": [
         "political_major"
       ],
@@ -1665,7 +1646,7 @@
       "corroboration": []
     },
     {
-      "rank": 86,
+      "rank": 85,
       "class": "C",
       "score": 64,
       "region": "telangana",
@@ -1676,7 +1657,7 @@
       "source": "Deccan Chronicle",
       "source_preferred": false,
       "published_at": "2026-10-13T22:18:13+05:30",
-      "age_hours": 8.12,
+      "age_hours": 8.34,
       "categories": [
         "political_major",
         "protest_major"
@@ -1685,7 +1666,7 @@
       "corroboration": []
     },
     {
-      "rank": 87,
+      "rank": 86,
       "class": "C",
       "score": 64,
       "region": "telangana",
@@ -1696,7 +1677,7 @@
       "source": "Deccan Chronicle",
       "source_preferred": false,
       "published_at": "2026-10-13T21:30:14+05:30",
-      "age_hours": 8.92,
+      "age_hours": 9.14,
       "categories": [
         "court_judgment",
         "political_major"
@@ -1705,7 +1686,7 @@
       "corroboration": []
     },
     {
-      "rank": 88,
+      "rank": 87,
       "class": "C",
       "score": 64,
       "region": "telangana",
@@ -1716,7 +1697,7 @@
       "source": "Deccan Chronicle",
       "source_preferred": false,
       "published_at": "2026-10-13T21:17:09+05:30",
-      "age_hours": 9.14,
+      "age_hours": 9.36,
       "categories": [
         "political_major"
       ],
@@ -1724,7 +1705,7 @@
       "corroboration": []
     },
     {
-      "rank": 89,
+      "rank": 88,
       "class": "C",
       "score": 64,
       "region": "india",
@@ -1735,7 +1716,7 @@
       "source": "The Hindu",
       "source_preferred": true,
       "published_at": "2026-10-13T20:26:17+05:30",
-      "age_hours": 9.98,
+      "age_hours": 10.21,
       "categories": [
         "political_major"
       ],
@@ -1743,7 +1724,7 @@
       "corroboration": []
     },
     {
-      "rank": 90,
+      "rank": 89,
       "class": "C",
       "score": 64,
       "region": "telangana",
@@ -1754,11 +1735,31 @@
       "source": "The Hindu",
       "source_preferred": true,
       "published_at": "2026-10-13T20:02:47+05:30",
-      "age_hours": 10.38,
+      "age_hours": 10.6,
       "categories": [
         "traffic_disruption"
       ],
       "excerpt": "",
+      "corroboration": []
+    },
+    {
+      "rank": 90,
+      "class": "C",
+      "score": 64,
+      "region": "telangana",
+      "region_confidence": 1.0,
+      "suggested_headline": "📰 LATEST NEWS — TELANGANA",
+      "title": "KTR accuses Telangana government of negligence over RIMS fire deaths",
+      "url": "https://telanganatoday.com/ktr-accuses-telangana-government-of-negligence-over-rims-fire-deaths",
+      "source": "Telangana Today",
+      "source_preferred": false,
+      "published_at": "2026-10-13T18:31:47+05:30",
+      "age_hours": 12.11,
+      "categories": [
+        "fire_explosion",
+        "political_major"
+      ],
+      "excerpt": "BRS working president KT Rama Rao accused the Telangana government of negligence after five infants died in a fire at Adilabad’s RIMS newborn care unit. He questioned an inquiry report reportedly blaming rats chewing AC wires and demanded accountability.",
       "corroboration": []
     },
     {
@@ -1773,7 +1774,7 @@
       "source": "Deccan Chronicle",
       "source_preferred": false,
       "published_at": "2026-10-13T15:09:37+05:30",
-      "age_hours": 15.26,
+      "age_hours": 15.48,
       "categories": [
         "security_terror",
         "political_major",
@@ -1794,7 +1795,7 @@
       "source": "Deccan Chronicle",
       "source_preferred": false,
       "published_at": "2026-10-13T11:27:48+05:30",
-      "age_hours": 18.96,
+      "age_hours": 19.18,
       "categories": [
         "accident_casualty"
       ],
@@ -1813,7 +1814,7 @@
       "source": "NDTV",
       "source_preferred": false,
       "published_at": "2026-10-14T04:49:28+05:30",
-      "age_hours": 1.6,
+      "age_hours": 1.82,
       "categories": [
         "traffic_disruption",
         "political_major",
@@ -1834,7 +1835,7 @@
       "source": "Deccan Chronicle",
       "source_preferred": false,
       "published_at": "2026-10-14T03:38:37+05:30",
-      "age_hours": 2.78,
+      "age_hours": 3.0,
       "categories": [
         "disaster_weather"
       ],
@@ -1853,7 +1854,7 @@
       "source": "NDTV",
       "source_preferred": false,
       "published_at": "2026-10-14T00:58:52+05:30",
-      "age_hours": 5.44,
+      "age_hours": 5.66,
       "categories": [
         "accident_casualty"
       ],
@@ -1872,7 +1873,7 @@
       "source": "Deccan Chronicle",
       "source_preferred": false,
       "published_at": "2026-10-14T00:53:57+05:30",
-      "age_hours": 5.52,
+      "age_hours": 5.74,
       "categories": [
         "police_operation"
       ],
@@ -1891,7 +1892,7 @@
       "source": "Times of India",
       "source_preferred": false,
       "published_at": "2026-10-14T00:42:42+05:30",
-      "age_hours": 5.71,
+      "age_hours": 5.93,
       "categories": [
         "political_major",
         "protest_major"
@@ -1906,32 +1907,12 @@
       "region": "india",
       "region_confidence": 1.0,
       "suggested_headline": "📰 LATEST NEWS — INDIA",
-      "title": "TOI explains: Why can’t Bengaluru protest outside Freedom Park?",
-      "url": "https://timesofindia.indiatimes.com/india/toi-explains-why-cant-bengaluru-protest-outside-freedom-park/articleshow/134925892.cms",
-      "source": "Times of India",
-      "source_preferred": false,
-      "published_at": "2026-10-14T00:32:25+05:30",
-      "age_hours": 5.88,
-      "categories": [
-        "political_major",
-        "protest_major"
-      ],
-      "excerpt": "",
-      "corroboration": []
-    },
-    {
-      "rank": 99,
-      "class": "C",
-      "score": 62,
-      "region": "india",
-      "region_confidence": 1.0,
-      "suggested_headline": "📰 LATEST NEWS — INDIA",
       "title": "Former Supreme Court judge calls for constitutional safeguards to ensure ECI’s independence",
       "url": "https://www.thehindu.com/news/national/kerala/former-supreme-court-judge-calls-for-constitutional-safeguards-to-ensure-ecis-independence/article71580390.ece",
       "source": "The Hindu",
       "source_preferred": true,
       "published_at": "2026-10-13T23:55:48+05:30",
-      "age_hours": 6.49,
+      "age_hours": 6.71,
       "categories": [
         "court_judgment"
       ],
@@ -1939,7 +1920,7 @@
       "corroboration": []
     },
     {
-      "rank": 100,
+      "rank": 99,
       "class": "C",
       "score": 62,
       "region": "india",
@@ -1950,7 +1931,7 @@
       "source": "LiveMint",
       "source_preferred": false,
       "published_at": "2026-10-13T23:02:46+05:30",
-      "age_hours": 7.38,
+      "age_hours": 7.6,
       "categories": [
         "accident_casualty",
         "security_terror",
@@ -1960,7 +1941,7 @@
       "corroboration": []
     },
     {
-      "rank": 101,
+      "rank": 100,
       "class": "C",
       "score": 62,
       "region": "telangana",
@@ -1971,7 +1952,7 @@
       "source": "Deccan Chronicle",
       "source_preferred": false,
       "published_at": "2026-10-13T22:51:18+05:30",
-      "age_hours": 7.57,
+      "age_hours": 7.79,
       "categories": [
         "economic_major"
       ],
@@ -1979,7 +1960,7 @@
       "corroboration": []
     },
     {
-      "rank": 102,
+      "rank": 101,
       "class": "C",
       "score": 62,
       "region": "india",
@@ -1990,7 +1971,7 @@
       "source": "The Hindu",
       "source_preferred": true,
       "published_at": "2026-10-13T22:38:35+05:30",
-      "age_hours": 7.78,
+      "age_hours": 8.0,
       "categories": [
         "court_judgment",
         "protest_major"
@@ -1999,7 +1980,7 @@
       "corroboration": []
     },
     {
-      "rank": 103,
+      "rank": 102,
       "class": "C",
       "score": 62,
       "region": "telangana",
@@ -2010,7 +1991,7 @@
       "source": "Telangana Today",
       "source_preferred": false,
       "published_at": "2026-10-13T22:28:34+05:30",
-      "age_hours": 7.95,
+      "age_hours": 8.17,
       "categories": [
         "court_judgment"
       ],
@@ -2018,7 +1999,7 @@
       "corroboration": []
     },
     {
-      "rank": 104,
+      "rank": 103,
       "class": "C",
       "score": 62,
       "region": "india",
@@ -2029,7 +2010,7 @@
       "source": "India Today",
       "source_preferred": false,
       "published_at": "2026-10-13T22:12:59+05:30",
-      "age_hours": 8.21,
+      "age_hours": 8.43,
       "categories": [
         "accident_casualty"
       ],
@@ -2037,7 +2018,7 @@
       "corroboration": []
     },
     {
-      "rank": 105,
+      "rank": 104,
       "class": "C",
       "score": 62,
       "region": "telangana",
@@ -2048,7 +2029,7 @@
       "source": "Deccan Chronicle",
       "source_preferred": false,
       "published_at": "2026-10-13T21:57:31+05:30",
-      "age_hours": 8.46,
+      "age_hours": 8.69,
       "categories": [
         "court_judgment"
       ],
@@ -2056,7 +2037,7 @@
       "corroboration": []
     },
     {
-      "rank": 106,
+      "rank": 105,
       "class": "C",
       "score": 62,
       "region": "india",
@@ -2067,7 +2048,7 @@
       "source": "India Today",
       "source_preferred": false,
       "published_at": "2026-10-13T21:54:05+05:30",
-      "age_hours": 8.52,
+      "age_hours": 8.74,
       "categories": [
         "accident_casualty"
       ],
@@ -2075,7 +2056,7 @@
       "corroboration": []
     },
     {
-      "rank": 107,
+      "rank": 106,
       "class": "C",
       "score": 62,
       "region": "hyderabad",
@@ -2086,7 +2067,7 @@
       "source": "Newsmeter",
       "source_preferred": false,
       "published_at": "2026-10-13T20:28:51+05:30",
-      "age_hours": 9.94,
+      "age_hours": 10.16,
       "categories": [
         "police_operation"
       ],
@@ -2094,7 +2075,7 @@
       "corroboration": []
     },
     {
-      "rank": 108,
+      "rank": 107,
       "class": "C",
       "score": 62,
       "region": "telangana",
@@ -2105,7 +2086,7 @@
       "source": "Telangana Today",
       "source_preferred": false,
       "published_at": "2026-10-13T20:18:00+05:30",
-      "age_hours": 10.12,
+      "age_hours": 10.34,
       "categories": [
         "economic_major"
       ],
@@ -2113,7 +2094,7 @@
       "corroboration": []
     },
     {
-      "rank": 109,
+      "rank": 108,
       "class": "C",
       "score": 62,
       "region": "hyderabad",
@@ -2124,7 +2105,7 @@
       "source": "Newsmeter",
       "source_preferred": false,
       "published_at": "2026-10-13T20:00:40+05:30",
-      "age_hours": 10.41,
+      "age_hours": 10.63,
       "categories": [
         "police_operation"
       ],
@@ -2132,7 +2113,7 @@
       "corroboration": []
     },
     {
-      "rank": 110,
+      "rank": 109,
       "class": "C",
       "score": 62,
       "region": "india",
@@ -2143,7 +2124,7 @@
       "source": "The Hindu",
       "source_preferred": true,
       "published_at": "2026-10-13T19:23:40+05:30",
-      "age_hours": 11.03,
+      "age_hours": 11.25,
       "categories": [
         "economic_major"
       ],
@@ -2151,7 +2132,7 @@
       "corroboration": []
     },
     {
-      "rank": 111,
+      "rank": 110,
       "class": "C",
       "score": 62,
       "region": "india",
@@ -2162,7 +2143,7 @@
       "source": "Munsif Daily",
       "source_preferred": true,
       "published_at": "2026-10-13T18:23:00+05:30",
-      "age_hours": 12.04,
+      "age_hours": 12.26,
       "categories": [
         "political_major",
         "international_conflict"
@@ -2171,7 +2152,7 @@
       "corroboration": []
     },
     {
-      "rank": 112,
+      "rank": 111,
       "class": "C",
       "score": 62,
       "region": "hyderabad",
@@ -2182,7 +2163,7 @@
       "source": "Munsif Daily",
       "source_preferred": true,
       "published_at": "2026-10-13T17:58:24+05:30",
-      "age_hours": 12.45,
+      "age_hours": 12.67,
       "categories": [
         "accident_casualty",
         "major_crime",
@@ -2192,7 +2173,7 @@
       "corroboration": []
     },
     {
-      "rank": 113,
+      "rank": 112,
       "class": "C",
       "score": 62,
       "region": "hyderabad",
@@ -2203,7 +2184,7 @@
       "source": "Munsif Daily",
       "source_preferred": true,
       "published_at": "2026-10-13T17:23:19+05:30",
-      "age_hours": 13.03,
+      "age_hours": 13.26,
       "categories": [
         "accident_casualty",
         "political_major",
@@ -2213,7 +2194,7 @@
       "corroboration": []
     },
     {
-      "rank": 114,
+      "rank": 113,
       "class": "C",
       "score": 62,
       "region": "hyderabad",
@@ -2224,7 +2205,7 @@
       "source": "Munsif Daily",
       "source_preferred": true,
       "published_at": "2026-10-13T16:48:15+05:30",
-      "age_hours": 13.62,
+      "age_hours": 13.84,
       "categories": [
         "accident_casualty",
         "security_terror",
@@ -2234,7 +2215,7 @@
       "corroboration": []
     },
     {
-      "rank": 115,
+      "rank": 114,
       "class": "C",
       "score": 62,
       "region": "telangana",
@@ -2245,7 +2226,7 @@
       "source": "Munsif Daily",
       "source_preferred": true,
       "published_at": "2026-10-13T16:06:25+05:30",
-      "age_hours": 14.31,
+      "age_hours": 14.54,
       "categories": [
         "police_operation"
       ],
@@ -2253,7 +2234,7 @@
       "corroboration": []
     },
     {
-      "rank": 116,
+      "rank": 115,
       "class": "C",
       "score": 62,
       "region": "telangana",
@@ -2264,7 +2245,7 @@
       "source": "Newsmeter",
       "source_preferred": false,
       "published_at": "2026-10-13T16:06:10+05:30",
-      "age_hours": 14.32,
+      "age_hours": 14.54,
       "categories": [
         "political_major"
       ],
@@ -2272,7 +2253,7 @@
       "corroboration": []
     },
     {
-      "rank": 117,
+      "rank": 116,
       "class": "C",
       "score": 62,
       "region": "telangana",
@@ -2283,7 +2264,7 @@
       "source": "Deccan Chronicle",
       "source_preferred": false,
       "published_at": "2026-10-13T15:50:24+05:30",
-      "age_hours": 14.58,
+      "age_hours": 14.8,
       "categories": [
         "police_operation",
         "public_safety_warning"
@@ -2292,7 +2273,7 @@
       "corroboration": []
     },
     {
-      "rank": 118,
+      "rank": 117,
       "class": "C",
       "score": 62,
       "region": "telangana",
@@ -2303,7 +2284,7 @@
       "source": "Deccan Chronicle",
       "source_preferred": false,
       "published_at": "2026-10-13T15:47:45+05:30",
-      "age_hours": 14.63,
+      "age_hours": 14.85,
       "categories": [
         "political_major"
       ],
@@ -2311,7 +2292,7 @@
       "corroboration": []
     },
     {
-      "rank": 119,
+      "rank": 118,
       "class": "C",
       "score": 62,
       "region": "telangana",
@@ -2322,7 +2303,7 @@
       "source": "Deccan Chronicle",
       "source_preferred": false,
       "published_at": "2026-10-13T13:34:40+05:30",
-      "age_hours": 16.84,
+      "age_hours": 17.07,
       "categories": [
         "political_major"
       ],
@@ -2330,7 +2311,7 @@
       "corroboration": []
     },
     {
-      "rank": 120,
+      "rank": 119,
       "class": "C",
       "score": 62,
       "region": "world",
@@ -2341,11 +2322,31 @@
       "source": "The Hindu",
       "source_preferred": true,
       "published_at": "2026-10-13T13:27:52+05:30",
-      "age_hours": 16.96,
+      "age_hours": 17.18,
       "categories": [
         "accident_casualty"
       ],
       "excerpt": "‘One person is in cardiac arrest, and around seven others have been injured,’ says official",
+      "corroboration": []
+    },
+    {
+      "rank": 120,
+      "class": "C",
+      "score": 62,
+      "region": "india",
+      "region_confidence": 1.0,
+      "suggested_headline": "📰 LATEST NEWS — INDIA",
+      "title": "How does the U.S.-Russia diesel deal impact India | Explained",
+      "url": "https://www.thehindu.com/news/national/how-does-the-us-russia-diesel-deal-impact-india/article71578205.ece",
+      "source": "The Hindu",
+      "source_preferred": true,
+      "published_at": "2026-10-13T13:09:16+05:30",
+      "age_hours": 17.49,
+      "categories": [
+        "political_major",
+        "international_conflict"
+      ],
+      "excerpt": "Apart from the deal to allow Russia to sell diesel to the U.S. and global markets, U.S. President Donald Trump also announced an ‘energy ceasefire’ between Russia and Ukraine",
       "corroboration": []
     }
   ]
