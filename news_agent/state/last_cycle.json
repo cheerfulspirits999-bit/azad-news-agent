@@ -1,72 +1,40 @@
 {
-  "cycle": "20261016-0334",
-  "at": "2026-10-16T03:43:12.111469+05:30",
+  "cycle": "20261016-0353",
+  "at": "2026-10-16T03:53:27.790378+05:30",
   "candidates": 120,
   "published_this_cycle": 0,
-  "digest": "PUBLISHED auto-digest-2026-10-16-s0341",
-  "ru": {
-    "pre_ru_picks": 5,
-    "to_translate": 5,
-    "engine": {
-      "ok": false,
-      "lines_in": 5,
-      "lines_want": 5,
-      "method": "fallback",
-      "problems": "['Lines [1, 2, 3, 4, 5] copy 4+ consecutive English words verbatim into the Roman Urdu. Re-express those phrases in Urdu; keep only proper nouns/brands/technica"
-    },
-    "kills": {
-      "paste": [
-        1,
-        2,
-        4,
-        5
-      ],
-      "english-echo": [
-        3
-      ]
-    },
-    "accepted": 3,
-    "salvaged": [
-      1,
-      2,
-      3
-    ],
-    "via": {
-      "1": "gemini-3.5-flash",
-      "2": "gemini-flash-lite-latest",
-      "3": "gemini-flash-lite-latest"
-    }
-  },
+  "digest": "gate closed: ncards 4/24, gap 12 min, retry_pending=0",
+  "ru": {},
   "tail": [
-    "[16 Oct 03:43:12] stale or low-score, skipped: Bus Collides With Train Near Channel Tunnel Entrance In Fran",
-    "[16 Oct 03:43:12] queued for editorial pass (no safe auto frame): TGSRTC runs over 2,400 special buses to clear festive rush so far this",
-    "[16 Oct 03:43:12] queued for editorial pass (no safe auto frame): Newborn girl strangled at hospital in M.P.'s Ashok Nagar; cops suspect",
-    "[16 Oct 03:43:12] queued for editorial pass (no safe auto frame): Man killed in suspected leopard attack near Hasanur",
-    "[16 Oct 03:43:12] held for the next card: auto-punjabi-influencer-makeup-artist-shot-dead-in-amritsar",
-    "[16 Oct 03:43:12] stale or low-score, skipped: Adilabad tenant farmer dies by suicide amid debt and crop yi",
-    "[16 Oct 03:43:12] held for the next card: auto-17-killed-in-20-houthi-attacks-on-riyadh-airport-in-october",
-    "[16 Oct 03:43:12] stale or low-score, skipped: Search operations launched after suspected terrorist movemen",
-    "[16 Oct 03:43:12] stale or low-score, skipped: Shiva Sharma murder case: CCTV footage hints Shraddha Dubey ",
-    "[16 Oct 03:43:12] stale or low-score, skipped: Experienced Pilot Among 6 Killed in Plane Crash After Ice Ac",
-    "[16 Oct 03:43:12] stale or low-score, skipped: Pilot reports wing icing before plane crashes in Wisconsin; ",
-    "[16 Oct 03:43:12] stale or low-score, skipped: Kerala State Drugs Control dept. seeks curbs on inter-State ",
-    "[16 Oct 03:43:12] stale or low-score, skipped: States sue OpenAI, saying its popular chatbot hurting childr",
-    "[16 Oct 03:43:12] stale or low-score, skipped: At least two killed in explosions near palace in Aden used b",
-    "[16 Oct 03:43:12] stale or low-score, skipped: Iran executes man linked to anti-government protests",
-    "[16 Oct 03:43:12] stale or low-score, skipped: Russian attacks kill six in Ukraine, damage Kyiv's Northern ",
-    "[16 Oct 03:43:12] stale or low-score, skipped: Police constable drowns in Mancherial tank during morning wa",
-    "[16 Oct 03:43:12] stale or low-score, skipped: 15 Injured After Bus Veers Off Road in Hubballi",
-    "[16 Oct 03:43:12] stale or low-score, skipped: Woman Killed By Lightning In Kadapa District",
-    "[16 Oct 03:43:12] stale or low-score, skipped: NOT A DROP ... Drinking Water Problem Worsening in Nalgonda ",
-    "[16 Oct 03:43:12] stale or low-score, skipped: Kochi Mini Cooper crash: Accused blood alcohol level 5 times",
-    "[16 Oct 03:43:12] stale or low-score, skipped: KBR Park One Way Works And Flyover Construction To Be Paced ",
-    "[16 Oct 03:43:12] stale or low-score, skipped: Houthis fire missiles at Yemen palace in bid to wipe out Sau",
-    "[16 Oct 03:43:12] stale or low-score, skipped: KTR seeks probe into proposed foreign coal imports, alleges ",
-    "[16 Oct 03:43:12] stale or low-score, skipped: Food officials inspect Joint Al Mandi, Madhapur after custom",
-    "[16 Oct 03:43:12] stale or low-score, skipped: Man Murdered in Chikkadpally",
-    "[16 Oct 03:43:12] stale or low-score, skipped: TG SAFE detects discrepancies at 137 medical shops in Telang",
-    "[16 Oct 03:43:12] stale or low-score, skipped: K.T. Rama Rao Alleges Rs 3,000 cr Coal Import Scam Plans, De",
-    "[16 Oct 03:43:12] stale or low-score, skipped: Peshawar school roof collapse kills 17 children, teacher; 30",
-    "[16 Oct 03:43:12] stale or low-score, skipped: ChatGPT Hurting Children, Deceiving Adults: 8 US States Sue "
+    "[16 Oct 03:53:27] queued for editorial pass (no safe auto frame): Newborn girl strangled at hospital in M.P.'s Ashok Nagar; cops suspect",
+    "[16 Oct 03:53:27] queued for editorial pass (no safe auto frame): Man killed in suspected leopard attack near Hasanur",
+    "[16 Oct 03:53:27] held for the next card: auto-punjabi-influencer-makeup-artist-shot-dead-in-amritsar",
+    "[16 Oct 03:53:27] stale or low-score, skipped: Adilabad tenant farmer dies by suicide amid debt and crop yi",
+    "[16 Oct 03:53:27] held for the next card: auto-17-killed-in-20-houthi-attacks-on-riyadh-airport-in-october",
+    "[16 Oct 03:53:27] stale or low-score, skipped: Search operations launched after suspected terrorist movemen",
+    "[16 Oct 03:53:27] stale or low-score, skipped: Shiva Sharma murder case: CCTV footage hints Shraddha Dubey ",
+    "[16 Oct 03:53:27] stale or low-score, skipped: Experienced Pilot Among 6 Killed in Plane Crash After Ice Ac",
+    "[16 Oct 03:53:27] stale or low-score, skipped: Pilot reports wing icing before plane crashes in Wisconsin; ",
+    "[16 Oct 03:53:27] stale or low-score, skipped: NIA court declares Rajouri man \u2018proclaimed offender\u2019; orders",
+    "[16 Oct 03:53:27] stale or low-score, skipped: Kerala State Drugs Control dept. seeks curbs on inter-State ",
+    "[16 Oct 03:53:27] stale or low-score, skipped: States sue OpenAI, saying its popular chatbot hurting childr",
+    "[16 Oct 03:53:27] stale or low-score, skipped: At least two killed in explosions near palace in Aden used b",
+    "[16 Oct 03:53:27] stale or low-score, skipped: Iran executes man linked to anti-government protests",
+    "[16 Oct 03:53:27] stale or low-score, skipped: Russian attacks kill six in Ukraine, damage Kyiv's Northern ",
+    "[16 Oct 03:53:27] stale or low-score, skipped: Police constable drowns in Mancherial tank during morning wa",
+    "[16 Oct 03:53:27] stale or low-score, skipped: 15 Injured After Bus Veers Off Road in Hubballi",
+    "[16 Oct 03:53:27] stale or low-score, skipped: At least 2 hospitalised after shooting at elementary school,",
+    "[16 Oct 03:53:27] stale or low-score, skipped: NOT A DROP ... Drinking Water Problem Worsening in Nalgonda ",
+    "[16 Oct 03:53:27] stale or low-score, skipped: Kochi Mini Cooper crash: Accused blood alcohol level 5 times",
+    "[16 Oct 03:53:27] stale or low-score, skipped: KBR Park One Way Works And Flyover Construction To Be Paced ",
+    "[16 Oct 03:53:27] stale or low-score, skipped: Houthis fire missiles at Yemen palace in bid to wipe out Sau",
+    "[16 Oct 03:53:27] stale or low-score, skipped: KTR seeks probe into proposed foreign coal imports, alleges ",
+    "[16 Oct 03:53:27] stale or low-score, skipped: Food officials inspect Joint Al Mandi, Madhapur after custom",
+    "[16 Oct 03:53:27] stale or low-score, skipped: Man Murdered in Chikkadpally",
+    "[16 Oct 03:53:27] stale or low-score, skipped: TG SAFE detects discrepancies at 137 medical shops in Telang",
+    "[16 Oct 03:53:27] stale or low-score, skipped: K.T. Rama Rao Alleges Rs 3,000 cr Coal Import Scam Plans, De",
+    "[16 Oct 03:53:27] stale or low-score, skipped: Peshawar school roof collapse kills 17 children, teacher; 30",
+    "[16 Oct 03:53:27] stale or low-score, skipped: Woman Killed By Lightning In Kadapa District",
+    "[16 Oct 03:53:27] stale or low-score, skipped: ChatGPT Hurting Children, Deceiving Adults: 8 US States Sue "
   ]
 }
