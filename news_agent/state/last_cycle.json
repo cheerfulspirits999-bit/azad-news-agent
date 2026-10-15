@@ -1,74 +1,40 @@
 {
-  "cycle": "20261016-0009",
-  "at": "2026-10-16T00:16:05.525798+05:30",
+  "cycle": "20261016-0016",
+  "at": "2026-10-16T00:16:40.902349+05:30",
   "candidates": 120,
   "published_this_cycle": 0,
-  "digest": "PUBLISHED auto-digest-2026-10-16-s0014",
-  "ru": {
-    "pre_ru_picks": 5,
-    "to_translate": 5,
-    "engine": {
-      "ok": false,
-      "lines_in": 5,
-      "lines_want": 5,
-      "method": "fallback",
-      "problems": "['Lines [1, 2, 3, 4, 5] copy 4+ consecutive English words verbatim into the Roman Urdu. Re-express those phrases in Urdu; keep only proper nouns/brands/technica"
-    },
-    "kills": {
-      "paste": [
-        1,
-        4
-      ],
-      "english-echo": [
-        2,
-        3,
-        5
-      ]
-    },
-    "accepted": 4,
-    "salvaged": [
-      1,
-      2,
-      3,
-      4
-    ],
-    "via": {
-      "1": "gemini-flash-lite-latest",
-      "2": "gemini-flash-lite-latest",
-      "3": "gemini-flash-lite-latest",
-      "4": "gemini-flash-lite-latest"
-    }
-  },
+  "digest": "gate closed: ncards 1/24, gap 2 min, retry_pending=0",
+  "ru": {},
   "tail": [
-    "[16 Oct 00:16:05] queued for editorial pass (no safe auto frame): States sue OpenAI, saying its popular chatbot hurting children",
-    "[16 Oct 00:16:05] held for the next card: auto-at-least-two-killed-in-explosions-near-palace-in-aden-used-b",
-    "[16 Oct 00:16:05] queued for editorial pass (no safe auto frame): Iran executes man linked to anti-government protests",
-    "[16 Oct 00:16:05] queued for editorial pass (no safe auto frame): Russian attacks kill six in Ukraine, damage Kyiv's Northern Bridge",
-    "[16 Oct 00:16:05] stale or low-score, skipped: Kochi Mini Cooper crash: Accused blood alcohol level 5 times",
-    "[16 Oct 00:16:05] stale or low-score, skipped: End of Maoism\u00a0doesn't erase five decades of suffering it cau",
-    "[16 Oct 00:16:05] stale or low-score, skipped: KBR Park One Way Works And Flyover Construction To Be Paced ",
-    "[16 Oct 00:16:05] stale or low-score, skipped: 4 Killed In Explosion At Dye Factory In Gandhinagar",
-    "[16 Oct 00:16:05] stale or low-score, skipped: KTR seeks probe into proposed foreign coal imports, alleges ",
-    "[16 Oct 00:16:05] stale or low-score, skipped: 15 Injured After Bus Veers Off Road in Hubballi",
-    "[16 Oct 00:16:05] stale or low-score, skipped: Man booked for filming minor girl dies by suicide in Hyderab",
-    "[16 Oct 00:16:05] stale or low-score, skipped: K.T. Rama Rao Alleges Rs 3,000 cr Coal Import Scam Plans, De",
-    "[16 Oct 00:16:05] stale or low-score, skipped: Jammu-based Hindu group seeks ban on halal certification, sa",
-    "[16 Oct 00:16:05] stale or low-score, skipped: Stakeholders sensitised to food safety norms, licensing",
-    "[16 Oct 00:16:05] stale or low-score, skipped: J&K cop goes missing with rifle, magazine on way home; terro",
-    "[16 Oct 00:16:05] stale or low-score, skipped: Police constable drowns in Mancherial tank during morning wa",
-    "[16 Oct 00:16:05] stale or low-score, skipped: Collector inaugurates high-level bridge across Pambaru river",
-    "[16 Oct 00:16:05] stale or low-score, skipped: New China-North Korea bridge opens after more than a decade ",
-    "[16 Oct 00:16:05] stale or low-score, skipped: Families await return of 3 Indians killed in Germany fire; K",
-    "[16 Oct 00:16:05] stale or low-score, skipped: Mumbai shocker: CCTV clip shows 10-year-old pushing 18-month",
-    "[16 Oct 00:16:05] stale or low-score, skipped: How the Mini Cooper accident case casts a shadow on Kerala P",
-    "[16 Oct 00:16:05] stale or low-score, skipped: US plans strikes on Iran using \u2018mother of all bombs\u2019: Report",
-    "[16 Oct 00:16:05] stale or low-score, skipped: 4 workers killed in blast at dye manufacturing unit in Gujar",
-    "[16 Oct 00:16:05] stale or low-score, skipped: Peshawar school roof collapse kills 17 children, teacher; 30",
-    "[16 Oct 00:16:05] stale or low-score, skipped: Food officials inspect Joint Al Mandi, Madhapur after custom",
-    "[16 Oct 00:16:05] stale or low-score, skipped: Man Murdered in Chikkadpally",
-    "[16 Oct 00:16:05] stale or low-score, skipped: SIR exercise: Nine lakh names dropped from Uttarakhand\u2019s pol",
-    "[16 Oct 00:16:05] stale or low-score, skipped: IGL rolls out AI system to check CNG cylinder safety at pump",
-    "[16 Oct 00:16:05] stale or low-score, skipped: Amit Shah vows to eliminate every trace of Naxalism after fi",
-    "[16 Oct 00:16:05] stale or low-score, skipped: Konaseema Ambedkar Dt: Triple Riding Turns Fatal, 2 Youth Ki"
+    "[16 Oct 00:16:40] queued for editorial pass (no safe auto frame): States sue OpenAI, saying its popular chatbot hurting children",
+    "[16 Oct 00:16:40] held for the next card: auto-at-least-two-killed-in-explosions-near-palace-in-aden-used-b",
+    "[16 Oct 00:16:40] queued for editorial pass (no safe auto frame): Iran executes man linked to anti-government protests",
+    "[16 Oct 00:16:40] queued for editorial pass (no safe auto frame): Russian attacks kill six in Ukraine, damage Kyiv's Northern Bridge",
+    "[16 Oct 00:16:40] stale or low-score, skipped: Kochi Mini Cooper crash: Accused blood alcohol level 5 times",
+    "[16 Oct 00:16:40] stale or low-score, skipped: End of Maoism\u00a0doesn't erase five decades of suffering it cau",
+    "[16 Oct 00:16:40] stale or low-score, skipped: KBR Park One Way Works And Flyover Construction To Be Paced ",
+    "[16 Oct 00:16:40] stale or low-score, skipped: 4 Killed In Explosion At Dye Factory In Gandhinagar",
+    "[16 Oct 00:16:40] stale or low-score, skipped: KTR seeks probe into proposed foreign coal imports, alleges ",
+    "[16 Oct 00:16:40] stale or low-score, skipped: 15 Injured After Bus Veers Off Road in Hubballi",
+    "[16 Oct 00:16:40] stale or low-score, skipped: Man booked for filming minor girl dies by suicide in Hyderab",
+    "[16 Oct 00:16:40] stale or low-score, skipped: K.T. Rama Rao Alleges Rs 3,000 cr Coal Import Scam Plans, De",
+    "[16 Oct 00:16:40] stale or low-score, skipped: Jammu-based Hindu group seeks ban on halal certification, sa",
+    "[16 Oct 00:16:40] stale or low-score, skipped: Stakeholders sensitised to food safety norms, licensing",
+    "[16 Oct 00:16:40] stale or low-score, skipped: J&K cop goes missing with rifle, magazine on way home; terro",
+    "[16 Oct 00:16:40] stale or low-score, skipped: Police constable drowns in Mancherial tank during morning wa",
+    "[16 Oct 00:16:40] stale or low-score, skipped: Collector inaugurates high-level bridge across Pambaru river",
+    "[16 Oct 00:16:40] stale or low-score, skipped: New China-North Korea bridge opens after more than a decade ",
+    "[16 Oct 00:16:40] stale or low-score, skipped: Families await return of 3 Indians killed in Germany fire; K",
+    "[16 Oct 00:16:40] stale or low-score, skipped: Mumbai shocker: CCTV clip shows 10-year-old pushing 18-month",
+    "[16 Oct 00:16:40] stale or low-score, skipped: How the Mini Cooper accident case casts a shadow on Kerala P",
+    "[16 Oct 00:16:40] stale or low-score, skipped: US plans strikes on Iran using \u2018mother of all bombs\u2019: Report",
+    "[16 Oct 00:16:40] stale or low-score, skipped: 4 workers killed in blast at dye manufacturing unit in Gujar",
+    "[16 Oct 00:16:40] stale or low-score, skipped: Peshawar school roof collapse kills 17 children, teacher; 30",
+    "[16 Oct 00:16:40] stale or low-score, skipped: Food officials inspect Joint Al Mandi, Madhapur after custom",
+    "[16 Oct 00:16:40] stale or low-score, skipped: Man Murdered in Chikkadpally",
+    "[16 Oct 00:16:40] stale or low-score, skipped: SIR exercise: Nine lakh names dropped from Uttarakhand\u2019s pol",
+    "[16 Oct 00:16:40] stale or low-score, skipped: IGL rolls out AI system to check CNG cylinder safety at pump",
+    "[16 Oct 00:16:40] stale or low-score, skipped: Amit Shah vows to eliminate every trace of Naxalism after fi",
+    "[16 Oct 00:16:40] stale or low-score, skipped: Konaseema Ambedkar Dt: Triple Riding Turns Fatal, 2 Youth Ki"
   ]
 }
