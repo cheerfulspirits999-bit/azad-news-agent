@@ -1,40 +1,74 @@
 {
-  "cycle": "20261015-1832",
-  "at": "2026-10-15T18:33:06.368507+05:30",
+  "cycle": "20261015-1843",
+  "at": "2026-10-15T18:46:00.722840+05:30",
   "candidates": 120,
   "published_this_cycle": 0,
-  "digest": "gate closed: ncards 16/24, gap 53 min, retry_pending=0",
-  "ru": {},
+  "digest": "PUBLISHED auto-digest-2026-10-15-s1844",
+  "ru": {
+    "pre_ru_picks": 5,
+    "to_translate": 5,
+    "engine": {
+      "ok": false,
+      "lines_in": 5,
+      "lines_want": 5,
+      "method": "fallback",
+      "problems": "['Lines [1, 2, 3, 4, 5] copy 4+ consecutive English words verbatim into the Roman Urdu. Re-express those phrases in Urdu; keep only proper nouns/brands/technica"
+    },
+    "kills": {
+      "paste": [
+        1,
+        4,
+        5
+      ],
+      "english-echo": [
+        2,
+        3
+      ]
+    },
+    "accepted": 4,
+    "salvaged": [
+      1,
+      2,
+      3,
+      4
+    ],
+    "via": {
+      "1": "primary",
+      "2": "primary",
+      "3": "primary",
+      "4": "primary"
+    }
+  },
   "tail": [
-    "[15 Oct 18:33:06] queued for editorial pass (no safe auto frame): Pakistan school roof collapse leaves 30 dead, over 40 injured",
-    "[15 Oct 18:33:06] queued for editorial pass (no safe auto frame): GHMC inspects Rs 1,090 crore steel flyover project in Hyderabad",
-    "[15 Oct 18:33:06] stale or low-score, skipped: 2 injured as explosion at suspected firecracker unit collaps",
-    "[15 Oct 18:33:06] stale or low-score, skipped: 15 Injured After Bus Veers Off Road in Hubballi",
-    "[15 Oct 18:33:06] held for the next card: auto-bandh-over-anti-drug-crusader-s-murder-in-punjab-evokes-mixe",
-    "[15 Oct 18:33:06] queued for editorial pass (no safe auto frame): Telangana reviews drinking water supply amid El Ni\u00f1o concerns",
-    "[15 Oct 18:33:06] queued for editorial pass (no safe auto frame): Harish seeks \u20b910 lakh ex gratia for kin of migrant workers killed in K",
-    "[15 Oct 18:33:06] stale or low-score, skipped: Karnataka rejects Shubha Shankar's clemency plea in 2003 fia",
-    "[15 Oct 18:33:06] stale or low-score, skipped: Cauvery bridge on Chennai-Tiruchi-Madurai NH reopened for tr",
-    "[15 Oct 18:33:06] stale or low-score, skipped: Akkulam earth cave-in: apartment residents relocated",
-    "[15 Oct 18:33:06] stale or low-score, skipped: 18 injured after mini-bus falls into ditch in J&K's Udhampur",
-    "[15 Oct 18:33:06] stale or low-score, skipped: Peshawar school roof collapse kills 17 children, teacher; 30",
-    "[15 Oct 18:33:06] stale or low-score, skipped: Man booked for filming minor girl dies by suicide in Hyderab",
-    "[15 Oct 18:33:06] stale or low-score, skipped: Against All Odds, a New Kidney",
-    "[15 Oct 18:33:06] stale or low-score, skipped: Three children die in bedroom fire in Madinah",
-    "[15 Oct 18:33:06] stale or low-score, skipped: Food officials inspect Joint Al Mandi, Madhapur after custom",
-    "[15 Oct 18:33:06] stale or low-score, skipped: Man Murdered in Chikkadpally",
-    "[15 Oct 18:33:06] stale or low-score, skipped: India Slams Saudi Attacks After 1 Indian Killed, 11 Injured ",
-    "[15 Oct 18:33:06] stale or low-score, skipped: 72-year-old Hyderabad woman loses \u20b92.2 crore in digital arre",
-    "[15 Oct 18:33:06] stale or low-score, skipped: FSSAI licence of seven restaurants in three Telangana distri",
-    "[15 Oct 18:33:06] stale or low-score, skipped: Konaseema Ambedkar Dt: Triple Riding Turns Fatal, 2 Youth Ki",
-    "[15 Oct 18:33:06] stale or low-score, skipped: Nushratt Bharuccha undergoes spine surgery after Bali accide",
-    "[15 Oct 18:33:06] stale or low-score, skipped: Ghatkesar SHO suspended over corruption allegations",
-    "[15 Oct 18:33:06] stale or low-score, skipped: Vande Bharat crosses Chenab, Anji bridges at 100 kmph as Kat",
-    "[15 Oct 18:33:06] stale or low-score, skipped: From viral fame to violent deaths: 3 Punjab influencers murd",
-    "[15 Oct 18:33:06] stale or low-score, skipped: Video: Royal Bengal Tiger Spotted Along Arunachal Road, 2-Wh",
-    "[15 Oct 18:33:06] stale or low-score, skipped: Viveka Case: ED Quizzes Avinash Over \u20b940-Crore Trail",
-    "[15 Oct 18:33:06] stale or low-score, skipped: Injured Monkey Left Unattended For Hours In Adibatla",
-    "[15 Oct 18:33:06] stale or low-score, skipped: \u2018Any terror act from Pakistan will invite stronger response\u2019",
-    "[15 Oct 18:33:06] stale or low-score, skipped: Smartphone Shipments Crash 22% in Worst Quarter Ever, IDC Sa"
+    "[15 Oct 18:46:00] queued for editorial pass (no safe auto frame): After CAPF constable\u2019s death in Bijapur, family alleges murder",
+    "[15 Oct 18:46:00] queued for editorial pass (no safe auto frame): Pakistan school roof collapse leaves 30 dead, over 40 injured",
+    "[15 Oct 18:46:00] queued for editorial pass (no safe auto frame): GHMC inspects Rs 1,090 crore steel flyover project in Hyderabad",
+    "[15 Oct 18:46:00] stale or low-score, skipped: 2 injured as explosion at suspected firecracker unit collaps",
+    "[15 Oct 18:46:00] stale or low-score, skipped: 15 Injured After Bus Veers Off Road in Hubballi",
+    "[15 Oct 18:46:00] held for the next card: auto-bandh-over-anti-drug-crusader-s-murder-in-punjab-evokes-mixe",
+    "[15 Oct 18:46:00] queued for editorial pass (no safe auto frame): Harish seeks \u20b910 lakh ex gratia for kin of migrant workers killed in K",
+    "[15 Oct 18:46:00] stale or low-score, skipped: US plans strikes on Iran using \u2018mother of all bombs\u2019: Report",
+    "[15 Oct 18:46:00] stale or low-score, skipped: Karnataka rejects Shubha Shankar's clemency plea in 2003 fia",
+    "[15 Oct 18:46:00] stale or low-score, skipped: Cauvery bridge on Chennai-Tiruchi-Madurai NH reopened for tr",
+    "[15 Oct 18:46:00] stale or low-score, skipped: Akkulam earth cave-in: apartment residents relocated",
+    "[15 Oct 18:46:00] stale or low-score, skipped: 18 injured after mini-bus falls into ditch in J&K's Udhampur",
+    "[15 Oct 18:46:00] stale or low-score, skipped: Peshawar school roof collapse kills 17 children, teacher; 30",
+    "[15 Oct 18:46:00] stale or low-score, skipped: Man booked for filming minor girl dies by suicide in Hyderab",
+    "[15 Oct 18:46:00] stale or low-score, skipped: Against All Odds, a New Kidney",
+    "[15 Oct 18:46:00] stale or low-score, skipped: Three children die in bedroom fire in Madinah",
+    "[15 Oct 18:46:00] stale or low-score, skipped: Food officials inspect Joint Al Mandi, Madhapur after custom",
+    "[15 Oct 18:46:00] stale or low-score, skipped: Man Murdered in Chikkadpally",
+    "[15 Oct 18:46:00] stale or low-score, skipped: India Slams Saudi Attacks After 1 Indian Killed, 11 Injured ",
+    "[15 Oct 18:46:00] stale or low-score, skipped: 72-year-old Hyderabad woman loses \u20b92.2 crore in digital arre",
+    "[15 Oct 18:46:00] stale or low-score, skipped: FSSAI licence of seven restaurants in three Telangana distri",
+    "[15 Oct 18:46:00] stale or low-score, skipped: Konaseema Ambedkar Dt: Triple Riding Turns Fatal, 2 Youth Ki",
+    "[15 Oct 18:46:00] stale or low-score, skipped: Nushratt Bharuccha undergoes spine surgery after Bali accide",
+    "[15 Oct 18:46:00] stale or low-score, skipped: Ghatkesar SHO suspended over corruption allegations",
+    "[15 Oct 18:46:00] stale or low-score, skipped: Video: Royal Bengal Tiger Spotted Along Arunachal Road, 2-Wh",
+    "[15 Oct 18:46:00] stale or low-score, skipped: Viveka Case: ED Quizzes Avinash Over \u20b940-Crore Trail",
+    "[15 Oct 18:46:00] stale or low-score, skipped: Injured Monkey Left Unattended For Hours In Adibatla",
+    "[15 Oct 18:46:00] stale or low-score, skipped: \u2018Any terror act from Pakistan will invite stronger response\u2019",
+    "[15 Oct 18:46:00] stale or low-score, skipped: From viral fame to violent deaths: 3 Punjab influencers murd",
+    "[15 Oct 18:46:00] stale or low-score, skipped: Smartphone Shipments Crash 22% in Worst Quarter Ever, IDC Sa"
   ]
 }
