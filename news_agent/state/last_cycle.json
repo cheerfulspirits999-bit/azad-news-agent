@@ -1,40 +1,74 @@
 {
-  "cycle": "20261015-1252",
-  "at": "2026-10-15T12:52:20.452862+05:30",
+  "cycle": "20261015-1302",
+  "at": "2026-10-15T13:08:00.919210+05:30",
   "candidates": 120,
   "published_this_cycle": 0,
-  "digest": "gate closed: ncards 11/24, gap 53 min, retry_pending=0",
-  "ru": {},
+  "digest": "PUBLISHED auto-digest-2026-10-15-s1306",
+  "ru": {
+    "pre_ru_picks": 5,
+    "to_translate": 5,
+    "engine": {
+      "ok": false,
+      "lines_in": 5,
+      "lines_want": 5,
+      "method": "fallback",
+      "problems": "['Lines [1, 2, 3, 4, 5] copy 4+ consecutive English words verbatim into the Roman Urdu. Re-express those phrases in Urdu; keep only proper nouns/brands/technica"
+    },
+    "kills": {
+      "paste": [
+        1,
+        2
+      ],
+      "english-echo": [
+        3,
+        4,
+        5
+      ]
+    },
+    "accepted": 4,
+    "salvaged": [
+      1,
+      2,
+      3,
+      4
+    ],
+    "via": {
+      "1": "primary",
+      "2": "primary",
+      "3": "primary",
+      "4": "primary"
+    }
+  },
   "tail": [
-    "[15 Oct 12:52:20] stale or low-score, skipped: Past rivalry leads to shooting near Bengaluru\u2019s NICE Road",
-    "[15 Oct 12:52:20] stale or low-score, skipped: Air India Frankfurt-Delhi flight diverted to Jaipur after hi",
-    "[15 Oct 12:52:20] stale or low-score, skipped: Man booked for filming minor girl dies by suicide in Hyderab",
-    "[15 Oct 12:52:20] stale or low-score, skipped: Against All Odds, a New Kidney",
-    "[15 Oct 12:52:20] stale or low-score, skipped: Hyderabad: Chhattisgarh migrant worker found dead under susp",
-    "[15 Oct 12:52:20] stale or low-score, skipped: What is the \u2018Mother of All Bombs\u2019? The massive US weapon in ",
-    "[15 Oct 12:52:20] stale or low-score, skipped: India Slams Saudi Attacks After 1 Indian Killed, 11 Injured ",
-    "[15 Oct 12:52:20] stale or low-score, skipped: 72-year-old Hyderabad woman loses \u20b92.2 crore in digital arre",
-    "[15 Oct 12:52:20] stale or low-score, skipped: FSSAI licence of seven restaurants in three Telangana distri",
-    "[15 Oct 12:52:20] stale or low-score, skipped: New York to Ban Horse-Drawn Carriages Under Romanch\u2019s Law Af",
-    "[15 Oct 12:52:20] stale or low-score, skipped: 18, including 17 children killed, dozens injured as school r",
-    "[15 Oct 12:52:20] stale or low-score, skipped: Man Allegedly Bites Wife and Attacks Her With Stone Over Pot",
-    "[15 Oct 12:52:20] stale or low-score, skipped: Four years on, why is Ankita Bhandari murder in limelight?",
-    "[15 Oct 12:52:20] stale or low-score, skipped: Viveka Case: ED Quizzes Avinash Over \u20b940-Crore Trail",
-    "[15 Oct 12:52:20] stale or low-score, skipped: Bihar boat capsize: Rescue operation ends, 13 minors dead",
-    "[15 Oct 12:52:20] stale or low-score, skipped: Karnataka: Ballari woman, 2 kids dead, dowry harassment alle",
-    "[15 Oct 12:52:20] stale or low-score, skipped: Injured Monkey Left Unattended For Hours In Adibatla",
-    "[15 Oct 12:52:20] stale or low-score, skipped: Medak Farmer Dies by Suicide After Borewell Failure, Crop Lo",
-    "[15 Oct 12:52:20] stale or low-score, skipped: Illinois: Major tragedy averted; US youth held for plotting ",
-    "[15 Oct 12:52:20] stale or low-score, skipped: Rajinikanth's Jailer 2 building blast was real: Stunt direct",
-    "[15 Oct 12:52:20] stale or low-score, skipped: Goa drug peddler had over 800 contacts in Telangana, says EA",
-    "[15 Oct 12:52:20] stale or low-score, skipped: 10,000 investors may have been affected: Adilabad Police arr",
-    "[15 Oct 12:52:20] stale or low-score, skipped: Heera Group ponzi scam: ED completes registration of 7 prope",
-    "[15 Oct 12:52:20] stale or low-score, skipped: 2 killed, 6 injured after fire breaks out on 12th floor duri",
-    "[15 Oct 12:52:20] stale or low-score, skipped: Who is Angomcha Bimol Akoijam? Congress' Manipur MP accused ",
-    "[15 Oct 12:52:20] stale or low-score, skipped: 'He Was Mentally Unwell': Family On Bangladeshi Man Killed O",
-    "[15 Oct 12:52:20] stale or low-score, skipped: \"It Was Suicide\": UP Influencer Accused Of Killing Boyfriend",
-    "[15 Oct 12:52:20] stale or low-score, skipped: Punjab Bandh Over Anti-Drug Activist\u2019s Murder; Heavy Police ",
-    "[15 Oct 12:52:20] stale or low-score, skipped: Iran-backed Houthis strike Saudi oil company Aramco's headqu",
-    "[15 Oct 12:52:20] stale or low-score, skipped: Riyadh airport attack: 2 Indians remain in  ICU, flights sus"
+    "[15 Oct 13:08:00] queued for editorial pass (no safe auto frame): Harish seeks \u20b910 lakh ex gratia for kin of migrant workers killed in K",
+    "[15 Oct 13:08:00] stale or low-score, skipped: No more colour on Kolkata flyover after bike accident?",
+    "[15 Oct 13:08:00] stale or low-score, skipped: Assam Man, 2 Sons Found Dead Inside Locked House, Cops Suspe",
+    "[15 Oct 13:08:00] stale or low-score, skipped: Man booked for filming minor girl dies by suicide in Hyderab",
+    "[15 Oct 13:08:00] stale or low-score, skipped: Against All Odds, a New Kidney",
+    "[15 Oct 13:08:00] stale or low-score, skipped: Hyderabad: Chhattisgarh migrant worker found dead under susp",
+    "[15 Oct 13:08:00] stale or low-score, skipped: What is the \u2018Mother of All Bombs\u2019? The massive US weapon in ",
+    "[15 Oct 13:08:00] stale or low-score, skipped: India Slams Saudi Attacks After 1 Indian Killed, 11 Injured ",
+    "[15 Oct 13:08:00] stale or low-score, skipped: 72-year-old Hyderabad woman loses \u20b92.2 crore in digital arre",
+    "[15 Oct 13:08:00] stale or low-score, skipped: FSSAI licence of seven restaurants in three Telangana distri",
+    "[15 Oct 13:08:00] stale or low-score, skipped: New York to Ban Horse-Drawn Carriages Under Romanch\u2019s Law Af",
+    "[15 Oct 13:08:00] stale or low-score, skipped: 18, including 17 children killed, dozens injured as school r",
+    "[15 Oct 13:08:00] stale or low-score, skipped: Man Allegedly Bites Wife and Attacks Her With Stone Over Pot",
+    "[15 Oct 13:08:00] stale or low-score, skipped: Past rivalry leads to shooting near Bengaluru\u2019s NICE Road",
+    "[15 Oct 13:08:00] stale or low-score, skipped: Four years on, why is Ankita Bhandari murder in limelight?",
+    "[15 Oct 13:08:00] stale or low-score, skipped: Viveka Case: ED Quizzes Avinash Over \u20b940-Crore Trail",
+    "[15 Oct 13:08:00] stale or low-score, skipped: Bihar boat capsize: Rescue operation ends, 13 minors dead",
+    "[15 Oct 13:08:00] stale or low-score, skipped: Karnataka: Ballari woman, 2 kids dead, dowry harassment alle",
+    "[15 Oct 13:08:00] stale or low-score, skipped: Injured Monkey Left Unattended For Hours In Adibatla",
+    "[15 Oct 13:08:00] stale or low-score, skipped: Medak Farmer Dies by Suicide After Borewell Failure, Crop Lo",
+    "[15 Oct 13:08:00] stale or low-score, skipped: Illinois: Major tragedy averted; US youth held for plotting ",
+    "[15 Oct 13:08:00] stale or low-score, skipped: Rajinikanth's Jailer 2 building blast was real: Stunt direct",
+    "[15 Oct 13:08:00] stale or low-score, skipped: Goa drug peddler had over 800 contacts in Telangana, says EA",
+    "[15 Oct 13:08:00] stale or low-score, skipped: 10,000 investors may have been affected: Adilabad Police arr",
+    "[15 Oct 13:08:00] stale or low-score, skipped: Heera Group ponzi scam: ED completes registration of 7 prope",
+    "[15 Oct 13:08:00] stale or low-score, skipped: 2 killed, 6 injured after fire breaks out on 12th floor duri",
+    "[15 Oct 13:08:00] stale or low-score, skipped: 'He Was Mentally Unwell': Family On Bangladeshi Man Killed O",
+    "[15 Oct 13:08:00] stale or low-score, skipped: \"It Was Suicide\": UP Influencer Accused Of Killing Boyfriend",
+    "[15 Oct 13:08:00] stale or low-score, skipped: Punjab Bandh Over Anti-Drug Activist\u2019s Murder; Heavy Police ",
+    "[15 Oct 13:08:00] stale or low-score, skipped: Iran-backed Houthis strike Saudi oil company Aramco's headqu"
   ]
 }
