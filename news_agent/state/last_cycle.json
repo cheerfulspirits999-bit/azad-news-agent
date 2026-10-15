@@ -1,40 +1,70 @@
 {
-  "cycle": "20261015-2301",
-  "at": "2026-10-15T23:01:51.899291+05:30",
+  "cycle": "20261015-2311",
+  "at": "2026-10-15T23:22:50.162186+05:30",
   "candidates": 120,
   "published_this_cycle": 0,
-  "digest": "gate closed: ncards 20/24, gap 54 min, retry_pending=0",
-  "ru": {},
+  "digest": "starved: <3 publishable Urdu lines",
+  "ru": {
+    "pre_ru_picks": 5,
+    "to_translate": 5,
+    "engine": {
+      "ok": false,
+      "lines_in": 5,
+      "lines_want": 5,
+      "method": "fallback",
+      "problems": "['Lines [1, 2, 3, 4, 5] copy 4+ consecutive English words verbatim into the Roman Urdu. Re-express those phrases in Urdu; keep only proper nouns/brands/technica"
+    },
+    "kills": {
+      "paste": [
+        1,
+        2
+      ],
+      "english-echo": [
+        3,
+        4,
+        5
+      ]
+    },
+    "accepted": 2,
+    "salvaged": [
+      1,
+      2
+    ],
+    "via": {
+      "1": "gemini-3.5-flash",
+      "2": "gemini-flash-lite-latest"
+    }
+  },
   "tail": [
-    "[15 Oct 23:01:51] held for the next card: auto-17-killed-in-20-houthi-attacks-on-riyadh-airport-in-october",
-    "[15 Oct 23:01:51] stale or low-score, skipped: Pilot reports wing icing before plane crashes in Wisconsin; ",
-    "[15 Oct 23:01:51] queued for editorial pass (no safe auto frame): Iran executes man linked to anti-government protests",
-    "[15 Oct 23:01:51] queued for editorial pass (no safe auto frame): Russian attacks kill six in Ukraine, damage Kyiv's Northern Bridge",
-    "[15 Oct 23:01:51] stale or low-score, skipped: Police constable drowns in Mancherial tank during morning wa",
-    "[15 Oct 23:01:51] stale or low-score, skipped: KBR Park One Way Works And Flyover Construction To Be Paced ",
-    "[15 Oct 23:01:51] stale or low-score, skipped: Families await return of 3 Indians killed in Germany fire; K",
-    "[15 Oct 23:01:51] stale or low-score, skipped: 4 Killed In Explosion At Dye Factory In Gandhinagar",
-    "[15 Oct 23:01:51] stale or low-score, skipped: KTR seeks probe into proposed foreign coal imports, alleges ",
-    "[15 Oct 23:01:51] stale or low-score, skipped: 4 dead in chemical blast at a Gandhinagar factory",
-    "[15 Oct 23:01:51] stale or low-score, skipped: 15 Injured After Bus Veers Off Road in Hubballi",
-    "[15 Oct 23:01:51] stale or low-score, skipped: Man booked for filming minor girl dies by suicide in Hyderab",
-    "[15 Oct 23:01:51] stale or low-score, skipped: J&K cop goes missing with rifle, magazine on way home; terro",
-    "[15 Oct 23:01:51] stale or low-score, skipped: IGL rolls out AI system to check CNG cylinder safety at pump",
-    "[15 Oct 23:01:51] stale or low-score, skipped: Food officials inspect Joint Al Mandi, Madhapur after custom",
-    "[15 Oct 23:01:51] stale or low-score, skipped: New China-North Korea bridge opens after more than a decade ",
-    "[15 Oct 23:01:51] stale or low-score, skipped: Paytm's Vijay Shekhar Sharma calls for power bank ban on fli",
-    "[15 Oct 23:01:51] stale or low-score, skipped: 11-year-old girl among three family members killed in lightn",
-    "[15 Oct 23:01:51] stale or low-score, skipped: Mumbai shocker: CCTV clip shows 10-year-old pushing 18-month",
-    "[15 Oct 23:01:51] stale or low-score, skipped: How the Mini Cooper accident case casts a shadow on Kerala P",
-    "[15 Oct 23:01:51] stale or low-score, skipped: US plans strikes on Iran using \u2018mother of all bombs\u2019: Report",
-    "[15 Oct 23:01:51] stale or low-score, skipped: Peshawar school roof collapse kills 17 children, teacher; 30",
-    "[15 Oct 23:01:51] stale or low-score, skipped: Man Murdered in Chikkadpally",
-    "[15 Oct 23:01:51] stale or low-score, skipped: Viveka Case: ED Quizzes Avinash Over \u20b940-Crore Trail",
-    "[15 Oct 23:01:51] stale or low-score, skipped: PAC grills Centre, States on \u2018fraud markers\u2019 flagged by CAG ",
-    "[15 Oct 23:01:51] stale or low-score, skipped: J&K Special Police Officer Goes Missing With Service Rifle",
-    "[15 Oct 23:01:51] stale or low-score, skipped: Telangana holds special camps for voter registration during ",
-    "[15 Oct 23:01:51] stale or low-score, skipped: Amit Shah vows to clear every trace of Naxalism after decade",
-    "[15 Oct 23:01:51] stale or low-score, skipped: Three children die in bedroom fire in Madinah",
-    "[15 Oct 23:01:51] stale or low-score, skipped: Konaseema Ambedkar Dt: Triple Riding Turns Fatal, 2 Youth Ki"
+    "[15 Oct 23:22:50] queued for editorial pass (no safe auto frame): 11-month-old killed in road accident at Koodaranji in Kozhikode",
+    "[15 Oct 23:22:50] queued for editorial pass (no safe auto frame): Nedumbassery crash: key accused taken to accident spot for evidence co",
+    "[15 Oct 23:22:50] queued for editorial pass (no safe auto frame): Autopsy done in Manipur on two Nagas after missing head found",
+    "[15 Oct 23:22:50] held for the next card: auto-17-killed-in-20-houthi-attacks-on-riyadh-airport-in-october",
+    "[15 Oct 23:22:50] stale or low-score, skipped: Pilot reports wing icing before plane crashes in Wisconsin; ",
+    "[15 Oct 23:22:50] queued for editorial pass (no safe auto frame): Iran executes man linked to anti-government protests",
+    "[15 Oct 23:22:50] queued for editorial pass (no safe auto frame): Russian attacks kill six in Ukraine, damage Kyiv's Northern Bridge",
+    "[15 Oct 23:22:50] stale or low-score, skipped: Police constable drowns in Mancherial tank during morning wa",
+    "[15 Oct 23:22:50] stale or low-score, skipped: KBR Park One Way Works And Flyover Construction To Be Paced ",
+    "[15 Oct 23:22:50] stale or low-score, skipped: 4 Killed In Explosion At Dye Factory In Gandhinagar",
+    "[15 Oct 23:22:50] stale or low-score, skipped: KTR seeks probe into proposed foreign coal imports, alleges ",
+    "[15 Oct 23:22:50] stale or low-score, skipped: 15 Injured After Bus Veers Off Road in Hubballi",
+    "[15 Oct 23:22:50] stale or low-score, skipped: Man booked for filming minor girl dies by suicide in Hyderab",
+    "[15 Oct 23:22:50] stale or low-score, skipped: J&K cop goes missing with rifle, magazine on way home; terro",
+    "[15 Oct 23:22:50] stale or low-score, skipped: IGL rolls out AI system to check CNG cylinder safety at pump",
+    "[15 Oct 23:22:50] stale or low-score, skipped: New China-North Korea bridge opens after more than a decade ",
+    "[15 Oct 23:22:50] stale or low-score, skipped: Paytm's Vijay Shekhar Sharma calls for power bank ban on fli",
+    "[15 Oct 23:22:50] stale or low-score, skipped: Families await return of 3 Indians killed in Germany fire; K",
+    "[15 Oct 23:22:50] stale or low-score, skipped: Mumbai shocker: CCTV clip shows 10-year-old pushing 18-month",
+    "[15 Oct 23:22:50] stale or low-score, skipped: How the Mini Cooper accident case casts a shadow on Kerala P",
+    "[15 Oct 23:22:50] stale or low-score, skipped: US plans strikes on Iran using \u2018mother of all bombs\u2019: Report",
+    "[15 Oct 23:22:50] stale or low-score, skipped: 4 workers killed in blast at dye manufacturing unit in Gujar",
+    "[15 Oct 23:22:50] stale or low-score, skipped: Peshawar school roof collapse kills 17 children, teacher; 30",
+    "[15 Oct 23:22:50] stale or low-score, skipped: Food officials inspect Joint Al Mandi, Madhapur after custom",
+    "[15 Oct 23:22:50] stale or low-score, skipped: Man Murdered in Chikkadpally",
+    "[15 Oct 23:22:50] stale or low-score, skipped: Viveka Case: ED Quizzes Avinash Over \u20b940-Crore Trail",
+    "[15 Oct 23:22:50] stale or low-score, skipped: J&K Special Police Officer Goes Missing With Service Rifle",
+    "[15 Oct 23:22:50] stale or low-score, skipped: Telangana holds special camps for voter registration during ",
+    "[15 Oct 23:22:50] stale or low-score, skipped: Amit Shah vows to clear every trace of Naxalism after decade",
+    "[15 Oct 23:22:50] stale or low-score, skipped: Konaseema Ambedkar Dt: Triple Riding Turns Fatal, 2 Youth Ki"
   ]
 }
