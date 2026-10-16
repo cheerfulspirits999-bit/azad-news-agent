@@ -1,70 +1,69 @@
 {
-  "cycle": "20261016-1047",
-  "at": "2026-10-16T10:54:25.423939+05:30",
+  "cycle": "20261016-1104",
+  "at": "2026-10-16T11:15:38.052516+05:30",
   "candidates": 120,
   "published_this_cycle": 0,
-  "digest": "starved: <3 publishable Urdu lines",
+  "digest": "PUBLISHED auto-digest-2026-10-16-s1114",
   "ru": {
     "pre_ru_picks": 5,
-    "to_translate": 5,
+    "to_translate": 4,
     "engine": {
       "ok": false,
-      "lines_in": 5,
-      "lines_want": 5,
+      "lines_in": 4,
+      "lines_want": 4,
       "method": "fallback",
-      "problems": "['Lines [1, 2, 3, 4, 5] copy 4+ consecutive English words verbatim into the Roman Urdu. Re-express those phrases in Urdu; keep only proper nouns/brands/technica"
+      "problems": "['Lines [1, 2, 3, 4] copy 4+ consecutive English words verbatim into the Roman Urdu. Re-express those phrases in Urdu; keep only proper nouns/brands/technical t"
     },
     "kills": {
-      "paste": [
-        1,
-        3
-      ],
       "english-echo": [
         2,
+        3
+      ],
+      "paste": [
         4,
         5
       ]
     },
     "accepted": 2,
     "salvaged": [
-      1,
-      2
+      2,
+      3
     ],
     "via": {
-      "1": "gemini-flash-lite-latest",
-      "2": "gemini-flash-lite-latest"
+      "2": "gemini-flash-lite-latest",
+      "3": "nvidia/nemotron-3-super-120b-a12b:free"
     }
   },
   "tail": [
-    "[16 Oct 10:54:25] stale or low-score, skipped: Speeding Car Overturns on Huzurabad\u2013Karimnagar Highway, One ",
-    "[16 Oct 10:54:25] stale or low-score, skipped: Mumbai Horror: 10-Year-Old Girl Throws Toddler Down Staircas",
-    "[16 Oct 10:54:25] stale or low-score, skipped: 3 children among 4 dead in US school shooting, 16-year-old s",
-    "[16 Oct 10:54:25] stale or low-score, skipped: 5 Killed, 16 Injured In Houthi Attack On Yemen\u2019s Aden Presid",
-    "[16 Oct 10:54:25] stale or low-score, skipped: US: Oregon School Shooting Leaves 4 Dead, Including 3 Childr",
-    "[16 Oct 10:54:25] stale or low-score, skipped: Major Fire Breaks Out at GV Mall in Kurnool",
-    "[16 Oct 10:54:25] stale or low-score, skipped: Mother, son among six people killed in Wisconsin plane crash",
-    "[16 Oct 10:54:25] stale or low-score, skipped: Oregon school shooting kills 3 children, teacher; gunman dea",
-    "[16 Oct 10:54:25] stale or low-score, skipped: Shooting at elementary school in Oregon leaves at least five",
-    "[16 Oct 10:54:25] stale or low-score, skipped: Karimnagar: Youth Found Dead Under Suspicious Circumstances ",
-    "[16 Oct 10:54:25] stale or low-score, skipped: Adilabad tenant farmer dies by suicide amid debt and crop yi",
-    "[16 Oct 10:54:25] stale or low-score, skipped: 15 Injured After Bus Veers Off Road in Hubballi",
-    "[16 Oct 10:54:25] stale or low-score, skipped: Fusion, devotion and star power strike a chord at Mysuru Das",
-    "[16 Oct 10:54:25] stale or low-score, skipped: UP lawyer shot dead by advocate after argument over disputed",
-    "[16 Oct 10:54:25] stale or low-score, skipped: Experienced Pilot Among 6 Killed in Plane Crash After Ice Ac",
-    "[16 Oct 10:54:25] stale or low-score, skipped: Police constable drowns in Mancherial tank during morning wa",
-    "[16 Oct 10:54:25] stale or low-score, skipped: Food officials inspect Joint Al Mandi, Madhapur after custom",
-    "[16 Oct 10:54:25] stale or low-score, skipped: States sue OpenAI, saying its popular chatbot hurting childr",
-    "[16 Oct 10:54:25] stale or low-score, skipped: At least two killed in explosions near palace in Aden used b",
-    "[16 Oct 10:54:25] stale or low-score, skipped: KTR seeks probe into proposed foreign coal imports, alleges ",
-    "[16 Oct 10:54:25] stale or low-score, skipped: Peshawar school roof collapse kills 17 children, teacher; 30",
-    "[16 Oct 10:54:25] stale or low-score, skipped: Another Punjab man hacked to death for allegedly opposing dr",
-    "[16 Oct 10:54:25] stale or low-score, skipped: Twist In Kerala Extortion Case, Accused's Family Claims Tort",
-    "[16 Oct 10:54:25] stale or low-score, skipped: Absconding in UP bizman murder case, accused model Shraddha ",
-    "[16 Oct 10:54:25] stale or low-score, skipped: Oregon school shooting: Three children, teacher killed in Be",
-    "[16 Oct 10:54:25] stale or low-score, skipped: NOT A DROP ... Drinking Water Problem Worsening in Nalgonda ",
-    "[16 Oct 10:54:25] stale or low-score, skipped: 10-year-old girl throws 18-month-old toddler off 6th floor o",
-    "[16 Oct 10:54:25] stale or low-score, skipped: KBR Park One Way Works And Flyover Construction To Be Paced ",
-    "[16 Oct 10:54:25] stale or low-score, skipped: Iran executes man linked to anti-government protests",
-    "[16 Oct 10:54:25] stale or low-score, skipped: Russian attacks kill six in Ukraine, damage Kyiv's Northern "
+    "[16 Oct 11:15:38] queued for editorial pass (no safe auto frame): We should not let any party hijack the fight against SIR, says Prakash",
+    "[16 Oct 11:15:38] stale or low-score, skipped: Speeding Car Overturns on Huzurabad\u2013Karimnagar Highway, One ",
+    "[16 Oct 11:15:38] stale or low-score, skipped: Mumbai Horror: 10-Year-Old Girl Throws Toddler Down Staircas",
+    "[16 Oct 11:15:38] stale or low-score, skipped: 5 Killed, 16 Injured In Houthi Attack On Yemen\u2019s Aden Presid",
+    "[16 Oct 11:15:38] stale or low-score, skipped: US: Oregon School Shooting Leaves 4 Dead, Including 3 Childr",
+    "[16 Oct 11:15:38] stale or low-score, skipped: Major Fire Breaks Out at GV Mall in Kurnool",
+    "[16 Oct 11:15:38] stale or low-score, skipped: U.S. military says latest strike on alleged drug-smuggling b",
+    "[16 Oct 11:15:38] stale or low-score, skipped: Two men killed in mob attack in Siliguri over suspicion of c",
+    "[16 Oct 11:15:38] stale or low-score, skipped: Mother, son among six people killed in Wisconsin plane crash",
+    "[16 Oct 11:15:38] stale or low-score, skipped: Oregon school shooting kills 3 children, teacher; gunman dea",
+    "[16 Oct 11:15:38] stale or low-score, skipped: Shooting at elementary school in Oregon leaves at least five",
+    "[16 Oct 11:15:38] stale or low-score, skipped: Karimnagar: Youth Found Dead Under Suspicious Circumstances ",
+    "[16 Oct 11:15:38] stale or low-score, skipped: Adilabad tenant farmer dies by suicide amid debt and crop yi",
+    "[16 Oct 11:15:38] stale or low-score, skipped: 15 Injured After Bus Veers Off Road in Hubballi",
+    "[16 Oct 11:15:38] stale or low-score, skipped: Fusion, devotion and star power strike a chord at Mysuru Das",
+    "[16 Oct 11:15:38] stale or low-score, skipped: UP lawyer shot dead by advocate after argument over disputed",
+    "[16 Oct 11:15:38] stale or low-score, skipped: 3 children among 4 killed in US school shooting in Oregon, 1",
+    "[16 Oct 11:15:38] stale or low-score, skipped: Experienced Pilot Among 6 Killed in Plane Crash After Ice Ac",
+    "[16 Oct 11:15:38] stale or low-score, skipped: Police constable drowns in Mancherial tank during morning wa",
+    "[16 Oct 11:15:38] stale or low-score, skipped: Food officials inspect Joint Al Mandi, Madhapur after custom",
+    "[16 Oct 11:15:38] stale or low-score, skipped: States sue OpenAI, saying its popular chatbot hurting childr",
+    "[16 Oct 11:15:38] stale or low-score, skipped: At least two killed in explosions near palace in Aden used b",
+    "[16 Oct 11:15:38] stale or low-score, skipped: KTR seeks probe into proposed foreign coal imports, alleges ",
+    "[16 Oct 11:15:38] stale or low-score, skipped: Peshawar school roof collapse kills 17 children, teacher; 30",
+    "[16 Oct 11:15:38] stale or low-score, skipped: Most-wanted SNAP fraud accused Manjeet Bedi extradited from ",
+    "[16 Oct 11:15:38] stale or low-score, skipped: Another Punjab man hacked to death for allegedly opposing dr",
+    "[16 Oct 11:15:38] stale or low-score, skipped: Twist In Kerala Extortion Case, Accused's Family Claims Tort",
+    "[16 Oct 11:15:38] stale or low-score, skipped: Absconding in UP bizman murder case, accused model Shraddha ",
+    "[16 Oct 11:15:38] stale or low-score, skipped: Oregon school shooting: Three children, teacher killed in Be",
+    "[16 Oct 11:15:38] stale or low-score, skipped: NOT A DROP ... Drinking Water Problem Worsening in Nalgonda "
   ]
 }
