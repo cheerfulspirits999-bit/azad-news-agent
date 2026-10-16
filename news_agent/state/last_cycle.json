@@ -1,40 +1,67 @@
 {
-  "cycle": "20261016-2352",
-  "at": "2026-10-16T23:52:51.865099+05:30",
+  "cycle": "20261017-0002",
+  "at": "2026-10-17T00:09:30.889649+05:30",
   "candidates": 120,
   "published_this_cycle": 0,
-  "digest": "gate closed: ncards 16/24, gap 33 min, retry_pending=0",
-  "ru": {},
+  "digest": "starved: <3 publishable Urdu lines",
+  "ru": {
+    "pre_ru_picks": 5,
+    "to_translate": 4,
+    "engine": {
+      "ok": false,
+      "lines_in": 4,
+      "lines_want": 4,
+      "method": "fallback",
+      "problems": "['Lines [1, 2, 3, 4] copy 4+ consecutive English words verbatim into the Roman Urdu. Re-express those phrases in Urdu; keep only proper nouns/brands/technical t"
+    },
+    "kills": {
+      "paste": [
+        1,
+        4
+      ],
+      "english-echo": [
+        2,
+        3
+      ]
+    },
+    "accepted": 1,
+    "salvaged": [
+      1
+    ],
+    "via": {
+      "1": "gemini-3.5-flash"
+    }
+  },
   "tail": [
-    "[16 Oct 23:52:51] queued for editorial pass (no safe auto frame): Israeli settlers burn olive trees, injure journalist in West Bank atta",
-    "[16 Oct 23:52:51] queued for editorial pass (no safe auto frame): NHM employees\u2019 strike in Telangana continues as 17,541 staff demand re",
-    "[16 Oct 23:52:51] queued for editorial pass (no safe auto frame): 11 Indian crew injured after ship hit by projectile in Strait of Hormu",
-    "[16 Oct 23:52:51] queued for editorial pass (no safe auto frame): Six-car pile-up leads to traffic jam on Hyderabad\u2019s PVNR Expressway",
-    "[16 Oct 23:52:51] stale or low-score, skipped: Two Die, One Critical As DCM Truck Rams Into Morning Walkers",
-    "[16 Oct 23:52:51] queued for editorial pass (no safe auto frame): Telangana government faces citizens\u2019 ire over Hyderabad\u2019s KBR flyover ",
-    "[16 Oct 23:52:51] held for the next card: auto-two-killed-1-injured-as-van-hits-morning-walkers-in-suryapet",
-    "[16 Oct 23:52:51] stale or low-score, skipped: MMC to prepare blueprint for traffic, road safety improvemen",
-    "[16 Oct 23:52:51] stale or low-score, skipped: Bridge of Promises, Traffic Nightmare for Warangal Commuters",
-    "[16 Oct 23:52:51] stale or low-score, skipped: Gulshan Kumar murder to 1993 Mumbai bomb blasts, top 5 cases",
-    "[16 Oct 23:52:51] stale or low-score, skipped: Micro-Level Plans To Tackle El Nino Impact: IAS Officer Dasa",
-    "[16 Oct 23:52:51] stale or low-score, skipped: Two drug peddlers held with MDMA, ganja in Bachupally",
-    "[16 Oct 23:52:51] stale or low-score, skipped: Hyderabad: Conjoined Twins Veena-Vani Step Into Their 24th Y",
-    "[16 Oct 23:52:51] stale or low-score, skipped: Four Killed, 31 Injured in Sleeper Bus - Lorry Collision in ",
-    "[16 Oct 23:52:51] stale or low-score, skipped: Six Cars Involved in Accident on PVNR Expressway Near Pillar",
-    "[16 Oct 23:52:51] stale or low-score, skipped: Girl\u2019s murder, Madras Regiment arms heist: DGP Anand orders ",
-    "[16 Oct 23:52:51] stale or low-score, skipped: Ex-service man shoots himself at residence in Hussaini Alam",
-    "[16 Oct 23:52:51] stale or low-score, skipped: India issues fresh advisory for its nationals in Saudi Arabi",
-    "[16 Oct 23:52:51] stale or low-score, skipped: Trump approves firing squad execution for Fort Hood shooter ",
-    "[16 Oct 23:52:51] stale or low-score, skipped: Cyberabad Police issue home safety advisory as families leav",
-    "[16 Oct 23:52:51] stale or low-score, skipped: Five women drown in reservoir in Andhra Pradesh",
-    "[16 Oct 23:52:51] stale or low-score, skipped: Kochi Mini Cooper Crash: Driver Had Five Times the Legal Alc",
-    "[16 Oct 23:52:51] stale or low-score, skipped: MHA seeks reports from Punjab government on killings, suicid",
-    "[16 Oct 23:52:51] stale or low-score, skipped: Forum for Constitutional Democracy slams Delhi Police over i",
-    "[16 Oct 23:52:51] stale or low-score, skipped: Speeding Car Overturns on Huzurabad\u2013Karimnagar Highway, One ",
-    "[16 Oct 23:52:51] stale or low-score, skipped: Karimnagar: Youth Found Dead Under Suspicious Circumstances ",
-    "[16 Oct 23:52:51] stale or low-score, skipped: Trump's press secretary Katie Zacharia 'let go' after just d",
-    "[16 Oct 23:52:51] stale or low-score, skipped: RPF, Nemili police seize 16 kg of ganja in separate cases; f",
-    "[16 Oct 23:52:51] stale or low-score, skipped: Bill Gates' daughters join mother to sign as founding backer",
-    "[16 Oct 23:52:51] stale or low-score, skipped: Cornell sexual assault case: Why the investigation has been "
+    "[17 Oct 00:09:30] stale or low-score, skipped: Two Die, One Critical As DCM Truck Rams Into Morning Walkers",
+    "[17 Oct 00:09:30] queued for editorial pass (no safe auto frame): Telangana government faces citizens\u2019 ire over Hyderabad\u2019s KBR flyover ",
+    "[17 Oct 00:09:30] held for the next card: auto-two-killed-1-injured-as-van-hits-morning-walkers-in-suryapet",
+    "[17 Oct 00:09:30] stale or low-score, skipped: MMC to prepare blueprint for traffic, road safety improvemen",
+    "[17 Oct 00:09:30] stale or low-score, skipped: Bridge of Promises, Traffic Nightmare for Warangal Commuters",
+    "[17 Oct 00:09:30] stale or low-score, skipped: Gulshan Kumar murder to 1993 Mumbai bomb blasts, top 5 cases",
+    "[17 Oct 00:09:30] stale or low-score, skipped: \u2018Targeting of commercial shipping must end\u2019: India condemns ",
+    "[17 Oct 00:09:30] stale or low-score, skipped: Two drug peddlers held with MDMA, ganja in Bachupally",
+    "[17 Oct 00:09:30] stale or low-score, skipped: Hyderabad: Conjoined Twins Veena-Vani Step Into Their 24th Y",
+    "[17 Oct 00:09:30] stale or low-score, skipped: Six Cars Involved in Accident on PVNR Expressway Near Pillar",
+    "[17 Oct 00:09:30] stale or low-score, skipped: Girl\u2019s murder, Madras Regiment arms heist: DGP Anand orders ",
+    "[17 Oct 00:09:30] stale or low-score, skipped: NHM employees\u2019 strike in Telangana continues as 17,541 staff",
+    "[17 Oct 00:09:30] stale or low-score, skipped: Ex-service man shoots himself at residence in Hussaini Alam",
+    "[17 Oct 00:09:30] stale or low-score, skipped: India issues fresh advisory for its nationals in Saudi Arabi",
+    "[17 Oct 00:09:30] stale or low-score, skipped: Trump approves firing squad execution for Fort Hood shooter ",
+    "[17 Oct 00:09:30] stale or low-score, skipped: Cyberabad Police issue home safety advisory as families leav",
+    "[17 Oct 00:09:30] stale or low-score, skipped: Four Killed, 31 Injured in Sleeper Bus - Lorry Collision in ",
+    "[17 Oct 00:09:30] stale or low-score, skipped: Five women drown in reservoir in Andhra Pradesh",
+    "[17 Oct 00:09:30] stale or low-score, skipped: Micro-Level Plans To Tackle El Nino Impact: IAS Officer Dasa",
+    "[17 Oct 00:09:30] stale or low-score, skipped: Kochi Mini Cooper Crash: Driver Had Five Times the Legal Alc",
+    "[17 Oct 00:09:30] stale or low-score, skipped: MHA seeks reports from Punjab government on killings, suicid",
+    "[17 Oct 00:09:30] stale or low-score, skipped: Forum for Constitutional Democracy slams Delhi Police over i",
+    "[17 Oct 00:09:30] stale or low-score, skipped: Speeding Car Overturns on Huzurabad\u2013Karimnagar Highway, One ",
+    "[17 Oct 00:09:30] stale or low-score, skipped: Karimnagar: Youth Found Dead Under Suspicious Circumstances ",
+    "[17 Oct 00:09:30] stale or low-score, skipped: Trump\u2019s press secretary Katie Zacharia \u2018let go\u2019 five days in",
+    "[17 Oct 00:09:30] stale or low-score, skipped: Trump's press secretary Katie Zacharia 'let go' after just d",
+    "[17 Oct 00:09:30] stale or low-score, skipped: Katie Zacharia \u2018let go\u2019 as White House Press Secretary after",
+    "[17 Oct 00:09:30] stale or low-score, skipped: RPF, Nemili police seize 16 kg of ganja in separate cases; f",
+    "[17 Oct 00:09:30] stale or low-score, skipped: Bill Gates' daughters join mother to sign as founding backer",
+    "[17 Oct 00:09:30] stale or low-score, skipped: Cornell sexual assault case: Why the investigation has been "
   ]
 }
