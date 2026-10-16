@@ -1,5 +1,5 @@
 {
- "at": "2026-10-15T04:24:49Z",
+ "at": "2026-10-16T04:20:04Z",
  "keys": {
   "RU_API_KEY": "set(len=73)",
   "GEMINI_API_KEY": "set(len=53)",
@@ -9,31 +9,25 @@
  "endpoint": "https://openrouter.ai/api/v1/chat/completions",
  "lanes": {
   "openrouter_free_raw": {
-   "http": 200,
-   "body": "\n         \n{\"id\":\"gen-1792038289-vvutsfEL5h9ld4ncbEns\",\"object\":\"chat.completion\",\"created\":1792038289,\"model\":\"nvidia/nemotron-3-ultra-550b-a55b:free\",\"provider\":\"Nvidia\",\"system_fingerprint\":null,\"service_tier\":null,\"choices\":[{\"index\":0,\"logprobs\":null,\"finish_reason\":\"length\",\"native_finish_reas"
+   "http": "ERR",
+   "body": "TimeoutError: The read operation timed out"
   },
   "openrouter_free_engine": {
-   "method": "llm",
-   "ok": true,
-   "problems": "[]",
-   "lines": [
-    "Telangana hukumat ne nayi data centre policy manzoor kar di",
-    "Afsaron ke mutabiq yeh project paanch hazar rozgar paida karega",
-    "Cabinet ne single-window clearance system bhi manzoor kar diya"
-   ]
+   "skipped": true,
+   "reason": "raw probe HTTP ERR"
   },
   "openai_direct": {
    "skipped": true,
    "reason": "no key"
   },
   "gemini_direct": {
-   "method": "llm",
-   "ok": true,
-   "problems": "[]",
+   "method": "fallback",
+   "ok": false,
+   "problems": "['Lines [2, 3] copy 4+ consecutive English words verbatim into the Roman Urdu. Re-express those phrases in Urdu; keep only proper nouns/brands/technical terms in English.', 'Output looks mostly untranslated (90% of words identical to English). Translate the sentences into natural Roman Urdu, keeping",
    "lines": [
-    "Telangana hukumat ne nayi data centre policy manzoor kar li",
-    "Hukkam ke mutabiq is project se 5,000 mulazmatein paida hongi",
-    "Cabinet ne single-window clearance system ki bhi manzoori de di"
+    "Telangana hukumat approves a naya data centre policy",
+    "Officials say the project will create five thousand jobs",
+    "The cabinet also cleared a single-window clearance system"
    ]
   }
  }
