@@ -1,40 +1,68 @@
 {
-  "cycle": "20261017-2200",
-  "at": "2026-10-17T22:01:17.943296+05:30",
+  "cycle": "20261017-2211",
+  "at": "2026-10-17T22:19:39.633221+05:30",
   "candidates": 120,
   "published_this_cycle": 0,
-  "digest": "gate closed: ncards 19/24, gap 53 min, retry_pending=0",
-  "ru": {},
+  "digest": "starved: <3 publishable Urdu lines",
+  "ru": {
+    "pre_ru_picks": 5,
+    "to_translate": 5,
+    "engine": {
+      "ok": false,
+      "lines_in": 5,
+      "lines_want": 5,
+      "method": "fallback",
+      "problems": "['Lines [1, 2, 3, 4, 5] copy 4+ consecutive English words verbatim into the Roman Urdu. Re-express those phrases in Urdu; keep only proper nouns/brands/technica"
+    },
+    "kills": {
+      "paste": [
+        1,
+        3,
+        4
+      ],
+      "english-echo": [
+        2,
+        5
+      ]
+    },
+    "accepted": 1,
+    "salvaged": [
+      1
+    ],
+    "via": {
+      "1": "gemini-3.8-flash"
+    }
+  },
   "tail": [
-    "[17 Oct 22:01:17] queued for editorial pass (no safe auto frame): IIT-B student death: Sahil Wakode apologised for cheating in exam, sou",
-    "[17 Oct 22:01:17] stale or low-score, skipped: QNET promoter Dig Vijay Singh held at Delhi Airport in \u20b910,0",
-    "[17 Oct 22:01:17] queued for editorial pass (no safe auto frame): Several hurt, one in \u2018cardiac arrest\u2019 in South Korea market stabbing",
-    "[17 Oct 22:01:17] queued for editorial pass (no safe auto frame): Workshop on \u2018From research to reach\u2019 held at BRIC-CDFD",
-    "[17 Oct 22:01:17] held for the next card: auto-10-killed-in-fire-at-seaside-resort-in-bangladesh",
-    "[17 Oct 22:01:17] stale or low-score, skipped: Several feared dead in stampede-like situation at Kolkata's ",
-    "[17 Oct 22:01:17] stale or low-score, skipped: Angry mob tries to storm Bhopal police station over 12-year-",
-    "[17 Oct 22:01:17] stale or low-score, skipped: Australia will do \u2018anything we can\u2019 to stop U.S. execution b",
-    "[17 Oct 22:01:17] stale or low-score, skipped: Dasara rush chokes highways out of Hyderabad, long queues at",
-    "[17 Oct 22:01:17] stale or low-score, skipped: Steps Underway To Ensure Drinking Water Supply In Rural Area",
-    "[17 Oct 22:01:17] stale or low-score, skipped: Man killed, four injured in suspected militant attack on Kuk",
-    "[17 Oct 22:01:17] stale or low-score, skipped: BJP is Ravan, Congress is Ram, says Revanth in Goa",
-    "[17 Oct 22:01:17] stale or low-score, skipped: Goan\u00a0drug\u00a0supplier\u00a0held;\u00a0\u20b948.4\u00a0lakh\u00a0trail\u00a0exposes\u00a0suspected\u00a0",
-    "[17 Oct 22:01:17] stale or low-score, skipped: Retired Army officer shoots self with licensed pistol in Hyd",
-    "[17 Oct 22:01:17] stale or low-score, skipped: Turkiye, Pakistan, Egypt, Saudi Arabia condemn Houthi attack",
-    "[17 Oct 22:01:17] stale or low-score, skipped: Kota: JEE aspirant injured after classmate hits him with toy",
-    "[17 Oct 22:01:17] stale or low-score, skipped: Khammam: Two killed, four injured as speeding lorry hits min",
-    "[17 Oct 22:01:17] stale or low-score, skipped: Khammam: 19-year-old B Tech student dies in Wyra during Dasa",
-    "[17 Oct 22:01:17] stale or low-score, skipped: Khammam: Two Killed, Four Injured as Lorry Rams Vehicle Near",
-    "[17 Oct 22:01:17] stale or low-score, skipped: Mahabubnagar: Speeding Cars Hit Two-Wheeler, Woman Dies",
-    "[17 Oct 22:01:17] stale or low-score, skipped: 8 Dead, 15 Injured as Minibus Falls into Drain on Delhi-Mumb",
-    "[17 Oct 22:01:17] stale or low-score, skipped: FSSAI issues notices to Nestl\u00e9 India, HUL over misleading pr",
-    "[17 Oct 22:01:17] stale or low-score, skipped: Another MRPL Employee Dies Of Burn Injuries Sustained In Sep",
-    "[17 Oct 22:01:17] stale or low-score, skipped: Authorities plan new roads at Nilackal to ease parking conge",
-    "[17 Oct 22:01:17] stale or low-score, skipped: Poll Violence in Kadapa district, Man Stabbed; Police Fires ",
-    "[17 Oct 22:01:17] stale or low-score, skipped: Watch: Emirates\u2019 Delhi-Dubai flight delayed after bird strik",
-    "[17 Oct 22:01:17] stale or low-score, skipped: Iran Guards say struck vessel in Strait of Hormuz",
-    "[17 Oct 22:01:17] stale or low-score, skipped: Children Among 10 Killed In Bangladesh Beach Resort Fire",
-    "[17 Oct 22:01:17] stale or low-score, skipped: Heavy Traffic on Hyderabad-Vijayawada Highway Ahead of Dasar",
-    "[17 Oct 22:01:17] stale or low-score, skipped: Wyra: 19-Year-Old Engineering Student Collapses, Dies"
+    "[17 Oct 22:19:39] queued for editorial pass (no safe auto frame): Riyadh airport extends shutdown after deadly attacks",
+    "[17 Oct 22:19:39] queued for editorial pass (no safe auto frame): No permanent medical college campus after nearly two years, GMC Mahesh",
+    "[17 Oct 22:19:39] stale or low-score, skipped: QNET promoter Dig Vijay Singh held at Delhi Airport in \u20b910,0",
+    "[17 Oct 22:19:39] queued for editorial pass (no safe auto frame): Several hurt, one in \u2018cardiac arrest\u2019 in South Korea market stabbing",
+    "[17 Oct 22:19:39] queued for editorial pass (no safe auto frame): Workshop on \u2018From research to reach\u2019 held at BRIC-CDFD",
+    "[17 Oct 22:19:39] held for the next card: auto-10-killed-in-fire-at-seaside-resort-in-bangladesh",
+    "[17 Oct 22:19:39] stale or low-score, skipped: Several feared dead in stampede-like situation at Kolkata's ",
+    "[17 Oct 22:19:39] stale or low-score, skipped: Angry mob tries to storm Bhopal police station over 12-year-",
+    "[17 Oct 22:19:39] stale or low-score, skipped: Australia will do \u2018anything we can\u2019 to stop U.S. execution b",
+    "[17 Oct 22:19:39] stale or low-score, skipped: Dasara rush chokes highways out of Hyderabad, long queues at",
+    "[17 Oct 22:19:39] stale or low-score, skipped: Steps Underway To Ensure Drinking Water Supply In Rural Area",
+    "[17 Oct 22:19:39] stale or low-score, skipped: Man killed, four injured in suspected militant attack on Kuk",
+    "[17 Oct 22:19:39] stale or low-score, skipped: BJP is Ravan, Congress is Ram, says Revanth in Goa",
+    "[17 Oct 22:19:39] stale or low-score, skipped: Goan\u00a0drug\u00a0supplier\u00a0held;\u00a0\u20b948.4\u00a0lakh\u00a0trail\u00a0exposes\u00a0suspected\u00a0",
+    "[17 Oct 22:19:39] stale or low-score, skipped: Retired Army officer shoots self with licensed pistol in Hyd",
+    "[17 Oct 22:19:39] stale or low-score, skipped: \u2018Bribe for entry\u2019 scam: Advocate seeks probe into alleged \u2018m",
+    "[17 Oct 22:19:39] stale or low-score, skipped: Turkiye, Pakistan, Egypt, Saudi Arabia condemn Houthi attack",
+    "[17 Oct 22:19:39] stale or low-score, skipped: Kota: JEE aspirant injured after classmate hits him with toy",
+    "[17 Oct 22:19:39] stale or low-score, skipped: Khammam: Two killed, four injured as speeding lorry hits min",
+    "[17 Oct 22:19:39] stale or low-score, skipped: Khammam: 19-year-old B Tech student dies in Wyra during Dasa",
+    "[17 Oct 22:19:39] stale or low-score, skipped: Khammam: Two Killed, Four Injured as Lorry Rams Vehicle Near",
+    "[17 Oct 22:19:39] stale or low-score, skipped: Mahabubnagar: Speeding Cars Hit Two-Wheeler, Woman Dies",
+    "[17 Oct 22:19:39] stale or low-score, skipped: 8 Dead, 15 Injured as Minibus Falls into Drain on Delhi-Mumb",
+    "[17 Oct 22:19:39] stale or low-score, skipped: FSSAI issues notices to Nestl\u00e9 India, HUL over misleading pr",
+    "[17 Oct 22:19:39] stale or low-score, skipped: Another MRPL Employee Dies Of Burn Injuries Sustained In Sep",
+    "[17 Oct 22:19:39] stale or low-score, skipped: Poll Violence in Kadapa district, Man Stabbed; Police Fires ",
+    "[17 Oct 22:19:39] stale or low-score, skipped: Watch: Emirates\u2019 Delhi-Dubai flight delayed after bird strik",
+    "[17 Oct 22:19:39] stale or low-score, skipped: Iran Guards say struck vessel in Strait of Hormuz",
+    "[17 Oct 22:19:39] stale or low-score, skipped: Heavy Traffic on Hyderabad-Vijayawada Highway Ahead of Dasar",
+    "[17 Oct 22:19:39] stale or low-score, skipped: Wyra: 19-Year-Old Engineering Student Collapses, Dies"
   ]
 }
