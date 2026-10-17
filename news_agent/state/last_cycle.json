@@ -1,40 +1,74 @@
 {
-  "cycle": "20261017-2322",
-  "at": "2026-10-17T23:23:24.735299+05:30",
+  "cycle": "20261017-2333",
+  "at": "2026-10-17T23:41:05.305152+05:30",
   "candidates": 120,
   "published_this_cycle": 0,
-  "digest": "gate closed: ncards 20/24, gap 54 min, retry_pending=0",
-  "ru": {},
+  "digest": "PUBLISHED auto-digest-2026-10-17-s2339",
+  "ru": {
+    "pre_ru_picks": 5,
+    "to_translate": 5,
+    "engine": {
+      "ok": false,
+      "lines_in": 5,
+      "lines_want": 5,
+      "method": "fallback",
+      "problems": "['Lines [1, 2, 3, 4, 5] copy 4+ consecutive English words verbatim into the Roman Urdu. Re-express those phrases in Urdu; keep only proper nouns/brands/technica"
+    },
+    "kills": {
+      "english-echo": [
+        1
+      ],
+      "paste": [
+        2,
+        3,
+        4,
+        5
+      ]
+    },
+    "accepted": 4,
+    "salvaged": [
+      1,
+      2,
+      3,
+      4
+    ],
+    "via": {
+      "1": "gemini-3.8-flash",
+      "2": "gemini-3.5-flash",
+      "3": "gemini-3.5-flash",
+      "4": "primary"
+    }
+  },
   "tail": [
-    "[17 Oct 23:23:24] queued for editorial pass (no safe auto frame): Osmania junior doctors defer strike by 10 days to give govt. time to a",
-    "[17 Oct 23:23:24] stale or low-score, skipped: 25 injured in stampede-like crowd surge at North Kolkata Dur",
-    "[17 Oct 23:23:24] queued for editorial pass (no safe auto frame): Hyderabad kidnapping-for-ransom case: 10 gang members held",
-    "[17 Oct 23:23:24] queued for editorial pass (no safe auto frame): Engineering student collapses, dies in Khammam district",
-    "[17 Oct 23:23:24] queued for editorial pass (no safe auto frame): Riyadh airport extends shutdown after deadly attacks",
-    "[17 Oct 23:23:24] queued for editorial pass (no safe auto frame): No permanent medical college campus after nearly two years, GMC Mahesh",
-    "[17 Oct 23:23:24] held for the next card: auto-toll-in-djibouti-boat-sinking-rises-to-139-dead-with-30-more",
-    "[17 Oct 23:23:24] held for the next card: auto-shooting-leaves-9-dead-including-suspect-in-erie-pennsylvani",
-    "[17 Oct 23:23:24] held for the next card: auto-10-killed-in-fire-at-seaside-resort-in-bangladesh",
-    "[17 Oct 23:23:24] stale or low-score, skipped: Kolkata Durga Puja Stampede: What We Know So Far",
-    "[17 Oct 23:23:24] stale or low-score, skipped: Rain, Narrow Exit, Weekend Rush: Witnesses Recount Kolkata P",
-    "[17 Oct 23:23:24] stale or low-score, skipped: 'Thoughts with those who have lost their loved ones': PM Mod",
-    "[17 Oct 23:23:24] stale or low-score, skipped: Narrow gates, no lighting: Witnesses recount Kolkata pandal ",
-    "[17 Oct 23:23:24] stale or low-score, skipped: Angry mob tries to storm Bhopal police station over 12-year-",
-    "[17 Oct 23:23:24] stale or low-score, skipped: QNET promoter Dig Vijay Singh held at Delhi Airport in \u20b910,0",
-    "[17 Oct 23:23:24] stale or low-score, skipped: Several hurt, one in \u2018cardiac arrest\u2019 in South Korea market ",
-    "[17 Oct 23:23:24] stale or low-score, skipped: Turkiye, Pakistan, Egypt, Saudi Arabia condemn Houthi attack",
-    "[17 Oct 23:23:24] stale or low-score, skipped: Khammam: Two killed, four injured as speeding lorry hits min",
-    "[17 Oct 23:23:24] stale or low-score, skipped: Khammam: 19-year-old B Tech student dies in Wyra during Dasa",
-    "[17 Oct 23:23:24] stale or low-score, skipped: Khammam: Two Killed, Four Injured as Lorry Rams Vehicle Near",
-    "[17 Oct 23:23:24] stale or low-score, skipped: Mahabubnagar: Speeding Cars Hit Two-Wheeler, Woman Dies",
-    "[17 Oct 23:23:24] stale or low-score, skipped: 8 Dead, 15 Injured as Minibus Falls into Drain on Delhi-Mumb",
-    "[17 Oct 23:23:24] stale or low-score, skipped: FSSAI issues notices to Nestl\u00e9 India, HUL over misleading pr",
-    "[17 Oct 23:23:24] stale or low-score, skipped: Another MRPL Employee Dies Of Burn Injuries Sustained In Sep",
-    "[17 Oct 23:23:24] stale or low-score, skipped: Australia will do \u2018anything we can\u2019 to stop U.S. execution b",
-    "[17 Oct 23:23:24] stale or low-score, skipped: Dasara rush chokes highways out of Hyderabad, long queues at",
-    "[17 Oct 23:23:24] stale or low-score, skipped: Steps Underway To Ensure Drinking Water Supply In Rural Area",
-    "[17 Oct 23:23:24] stale or low-score, skipped: Man killed, four injured in suspected militant attack on Kuk",
-    "[17 Oct 23:23:24] stale or low-score, skipped: Iran Guards say struck vessel in Strait of Hormuz",
-    "[17 Oct 23:23:24] stale or low-score, skipped: Wyra: 19-Year-Old Engineering Student Collapses, Dies"
+    "[17 Oct 23:41:05] stale or low-score, skipped: 17 killed, at least 35 injured in stampede at Kolkata Durga ",
+    "[17 Oct 23:41:05] queued for editorial pass (no safe auto frame): Engineering student collapses, dies in Khammam district",
+    "[17 Oct 23:41:05] queued for editorial pass (no safe auto frame): Riyadh airport extends shutdown after deadly attacks",
+    "[17 Oct 23:41:05] queued for editorial pass (no safe auto frame): No permanent medical college campus after nearly two years, GMC Mahesh",
+    "[17 Oct 23:41:05] queued for editorial pass (no safe auto frame): Osmania junior doctors defer strike by 10 days to give govt. time to a",
+    "[17 Oct 23:41:05] held for the next card: auto-toll-in-djibouti-boat-sinking-rises-to-139-dead-with-30-more",
+    "[17 Oct 23:41:05] held for the next card: auto-shooting-leaves-9-dead-including-suspect-in-erie-pennsylvani",
+    "[17 Oct 23:41:05] held for the next card: auto-10-killed-in-fire-at-seaside-resort-in-bangladesh",
+    "[17 Oct 23:41:05] stale or low-score, skipped: Kolkata Durga Puja Stampede: What We Know So Far",
+    "[17 Oct 23:41:05] stale or low-score, skipped: Rain, Narrow Exit, Weekend Rush: Witnesses Recount Kolkata P",
+    "[17 Oct 23:41:05] stale or low-score, skipped: 'Thoughts with those who have lost their loved ones': PM Mod",
+    "[17 Oct 23:41:05] stale or low-score, skipped: Amit Shah cancels all programs in Kolkata, to meet victims i",
+    "[17 Oct 23:41:05] stale or low-score, skipped: Narrow gates, no lighting: Witnesses recount Kolkata pandal ",
+    "[17 Oct 23:41:05] stale or low-score, skipped: QNET promoter Dig Vijay Singh held at Delhi Airport in \u20b910,0",
+    "[17 Oct 23:41:05] stale or low-score, skipped: Several hurt, one in \u2018cardiac arrest\u2019 in South Korea market ",
+    "[17 Oct 23:41:05] stale or low-score, skipped: Turkiye, Pakistan, Egypt, Saudi Arabia condemn Houthi attack",
+    "[17 Oct 23:41:05] stale or low-score, skipped: Khammam: Two killed, four injured as speeding lorry hits min",
+    "[17 Oct 23:41:05] stale or low-score, skipped: Khammam: 19-year-old B Tech student dies in Wyra during Dasa",
+    "[17 Oct 23:41:05] stale or low-score, skipped: Khammam: Two Killed, Four Injured as Lorry Rams Vehicle Near",
+    "[17 Oct 23:41:05] stale or low-score, skipped: Mahabubnagar: Speeding Cars Hit Two-Wheeler, Woman Dies",
+    "[17 Oct 23:41:05] stale or low-score, skipped: 8 Dead, 15 Injured as Minibus Falls into Drain on Delhi-Mumb",
+    "[17 Oct 23:41:05] stale or low-score, skipped: FSSAI issues notices to Nestl\u00e9 India, HUL over misleading pr",
+    "[17 Oct 23:41:05] stale or low-score, skipped: Another MRPL Employee Dies Of Burn Injuries Sustained In Sep",
+    "[17 Oct 23:41:05] stale or low-score, skipped: Angry mob tries to storm Bhopal police station over 12-year-",
+    "[17 Oct 23:41:05] stale or low-score, skipped: Australia will do \u2018anything we can\u2019 to stop U.S. execution b",
+    "[17 Oct 23:41:05] stale or low-score, skipped: Dasara rush chokes highways out of Hyderabad, long queues at",
+    "[17 Oct 23:41:05] stale or low-score, skipped: Steps Underway To Ensure Drinking Water Supply In Rural Area",
+    "[17 Oct 23:41:05] stale or low-score, skipped: Man killed, four injured in suspected militant attack on Kuk",
+    "[17 Oct 23:41:05] stale or low-score, skipped: Iran Guards say struck vessel in Strait of Hormuz",
+    "[17 Oct 23:41:05] stale or low-score, skipped: Wyra: 19-Year-Old Engineering Student Collapses, Dies"
   ]
 }
