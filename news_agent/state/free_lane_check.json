@@ -1,5 +1,5 @@
 {
- "at": "2026-10-17T04:12:05Z",
+ "at": "2026-10-18T04:18:39Z",
  "keys": {
   "RU_API_KEY": "set(len=73)",
   "GEMINI_API_KEY": "set(len=53)",
@@ -10,16 +10,16 @@
  "lanes": {
   "openrouter_free_raw": {
    "http": 200,
-   "body": "{\"id\":\"gen-1792210325-oIjwppfRUqDaYdZoDMwd\",\"error\":{\"message\":\"Upstream error from Nvidia: Service temporarily overloaded\",\"code\":503,\"metadata\":{\"error_type\":\"provider_overloaded\"}}}"
+   "body": "{\"id\":\"gen-1792297119-BE6vuhAEl1UzIuuuawhR\",\"error\":{\"message\":\"Upstream error from Nvidia: Service temporarily overloaded\",\"code\":503,\"metadata\":{\"error_type\":\"provider_overloaded\"}}}"
   },
   "openrouter_free_engine": {
-   "method": "fallback",
-   "ok": false,
-   "problems": "['Lines [2, 3] copy 4+ consecutive English words verbatim into the Roman Urdu. Re-express those phrases in Urdu; keep only proper nouns/brands/technical terms in English.', 'Output looks mostly untranslated (90% of words identical to English). Translate the sentences into natural Roman Urdu, keeping",
+   "method": "retry",
+   "ok": true,
+   "problems": "[]",
    "lines": [
-    "Telangana hukumat approves a naya data centre policy",
-    "Officials say the project will create five thousand jobs",
-    "The cabinet also cleared a single-window clearance system"
+    "Telangana hukumat ne nayi data centre policy manzoor kar di",
+    "Officials ke mutabiq project se paanch hazaar rozgar ke mauqay paida honge",
+    "Cabinet ne single-window clearance system bhi manzoor kar diya"
    ]
   },
   "openai_direct": {
@@ -27,13 +27,13 @@
    "reason": "no key"
   },
   "gemini_direct": {
-   "method": "llm",
-   "ok": true,
-   "problems": "[]",
+   "method": "fallback",
+   "ok": false,
+   "problems": "['Lines [2, 3] copy 4+ consecutive English words verbatim into the Roman Urdu. Re-express those phrases in Urdu; keep only proper nouns/brands/technical terms in English.', 'Output looks mostly untranslated (90% of words identical to English). Translate the sentences into natural Roman Urdu, keeping",
    "lines": [
-    "Telangana hukumat ne nayi data centre policy manzoor kar li",
-    "Hukkam ke mutabiq is project se paanch hazar mulazmatein paida hongi",
-    "Cabinet ne single-window clearance system ki bhi manzoori de di"
+    "Telangana hukumat approves a naya data centre policy",
+    "Officials say the project will create five thousand jobs",
+    "The cabinet also cleared a single-window clearance system"
    ]
   }
  }
