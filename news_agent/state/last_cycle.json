@@ -1,40 +1,62 @@
 {
-  "cycle": "20261019-1825",
-  "at": "2026-10-19T18:26:01.489308+05:30",
+  "cycle": "20261019-1836",
+  "at": "2026-10-19T18:38:17.943370+05:30",
   "candidates": 120,
   "published_this_cycle": 0,
-  "digest": "gate closed: ncards 17/24, gap 53 min, retry_pending=0",
-  "ru": {},
+  "digest": "PUBLISHED auto-digest-2026-10-19-s1836",
+  "ru": {
+    "pre_ru_picks": 5,
+    "to_translate": 5,
+    "engine": {
+      "ok": true,
+      "lines_in": 5,
+      "lines_want": 5,
+      "method": "llm",
+      "problems": "[]"
+    },
+    "kills": {
+      "digits": [
+        2
+      ]
+    },
+    "accepted": 5,
+    "salvaged": [
+      2
+    ],
+    "via": {
+      "2": "primary"
+    }
+  },
   "tail": [
-    "[19 Oct 18:26:01] stale or low-score, skipped: Hyderabad Techie Dies by Suicide After Stock Market Losses",
-    "[19 Oct 18:26:01] stale or low-score, skipped: Government school teacher drowns in Nagarjuna Sagar canal in",
-    "[19 Oct 18:26:01] held for the next card: auto-one-dead-several-injured-in-clashes-in-manipur-s-thoubal-dis",
-    "[19 Oct 18:26:01] stale or low-score, skipped: Medchal: Priest killed as unidentified vehicle rams electric",
-    "[19 Oct 18:26:01] stale or low-score, skipped: Rail passengers seek better Secunderabad station facilities ",
-    "[19 Oct 18:26:01] stale or low-score, skipped: Fire Breaks Out at Hosiery Store near Charminar, No Injuries",
-    "[19 Oct 18:26:01] stale or low-score, skipped: Mumbai: Bollywood actor Tiger Shroff escapes unhurt in gun a",
-    "[19 Oct 18:26:01] stale or low-score, skipped: Alai Balai festival on Oct. 22 to focus on drug-free India: ",
-    "[19 Oct 18:26:01] stale or low-score, skipped: Watch: Big Relief for Cancer Patients? Centre Revises Prices",
-    "[19 Oct 18:26:01] stale or low-score, skipped: \"India Is Not Bangladesh\": Shashi Tharoor Agrees To Disagree",
-    "[19 Oct 18:26:01] stale or low-score, skipped: Eight MGNREGA Workers Killed as Car Rams Road Workers in Pun",
-    "[19 Oct 18:26:01] stale or low-score, skipped: Journalist dies after assault in UP\u2019s Hapur over advertiseme",
-    "[19 Oct 18:26:01] stale or low-score, skipped: Anti-drug activist murder: Diljit Dosanjh says Jhota's famil",
-    "[19 Oct 18:26:01] stale or low-score, skipped: Indian air ambulance makes emergency landing in Bangladesh; ",
-    "[19 Oct 18:26:01] stale or low-score, skipped: Four friends clicking selfies on overbridge killed after tru",
-    "[19 Oct 18:26:01] stale or low-score, skipped: Khammam road accident kills couple, leaves two children orph",
-    "[19 Oct 18:26:01] stale or low-score, skipped: Eight dead, 12 injured as car runs over workers in Punjab's ",
-    "[19 Oct 18:26:01] stale or low-score, skipped: FSSAI proposes ban on added sugars in infant foods: Why it w",
-    "[19 Oct 18:26:01] stale or low-score, skipped: Another Srinagar-bound bus attacked, this time in Punjab",
-    "[19 Oct 18:26:01] stale or low-score, skipped: Manipur Violence: Bodies of Two Men Placed Outside CM\u2019s Resi",
-    "[19 Oct 18:26:01] stale or low-score, skipped: Mumbai To Kota To Delhi, Finally Nepal. Tiger Shroff's Shoot",
-    "[19 Oct 18:26:01] stale or low-score, skipped: Advocate Shot Dead In Bengaluru By Tenants From Bihar Over U",
-    "[19 Oct 18:26:01] stale or low-score, skipped: Karanveer Mehra reacts to narrow escape in Tiger Shroff firi",
-    "[19 Oct 18:26:01] stale or low-score, skipped: TSCSCL manager ends life following sexual assault complaint,",
-    "[19 Oct 18:26:01] stale or low-score, skipped: Parents Allege Negligence As 23 Students Injured",
-    "[19 Oct 18:26:01] stale or low-score, skipped: Civil Supplies Employee Dies By Suicide In Bhadrachalam",
-    "[19 Oct 18:26:01] stale or low-score, skipped: Students Recall Horror Of Truss Collapse",
-    "[19 Oct 18:26:01] stale or low-score, skipped: Farmer hid ganja plants in middle of red gram crop",
-    "[19 Oct 18:26:01] stale or low-score, skipped: Drug peddlers held in Gadag",
-    "[19 Oct 18:26:01] stale or low-score, skipped: Hyderabad: How 2 Ameerpet businessmen used crypto to route d"
+    "[19 Oct 18:38:17] stale or low-score, skipped: Khammam: Woman dies of heart attack during Bathukamma celebr",
+    "[19 Oct 18:38:17] stale or low-score, skipped: Jagtial: Two killed, one injured as unidentified vehicle hit",
+    "[19 Oct 18:38:17] stale or low-score, skipped: Hyderabad Techie Dies by Suicide After Stock Market Losses",
+    "[19 Oct 18:38:17] stale or low-score, skipped: Government school teacher drowns in Nagarjuna Sagar canal in",
+    "[19 Oct 18:38:17] held for the next card: auto-one-dead-several-injured-in-clashes-in-manipur-s-thoubal-dis",
+    "[19 Oct 18:38:17] stale or low-score, skipped: Medchal: Priest killed as unidentified vehicle rams electric",
+    "[19 Oct 18:38:17] stale or low-score, skipped: Rail passengers seek better Secunderabad station facilities ",
+    "[19 Oct 18:38:17] stale or low-score, skipped: Fire Breaks Out at Hosiery Store near Charminar, No Injuries",
+    "[19 Oct 18:38:17] stale or low-score, skipped: Mumbai: Bollywood actor Tiger Shroff escapes unhurt in gun a",
+    "[19 Oct 18:38:17] stale or low-score, skipped: Alai Balai festival on Oct. 22 to focus on drug-free India: ",
+    "[19 Oct 18:38:17] stale or low-score, skipped: Watch: Big Relief for Cancer Patients? Centre Revises Prices",
+    "[19 Oct 18:38:17] stale or low-score, skipped: Eight MGNREGA Workers Killed as Car Rams Road Workers in Pun",
+    "[19 Oct 18:38:17] stale or low-score, skipped: Journalist dies after assault in UP\u2019s Hapur over advertiseme",
+    "[19 Oct 18:38:17] stale or low-score, skipped: Anti-drug activist murder: Diljit Dosanjh says Jhota's famil",
+    "[19 Oct 18:38:17] stale or low-score, skipped: Indian air ambulance makes emergency landing in Bangladesh; ",
+    "[19 Oct 18:38:17] stale or low-score, skipped: Four friends clicking selfies on overbridge killed after tru",
+    "[19 Oct 18:38:17] stale or low-score, skipped: Khammam road accident kills couple, leaves two children orph",
+    "[19 Oct 18:38:17] stale or low-score, skipped: Eight dead, 12 injured as car runs over workers in Punjab's ",
+    "[19 Oct 18:38:17] stale or low-score, skipped: FSSAI proposes ban on added sugars in infant foods: Why it w",
+    "[19 Oct 18:38:17] stale or low-score, skipped: Another Srinagar-bound bus attacked, this time in Punjab",
+    "[19 Oct 18:38:17] stale or low-score, skipped: Manipur Violence: Bodies of Two Men Placed Outside CM\u2019s Resi",
+    "[19 Oct 18:38:17] stale or low-score, skipped: Mumbai To Kota To Delhi, Finally Nepal. Tiger Shroff's Shoot",
+    "[19 Oct 18:38:17] stale or low-score, skipped: Advocate Shot Dead In Bengaluru By Tenants From Bihar Over U",
+    "[19 Oct 18:38:17] stale or low-score, skipped: Karanveer Mehra reacts to narrow escape in Tiger Shroff firi",
+    "[19 Oct 18:38:17] stale or low-score, skipped: TSCSCL manager ends life following sexual assault complaint,",
+    "[19 Oct 18:38:17] stale or low-score, skipped: Parents Allege Negligence As 23 Students Injured",
+    "[19 Oct 18:38:17] stale or low-score, skipped: Civil Supplies Employee Dies By Suicide In Bhadrachalam",
+    "[19 Oct 18:38:17] stale or low-score, skipped: Students Recall Horror Of Truss Collapse",
+    "[19 Oct 18:38:17] stale or low-score, skipped: \"India Is Not Bangladesh\": Shashi Tharoor Agrees To Disagree",
+    "[19 Oct 18:38:17] stale or low-score, skipped: Hyderabad: How 2 Ameerpet businessmen used crypto to route d"
   ]
 }
