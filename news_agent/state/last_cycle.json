@@ -1,73 +1,40 @@
 {
-  "cycle": "20261020-0344",
-  "at": "2026-10-20T03:51:48.272781+05:30",
+  "cycle": "20261020-0401",
+  "at": "2026-10-20T04:02:04.145908+05:30",
   "candidates": 120,
   "published_this_cycle": 0,
-  "digest": "PUBLISHED auto-digest-2026-10-20-s0350",
-  "ru": {
-    "pre_ru_picks": 5,
-    "to_translate": 4,
-    "engine": {
-      "ok": false,
-      "lines_in": 4,
-      "lines_want": 4,
-      "method": "fallback",
-      "problems": "['Lines [1, 2, 3, 4] copy 4+ consecutive English words verbatim into the Roman Urdu. Re-express those phrases in Urdu; keep only proper nouns/brands/technical t"
-    },
-    "kills": {
-      "paste": [
-        2,
-        4,
-        5
-      ],
-      "english-echo": [
-        3
-      ]
-    },
-    "accepted": 4,
-    "salvaged": [
-      2,
-      3,
-      4,
-      5
-    ],
-    "via": {
-      "2": "gemini-flash-latest",
-      "3": "gemini-flash-latest",
-      "4": "gemini-3.5-flash",
-      "5": "gemini-3.5-flash"
-    }
-  },
+  "digest": "gate closed: ncards 4/24, gap 12 min, retry_pending=0",
+  "ru": {},
   "tail": [
-    "[20 Oct 03:51:48] stale or low-score, skipped: 57-Year-Old Man Jumps In Front Of Delhi Metro, Dies",
-    "[20 Oct 03:51:48] stale or low-score, skipped: West Bank on verge of 'explosion': senior Palestinian offici",
-    "[20 Oct 03:51:48] stale or low-score, skipped: Two Bhavani Devotees Killed, 12 Injured As Van Overturns on ",
-    "[20 Oct 03:51:48] stale or low-score, skipped: Shilpa Layout flyover service roads at Gachibowli ready to o",
-    "[20 Oct 03:51:48] stale or low-score, skipped: Khammam: 22-year-old degree student drowns in irrigation wel",
-    "[20 Oct 03:51:48] stale or low-score, skipped: Khammam: Woman dies of heart attack during Bathukamma celebr",
-    "[20 Oct 03:51:48] stale or low-score, skipped: Jagtial: Two killed, one injured as unidentified vehicle hit",
-    "[20 Oct 03:51:48] stale or low-score, skipped: Hyderabad Techie Dies by Suicide After Stock Market Losses",
-    "[20 Oct 03:51:48] stale or low-score, skipped: Government school teacher drowns in Nagarjuna Sagar canal in",
-    "[20 Oct 03:51:48] stale or low-score, skipped: Khammam road accident kills couple, leaves two children orph",
-    "[20 Oct 03:51:48] stale or low-score, skipped: Prime Accused In Chit Fund Scam Held At Airport",
-    "[20 Oct 03:51:48] stale or low-score, skipped: Marco Rubio To Begin 3-Day India Tour Today, Will Honour 26/",
-    "[20 Oct 03:51:48] stale or low-score, skipped: Srinagar-bound bus attacked in Ludhiana's Khanna; no one inj",
-    "[20 Oct 03:51:48] stale or low-score, skipped: AI, IndiGo officials to appear before House panel on Nov 2",
-    "[20 Oct 03:51:48] stale or low-score, skipped: Eight MGNREGA Workers Killed as Car Rams Road Workers in Pun",
-    "[20 Oct 03:51:48] stale or low-score, skipped: TSCSCL manager ends life following sexual assault complaint,",
-    "[20 Oct 03:51:48] stale or low-score, skipped: Woman Killed, Son Injured In ORR Crash",
-    "[20 Oct 03:51:48] stale or low-score, skipped: Video: In \"World's First\", Ukraine Airlifts Injured Soldier ",
-    "[20 Oct 03:51:48] stale or low-score, skipped: India Issues Advisory As Protests Rock Italy",
-    "[20 Oct 03:51:48] stale or low-score, skipped: Critically Ill Woman Dies After Air Ambulance Makes Emergenc",
-    "[20 Oct 03:51:48] stale or low-score, skipped: Three CRPF personnel seriously injured in IED blast in Manip",
-    "[20 Oct 03:51:48] stale or low-score, skipped: Clashes Rock Kuppam During Nomination Scrutiny",
-    "[20 Oct 03:51:48] stale or low-score, skipped: Russian Strikes In Ukraine's Kharkiv Kill Infant In Stroller",
-    "[20 Oct 03:51:48] stale or low-score, skipped: 6 ops in 48 hrs: Houthis claim to strike Saudi airports, oil",
-    "[20 Oct 03:51:48] stale or low-score, skipped: Kolkata Metro services disrupted for around 1 hour due to te",
-    "[20 Oct 03:51:48] stale or low-score, skipped: Magisterial Probe Ordered into Gwalior Temple Tragedy, CM Vi",
-    "[20 Oct 03:51:48] stale or low-score, skipped: NHM employees\u2019 strike enters seventh day in Nagarkurnool",
-    "[20 Oct 03:51:48] stale or low-score, skipped: UPSC aspirant from Andhra Pradesh dies by suicide in Delhi's",
-    "[20 Oct 03:51:48] stale or low-score, skipped: Mumbai: Tiger Shroff Escapes Firing, Driver and Auto Driver ",
-    "[20 Oct 03:51:48] stale or low-score, skipped: Hyderabad sees lighter traffic as residents leave for Dasara"
+    "[20 Oct 04:02:04] stale or low-score, skipped: West Bank on verge of 'explosion': senior Palestinian offici",
+    "[20 Oct 04:02:04] stale or low-score, skipped: Two Bhavani Devotees Killed, 12 Injured As Van Overturns on ",
+    "[20 Oct 04:02:04] stale or low-score, skipped: Shilpa Layout flyover service roads at Gachibowli ready to o",
+    "[20 Oct 04:02:04] stale or low-score, skipped: Khammam: 22-year-old degree student drowns in irrigation wel",
+    "[20 Oct 04:02:04] stale or low-score, skipped: Khammam: Woman dies of heart attack during Bathukamma celebr",
+    "[20 Oct 04:02:04] stale or low-score, skipped: Jagtial: Two killed, one injured as unidentified vehicle hit",
+    "[20 Oct 04:02:04] stale or low-score, skipped: Hyderabad Techie Dies by Suicide After Stock Market Losses",
+    "[20 Oct 04:02:04] stale or low-score, skipped: Government school teacher drowns in Nagarjuna Sagar canal in",
+    "[20 Oct 04:02:04] stale or low-score, skipped: Khammam road accident kills couple, leaves two children orph",
+    "[20 Oct 04:02:04] stale or low-score, skipped: Prime Accused In Chit Fund Scam Held At Airport",
+    "[20 Oct 04:02:04] stale or low-score, skipped: Marco Rubio To Begin 3-Day India Tour Today, Will Honour 26/",
+    "[20 Oct 04:02:04] stale or low-score, skipped: Srinagar-bound bus attacked in Ludhiana's Khanna; no one inj",
+    "[20 Oct 04:02:04] stale or low-score, skipped: AI, IndiGo officials to appear before House panel on Nov 2",
+    "[20 Oct 04:02:04] stale or low-score, skipped: Eight MGNREGA Workers Killed as Car Rams Road Workers in Pun",
+    "[20 Oct 04:02:04] stale or low-score, skipped: TSCSCL manager ends life following sexual assault complaint,",
+    "[20 Oct 04:02:04] stale or low-score, skipped: Woman Killed, Son Injured In ORR Crash",
+    "[20 Oct 04:02:04] stale or low-score, skipped: Video: In \"World's First\", Ukraine Airlifts Injured Soldier ",
+    "[20 Oct 04:02:04] stale or low-score, skipped: India Issues Advisory As Protests Rock Italy",
+    "[20 Oct 04:02:04] stale or low-score, skipped: Critically Ill Woman Dies After Air Ambulance Makes Emergenc",
+    "[20 Oct 04:02:04] stale or low-score, skipped: Three CRPF personnel seriously injured in IED blast in Manip",
+    "[20 Oct 04:02:04] stale or low-score, skipped: Clashes Rock Kuppam During Nomination Scrutiny",
+    "[20 Oct 04:02:04] stale or low-score, skipped: Russian Strikes In Ukraine's Kharkiv Kill Infant In Stroller",
+    "[20 Oct 04:02:04] stale or low-score, skipped: 6 ops in 48 hrs: Houthis claim to strike Saudi airports, oil",
+    "[20 Oct 04:02:04] stale or low-score, skipped: Kolkata Metro services disrupted for around 1 hour due to te",
+    "[20 Oct 04:02:04] stale or low-score, skipped: Magisterial Probe Ordered into Gwalior Temple Tragedy, CM Vi",
+    "[20 Oct 04:02:04] stale or low-score, skipped: NHM employees\u2019 strike enters seventh day in Nagarkurnool",
+    "[20 Oct 04:02:04] stale or low-score, skipped: UPSC aspirant from Andhra Pradesh dies by suicide in Delhi's",
+    "[20 Oct 04:02:04] stale or low-score, skipped: Mumbai: Tiger Shroff Escapes Firing, Driver and Auto Driver ",
+    "[20 Oct 04:02:04] stale or low-score, skipped: Hyderabad sees lighter traffic as residents leave for Dasara",
+    "[20 Oct 04:02:04] stale or low-score, skipped: Rail passengers seek better Secunderabad station facilities "
   ]
 }
