@@ -1,5 +1,5 @@
 {
- "at": "2026-10-18T04:18:39Z",
+ "at": "2026-10-19T04:27:57Z",
  "keys": {
   "RU_API_KEY": "set(len=73)",
   "GEMINI_API_KEY": "set(len=53)",
@@ -10,16 +10,16 @@
  "lanes": {
   "openrouter_free_raw": {
    "http": 200,
-   "body": "{\"id\":\"gen-1792297119-BE6vuhAEl1UzIuuuawhR\",\"error\":{\"message\":\"Upstream error from Nvidia: Service temporarily overloaded\",\"code\":503,\"metadata\":{\"error_type\":\"provider_overloaded\"}}}"
+   "body": "\n         \n{\"id\":\"gen-1792384077-fnICjCsciY7Z06OM612V\",\"object\":\"chat.completion\",\"created\":1792384077,\"model\":\"nvidia/nemotron-3-ultra-550b-a55b:free\",\"provider\":\"Nvidia\",\"system_fingerprint\":null,\"service_tier\":null,\"choices\":[{\"index\":0,\"logprobs\":null,\"finish_reason\":\"length\",\"native_finish_reas"
   },
   "openrouter_free_engine": {
-   "method": "retry",
+   "method": "llm",
    "ok": true,
    "problems": "[]",
    "lines": [
-    "Telangana hukumat ne nayi data centre policy manzoor kar di",
-    "Officials ke mutabiq project se paanch hazaar rozgar ke mauqay paida honge",
-    "Cabinet ne single-window clearance system bhi manzoor kar diya"
+    "Telangana hukumat nayi data centre policy manzoor kar di",
+    "Afsaron ka kehna hai ke yeh project paanch hazaar rozgar paida karega",
+    "Cabinet ne bhi aik single-window clearance system manzoor kar diya"
    ]
   },
   "openai_direct": {
@@ -27,13 +27,13 @@
    "reason": "no key"
   },
   "gemini_direct": {
-   "method": "fallback",
-   "ok": false,
-   "problems": "['Lines [2, 3] copy 4+ consecutive English words verbatim into the Roman Urdu. Re-express those phrases in Urdu; keep only proper nouns/brands/technical terms in English.', 'Output looks mostly untranslated (90% of words identical to English). Translate the sentences into natural Roman Urdu, keeping",
+   "method": "llm",
+   "ok": true,
+   "problems": "[]",
    "lines": [
-    "Telangana hukumat approves a naya data centre policy",
-    "Officials say the project will create five thousand jobs",
-    "The cabinet also cleared a single-window clearance system"
+    "Telangana hukumat ne nayi data centre policy manzoor kar li",
+    "Hukkam ka kehna hai ke project se 5,000 mulazmatein paida hongi",
+    "Cabinet ne single-window clearance system ki bhi manzoori de di"
    ]
   }
  }
