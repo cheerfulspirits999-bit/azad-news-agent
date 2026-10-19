@@ -1,40 +1,74 @@
 {
-  "cycle": "20261019-2058",
-  "at": "2026-10-19T20:58:26.721080+05:30",
+  "cycle": "20261019-2108",
+  "at": "2026-10-19T21:12:25.056854+05:30",
   "candidates": 120,
   "published_this_cycle": 0,
-  "digest": "gate closed: ncards 19/24, gap 54 min, retry_pending=0",
-  "ru": {},
+  "digest": "PUBLISHED auto-digest-2026-10-19-s2111",
+  "ru": {
+    "pre_ru_picks": 5,
+    "to_translate": 5,
+    "engine": {
+      "ok": false,
+      "lines_in": 5,
+      "lines_want": 5,
+      "method": "fallback",
+      "problems": "['Lines [1, 2, 3, 4, 5] copy 4+ consecutive English words verbatim into the Roman Urdu. Re-express those phrases in Urdu; keep only proper nouns/brands/technica"
+    },
+    "kills": {
+      "english-echo": [
+        1
+      ],
+      "paste": [
+        2,
+        3,
+        4,
+        5
+      ]
+    },
+    "accepted": 4,
+    "salvaged": [
+      1,
+      2,
+      3,
+      4
+    ],
+    "via": {
+      "1": "primary",
+      "2": "primary",
+      "3": "primary",
+      "4": "primary"
+    }
+  },
   "tail": [
-    "[19 Oct 20:58:26] stale or low-score, skipped: Mumbai: Tiger Shroff Escapes Firing, Driver and Auto Driver ",
-    "[19 Oct 20:58:26] stale or low-score, skipped: Hyderabad sees lighter traffic as residents leave for Dasara",
-    "[19 Oct 20:58:26] stale or low-score, skipped: Shilpa Layout flyover service roads at Gachibowli ready to o",
-    "[19 Oct 20:58:26] stale or low-score, skipped: Fire Breaks Out at Hosiery Store near Charminar, No Injuries",
-    "[19 Oct 20:58:26] stale or low-score, skipped: Mumbai: Bollywood actor Tiger Shroff escapes unhurt in gun a",
-    "[19 Oct 20:58:26] stale or low-score, skipped: How Mumbai Cops Tracked Down 3 Men Who Fired At Tiger Shroff",
-    "[19 Oct 20:58:26] stale or low-score, skipped: Eight MGNREGA Workers Killed as Car Rams Road Workers in Pun",
-    "[19 Oct 20:58:26] stale or low-score, skipped: Khammam: Woman dies of heart attack during Bathukamma celebr",
-    "[19 Oct 20:58:26] stale or low-score, skipped: Jagtial: Two killed, one injured as unidentified vehicle hit",
-    "[19 Oct 20:58:26] stale or low-score, skipped: Hyderabad Techie Dies by Suicide After Stock Market Losses",
-    "[19 Oct 20:58:26] stale or low-score, skipped: Government school teacher drowns in Nagarjuna Sagar canal in",
-    "[19 Oct 20:58:26] stale or low-score, skipped: One dead, several injured in clashes in Manipur's Thoubal di",
-    "[19 Oct 20:58:26] stale or low-score, skipped: Khammam road accident kills couple, leaves two children orph",
-    "[19 Oct 20:58:26] stale or low-score, skipped: Alai Balai festival on Oct. 22 to focus on drug-free India: ",
-    "[19 Oct 20:58:26] stale or low-score, skipped: Nepal bans India-made Priyagold biscuits after FSSAI flags f",
-    "[19 Oct 20:58:26] stale or low-score, skipped: \u2018Avoid crowded areas\u2019: India issues advisory for citizens am",
-    "[19 Oct 20:58:26] stale or low-score, skipped: Armed Reserve ASI dies in road accident in Medak district",
-    "[19 Oct 20:58:26] stale or low-score, skipped: Mumbai To Kota To Delhi, Finally Nepal. Tiger Shroff's Shoot",
-    "[19 Oct 20:58:26] stale or low-score, skipped: Rail passengers seek better Secunderabad station facilities ",
-    "[19 Oct 20:58:26] stale or low-score, skipped: Manipur Violence: Bodies of Two Men Placed Outside CM\u2019s Resi",
-    "[19 Oct 20:58:26] stale or low-score, skipped: Parents Allege Negligence As 23 Students Injured",
-    "[19 Oct 20:58:26] stale or low-score, skipped: Civil Supplies Employee Dies By Suicide In Bhadrachalam",
-    "[19 Oct 20:58:26] stale or low-score, skipped: Students Recall Horror Of Truss Collapse",
-    "[19 Oct 20:58:26] stale or low-score, skipped: Kolkata\u2019s rainbow-painted Chingrighata flyover raises road-s",
-    "[19 Oct 20:58:26] stale or low-score, skipped: Indian-origin siblings sold cookies in 2018; charity gave 10",
-    "[19 Oct 20:58:26] stale or low-score, skipped: U.S. missions in West Asia issue security alert over possibl",
-    "[19 Oct 20:58:26] stale or low-score, skipped: Watch: Big Relief for Cancer Patients? Centre Revises Prices",
-    "[19 Oct 20:58:26] stale or low-score, skipped: Anti-drug activist murder: Diljit Dosanjh says Jhota's famil",
-    "[19 Oct 20:58:26] stale or low-score, skipped: Indian air ambulance makes emergency landing in Bangladesh; ",
-    "[19 Oct 20:58:26] stale or low-score, skipped: Four friends clicking selfies on overbridge killed after tru"
+    "[19 Oct 21:12:25] stale or low-score, skipped: Medchal: Priest killed as unidentified vehicle rams electric",
+    "[19 Oct 21:12:25] queued for editorial pass (no safe auto frame): Two killed, three-year-old girl injured as Thar rams into scooter in H",
+    "[19 Oct 21:12:25] stale or low-score, skipped: CJP contrasts leaders' detention with relief for Uttar Prade",
+    "[19 Oct 21:12:25] stale or low-score, skipped: Mumbai: Tiger Shroff Escapes Firing, Driver and Auto Driver ",
+    "[19 Oct 21:12:25] stale or low-score, skipped: Shilpa Layout flyover service roads at Gachibowli ready to o",
+    "[19 Oct 21:12:25] stale or low-score, skipped: Fire Breaks Out at Hosiery Store near Charminar, No Injuries",
+    "[19 Oct 21:12:25] stale or low-score, skipped: Mumbai: Bollywood actor Tiger Shroff escapes unhurt in gun a",
+    "[19 Oct 21:12:25] stale or low-score, skipped: How Mumbai Cops Tracked Down 3 Men Who Fired At Tiger Shroff",
+    "[19 Oct 21:12:25] stale or low-score, skipped: Eight MGNREGA Workers Killed as Car Rams Road Workers in Pun",
+    "[19 Oct 21:12:25] stale or low-score, skipped: Khammam: Woman dies of heart attack during Bathukamma celebr",
+    "[19 Oct 21:12:25] stale or low-score, skipped: Jagtial: Two killed, one injured as unidentified vehicle hit",
+    "[19 Oct 21:12:25] stale or low-score, skipped: Hyderabad Techie Dies by Suicide After Stock Market Losses",
+    "[19 Oct 21:12:25] stale or low-score, skipped: Government school teacher drowns in Nagarjuna Sagar canal in",
+    "[19 Oct 21:12:25] stale or low-score, skipped: One dead, several injured in clashes in Manipur's Thoubal di",
+    "[19 Oct 21:12:25] stale or low-score, skipped: Khammam road accident kills couple, leaves two children orph",
+    "[19 Oct 21:12:25] stale or low-score, skipped: Alai Balai festival on Oct. 22 to focus on drug-free India: ",
+    "[19 Oct 21:12:25] stale or low-score, skipped: Nepal bans India-made Priyagold biscuits after FSSAI flags f",
+    "[19 Oct 21:12:25] stale or low-score, skipped: \u2018Avoid crowded areas\u2019: India issues advisory for citizens am",
+    "[19 Oct 21:12:25] stale or low-score, skipped: Hyderabad sees lighter traffic as residents leave for Dasara",
+    "[19 Oct 21:12:25] stale or low-score, skipped: Mumbai To Kota To Delhi, Finally Nepal. Tiger Shroff's Shoot",
+    "[19 Oct 21:12:25] stale or low-score, skipped: Rail passengers seek better Secunderabad station facilities ",
+    "[19 Oct 21:12:25] stale or low-score, skipped: Manipur Violence: Bodies of Two Men Placed Outside CM\u2019s Resi",
+    "[19 Oct 21:12:25] stale or low-score, skipped: Parents Allege Negligence As 23 Students Injured",
+    "[19 Oct 21:12:25] stale or low-score, skipped: Civil Supplies Employee Dies By Suicide In Bhadrachalam",
+    "[19 Oct 21:12:25] stale or low-score, skipped: Students Recall Horror Of Truss Collapse",
+    "[19 Oct 21:12:25] stale or low-score, skipped: Kolkata\u2019s rainbow-painted Chingrighata flyover raises road-s",
+    "[19 Oct 21:12:25] stale or low-score, skipped: U.S. missions in West Asia issue security alert over possibl",
+    "[19 Oct 21:12:25] stale or low-score, skipped: Watch: Big Relief for Cancer Patients? Centre Revises Prices",
+    "[19 Oct 21:12:25] stale or low-score, skipped: Anti-drug activist murder: Diljit Dosanjh says Jhota's famil",
+    "[19 Oct 21:12:25] stale or low-score, skipped: Indian air ambulance makes emergency landing in Bangladesh; "
   ]
 }
