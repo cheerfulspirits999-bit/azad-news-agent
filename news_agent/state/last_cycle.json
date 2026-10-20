@@ -1,40 +1,74 @@
 {
-  "cycle": "20261020-2349",
-  "at": "2026-10-20T23:50:02.048004+05:30",
+  "cycle": "20261021-0000",
+  "at": "2026-10-21T00:08:13.145196+05:30",
   "candidates": 120,
   "published_this_cycle": 0,
-  "digest": "gate closed: ncards 21/24, gap 53 min, retry_pending=0",
-  "ru": {},
+  "digest": "PUBLISHED auto-digest-2026-10-21-s0006",
+  "ru": {
+    "pre_ru_picks": 5,
+    "to_translate": 5,
+    "engine": {
+      "ok": false,
+      "lines_in": 5,
+      "lines_want": 5,
+      "method": "fallback",
+      "problems": "['Lines [1, 2, 3, 4, 5] copy 4+ consecutive English words verbatim into the Roman Urdu. Re-express those phrases in Urdu; keep only proper nouns/brands/technica"
+    },
+    "kills": {
+      "paste": [
+        1,
+        2,
+        5
+      ],
+      "english-echo": [
+        3,
+        4
+      ]
+    },
+    "accepted": 4,
+    "salvaged": [
+      1,
+      2,
+      3,
+      4
+    ],
+    "via": {
+      "1": "gemini-flash-lite-latest",
+      "2": "gemini-flash-lite-latest",
+      "3": "gemini-flash-lite-latest",
+      "4": "gemini-flash-lite-latest"
+    }
+  },
   "tail": [
-    "[20 Oct 23:50:02] queued for editorial pass (no safe auto frame): Kuki man killed in Manipur; shutdown paralyses Imphal Valley",
-    "[20 Oct 23:50:02] stale or low-score, skipped: 13 Killed, 34 Injured After Large Truck Crashes Into Tour Bu",
-    "[20 Oct 23:50:02] stale or low-score, skipped: Zero tolerance on terror: Jaishankar thanks US for Tahawwur ",
-    "[20 Oct 23:50:02] stale or low-score, skipped: No double standards on terror, need unified action to disman",
-    "[20 Oct 23:50:02] stale or low-score, skipped: Boliyaru crash: Murder case filed against absconding driver",
-    "[20 Oct 23:50:02] stale or low-score, skipped: Dussehra\u00a02026: Traffic\u00a0curbs in Dwarka, security tightened i",
-    "[20 Oct 23:50:02] stale or low-score, skipped: Shiva Sharma Murder Case: \u0928\u0947\u092a\u093e\u0932 \u091f\u0942 \u0928\u093e\u0917\u092a\u0941\u0930 \u0935\u093e\u092f\u093e \u0906\u0917\u0930\u093e... 11 \u0926\u093f",
-    "[20 Oct 23:50:02] stale or low-score, skipped: Keralam govt to file case against parents after 2-year-old d",
-    "[20 Oct 23:50:02] stale or low-score, skipped: Parvinder Singh Jhota Murder Probe To Be Handed Over to CBI:",
-    "[20 Oct 23:50:02] stale or low-score, skipped: Bihar Boat Capsize: Prashant Kishor Seeks Hike In Compensati",
-    "[20 Oct 23:50:02] stale or low-score, skipped: 15 passengers Injured As Bus Rams Into Cement Lorry On Batas",
-    "[20 Oct 23:50:02] stale or low-score, skipped: Speeding Motorcycle Rams Into Another Bike; Milk Supplier Di",
-    "[20 Oct 23:50:02] stale or low-score, skipped: AR Officer Succumbs To Accident Injuries",
-    "[20 Oct 23:50:02] stale or low-score, skipped: Illicit Affair Leads To Murder Of Teenager In Jagtial",
-    "[20 Oct 23:50:02] stale or low-score, skipped: Google Cloud Outage in London Disrupts Multiple Online Servi",
-    "[20 Oct 23:50:02] stale or low-score, skipped: China hits back at US ban on DeepSeek in federal agencies",
-    "[20 Oct 23:50:02] stale or low-score, skipped: Israeli pre-dawn strike on Gaza apartment kills 2 people",
-    "[20 Oct 23:50:02] stale or low-score, skipped: Death toll rises to 60 in Houthi strike on Yemen training ca",
-    "[20 Oct 23:50:02] stale or low-score, skipped: Indian air ambulance makes emergency landing in Bangladesh; ",
-    "[20 Oct 23:50:02] stale or low-score, skipped: 1 dead in Ohio mosque shooting, police say attack not linked",
-    "[20 Oct 23:50:02] stale or low-score, skipped: How an SUV carrying 27kg of mephedrone exposed a clandestine",
-    "[20 Oct 23:50:02] stale or low-score, skipped: Fire Breaks Out at Jewellery Shop in Jammikunta",
-    "[20 Oct 23:50:02] stale or low-score, skipped: 2 Killed, 10 Injured as Jeep Overturns on Paderu Ghat Road",
-    "[20 Oct 23:50:02] stale or low-score, skipped: Car Rams Into Shops, Vehicles, 3 Injured In Tuni",
-    "[20 Oct 23:50:02] stale or low-score, skipped: Sudan army strike in disputed territory kills 53: local auth",
-    "[20 Oct 23:50:02] stale or low-score, skipped: 65-year old swimmer killed in shark attack off South African",
-    "[20 Oct 23:50:02] stale or low-score, skipped: Amit Shah meets families of anti-drug campaigners killed in ",
-    "[20 Oct 23:50:02] stale or low-score, skipped: CBI will hunt culprits even in hell: Amit Shah on Punjab dru",
-    "[20 Oct 23:50:02] stale or low-score, skipped: Gold mine collapse kills at least 14 in southwest Colombia",
-    "[20 Oct 23:50:02] stale or low-score, skipped: Sudan drone attacks kill three children in Khartoum, dozens "
+    "[21 Oct 00:08:13] queued for editorial pass (no safe auto frame): Death toll from Houthi strike on Yemen government camp rises to 73",
+    "[21 Oct 00:08:13] queued for editorial pass (no safe auto frame): Kuki man killed in Manipur; shutdown paralyses Imphal Valley",
+    "[21 Oct 00:08:13] stale or low-score, skipped: 13 Killed, 34 Injured After Large Truck Crashes Into Tour Bu",
+    "[21 Oct 00:08:13] stale or low-score, skipped: Zero tolerance on terror: Jaishankar thanks US for Tahawwur ",
+    "[21 Oct 00:08:13] stale or low-score, skipped: No double standards on terror, need unified action to disman",
+    "[21 Oct 00:08:13] stale or low-score, skipped: Boliyaru crash: Murder case filed against absconding driver",
+    "[21 Oct 00:08:13] stale or low-score, skipped: Dussehra\u00a02026: Traffic\u00a0curbs in Dwarka, security tightened i",
+    "[21 Oct 00:08:13] stale or low-score, skipped: Shiva Sharma Murder Case: \u0928\u0947\u092a\u093e\u0932 \u091f\u0942 \u0928\u093e\u0917\u092a\u0941\u0930 \u0935\u093e\u092f\u093e \u0906\u0917\u0930\u093e... 11 \u0926\u093f",
+    "[21 Oct 00:08:13] stale or low-score, skipped: Keralam govt to file case against parents after 2-year-old d",
+    "[21 Oct 00:08:13] stale or low-score, skipped: Parvinder Singh Jhota Murder Probe To Be Handed Over to CBI:",
+    "[21 Oct 00:08:13] stale or low-score, skipped: Bihar Boat Capsize: Prashant Kishor Seeks Hike In Compensati",
+    "[21 Oct 00:08:13] stale or low-score, skipped: 15 passengers Injured As Bus Rams Into Cement Lorry On Batas",
+    "[21 Oct 00:08:13] stale or low-score, skipped: Speeding Motorcycle Rams Into Another Bike; Milk Supplier Di",
+    "[21 Oct 00:08:13] stale or low-score, skipped: AR Officer Succumbs To Accident Injuries",
+    "[21 Oct 00:08:13] stale or low-score, skipped: Google Cloud Outage in London Disrupts Multiple Online Servi",
+    "[21 Oct 00:08:13] stale or low-score, skipped: China hits back at US ban on DeepSeek in federal agencies",
+    "[21 Oct 00:08:13] stale or low-score, skipped: Israeli pre-dawn strike on Gaza apartment kills 2 people",
+    "[21 Oct 00:08:13] stale or low-score, skipped: Death toll rises to 60 in Houthi strike on Yemen training ca",
+    "[21 Oct 00:08:13] stale or low-score, skipped: Indian air ambulance makes emergency landing in Bangladesh; ",
+    "[21 Oct 00:08:13] stale or low-score, skipped: 1 dead in Ohio mosque shooting, police say attack not linked",
+    "[21 Oct 00:08:13] stale or low-score, skipped: How an SUV carrying 27kg of mephedrone exposed a clandestine",
+    "[21 Oct 00:08:13] stale or low-score, skipped: Fire Breaks Out at Jewellery Shop in Jammikunta",
+    "[21 Oct 00:08:13] stale or low-score, skipped: 2 Killed, 10 Injured as Jeep Overturns on Paderu Ghat Road",
+    "[21 Oct 00:08:13] stale or low-score, skipped: Car Rams Into Shops, Vehicles, 3 Injured In Tuni",
+    "[21 Oct 00:08:13] stale or low-score, skipped: Sudan army strike in disputed territory kills 53: local auth",
+    "[21 Oct 00:08:13] stale or low-score, skipped: 65-year old swimmer killed in shark attack off South African",
+    "[21 Oct 00:08:13] stale or low-score, skipped: Amit Shah meets families of anti-drug campaigners killed in ",
+    "[21 Oct 00:08:13] stale or low-score, skipped: CBI will hunt culprits even in hell: Amit Shah on Punjab dru",
+    "[21 Oct 00:08:13] stale or low-score, skipped: Gold mine collapse kills at least 14 in southwest Colombia",
+    "[21 Oct 00:08:13] stale or low-score, skipped: Sudan drone attacks kill three children in Khartoum, dozens "
   ]
 }
