@@ -1,13 +1,13 @@
 {
-  "cycle_id": "20261020-0731",
-  "generated_at": "2026-10-20T07:31:09.570886+05:30",
+  "cycle_id": "20261020-0741",
+  "generated_at": "2026-10-20T07:41:24.996681+05:30",
   "feeds_ok": 10,
   "errors": [],
   "counts": {
-    "fetched": 1715,
-    "fresh": 821,
+    "fetched": 1719,
+    "fresh": 823,
     "candidates": 120,
-    "duplicates_suppressed": 13
+    "duplicates_suppressed": 12
   },
   "candidates": [
     {
@@ -22,7 +22,7 @@
       "source": "Deccan Chronicle",
       "source_preferred": false,
       "published_at": "2026-10-19T10:58:24+05:30",
-      "age_hours": 20.55,
+      "age_hours": 20.72,
       "categories": [
         "accident_casualty"
       ],
@@ -41,7 +41,7 @@
       "source": "Deccan Chronicle",
       "source_preferred": false,
       "published_at": "2026-10-19T20:21:25+05:30",
-      "age_hours": 11.16,
+      "age_hours": 11.33,
       "categories": [
         "fire_explosion",
         "accident_casualty"
@@ -52,26 +52,6 @@
     {
       "rank": 3,
       "class": "C",
-      "score": 76,
-      "region": "hyderabad",
-      "region_confidence": 1.0,
-      "suggested_headline": "📰 LATEST NEWS — HYDERABAD",
-      "title": "Fire breaks out at anti-drone equipment testing facility in Madhapur; no casualties",
-      "url": "https://www.thehindu.com/news/national/telangana/fire-breaks-out-at-anti-drone-equipment-testing-facility-in-madhapur-no-casualties/article71600343.ece",
-      "source": "The Hindu",
-      "source_preferred": true,
-      "published_at": "2026-10-19T07:36:22+05:30",
-      "age_hours": 23.91,
-      "categories": [
-        "fire_explosion",
-        "accident_casualty"
-      ],
-      "excerpt": "",
-      "corroboration": []
-    },
-    {
-      "rank": 4,
-      "class": "C",
       "score": 74,
       "region": "world",
       "region_confidence": 1.0,
@@ -81,7 +61,7 @@
       "source": "Indian Express",
       "source_preferred": false,
       "published_at": "2026-10-20T07:17:47+05:30",
-      "age_hours": 0.22,
+      "age_hours": 0.39,
       "categories": [
         "accident_casualty"
       ],
@@ -89,7 +69,7 @@
       "corroboration": []
     },
     {
-      "rank": 5,
+      "rank": 4,
       "class": "C",
       "score": 74,
       "region": "world",
@@ -100,7 +80,7 @@
       "source": "Times of India",
       "source_preferred": false,
       "published_at": "2026-10-20T05:48:00+05:30",
-      "age_hours": 1.72,
+      "age_hours": 1.89,
       "categories": [
         "accident_casualty",
         "infrastructure_failure"
@@ -111,7 +91,7 @@
       ]
     },
     {
-      "rank": 6,
+      "rank": 5,
       "class": "C",
       "score": 74,
       "region": "hyderabad",
@@ -122,7 +102,7 @@
       "source": "Munsif Daily",
       "source_preferred": true,
       "published_at": "2026-10-19T14:40:11+05:30",
-      "age_hours": 16.85,
+      "age_hours": 17.02,
       "categories": [
         "fire_explosion",
         "court_judgment"
@@ -131,7 +111,7 @@
       "corroboration": []
     },
     {
-      "rank": 7,
+      "rank": 6,
       "class": "C",
       "score": 73,
       "region": "telangana",
@@ -142,7 +122,7 @@
       "source": "Deccan Chronicle",
       "source_preferred": false,
       "published_at": "2026-10-19T22:00:01+05:30",
-      "age_hours": 9.52,
+      "age_hours": 9.69,
       "categories": [
         "accident_casualty"
       ],
@@ -150,7 +130,7 @@
       "corroboration": []
     },
     {
-      "rank": 8,
+      "rank": 7,
       "class": "C",
       "score": 73,
       "region": "hyderabad",
@@ -161,12 +141,34 @@
       "source": "Telangana Today",
       "source_preferred": false,
       "published_at": "2026-10-19T12:23:42+05:30",
-      "age_hours": 19.12,
+      "age_hours": 19.3,
       "categories": [
         "fire_explosion"
       ],
       "excerpt": "A massive fire broke out at a wholesale clothing shop on Madina Road in Hyderabad’s Charminar area on Monday, triggering panic among residents. Firefighters rushed to contain the blaze, while the cause and extent of property damage remain unknown.",
       "corroboration": []
+    },
+    {
+      "rank": 8,
+      "class": "C",
+      "score": 72,
+      "region": "world",
+      "region_confidence": 1.0,
+      "suggested_headline": "🌍 LATEST — WORLD",
+      "title": "Gold mine collapse kills at least 14 in southwest Colombia",
+      "url": "https://www.thehindu.com/news/international/gold-mine-collapse-in-colombias-narino-province/article71603089.ece",
+      "source": "The Hindu",
+      "source_preferred": true,
+      "published_at": "2026-10-20T07:31:30+05:30",
+      "age_hours": 0.17,
+      "categories": [
+        "accident_casualty",
+        "infrastructure_failure"
+      ],
+      "excerpt": "At least six miners were killed Monday when an open-pit gold mine collapsed in a remote corner of Colombia’s Nariño province, authorities said",
+      "corroboration": [
+        "Deccan Chronicle"
+      ]
     },
     {
       "rank": 9,
@@ -180,7 +182,7 @@
       "source": "The Hindu",
       "source_preferred": true,
       "published_at": "2026-10-20T02:27:52+05:30",
-      "age_hours": 5.05,
+      "age_hours": 5.23,
       "categories": [
         "accident_casualty",
         "court_judgment",
@@ -193,26 +195,6 @@
       "rank": 10,
       "class": "C",
       "score": 72,
-      "region": "telangana",
-      "region_confidence": 1.0,
-      "suggested_headline": "📰 LATEST NEWS — TELANGANA",
-      "title": "15 passengers Injured As Bus Rams Into Cement Lorry On Batasingaram Flyover",
-      "url": "https://www.deccanchronicle.com/southern-states/telangana/15-passengers-injured-as-bus-rams-into-cement-lorry-on-batasingaram-flyover-1997344",
-      "source": "Deccan Chronicle",
-      "source_preferred": false,
-      "published_at": "2026-10-20T01:36:24+05:30",
-      "age_hours": 5.91,
-      "categories": [
-        "accident_casualty",
-        "infrastructure_failure"
-      ],
-      "excerpt": "The injured, Bandaru Thirupathamma, 65, and Duggi Laxmi, 38, were travelling with family members, including two children.",
-      "corroboration": []
-    },
-    {
-      "rank": 11,
-      "class": "C",
-      "score": 72,
       "region": "hyderabad",
       "region_confidence": 1.0,
       "suggested_headline": "📰 LATEST NEWS — HYDERABAD",
@@ -221,7 +203,7 @@
       "source": "Munsif Daily",
       "source_preferred": true,
       "published_at": "2026-10-19T17:54:29+05:30",
-      "age_hours": 13.61,
+      "age_hours": 13.78,
       "categories": [
         "political_major"
       ],
@@ -229,26 +211,7 @@
       "corroboration": []
     },
     {
-      "rank": 12,
-      "class": "C",
-      "score": 72,
-      "region": "telangana",
-      "region_confidence": 1.0,
-      "suggested_headline": "📰 LATEST NEWS — TELANGANA",
-      "title": "Two killed, three-year-old girl injured as Thar rams into scooter in Hayathnagar",
-      "url": "https://www.thehindu.com/news/national/telangana/two-killed-three-year-old-girl-injured-as-thar-rams-into-scooter-in-hayathnagar/article71600696.ece",
-      "source": "The Hindu",
-      "source_preferred": true,
-      "published_at": "2026-10-19T07:34:42+05:30",
-      "age_hours": 23.94,
-      "categories": [
-        "accident_casualty"
-      ],
-      "excerpt": "",
-      "corroboration": []
-    },
-    {
-      "rank": 13,
+      "rank": 11,
       "class": "C",
       "score": 70,
       "region": "telangana",
@@ -259,7 +222,7 @@
       "source": "The Hindu",
       "source_preferred": true,
       "published_at": "2026-10-20T04:43:04+05:30",
-      "age_hours": 2.8,
+      "age_hours": 2.97,
       "categories": [
         "major_crime"
       ],
@@ -267,7 +230,7 @@
       "corroboration": []
     },
     {
-      "rank": 14,
+      "rank": 12,
       "class": "C",
       "score": 70,
       "region": "world",
@@ -278,7 +241,7 @@
       "source": "NDTV",
       "source_preferred": false,
       "published_at": "2026-10-20T04:06:20+05:30",
-      "age_hours": 3.41,
+      "age_hours": 3.58,
       "categories": [
         "accident_casualty"
       ],
@@ -286,7 +249,7 @@
       "corroboration": []
     },
     {
-      "rank": 15,
+      "rank": 13,
       "class": "C",
       "score": 70,
       "region": "telangana",
@@ -297,7 +260,7 @@
       "source": "The Hindu",
       "source_preferred": true,
       "published_at": "2026-10-19T22:35:03+05:30",
-      "age_hours": 8.94,
+      "age_hours": 9.11,
       "categories": [
         "political_major"
       ],
@@ -305,7 +268,7 @@
       "corroboration": []
     },
     {
-      "rank": 16,
+      "rank": 14,
       "class": "C",
       "score": 70,
       "region": "telangana",
@@ -316,7 +279,7 @@
       "source": "The Hindu",
       "source_preferred": true,
       "published_at": "2026-10-19T22:26:20+05:30",
-      "age_hours": 9.08,
+      "age_hours": 9.25,
       "categories": [
         "political_major"
       ],
@@ -324,7 +287,7 @@
       "corroboration": []
     },
     {
-      "rank": 17,
+      "rank": 15,
       "class": "C",
       "score": 70,
       "region": "telangana",
@@ -335,7 +298,7 @@
       "source": "The Hindu",
       "source_preferred": true,
       "published_at": "2026-10-19T20:22:49+05:30",
-      "age_hours": 11.14,
+      "age_hours": 11.31,
       "categories": [
         "political_major",
         "protest_major"
@@ -344,7 +307,7 @@
       "corroboration": []
     },
     {
-      "rank": 18,
+      "rank": 16,
       "class": "C",
       "score": 70,
       "region": "telangana",
@@ -355,7 +318,7 @@
       "source": "Munsif Daily",
       "source_preferred": true,
       "published_at": "2026-10-19T19:52:04+05:30",
-      "age_hours": 11.65,
+      "age_hours": 11.82,
       "categories": [
         "political_major"
       ],
@@ -363,7 +326,7 @@
       "corroboration": []
     },
     {
-      "rank": 19,
+      "rank": 17,
       "class": "C",
       "score": 70,
       "region": "hyderabad",
@@ -374,7 +337,7 @@
       "source": "Telangana Today",
       "source_preferred": false,
       "published_at": "2026-10-19T16:13:50+05:30",
-      "age_hours": 15.29,
+      "age_hours": 15.46,
       "categories": [
         "accident_casualty"
       ],
@@ -382,7 +345,7 @@
       "corroboration": []
     },
     {
-      "rank": 20,
+      "rank": 18,
       "class": "C",
       "score": 70,
       "region": "hyderabad",
@@ -393,7 +356,7 @@
       "source": "Telangana Today",
       "source_preferred": false,
       "published_at": "2026-10-19T12:25:28+05:30",
-      "age_hours": 19.09,
+      "age_hours": 19.27,
       "categories": [
         "accident_casualty"
       ],
@@ -401,51 +364,50 @@
       "corroboration": []
     },
     {
-      "rank": 21,
+      "rank": 19,
       "class": "C",
       "score": 68,
-      "region": "world",
-      "region_confidence": 1.0,
-      "suggested_headline": "🌍 LATEST — WORLD",
-      "title": "Two Indian nationals among 28 charged with election fraud in California",
-      "url": "https://www.thehindu.com/news/international/two-indian-nationals-among-28-charged-with-election-fraud-in-california/article71603104.ece",
-      "source": "The Hindu",
+      "region": "hyderabad",
+      "region_confidence": 0.4,
+      "suggested_headline": "📰 LATEST NEWS — HYDERABAD",
+      "title": "Two Indian nationals among 28 charged with election fraud in US",
+      "url": "https://www.siasat.com/two-indian-nationals-among-28-charged-with-election-fraud-in-us-3561189/",
+      "source": "Munsif Daily",
       "source_preferred": true,
-      "published_at": "2026-10-20T06:50:54+05:30",
-      "age_hours": 0.67,
+      "published_at": "2026-10-20T07:40:04+05:30",
+      "age_hours": 0.02,
       "categories": [
         "major_crime",
         "political_major"
       ],
-      "excerpt": "According to the Justice Department, Amandeep Kaur (30) and Kamlesh Shah (67) have been charged with fraudulently registering as voters and casting their ballots in the November 2024 U.S. elections",
+      "excerpt": "Washington: Two Indian nationals are among 28 green card holders charged with election fraud in California, the US Department of Justice said in a statement on Monday, October 19. According to the Justice Department, Amandeep Kaur (30) and Kamlesh Shah (67) have been charged with fraudulently registering as voters and casting their ballots in the …",
       "corroboration": [
-        "Deccan Chronicle"
+        "The Hindu"
       ]
     },
     {
-      "rank": 22,
+      "rank": 20,
       "class": "C",
       "score": 68,
       "region": "world",
       "region_confidence": 1.0,
       "suggested_headline": "🌍 LATEST — WORLD",
-      "title": "Gold mine collapse kills at least six in southwest Colombia",
-      "url": "https://www.thehindu.com/news/international/gold-mine-collapse-in-colombias-narino-province/article71603089.ece",
+      "title": "Migrants have taken over France, they must close the borders: Trump on France riots",
+      "url": "https://www.thehindu.com/news/international/migrants-have-taken-over-france-they-must-close-the-borders-trump-on-france-riots/article71603124.ece",
       "source": "The Hindu",
       "source_preferred": true,
-      "published_at": "2026-10-20T02:09:09+05:30",
-      "age_hours": 5.37,
+      "published_at": "2026-10-20T07:35:25+05:30",
+      "age_hours": 0.1,
       "categories": [
-        "accident_casualty",
-        "infrastructure_failure"
+        "traffic_disruption",
+        "political_major",
+        "protest_major"
       ],
-      "excerpt": "At least six miners were killed Monday when an open-pit gold mine collapsed in a remote corner of Colombia’s Nariño province, authorities said",
-      "corroboration": [
-        "Deccan Chronicle"
-      ]
+      "excerpt": "At a rally in Kansas, the U.S. President launched into a lengthy tirade about France, which he said was being “conquered, looted, and burned to the ground by migrants, jihadists, and communists”",
+      "corroboration": []
     },
     {
-      "rank": 23,
+      "rank": 21,
       "class": "C",
       "score": 68,
       "region": "telangana",
@@ -456,7 +418,7 @@
       "source": "Deccan Chronicle",
       "source_preferred": false,
       "published_at": "2026-10-20T01:49:48+05:30",
-      "age_hours": 5.69,
+      "age_hours": 5.86,
       "categories": [
         "political_major"
       ],
@@ -466,7 +428,27 @@
       ]
     },
     {
-      "rank": 24,
+      "rank": 22,
+      "class": "C",
+      "score": 68,
+      "region": "telangana",
+      "region_confidence": 1.0,
+      "suggested_headline": "📰 LATEST NEWS — TELANGANA",
+      "title": "15 passengers Injured As Bus Rams Into Cement Lorry On Batasingaram Flyover",
+      "url": "https://www.deccanchronicle.com/southern-states/telangana/15-passengers-injured-as-bus-rams-into-cement-lorry-on-batasingaram-flyover-1997344",
+      "source": "Deccan Chronicle",
+      "source_preferred": false,
+      "published_at": "2026-10-20T01:36:24+05:30",
+      "age_hours": 6.08,
+      "categories": [
+        "accident_casualty",
+        "infrastructure_failure"
+      ],
+      "excerpt": "The injured, Bandaru Thirupathamma, 65, and Duggi Laxmi, 38, were travelling with family members, including two children.",
+      "corroboration": []
+    },
+    {
+      "rank": 23,
       "class": "C",
       "score": 68,
       "region": "telangana",
@@ -477,7 +459,7 @@
       "source": "Deccan Chronicle",
       "source_preferred": false,
       "published_at": "2026-10-20T01:16:43+05:30",
-      "age_hours": 6.24,
+      "age_hours": 6.41,
       "categories": [
         "accident_casualty"
       ],
@@ -485,7 +467,7 @@
       "corroboration": []
     },
     {
-      "rank": 25,
+      "rank": 24,
       "class": "C",
       "score": 68,
       "region": "telangana",
@@ -496,7 +478,7 @@
       "source": "Deccan Chronicle",
       "source_preferred": false,
       "published_at": "2026-10-20T01:13:54+05:30",
-      "age_hours": 6.29,
+      "age_hours": 6.46,
       "categories": [
         "accident_casualty"
       ],
@@ -504,7 +486,7 @@
       "corroboration": []
     },
     {
-      "rank": 26,
+      "rank": 25,
       "class": "C",
       "score": 68,
       "region": "telangana",
@@ -515,7 +497,7 @@
       "source": "Telangana Today",
       "source_preferred": false,
       "published_at": "2026-10-20T00:48:50+05:30",
-      "age_hours": 6.71,
+      "age_hours": 6.88,
       "categories": [
         "accident_casualty",
         "political_major"
@@ -524,7 +506,7 @@
       "corroboration": []
     },
     {
-      "rank": 27,
+      "rank": 26,
       "class": "C",
       "score": 68,
       "region": "telangana",
@@ -535,7 +517,7 @@
       "source": "Deccan Chronicle",
       "source_preferred": false,
       "published_at": "2026-10-19T23:52:12+05:30",
-      "age_hours": 7.65,
+      "age_hours": 7.82,
       "categories": [
         "accident_casualty"
       ],
@@ -543,7 +525,7 @@
       "corroboration": []
     },
     {
-      "rank": 28,
+      "rank": 27,
       "class": "C",
       "score": 68,
       "region": "telangana",
@@ -554,7 +536,7 @@
       "source": "Deccan Chronicle",
       "source_preferred": false,
       "published_at": "2026-10-19T23:40:59+05:30",
-      "age_hours": 7.84,
+      "age_hours": 8.01,
       "categories": [
         "disaster_weather",
         "infrastructure_failure"
@@ -563,7 +545,7 @@
       "corroboration": []
     },
     {
-      "rank": 29,
+      "rank": 28,
       "class": "C",
       "score": 68,
       "region": "telangana",
@@ -574,7 +556,7 @@
       "source": "Deccan Chronicle",
       "source_preferred": false,
       "published_at": "2026-10-19T22:47:32+05:30",
-      "age_hours": 8.73,
+      "age_hours": 8.9,
       "categories": [
         "accident_casualty",
         "international_conflict"
@@ -583,7 +565,7 @@
       "corroboration": []
     },
     {
-      "rank": 30,
+      "rank": 29,
       "class": "C",
       "score": 68,
       "region": "india",
@@ -594,7 +576,7 @@
       "source": "The Hindu",
       "source_preferred": true,
       "published_at": "2026-10-19T22:40:04+05:30",
-      "age_hours": 8.85,
+      "age_hours": 9.02,
       "categories": [
         "accident_casualty"
       ],
@@ -602,7 +584,7 @@
       "corroboration": []
     },
     {
-      "rank": 31,
+      "rank": 30,
       "class": "C",
       "score": 68,
       "region": "telangana",
@@ -613,7 +595,7 @@
       "source": "Deccan Chronicle",
       "source_preferred": false,
       "published_at": "2026-10-19T21:43:37+05:30",
-      "age_hours": 9.79,
+      "age_hours": 9.96,
       "categories": [
         "accident_casualty",
         "infrastructure_failure"
@@ -622,7 +604,7 @@
       "corroboration": []
     },
     {
-      "rank": 32,
+      "rank": 31,
       "class": "C",
       "score": 68,
       "region": "india",
@@ -633,7 +615,7 @@
       "source": "The Hindu",
       "source_preferred": true,
       "published_at": "2026-10-19T20:23:14+05:30",
-      "age_hours": 11.13,
+      "age_hours": 11.3,
       "categories": [
         "fire_explosion",
         "accident_casualty"
@@ -642,27 +624,7 @@
       "corroboration": []
     },
     {
-      "rank": 33,
-      "class": "C",
-      "score": 68,
-      "region": "hyderabad",
-      "region_confidence": 1.0,
-      "suggested_headline": "📰 LATEST NEWS — HYDERABAD",
-      "title": "DJ-Remixed Protest Beats Rock Parties",
-      "url": "https://www.deccanchronicle.com/tabloid/hyderabad-chronicle/dj-remixed-protest-beats-rock-parties-1997213",
-      "source": "Deccan Chronicle",
-      "source_preferred": false,
-      "published_at": "2026-10-19T19:30:56+05:30",
-      "age_hours": 12.0,
-      "categories": [
-        "political_major",
-        "protest_major"
-      ],
-      "excerpt": "The catchy protest slogans of Gen-Z (ek kachori, do samosa… Gyanu Go, It’s done Bro!) have now become club-remix hits in pubs and discos across the country",
-      "corroboration": []
-    },
-    {
-      "rank": 34,
+      "rank": 32,
       "class": "C",
       "score": 68,
       "region": "india",
@@ -673,7 +635,7 @@
       "source": "Times of India",
       "source_preferred": false,
       "published_at": "2026-10-19T18:50:35+05:30",
-      "age_hours": 12.68,
+      "age_hours": 12.85,
       "categories": [
         "accident_casualty",
         "police_operation",
@@ -683,7 +645,7 @@
       "corroboration": []
     },
     {
-      "rank": 35,
+      "rank": 33,
       "class": "C",
       "score": 68,
       "region": "telangana",
@@ -694,7 +656,7 @@
       "source": "Munsif Daily",
       "source_preferred": true,
       "published_at": "2026-10-19T18:02:03+05:30",
-      "age_hours": 13.49,
+      "age_hours": 13.66,
       "categories": [
         "political_major"
       ],
@@ -702,7 +664,7 @@
       "corroboration": []
     },
     {
-      "rank": 36,
+      "rank": 34,
       "class": "C",
       "score": 68,
       "region": "telangana",
@@ -713,7 +675,7 @@
       "source": "Munsif Daily",
       "source_preferred": true,
       "published_at": "2026-10-19T16:20:33+05:30",
-      "age_hours": 15.18,
+      "age_hours": 15.35,
       "categories": [
         "political_major"
       ],
@@ -721,7 +683,7 @@
       "corroboration": []
     },
     {
-      "rank": 37,
+      "rank": 35,
       "class": "C",
       "score": 68,
       "region": "telangana",
@@ -732,7 +694,7 @@
       "source": "Munsif Daily",
       "source_preferred": true,
       "published_at": "2026-10-19T12:56:29+05:30",
-      "age_hours": 18.58,
+      "age_hours": 18.75,
       "categories": [
         "political_major"
       ],
@@ -740,7 +702,7 @@
       "corroboration": []
     },
     {
-      "rank": 38,
+      "rank": 36,
       "class": "C",
       "score": 68,
       "region": "hyderabad",
@@ -751,7 +713,7 @@
       "source": "Deccan Chronicle",
       "source_preferred": false,
       "published_at": "2026-10-19T11:41:48+05:30",
-      "age_hours": 19.82,
+      "age_hours": 19.99,
       "categories": [
         "fire_explosion"
       ],
@@ -759,7 +721,7 @@
       "corroboration": []
     },
     {
-      "rank": 39,
+      "rank": 37,
       "class": "C",
       "score": 68,
       "region": "india",
@@ -770,7 +732,7 @@
       "source": "Newsmeter",
       "source_preferred": false,
       "published_at": "2026-10-19T09:09:13+05:30",
-      "age_hours": 22.37,
+      "age_hours": 22.54,
       "categories": [
         "accident_casualty"
       ],
@@ -778,7 +740,7 @@
       "corroboration": []
     },
     {
-      "rank": 40,
+      "rank": 38,
       "class": "C",
       "score": 67,
       "region": "hyderabad",
@@ -789,7 +751,7 @@
       "source": "Munsif Daily",
       "source_preferred": true,
       "published_at": "2026-10-19T17:50:56+05:30",
-      "age_hours": 13.67,
+      "age_hours": 13.84,
       "categories": [
         "accident_casualty"
       ],
@@ -797,7 +759,83 @@
       "corroboration": []
     },
     {
+      "rank": 39,
+      "class": "C",
+      "score": 66,
+      "region": "india",
+      "region_confidence": 1.0,
+      "suggested_headline": "📰 LATEST NEWS — INDIA",
+      "title": "Delhi Traffic Police Issues Dussehra Advisory, Urges Commuters To Plan Journeys In Advance",
+      "url": "https://www.deccanchronicle.com/nation/delhi-traffic-police-issues-dussehra-advisory-urges-commuters-to-plan-journeys-in-advance-1997355",
+      "source": "Deccan Chronicle",
+      "source_preferred": false,
+      "published_at": "2026-10-20T07:32:47+05:30",
+      "age_hours": 0.14,
+      "categories": [
+        "public_safety_warning"
+      ],
+      "excerpt": "According to the advisory, traffic diversions will be enforced on major arterial roads in East Delhi between 5 pm and 8 pm, as required, due to the expected heavy movement of vehicles and pedestrians during the celebrations.",
+      "corroboration": []
+    },
+    {
+      "rank": 40,
+      "class": "C",
+      "score": 66,
+      "region": "india",
+      "region_confidence": 1.0,
+      "suggested_headline": "📰 LATEST NEWS — INDIA",
+      "title": "Amit Shah To Launch Rs 8,941 Crore Delhi Water Projects On October 22",
+      "url": "https://www.ndtv.com/delhi-news/amit-shah-to-launch-rs-8-941-crore-delhi-water-projects-on-october-22-12208854#publisher=newsstand",
+      "source": "NDTV",
+      "source_preferred": false,
+      "published_at": "2026-10-20T07:25:29+05:30",
+      "age_hours": 0.27,
+      "categories": [
+        "political_major"
+      ],
+      "excerpt": "Water Minister Parvesh Sahib Singh shared the details on Monday and announced that Union Home Minister Amit Shah would inaugurate and lay the foundation stones of 43 Delhi Jal Board projects worth Rs 8,941.22 crore on October 22.",
+      "corroboration": []
+    },
+    {
       "rank": 41,
+      "class": "C",
+      "score": 66,
+      "region": "india",
+      "region_confidence": 1.0,
+      "suggested_headline": "📰 LATEST NEWS — INDIA",
+      "title": "Birthday Parties On Yamuna Banks? Delhi Minister's Unusual Cleanup Plan",
+      "url": "https://www.ndtv.com/delhi-news/birthday-parties-on-yamuna-banks-delhi-ministers-unusual-cleanup-plan-12208833#publisher=newsstand",
+      "source": "NDTV",
+      "source_preferred": false,
+      "published_at": "2026-10-20T07:13:25+05:30",
+      "age_hours": 0.47,
+      "categories": [
+        "political_major"
+      ],
+      "excerpt": "The unusual proposal is part of the Delhi government's efforts to encourage people to develop a personal connection with the Yamuna and take responsibility for keeping it clean.",
+      "corroboration": []
+    },
+    {
+      "rank": 42,
+      "class": "C",
+      "score": 66,
+      "region": "world",
+      "region_confidence": 1.0,
+      "suggested_headline": "🌍 LATEST — WORLD",
+      "title": "Woman Gets Husband Killed By Painter Turned Lover They Hired For New Home",
+      "url": "https://www.ndtv.com/india-news/karnataka-woman-falls-for-painter-together-plot-husbands-murder-12208218#publisher=newsstand",
+      "source": "NDTV",
+      "source_preferred": false,
+      "published_at": "2026-10-20T07:12:59+05:30",
+      "age_hours": 0.47,
+      "categories": [
+        "accident_casualty"
+      ],
+      "excerpt": "The case came to light after 42-year-old Rajshekhar Biradar's body was found on October 4.",
+      "corroboration": []
+    },
+    {
+      "rank": 43,
       "class": "C",
       "score": 66,
       "region": "telangana",
@@ -808,7 +846,7 @@
       "source": "Deccan Chronicle",
       "source_preferred": false,
       "published_at": "2026-10-20T01:22:30+05:30",
-      "age_hours": 6.14,
+      "age_hours": 6.32,
       "categories": [
         "fire_explosion"
       ],
@@ -816,7 +854,7 @@
       "corroboration": []
     },
     {
-      "rank": 42,
+      "rank": 44,
       "class": "C",
       "score": 66,
       "region": "world",
@@ -827,7 +865,7 @@
       "source": "Deccan Chronicle",
       "source_preferred": false,
       "published_at": "2026-10-20T01:18:06+05:30",
-      "age_hours": 6.22,
+      "age_hours": 6.39,
       "categories": [
         "accident_casualty"
       ],
@@ -835,7 +873,7 @@
       "corroboration": []
     },
     {
-      "rank": 43,
+      "rank": 45,
       "class": "C",
       "score": 66,
       "region": "world",
@@ -846,7 +884,7 @@
       "source": "Deccan Chronicle",
       "source_preferred": false,
       "published_at": "2026-10-20T00:06:19+05:30",
-      "age_hours": 7.41,
+      "age_hours": 7.58,
       "categories": [
         "accident_casualty"
       ],
@@ -854,7 +892,7 @@
       "corroboration": []
     },
     {
-      "rank": 44,
+      "rank": 46,
       "class": "C",
       "score": 66,
       "region": "telangana",
@@ -865,7 +903,7 @@
       "source": "Munsif Daily",
       "source_preferred": true,
       "published_at": "2026-10-19T21:37:57+05:30",
-      "age_hours": 9.89,
+      "age_hours": 10.06,
       "categories": [
         "major_crime",
         "police_operation"
@@ -874,7 +912,7 @@
       "corroboration": []
     },
     {
-      "rank": 45,
+      "rank": 47,
       "class": "C",
       "score": 66,
       "region": "world",
@@ -885,7 +923,7 @@
       "source": "Deccan Chronicle",
       "source_preferred": false,
       "published_at": "2026-10-19T19:59:39+05:30",
-      "age_hours": 11.53,
+      "age_hours": 11.7,
       "categories": [
         "accident_casualty"
       ],
@@ -893,7 +931,27 @@
       "corroboration": []
     },
     {
-      "rank": 46,
+      "rank": 48,
+      "class": "C",
+      "score": 66,
+      "region": "hyderabad",
+      "region_confidence": 1.0,
+      "suggested_headline": "📰 LATEST NEWS — HYDERABAD",
+      "title": "DJ-Remixed Protest Beats Rock Parties",
+      "url": "https://www.deccanchronicle.com/tabloid/hyderabad-chronicle/dj-remixed-protest-beats-rock-parties-1997213",
+      "source": "Deccan Chronicle",
+      "source_preferred": false,
+      "published_at": "2026-10-19T19:30:56+05:30",
+      "age_hours": 12.17,
+      "categories": [
+        "political_major",
+        "protest_major"
+      ],
+      "excerpt": "The catchy protest slogans of Gen-Z (ek kachori, do samosa… Gyanu Go, It’s done Bro!) have now become club-remix hits in pubs and discos across the country",
+      "corroboration": []
+    },
+    {
+      "rank": 49,
       "class": "C",
       "score": 66,
       "region": "india",
@@ -904,7 +962,7 @@
       "source": "The Hindu",
       "source_preferred": true,
       "published_at": "2026-10-19T17:40:28+05:30",
-      "age_hours": 13.84,
+      "age_hours": 14.02,
       "categories": [
         "accident_casualty",
         "missing_person"
@@ -913,7 +971,7 @@
       "corroboration": []
     },
     {
-      "rank": 47,
+      "rank": 50,
       "class": "C",
       "score": 66,
       "region": "india",
@@ -924,7 +982,7 @@
       "source": "Munsif Daily",
       "source_preferred": true,
       "published_at": "2026-10-19T16:52:39+05:30",
-      "age_hours": 14.64,
+      "age_hours": 14.81,
       "categories": [
         "accident_casualty",
         "political_major"
@@ -933,7 +991,7 @@
       "corroboration": []
     },
     {
-      "rank": 48,
+      "rank": 51,
       "class": "C",
       "score": 66,
       "region": "telangana",
@@ -944,7 +1002,7 @@
       "source": "Telangana Today",
       "source_preferred": false,
       "published_at": "2026-10-19T15:29:26+05:30",
-      "age_hours": 16.03,
+      "age_hours": 16.2,
       "categories": [
         "accident_casualty"
       ],
@@ -952,7 +1010,7 @@
       "corroboration": []
     },
     {
-      "rank": 49,
+      "rank": 52,
       "class": "C",
       "score": 66,
       "region": "telangana",
@@ -963,7 +1021,7 @@
       "source": "Telangana Today",
       "source_preferred": false,
       "published_at": "2026-10-19T14:49:27+05:30",
-      "age_hours": 16.7,
+      "age_hours": 16.87,
       "categories": [
         "accident_casualty"
       ],
@@ -973,7 +1031,7 @@
       ]
     },
     {
-      "rank": 50,
+      "rank": 53,
       "class": "C",
       "score": 66,
       "region": "hyderabad",
@@ -984,7 +1042,7 @@
       "source": "Deccan Chronicle",
       "source_preferred": false,
       "published_at": "2026-10-19T14:19:44+05:30",
-      "age_hours": 17.19,
+      "age_hours": 17.36,
       "categories": [
         "political_major"
       ],
@@ -992,7 +1050,7 @@
       "corroboration": []
     },
     {
-      "rank": 51,
+      "rank": 54,
       "class": "C",
       "score": 66,
       "region": "telangana",
@@ -1003,7 +1061,7 @@
       "source": "Telangana Today",
       "source_preferred": false,
       "published_at": "2026-10-19T14:17:46+05:30",
-      "age_hours": 17.22,
+      "age_hours": 17.39,
       "categories": [
         "accident_casualty"
       ],
@@ -1011,7 +1069,7 @@
       "corroboration": []
     },
     {
-      "rank": 52,
+      "rank": 55,
       "class": "C",
       "score": 66,
       "region": "telangana",
@@ -1022,7 +1080,7 @@
       "source": "Deccan Chronicle",
       "source_preferred": false,
       "published_at": "2026-10-19T14:09:12+05:30",
-      "age_hours": 17.37,
+      "age_hours": 17.54,
       "categories": [
         "accident_casualty"
       ],
@@ -1030,7 +1088,7 @@
       "corroboration": []
     },
     {
-      "rank": 53,
+      "rank": 56,
       "class": "C",
       "score": 66,
       "region": "telangana",
@@ -1041,7 +1099,7 @@
       "source": "Telangana Today",
       "source_preferred": false,
       "published_at": "2026-10-19T13:55:34+05:30",
-      "age_hours": 17.59,
+      "age_hours": 17.76,
       "categories": [
         "accident_casualty"
       ],
@@ -1049,7 +1107,7 @@
       "corroboration": []
     },
     {
-      "rank": 54,
+      "rank": 57,
       "class": "C",
       "score": 66,
       "region": "telangana",
@@ -1060,7 +1118,7 @@
       "source": "Telangana Today",
       "source_preferred": false,
       "published_at": "2026-10-19T11:01:17+05:30",
-      "age_hours": 20.5,
+      "age_hours": 20.67,
       "categories": [
         "accident_casualty"
       ],
@@ -1068,7 +1126,26 @@
       "corroboration": []
     },
     {
-      "rank": 55,
+      "rank": 58,
+      "class": "C",
+      "score": 65,
+      "region": "world",
+      "region_confidence": 1.0,
+      "suggested_headline": "🌍 LATEST — WORLD",
+      "title": "Forget Obsession and Carrie, the biggest horror story of 2026 is layoffs",
+      "url": "https://www.indiatoday.in/jobs/deep-dive/story/2026-layoffs-ai-cost-cuts-restructuring-global-job-losses-educ-3020529-2026-10-20?utm_source=rss",
+      "source": "India Today",
+      "source_preferred": false,
+      "published_at": "2026-10-20T07:30:54+05:30",
+      "age_hours": 0.18,
+      "categories": [
+        "economic_major"
+      ],
+      "excerpt": "Forget Obsession and Carrie the biggest horror story of is layoffs",
+      "corroboration": []
+    },
+    {
+      "rank": 59,
       "class": "C",
       "score": 64,
       "region": "world",
@@ -1079,7 +1156,7 @@
       "source": "Indian Express",
       "source_preferred": false,
       "published_at": "2026-10-20T06:10:54+05:30",
-      "age_hours": 1.34,
+      "age_hours": 1.51,
       "categories": [
         "security_terror"
       ],
@@ -1087,7 +1164,7 @@
       "corroboration": []
     },
     {
-      "rank": 56,
+      "rank": 60,
       "class": "C",
       "score": 64,
       "region": "india",
@@ -1098,7 +1175,7 @@
       "source": "The Hindu",
       "source_preferred": true,
       "published_at": "2026-10-20T01:18:25+05:30",
-      "age_hours": 6.21,
+      "age_hours": 6.38,
       "categories": [
         "political_major"
       ],
@@ -1106,7 +1183,7 @@
       "corroboration": []
     },
     {
-      "rank": 57,
+      "rank": 61,
       "class": "C",
       "score": 64,
       "region": "world",
@@ -1117,7 +1194,7 @@
       "source": "The Hindu",
       "source_preferred": true,
       "published_at": "2026-10-20T00:03:27+05:30",
-      "age_hours": 7.46,
+      "age_hours": 7.63,
       "categories": [
         "accident_casualty"
       ],
@@ -1125,7 +1202,7 @@
       "corroboration": []
     },
     {
-      "rank": 58,
+      "rank": 62,
       "class": "C",
       "score": 64,
       "region": "india",
@@ -1136,7 +1213,7 @@
       "source": "Munsif Daily",
       "source_preferred": true,
       "published_at": "2026-10-19T23:05:26+05:30",
-      "age_hours": 8.43,
+      "age_hours": 8.6,
       "categories": [
         "political_major"
       ],
@@ -1144,7 +1221,7 @@
       "corroboration": []
     },
     {
-      "rank": 59,
+      "rank": 63,
       "class": "C",
       "score": 64,
       "region": "telangana",
@@ -1155,7 +1232,7 @@
       "source": "Deccan Chronicle",
       "source_preferred": false,
       "published_at": "2026-10-19T23:00:28+05:30",
-      "age_hours": 8.51,
+      "age_hours": 8.68,
       "categories": [
         "political_major"
       ],
@@ -1163,7 +1240,7 @@
       "corroboration": []
     },
     {
-      "rank": 60,
+      "rank": 64,
       "class": "C",
       "score": 64,
       "region": "world",
@@ -1174,7 +1251,7 @@
       "source": "The Hindu",
       "source_preferred": true,
       "published_at": "2026-10-19T22:48:34+05:30",
-      "age_hours": 8.71,
+      "age_hours": 8.88,
       "categories": [
         "accident_casualty",
         "traffic_disruption",
@@ -1184,7 +1261,7 @@
       "corroboration": []
     },
     {
-      "rank": 61,
+      "rank": 65,
       "class": "C",
       "score": 64,
       "region": "telangana",
@@ -1195,7 +1272,7 @@
       "source": "Deccan Chronicle",
       "source_preferred": false,
       "published_at": "2026-10-19T21:54:25+05:30",
-      "age_hours": 9.61,
+      "age_hours": 9.78,
       "categories": [
         "political_major"
       ],
@@ -1203,7 +1280,7 @@
       "corroboration": []
     },
     {
-      "rank": 62,
+      "rank": 66,
       "class": "C",
       "score": 64,
       "region": "india",
@@ -1214,7 +1291,7 @@
       "source": "The Hindu",
       "source_preferred": true,
       "published_at": "2026-10-19T21:46:41+05:30",
-      "age_hours": 9.74,
+      "age_hours": 9.91,
       "categories": [
         "political_major"
       ],
@@ -1222,7 +1299,7 @@
       "corroboration": []
     },
     {
-      "rank": 63,
+      "rank": 67,
       "class": "C",
       "score": 64,
       "region": "telangana",
@@ -1233,7 +1310,7 @@
       "source": "Telangana Today",
       "source_preferred": false,
       "published_at": "2026-10-19T21:26:37+05:30",
-      "age_hours": 10.08,
+      "age_hours": 10.25,
       "categories": [
         "political_major"
       ],
@@ -1243,7 +1320,7 @@
       ]
     },
     {
-      "rank": 64,
+      "rank": 68,
       "class": "C",
       "score": 64,
       "region": "hyderabad",
@@ -1254,7 +1331,7 @@
       "source": "Munsif Daily",
       "source_preferred": true,
       "published_at": "2026-10-19T21:12:36+05:30",
-      "age_hours": 10.31,
+      "age_hours": 10.48,
       "categories": [
         "accident_casualty",
         "court_judgment"
@@ -1263,7 +1340,7 @@
       "corroboration": []
     },
     {
-      "rank": 65,
+      "rank": 69,
       "class": "C",
       "score": 64,
       "region": "india",
@@ -1274,7 +1351,7 @@
       "source": "The Hindu",
       "source_preferred": true,
       "published_at": "2026-10-19T20:57:42+05:30",
-      "age_hours": 10.56,
+      "age_hours": 10.73,
       "categories": [
         "accident_casualty"
       ],
@@ -1282,7 +1359,7 @@
       "corroboration": []
     },
     {
-      "rank": 66,
+      "rank": 70,
       "class": "C",
       "score": 64,
       "region": "hyderabad",
@@ -1293,7 +1370,7 @@
       "source": "Munsif Daily",
       "source_preferred": true,
       "published_at": "2026-10-19T20:29:14+05:30",
-      "age_hours": 11.03,
+      "age_hours": 11.2,
       "categories": [
         "accident_casualty"
       ],
@@ -1301,7 +1378,7 @@
       "corroboration": []
     },
     {
-      "rank": 67,
+      "rank": 71,
       "class": "C",
       "score": 64,
       "region": "india",
@@ -1312,7 +1389,7 @@
       "source": "The Hindu",
       "source_preferred": true,
       "published_at": "2026-10-19T20:18:54+05:30",
-      "age_hours": 11.2,
+      "age_hours": 11.38,
       "categories": [
         "political_major"
       ],
@@ -1320,9 +1397,377 @@
       "corroboration": []
     },
     {
-      "rank": 68,
+      "rank": 72,
       "class": "C",
       "score": 64,
+      "region": "india",
+      "region_confidence": 1.0,
+      "suggested_headline": "📰 LATEST NEWS — INDIA",
+      "title": "Supreme Court stays execution of death sentence of convict in 2008 Ahmedabad serial blasts case",
+      "url": "https://www.thehindu.com/news/national/supreme-court-stays-execution-of-death-sentence-of-convict-in-2008-ahmedabad-serial-blasts-case/article71602719.ece",
+      "source": "The Hindu",
+      "source_preferred": true,
+      "published_at": "2026-10-19T18:24:02+05:30",
+      "age_hours": 13.29,
+      "categories": [
+        "security_terror",
+        "court_judgment"
+      ],
+      "excerpt": "On July 7, the high court upheld the death sentences of 38 operatives of terror outfit Indian Mujahideen in the serial-bomb-blasts case",
+      "corroboration": []
+    },
+    {
+      "rank": 73,
+      "class": "C",
+      "score": 64,
+      "region": "hyderabad",
+      "region_confidence": 1.0,
+      "suggested_headline": "📰 LATEST NEWS — HYDERABAD",
+      "title": "Hyderabad Airport’s Official X Account Hacked, Recovered Quickly",
+      "url": "https://www.deccanchronicle.com/southern-states/telangana/hyderabad-airports-official-x-account-hacked-recovered-quickly-1997130",
+      "source": "Deccan Chronicle",
+      "source_preferred": false,
+      "published_at": "2026-10-19T13:31:21+05:30",
+      "age_hours": 18.17,
+      "categories": [
+        "govt_announcement"
+      ],
+      "excerpt": "Airport operator says account restored, cybercrime authorities and X notified; no impact on airport operations or passenger services.",
+      "corroboration": []
+    },
+    {
+      "rank": 74,
+      "class": "C",
+      "score": 64,
+      "region": "telangana",
+      "region_confidence": 1.0,
+      "suggested_headline": "📰 LATEST NEWS — TELANGANA",
+      "title": "TSCSCL manager ends life following sexual assault complaint, six booked",
+      "url": "https://www.thehindu.com/news/national/telangana/tscscl-manager-ends-life-six-booked/article71600769.ece",
+      "source": "The Hindu",
+      "source_preferred": true,
+      "published_at": "2026-10-19T07:41:54+05:30",
+      "age_hours": 23.99,
+      "categories": [
+        "major_crime"
+      ],
+      "excerpt": "",
+      "corroboration": []
+    },
+    {
+      "rank": 75,
+      "class": "C",
+      "score": 62,
+      "region": "world",
+      "region_confidence": 1.0,
+      "suggested_headline": "🌍 LATEST — WORLD",
+      "title": "‘You’ll see soon enough’: Trump on efforts to free US hostage held in Russia",
+      "url": "https://timesofindia.indiatimes.com/world/us/youll-see-soon-enough-trump-on-efforts-to-free-us-hostage-held-in-russia/articleshow/135059651.cms",
+      "source": "Times of India",
+      "source_preferred": false,
+      "published_at": "2026-10-20T07:32:23+05:30",
+      "age_hours": 0.15,
+      "categories": [
+        "political_major",
+        "international_conflict"
+      ],
+      "excerpt": "Donald Trump suggested a potential breakthrough in the release of an American hostage held by Russia. He underscored the necessity of maintaining open communication with Russian President Vladimir Putin on various issues. Trump noted advancements in negotiations concerning the Ukraine conflict, energy supplies, and the hostage situation, while cautioning that he could step back from discussions if they fail to produce results.",
+      "corroboration": []
+    },
+    {
+      "rank": 76,
+      "class": "C",
+      "score": 62,
+      "region": "world",
+      "region_confidence": 1.0,
+      "suggested_headline": "🌍 LATEST — WORLD",
+      "title": "Food quality on trains to get better? IRCTC and QCI to crack down with surprise audits",
+      "url": "https://timesofindia.indiatimes.com/business/india-business/indian-railways-cracks-down-on-food-quality-issues-after-passenger-complaints-irctc-partners-with-qci-for-surprise-audits-on-trains-and-stations-with-digital-evidence-to-speed-up-action/articleshow/135045412.cms",
+      "source": "Times of India",
+      "source_preferred": false,
+      "published_at": "2026-10-20T06:56:00+05:30",
+      "age_hours": 0.76,
+      "categories": [
+        "public_safety_warning",
+        "infrastructure_failure"
+      ],
+      "excerpt": "Indian Railway Catering and Tourism Corporation Limited (IRCTC) has entered into a strategic Memorandum of Understanding (MoU) with Quality Council of India to strengthen compliance with food safety and hygiene standards across the railway system, according to a statement issued by the Railway Ministry. As part of the system, inspectors will use a mobile application to record their findings, with geo-tagging, time-stamps and photographic evidence made mandatory.",
+      "corroboration": []
+    },
+    {
+      "rank": 77,
+      "class": "C",
+      "score": 62,
+      "region": "world",
+      "region_confidence": 1.0,
+      "suggested_headline": "🌍 LATEST — WORLD",
+      "title": "Trump Warns Europe Is Finished Without Border Closures, Deportations",
+      "url": "https://www.deccanchronicle.com/world/americas/trump-warns-europe-is-finished-without-border-closures-deportations-1997352",
+      "source": "Deccan Chronicle",
+      "source_preferred": false,
+      "published_at": "2026-10-20T06:53:19+05:30",
+      "age_hours": 0.8,
+      "categories": [
+        "political_major"
+      ],
+      "excerpt": "Speaking to reporters outside the White House, President Trump attributed the unrest in France primarily to immigration, rejecting suggestions that it was linked to education or domestic policy issues.",
+      "corroboration": []
+    },
+    {
+      "rank": 78,
+      "class": "C",
+      "score": 62,
+      "region": "india",
+      "region_confidence": 1.0,
+      "suggested_headline": "📰 LATEST NEWS — INDIA",
+      "title": "Visakhapatnam: 70-Year-Old Man Dies of Sea Snakebite",
+      "url": "https://www.deccanchronicle.com/southern-states/andhra-pradesh/visakhapatnam-70-year-old-man-dies-of-sea-snakebite-1997342",
+      "source": "Deccan Chronicle",
+      "source_preferred": false,
+      "published_at": "2026-10-20T01:28:03+05:30",
+      "age_hours": 6.22,
+      "categories": [
+        "accident_casualty"
+      ],
+      "excerpt": "A 70-year-old man died after being bitten by a sea snake while working in a farm field at Lingalapadu village in Jalumuru mandal of Srikakulam district.",
+      "corroboration": []
+    },
+    {
+      "rank": 79,
+      "class": "C",
+      "score": 62,
+      "region": "india",
+      "region_confidence": 1.0,
+      "suggested_headline": "📰 LATEST NEWS — INDIA",
+      "title": "57-Year-Old Man Jumps In Front Of Delhi Metro, Dies",
+      "url": "https://www.ndtv.com/delhi-news/57-year-old-man-jumps-in-front-of-delhi-metro-dies-12208411#publisher=newsstand",
+      "source": "NDTV",
+      "source_preferred": false,
+      "published_at": "2026-10-20T00:58:31+05:30",
+      "age_hours": 6.71,
+      "categories": [
+        "accident_casualty"
+      ],
+      "excerpt": "The victim was identified as Sanjay Chopra, a resident of Kotla Mubarakpur in Delhi, who was reportedly working as a Life Insurance Corporation (LIC) agent, they said.",
+      "corroboration": []
+    },
+    {
+      "rank": 80,
+      "class": "C",
+      "score": 62,
+      "region": "world",
+      "region_confidence": 1.0,
+      "suggested_headline": "🌍 LATEST — WORLD",
+      "title": "West Bank on verge of 'explosion': senior Palestinian official",
+      "url": "https://www.thehindu.com/news/international/west-bank-on-verge-of-explosion-senior-palestinian-official/article71603078.ece",
+      "source": "The Hindu",
+      "source_preferred": true,
+      "published_at": "2026-10-20T00:34:24+05:30",
+      "age_hours": 7.12,
+      "categories": [
+        "fire_explosion"
+      ],
+      "excerpt": "\"The terrorism carried out by the army and settlers, under the supervision of the Israeli government, is a prelude to a coming reaction and explosion,\" says Jibril Rajoub",
+      "corroboration": []
+    },
+    {
+      "rank": 81,
+      "class": "C",
+      "score": 62,
+      "region": "india",
+      "region_confidence": 1.0,
+      "suggested_headline": "📰 LATEST NEWS — INDIA",
+      "title": "CJP contrasts murder convict's relief with leaders' continued custody",
+      "url": "https://www.indiatoday.in/india/story/cjp-leaders-custody-extended-party-alleges-flawed-bail-proceedings-ptag-3021088-2026-10-19?utm_source=rss",
+      "source": "India Today",
+      "source_preferred": false,
+      "published_at": "2026-10-19T23:32:33+05:30",
+      "age_hours": 8.15,
+      "categories": [
+        "accident_casualty",
+        "police_operation"
+      ],
+      "excerpt": "CJP contrasts murder convicts relief with leaders continued custody",
+      "corroboration": []
+    },
+    {
+      "rank": 82,
+      "class": "C",
+      "score": 62,
+      "region": "india",
+      "region_confidence": 1.0,
+      "suggested_headline": "📰 LATEST NEWS — INDIA",
+      "title": "Naveen Patnaik questions Odisha government’s 'silence' on Andhra's poll notification for disputed Kotia villages",
+      "url": "https://www.thehindu.com/news/national/odisha/naveen-patnaik-questions-odisha-governments-silence-on-andhras-poll-notification-for-disputed-kotia-villages/article71603050.ece",
+      "source": "The Hindu",
+      "source_preferred": true,
+      "published_at": "2026-10-19T22:58:21+05:30",
+      "age_hours": 8.72,
+      "categories": [
+        "govt_announcement"
+      ],
+      "excerpt": "The decades-old dispute involves both Odisha and Andhra Pradesh claiming their right over 21 of the 28 villages of Kotia Gram Panchayat",
+      "corroboration": []
+    },
+    {
+      "rank": 83,
+      "class": "C",
+      "score": 62,
+      "region": "hyderabad",
+      "region_confidence": 1.0,
+      "suggested_headline": "📰 LATEST NEWS — HYDERABAD",
+      "title": "Man uses fake female profiles to get men's nude photos, blackmails them; arrested",
+      "url": "https://www.indiatoday.in/cities/hyderabad/story/hyderabad-honey-trap-case-man-arrested-rs-25-16-lakh-extortion-3021036-2026-10-19?utm_source=rss",
+      "source": "India Today",
+      "source_preferred": false,
+      "published_at": "2026-10-19T22:55:39+05:30",
+      "age_hours": 8.76,
+      "categories": [
+        "police_operation"
+      ],
+      "excerpt": "Man uses fake female profiles to get mens nude photos blackmails them arrested",
+      "corroboration": []
+    },
+    {
+      "rank": 84,
+      "class": "C",
+      "score": 62,
+      "region": "hyderabad",
+      "region_confidence": 1.0,
+      "suggested_headline": "📰 LATEST NEWS — HYDERABAD",
+      "title": "Honey Trapper Arrested In Hyderabad",
+      "url": "https://www.deccanchronicle.com/southern-states/telangana/honey-trapper-arrested-in-hyderabad-1997237",
+      "source": "Deccan Chronicle",
+      "source_preferred": false,
+      "published_at": "2026-10-19T21:40:26+05:30",
+      "age_hours": 10.02,
+      "categories": [
+        "police_operation"
+      ],
+      "excerpt": "According to DCP Charminar Kiran Khare, Pavan operated 34 fake social media accounts under women’s names, interacted with over 1,000 people, and sent nude videos and pictures of other women to 82 victims, including a government officer from Telangana. Victims were also traced to Andhra Pradesh, Karnataka, Tamil Nadu, Punjab, and overseas locations. He extorted ₹24.16 lakh",
+      "corroboration": []
+    },
+    {
+      "rank": 85,
+      "class": "C",
+      "score": 62,
+      "region": "india",
+      "region_confidence": 1.0,
+      "suggested_headline": "📰 LATEST NEWS — INDIA",
+      "title": "UPSC aspirant from Andhra Pradesh dies by suicide in Delhi's Old Rajinder Nagar",
+      "url": "https://www.indiatoday.in/cities/delhi/story/upsc-aspirant-alta-bharat-kumar-reddy-depression-related-studies-dies-by-suicide-delhi-rajinder-nagar-3020999-2026-10-19?utm_source=rss",
+      "source": "India Today",
+      "source_preferred": false,
+      "published_at": "2026-10-19T21:40:23+05:30",
+      "age_hours": 10.02,
+      "categories": [
+        "accident_casualty"
+      ],
+      "excerpt": "UPSC aspirant from Andhra Pradesh dies by suicide in Delhis Old Rajinder Nagar",
+      "corroboration": []
+    },
+    {
+      "rank": 86,
+      "class": "C",
+      "score": 62,
+      "region": "india",
+      "region_confidence": 1.0,
+      "suggested_headline": "📰 LATEST NEWS — INDIA",
+      "title": "Odisha: juvenile Detained In Cuttack Murder Case, Police Suspect Past Enmity",
+      "url": "https://www.deccanchronicle.com/nation/odisha-juvenile-detained-in-cuttack-murder-case-police-suspect-past-enmity-1997231",
+      "source": "Deccan Chronicle",
+      "source_preferred": false,
+      "published_at": "2026-10-19T21:03:39+05:30",
+      "age_hours": 10.63,
+      "categories": [
+        "accident_casualty",
+        "police_operation"
+      ],
+      "excerpt": "Police detained a juvenile in connection with a student’s murder in Cuttack, suspecting past enmity while probing a possible social media-related dispute.",
+      "corroboration": []
+    },
+    {
+      "rank": 87,
+      "class": "C",
+      "score": 62,
+      "region": "india",
+      "region_confidence": 1.0,
+      "suggested_headline": "📰 LATEST NEWS — INDIA",
+      "title": "Assam govt to challenge bail for 2 accused in Zubeen death case",
+      "url": "https://www.siasat.com/assam-govt-to-challenge-bail-for-2-accused-in-zubeen-death-case-3561083/",
+      "source": "Munsif Daily",
+      "source_preferred": true,
+      "published_at": "2026-10-19T19:59:13+05:30",
+      "age_hours": 11.7,
+      "categories": [
+        "court_judgment"
+      ],
+      "excerpt": "Guwahati: The Assam government will move the Supreme Court challenging the Gauhati High Court’s decision to grant bail to two of the seven accused in singer Zubeen Garg’s death case, officials said on Sunday. A Special Leave Petition (SLP) would be filed as soon as the apex court reopens after the ongoing holidays, they said. …",
+      "corroboration": []
+    },
+    {
+      "rank": 88,
+      "class": "C",
+      "score": 62,
+      "region": "india",
+      "region_confidence": 1.0,
+      "suggested_headline": "📰 LATEST NEWS — INDIA",
+      "title": "Very close to finalising trade deal with India: Rubio",
+      "url": "https://www.siasat.com/very-close-to-finalising-trade-deal-with-india-rubio-3561088/",
+      "source": "Munsif Daily",
+      "source_preferred": true,
+      "published_at": "2026-10-19T19:58:02+05:30",
+      "age_hours": 11.72,
+      "categories": [
+        "govt_announcement"
+      ],
+      "excerpt": "Washington: The US is “very close” to finalising a trade deal with India, Secretary of State Marco Rubio said on Monday, suggesting that the waiver from tariffs for buying Russian oil was linked to the decision. “We’re trying to finalise the trade deal with India right now. We’re very close to doing that. So that’s …",
+      "corroboration": []
+    },
+    {
+      "rank": 89,
+      "class": "C",
+      "score": 62,
+      "region": "world",
+      "region_confidence": 1.0,
+      "suggested_headline": "🌍 LATEST — WORLD",
+      "title": "Tiger Shroff firing: Three suspects detained in Kota; one was in touch with Bishnoi gang aide, says police",
+      "url": "https://www.thehindu.com/news/cities/mumbai/tiger-shroff-firing-fir-lodged-mumbai-crime-branch-takes-over-probe/article71602123.ece",
+      "source": "The Hindu",
+      "source_preferred": true,
+      "published_at": "2026-10-19T19:49:05+05:30",
+      "age_hours": 11.87,
+      "categories": [
+        "fire_explosion",
+        "police_operation"
+      ],
+      "excerpt": "Three unidentified assailants opened fire at Shroff’s car in Mumbai’s Juhu area on Sunday (October 18, 2026) evening",
+      "corroboration": []
+    },
+    {
+      "rank": 90,
+      "class": "C",
+      "score": 62,
+      "region": "india",
+      "region_confidence": 1.0,
+      "suggested_headline": "📰 LATEST NEWS — INDIA",
+      "title": "Mumbai: Tiger Shroff Escapes Firing, Driver and Auto Driver Injured",
+      "url": "https://newsmeter.in/video-stories/mumbai-tiger-shroff-escapes-firing-driver-and-auto-driver-injured-777760",
+      "source": "Newsmeter",
+      "source_preferred": false,
+      "published_at": "2026-10-19T19:45:18+05:30",
+      "age_hours": 11.94,
+      "categories": [
+        "fire_explosion",
+        "accident_casualty"
+      ],
+      "excerpt": "Three motorcycle-borne assailants allegedly opened fire at the actor’s car in Juhu. His driver and an autorickshaw driver sustained gunshot injuries and were taken to hospital.",
+      "corroboration": []
+    },
+    {
+      "rank": 91,
+      "class": "C",
+      "score": 62,
       "region": "india",
       "region_confidence": 1.0,
       "suggested_headline": "📰 LATEST NEWS — INDIA",
@@ -1331,7 +1776,7 @@
       "source": "The Hindu",
       "source_preferred": true,
       "published_at": "2026-10-19T19:36:44+05:30",
-      "age_hours": 11.91,
+      "age_hours": 12.08,
       "categories": [
         "police_operation",
         "political_major",
@@ -1343,356 +1788,7 @@
       ]
     },
     {
-      "rank": 69,
-      "class": "C",
-      "score": 64,
-      "region": "india",
-      "region_confidence": 1.0,
-      "suggested_headline": "📰 LATEST NEWS — INDIA",
-      "title": "Supreme Court stays execution of death sentence of convict in 2008 Ahmedabad serial blasts case",
-      "url": "https://www.thehindu.com/news/national/supreme-court-stays-execution-of-death-sentence-of-convict-in-2008-ahmedabad-serial-blasts-case/article71602719.ece",
-      "source": "The Hindu",
-      "source_preferred": true,
-      "published_at": "2026-10-19T18:24:02+05:30",
-      "age_hours": 13.12,
-      "categories": [
-        "security_terror",
-        "court_judgment"
-      ],
-      "excerpt": "On July 7, the high court upheld the death sentences of 38 operatives of terror outfit Indian Mujahideen in the serial-bomb-blasts case",
-      "corroboration": []
-    },
-    {
-      "rank": 70,
-      "class": "C",
-      "score": 64,
-      "region": "hyderabad",
-      "region_confidence": 1.0,
-      "suggested_headline": "📰 LATEST NEWS — HYDERABAD",
-      "title": "Hyderabad Airport’s Official X Account Hacked, Recovered Quickly",
-      "url": "https://www.deccanchronicle.com/southern-states/telangana/hyderabad-airports-official-x-account-hacked-recovered-quickly-1997130",
-      "source": "Deccan Chronicle",
-      "source_preferred": false,
-      "published_at": "2026-10-19T13:31:21+05:30",
-      "age_hours": 18.0,
-      "categories": [
-        "govt_announcement"
-      ],
-      "excerpt": "Airport operator says account restored, cybercrime authorities and X notified; no impact on airport operations or passenger services.",
-      "corroboration": []
-    },
-    {
-      "rank": 71,
-      "class": "C",
-      "score": 64,
-      "region": "telangana",
-      "region_confidence": 1.0,
-      "suggested_headline": "📰 LATEST NEWS — TELANGANA",
-      "title": "TSCSCL manager ends life following sexual assault complaint, six booked",
-      "url": "https://www.thehindu.com/news/national/telangana/tscscl-manager-ends-life-six-booked/article71600769.ece",
-      "source": "The Hindu",
-      "source_preferred": true,
-      "published_at": "2026-10-19T07:41:54+05:30",
-      "age_hours": 23.82,
-      "categories": [
-        "major_crime"
-      ],
-      "excerpt": "",
-      "corroboration": []
-    },
-    {
-      "rank": 72,
-      "class": "C",
-      "score": 62,
-      "region": "world",
-      "region_confidence": 1.0,
-      "suggested_headline": "🌍 LATEST — WORLD",
-      "title": "Trump Warns Europe Is Finished Without Border Closures, Deportations",
-      "url": "https://www.deccanchronicle.com/world/americas/trump-warns-europe-is-finished-without-border-closures-deportations-1997352",
-      "source": "Deccan Chronicle",
-      "source_preferred": false,
-      "published_at": "2026-10-20T06:53:19+05:30",
-      "age_hours": 0.63,
-      "categories": [
-        "political_major"
-      ],
-      "excerpt": "Speaking to reporters outside the White House, President Trump attributed the unrest in France primarily to immigration, rejecting suggestions that it was linked to education or domestic policy issues.",
-      "corroboration": []
-    },
-    {
-      "rank": 73,
-      "class": "C",
-      "score": 62,
-      "region": "india",
-      "region_confidence": 1.0,
-      "suggested_headline": "📰 LATEST NEWS — INDIA",
-      "title": "Visakhapatnam: 70-Year-Old Man Dies of Sea Snakebite",
-      "url": "https://www.deccanchronicle.com/southern-states/andhra-pradesh/visakhapatnam-70-year-old-man-dies-of-sea-snakebite-1997342",
-      "source": "Deccan Chronicle",
-      "source_preferred": false,
-      "published_at": "2026-10-20T01:28:03+05:30",
-      "age_hours": 6.05,
-      "categories": [
-        "accident_casualty"
-      ],
-      "excerpt": "A 70-year-old man died after being bitten by a sea snake while working in a farm field at Lingalapadu village in Jalumuru mandal of Srikakulam district.",
-      "corroboration": []
-    },
-    {
-      "rank": 74,
-      "class": "C",
-      "score": 62,
-      "region": "india",
-      "region_confidence": 1.0,
-      "suggested_headline": "📰 LATEST NEWS — INDIA",
-      "title": "57-Year-Old Man Jumps In Front Of Delhi Metro, Dies",
-      "url": "https://www.ndtv.com/delhi-news/57-year-old-man-jumps-in-front-of-delhi-metro-dies-12208411#publisher=newsstand",
-      "source": "NDTV",
-      "source_preferred": false,
-      "published_at": "2026-10-20T00:58:31+05:30",
-      "age_hours": 6.54,
-      "categories": [
-        "accident_casualty"
-      ],
-      "excerpt": "The victim was identified as Sanjay Chopra, a resident of Kotla Mubarakpur in Delhi, who was reportedly working as a Life Insurance Corporation (LIC) agent, they said.",
-      "corroboration": []
-    },
-    {
-      "rank": 75,
-      "class": "C",
-      "score": 62,
-      "region": "world",
-      "region_confidence": 1.0,
-      "suggested_headline": "🌍 LATEST — WORLD",
-      "title": "West Bank on verge of 'explosion': senior Palestinian official",
-      "url": "https://www.thehindu.com/news/international/west-bank-on-verge-of-explosion-senior-palestinian-official/article71603078.ece",
-      "source": "The Hindu",
-      "source_preferred": true,
-      "published_at": "2026-10-20T00:34:24+05:30",
-      "age_hours": 6.95,
-      "categories": [
-        "fire_explosion"
-      ],
-      "excerpt": "\"The terrorism carried out by the army and settlers, under the supervision of the Israeli government, is a prelude to a coming reaction and explosion,\" says Jibril Rajoub",
-      "corroboration": []
-    },
-    {
-      "rank": 76,
-      "class": "C",
-      "score": 62,
-      "region": "india",
-      "region_confidence": 1.0,
-      "suggested_headline": "📰 LATEST NEWS — INDIA",
-      "title": "UP Murder Convict Wishes To Contest Polls. High Court Pauses His Conviction",
-      "url": "https://www.ndtv.com/india-news/up-murder-convict-wishes-to-contest-polls-high-court-pauses-his-conviction-12208363#publisher=newsstand",
-      "source": "NDTV",
-      "source_preferred": false,
-      "published_at": "2026-10-20T00:28:40+05:30",
-      "age_hours": 7.04,
-      "categories": [
-        "accident_casualty",
-        "court_judgment",
-        "political_major"
-      ],
-      "excerpt": "A two-judge bench comprising Justice Siddharth and Justice Vinai Kumar Dwivedi passed the order hearing a criminal appeal filed by Nandlal Rai alias Babloo Rai, who was convicted by the Varanasi sessions court in 2025 in connection with a 2017 murder case.",
-      "corroboration": []
-    },
-    {
-      "rank": 77,
-      "class": "C",
-      "score": 62,
-      "region": "india",
-      "region_confidence": 1.0,
-      "suggested_headline": "📰 LATEST NEWS — INDIA",
-      "title": "CJP contrasts murder convict's relief with leaders' continued custody",
-      "url": "https://www.indiatoday.in/india/story/cjp-leaders-custody-extended-party-alleges-flawed-bail-proceedings-ptag-3021088-2026-10-19?utm_source=rss",
-      "source": "India Today",
-      "source_preferred": false,
-      "published_at": "2026-10-19T23:32:33+05:30",
-      "age_hours": 7.98,
-      "categories": [
-        "accident_casualty",
-        "police_operation"
-      ],
-      "excerpt": "CJP contrasts murder convicts relief with leaders continued custody",
-      "corroboration": []
-    },
-    {
-      "rank": 78,
-      "class": "C",
-      "score": 62,
-      "region": "india",
-      "region_confidence": 1.0,
-      "suggested_headline": "📰 LATEST NEWS — INDIA",
-      "title": "Naveen Patnaik questions Odisha government’s 'silence' on Andhra's poll notification for disputed Kotia villages",
-      "url": "https://www.thehindu.com/news/national/odisha/naveen-patnaik-questions-odisha-governments-silence-on-andhras-poll-notification-for-disputed-kotia-villages/article71603050.ece",
-      "source": "The Hindu",
-      "source_preferred": true,
-      "published_at": "2026-10-19T22:58:21+05:30",
-      "age_hours": 8.55,
-      "categories": [
-        "govt_announcement"
-      ],
-      "excerpt": "The decades-old dispute involves both Odisha and Andhra Pradesh claiming their right over 21 of the 28 villages of Kotia Gram Panchayat",
-      "corroboration": []
-    },
-    {
-      "rank": 79,
-      "class": "C",
-      "score": 62,
-      "region": "hyderabad",
-      "region_confidence": 1.0,
-      "suggested_headline": "📰 LATEST NEWS — HYDERABAD",
-      "title": "Man uses fake female profiles to get men's nude photos, blackmails them; arrested",
-      "url": "https://www.indiatoday.in/cities/hyderabad/story/hyderabad-honey-trap-case-man-arrested-rs-25-16-lakh-extortion-3021036-2026-10-19?utm_source=rss",
-      "source": "India Today",
-      "source_preferred": false,
-      "published_at": "2026-10-19T22:55:39+05:30",
-      "age_hours": 8.59,
-      "categories": [
-        "police_operation"
-      ],
-      "excerpt": "Man uses fake female profiles to get mens nude photos blackmails them arrested",
-      "corroboration": []
-    },
-    {
-      "rank": 80,
-      "class": "C",
-      "score": 62,
-      "region": "hyderabad",
-      "region_confidence": 1.0,
-      "suggested_headline": "📰 LATEST NEWS — HYDERABAD",
-      "title": "Honey Trapper Arrested In Hyderabad",
-      "url": "https://www.deccanchronicle.com/southern-states/telangana/honey-trapper-arrested-in-hyderabad-1997237",
-      "source": "Deccan Chronicle",
-      "source_preferred": false,
-      "published_at": "2026-10-19T21:40:26+05:30",
-      "age_hours": 9.85,
-      "categories": [
-        "police_operation"
-      ],
-      "excerpt": "According to DCP Charminar Kiran Khare, Pavan operated 34 fake social media accounts under women’s names, interacted with over 1,000 people, and sent nude videos and pictures of other women to 82 victims, including a government officer from Telangana. Victims were also traced to Andhra Pradesh, Karnataka, Tamil Nadu, Punjab, and overseas locations. He extorted ₹24.16 lakh",
-      "corroboration": []
-    },
-    {
-      "rank": 81,
-      "class": "C",
-      "score": 62,
-      "region": "india",
-      "region_confidence": 1.0,
-      "suggested_headline": "📰 LATEST NEWS — INDIA",
-      "title": "UPSC aspirant from Andhra Pradesh dies by suicide in Delhi's Old Rajinder Nagar",
-      "url": "https://www.indiatoday.in/cities/delhi/story/upsc-aspirant-alta-bharat-kumar-reddy-depression-related-studies-dies-by-suicide-delhi-rajinder-nagar-3020999-2026-10-19?utm_source=rss",
-      "source": "India Today",
-      "source_preferred": false,
-      "published_at": "2026-10-19T21:40:23+05:30",
-      "age_hours": 9.85,
-      "categories": [
-        "accident_casualty"
-      ],
-      "excerpt": "UPSC aspirant from Andhra Pradesh dies by suicide in Delhis Old Rajinder Nagar",
-      "corroboration": []
-    },
-    {
-      "rank": 82,
-      "class": "C",
-      "score": 62,
-      "region": "india",
-      "region_confidence": 1.0,
-      "suggested_headline": "📰 LATEST NEWS — INDIA",
-      "title": "Odisha: juvenile Detained In Cuttack Murder Case, Police Suspect Past Enmity",
-      "url": "https://www.deccanchronicle.com/nation/odisha-juvenile-detained-in-cuttack-murder-case-police-suspect-past-enmity-1997231",
-      "source": "Deccan Chronicle",
-      "source_preferred": false,
-      "published_at": "2026-10-19T21:03:39+05:30",
-      "age_hours": 10.46,
-      "categories": [
-        "accident_casualty",
-        "police_operation"
-      ],
-      "excerpt": "Police detained a juvenile in connection with a student’s murder in Cuttack, suspecting past enmity while probing a possible social media-related dispute.",
-      "corroboration": []
-    },
-    {
-      "rank": 83,
-      "class": "C",
-      "score": 62,
-      "region": "india",
-      "region_confidence": 1.0,
-      "suggested_headline": "📰 LATEST NEWS — INDIA",
-      "title": "Assam govt to challenge bail for 2 accused in Zubeen death case",
-      "url": "https://www.siasat.com/assam-govt-to-challenge-bail-for-2-accused-in-zubeen-death-case-3561083/",
-      "source": "Munsif Daily",
-      "source_preferred": true,
-      "published_at": "2026-10-19T19:59:13+05:30",
-      "age_hours": 11.53,
-      "categories": [
-        "court_judgment"
-      ],
-      "excerpt": "Guwahati: The Assam government will move the Supreme Court challenging the Gauhati High Court’s decision to grant bail to two of the seven accused in singer Zubeen Garg’s death case, officials said on Sunday. A Special Leave Petition (SLP) would be filed as soon as the apex court reopens after the ongoing holidays, they said. …",
-      "corroboration": []
-    },
-    {
-      "rank": 84,
-      "class": "C",
-      "score": 62,
-      "region": "india",
-      "region_confidence": 1.0,
-      "suggested_headline": "📰 LATEST NEWS — INDIA",
-      "title": "Very close to finalising trade deal with India: Rubio",
-      "url": "https://www.siasat.com/very-close-to-finalising-trade-deal-with-india-rubio-3561088/",
-      "source": "Munsif Daily",
-      "source_preferred": true,
-      "published_at": "2026-10-19T19:58:02+05:30",
-      "age_hours": 11.55,
-      "categories": [
-        "govt_announcement"
-      ],
-      "excerpt": "Washington: The US is “very close” to finalising a trade deal with India, Secretary of State Marco Rubio said on Monday, suggesting that the waiver from tariffs for buying Russian oil was linked to the decision. “We’re trying to finalise the trade deal with India right now. We’re very close to doing that. So that’s …",
-      "corroboration": []
-    },
-    {
-      "rank": 85,
-      "class": "C",
-      "score": 62,
-      "region": "world",
-      "region_confidence": 1.0,
-      "suggested_headline": "🌍 LATEST — WORLD",
-      "title": "Tiger Shroff firing: Three suspects detained in Kota; one was in touch with Bishnoi gang aide, says police",
-      "url": "https://www.thehindu.com/news/cities/mumbai/tiger-shroff-firing-fir-lodged-mumbai-crime-branch-takes-over-probe/article71602123.ece",
-      "source": "The Hindu",
-      "source_preferred": true,
-      "published_at": "2026-10-19T19:49:05+05:30",
-      "age_hours": 11.7,
-      "categories": [
-        "fire_explosion",
-        "police_operation"
-      ],
-      "excerpt": "Three unidentified assailants opened fire at Shroff’s car in Mumbai’s Juhu area on Sunday (October 18, 2026) evening",
-      "corroboration": []
-    },
-    {
-      "rank": 86,
-      "class": "C",
-      "score": 62,
-      "region": "india",
-      "region_confidence": 1.0,
-      "suggested_headline": "📰 LATEST NEWS — INDIA",
-      "title": "Mumbai: Tiger Shroff Escapes Firing, Driver and Auto Driver Injured",
-      "url": "https://newsmeter.in/video-stories/mumbai-tiger-shroff-escapes-firing-driver-and-auto-driver-injured-777760",
-      "source": "Newsmeter",
-      "source_preferred": false,
-      "published_at": "2026-10-19T19:45:18+05:30",
-      "age_hours": 11.76,
-      "categories": [
-        "fire_explosion",
-        "accident_casualty"
-      ],
-      "excerpt": "Three motorcycle-borne assailants allegedly opened fire at the actor’s car in Juhu. His driver and an autorickshaw driver sustained gunshot injuries and were taken to hospital.",
-      "corroboration": []
-    },
-    {
-      "rank": 87,
+      "rank": 92,
       "class": "C",
       "score": 62,
       "region": "world",
@@ -1703,7 +1799,7 @@
       "source": "The Hindu",
       "source_preferred": true,
       "published_at": "2026-10-19T18:38:04+05:30",
-      "age_hours": 12.88,
+      "age_hours": 13.06,
       "categories": [
         "accident_casualty",
         "political_major",
@@ -1713,7 +1809,7 @@
       "corroboration": []
     },
     {
-      "rank": 88,
+      "rank": 93,
       "class": "C",
       "score": 62,
       "region": "telangana",
@@ -1724,7 +1820,7 @@
       "source": "Deccan Chronicle",
       "source_preferred": false,
       "published_at": "2026-10-19T18:04:51+05:30",
-      "age_hours": 13.44,
+      "age_hours": 13.61,
       "categories": [
         "political_major"
       ],
@@ -1732,7 +1828,7 @@
       "corroboration": []
     },
     {
-      "rank": 89,
+      "rank": 94,
       "class": "C",
       "score": 62,
       "region": "hyderabad",
@@ -1743,7 +1839,7 @@
       "source": "Munsif Daily",
       "source_preferred": true,
       "published_at": "2026-10-19T16:12:25+05:30",
-      "age_hours": 15.31,
+      "age_hours": 15.48,
       "categories": [
         "accident_casualty"
       ],
@@ -1751,7 +1847,7 @@
       "corroboration": []
     },
     {
-      "rank": 90,
+      "rank": 95,
       "class": "C",
       "score": 62,
       "region": "hyderabad",
@@ -1762,7 +1858,7 @@
       "source": "Telangana Today",
       "source_preferred": false,
       "published_at": "2026-10-19T16:01:22+05:30",
-      "age_hours": 15.5,
+      "age_hours": 15.67,
       "categories": [
         "major_crime",
         "police_operation"
@@ -1773,7 +1869,7 @@
       ]
     },
     {
-      "rank": 91,
+      "rank": 96,
       "class": "C",
       "score": 62,
       "region": "india",
@@ -1784,7 +1880,7 @@
       "source": "The Hindu",
       "source_preferred": true,
       "published_at": "2026-10-19T15:30:17+05:30",
-      "age_hours": 16.01,
+      "age_hours": 16.19,
       "categories": [
         "political_major"
       ],
@@ -1792,7 +1888,7 @@
       "corroboration": []
     },
     {
-      "rank": 92,
+      "rank": 97,
       "class": "C",
       "score": 62,
       "region": "telangana",
@@ -1803,7 +1899,7 @@
       "source": "Telangana Today",
       "source_preferred": false,
       "published_at": "2026-10-19T15:20:20+05:30",
-      "age_hours": 16.18,
+      "age_hours": 16.35,
       "categories": [
         "political_major"
       ],
@@ -1811,7 +1907,7 @@
       "corroboration": []
     },
     {
-      "rank": 93,
+      "rank": 98,
       "class": "C",
       "score": 62,
       "region": "india",
@@ -1822,7 +1918,7 @@
       "source": "The Hindu",
       "source_preferred": true,
       "published_at": "2026-10-19T14:57:53+05:30",
-      "age_hours": 16.55,
+      "age_hours": 16.73,
       "categories": [
         "accident_casualty",
         "major_crime"
@@ -1831,7 +1927,7 @@
       "corroboration": []
     },
     {
-      "rank": 94,
+      "rank": 99,
       "class": "C",
       "score": 62,
       "region": "india",
@@ -1842,7 +1938,7 @@
       "source": "The Hindu",
       "source_preferred": true,
       "published_at": "2026-10-19T13:29:54+05:30",
-      "age_hours": 18.02,
+      "age_hours": 18.19,
       "categories": [
         "accident_casualty"
       ],
@@ -1852,7 +1948,7 @@
       ]
     },
     {
-      "rank": 95,
+      "rank": 100,
       "class": "C",
       "score": 62,
       "region": "telangana",
@@ -1863,7 +1959,7 @@
       "source": "Deccan Chronicle",
       "source_preferred": false,
       "published_at": "2026-10-19T12:51:10+05:30",
-      "age_hours": 18.67,
+      "age_hours": 18.84,
       "categories": [
         "court_judgment",
         "political_major"
@@ -1872,7 +1968,7 @@
       "corroboration": []
     },
     {
-      "rank": 96,
+      "rank": 101,
       "class": "C",
       "score": 62,
       "region": "india",
@@ -1883,7 +1979,7 @@
       "source": "The Hindu",
       "source_preferred": true,
       "published_at": "2026-10-19T12:32:16+05:30",
-      "age_hours": 18.98,
+      "age_hours": 19.15,
       "categories": [
         "political_major"
       ],
@@ -1891,7 +1987,7 @@
       "corroboration": []
     },
     {
-      "rank": 97,
+      "rank": 102,
       "class": "C",
       "score": 62,
       "region": "world",
@@ -1902,7 +1998,7 @@
       "source": "The Hindu",
       "source_preferred": true,
       "published_at": "2026-10-19T12:09:05+05:30",
-      "age_hours": 19.37,
+      "age_hours": 19.54,
       "categories": [
         "fire_explosion",
         "accident_casualty",
@@ -1913,7 +2009,7 @@
       "corroboration": []
     },
     {
-      "rank": 98,
+      "rank": 103,
       "class": "C",
       "score": 62,
       "region": "world",
@@ -1924,7 +2020,7 @@
       "source": "The Hindu",
       "source_preferred": true,
       "published_at": "2026-10-19T11:47:51+05:30",
-      "age_hours": 19.72,
+      "age_hours": 19.89,
       "categories": [
         "fire_explosion",
         "accident_casualty",
@@ -1934,7 +2030,7 @@
       "corroboration": []
     },
     {
-      "rank": 99,
+      "rank": 104,
       "class": "C",
       "score": 62,
       "region": "telangana",
@@ -1945,7 +2041,7 @@
       "source": "Telangana Today",
       "source_preferred": false,
       "published_at": "2026-10-19T11:11:37+05:30",
-      "age_hours": 20.33,
+      "age_hours": 20.5,
       "categories": [
         "political_major",
         "protest_major"
@@ -1954,7 +2050,7 @@
       "corroboration": []
     },
     {
-      "rank": 100,
+      "rank": 105,
       "class": "C",
       "score": 62,
       "region": "hyderabad",
@@ -1965,7 +2061,7 @@
       "source": "Newsmeter",
       "source_preferred": false,
       "published_at": "2026-10-19T08:43:11+05:30",
-      "age_hours": 22.8,
+      "age_hours": 22.97,
       "categories": [
         "major_crime"
       ],
@@ -1973,7 +2069,7 @@
       "corroboration": []
     },
     {
-      "rank": 101,
+      "rank": 106,
       "class": "C",
       "score": 62,
       "region": "world",
@@ -1984,7 +2080,7 @@
       "source": "The Hindu",
       "source_preferred": true,
       "published_at": "2026-10-19T08:09:30+05:30",
-      "age_hours": 23.36,
+      "age_hours": 23.53,
       "categories": [
         "accident_casualty",
         "security_terror",
@@ -1994,7 +2090,7 @@
       "corroboration": []
     },
     {
-      "rank": 102,
+      "rank": 107,
       "class": "C",
       "score": 62,
       "region": "telangana",
@@ -2005,7 +2101,7 @@
       "source": "The Hindu",
       "source_preferred": true,
       "published_at": "2026-10-19T07:42:40+05:30",
-      "age_hours": 23.81,
+      "age_hours": 23.98,
       "categories": [
         "police_operation"
       ],
@@ -2013,7 +2109,7 @@
       "corroboration": []
     },
     {
-      "rank": 103,
+      "rank": 108,
       "class": "C",
       "score": 60,
       "region": "world",
@@ -2024,7 +2120,7 @@
       "source": "LiveMint",
       "source_preferred": false,
       "published_at": "2026-10-20T07:03:59+05:30",
-      "age_hours": 0.45,
+      "age_hours": 0.62,
       "categories": [
         "court_judgment"
       ],
@@ -2032,7 +2128,7 @@
       "corroboration": []
     },
     {
-      "rank": 104,
+      "rank": 109,
       "class": "C",
       "score": 60,
       "region": "india",
@@ -2043,7 +2139,7 @@
       "source": "India Today",
       "source_preferred": false,
       "published_at": "2026-10-20T06:49:50+05:30",
-      "age_hours": 0.69,
+      "age_hours": 0.86,
       "categories": [
         "police_operation"
       ],
@@ -2051,7 +2147,7 @@
       "corroboration": []
     },
     {
-      "rank": 105,
+      "rank": 110,
       "class": "C",
       "score": 60,
       "region": "world",
@@ -2062,7 +2158,7 @@
       "source": "LiveMint",
       "source_preferred": false,
       "published_at": "2026-10-20T06:48:48+05:30",
-      "age_hours": 0.71,
+      "age_hours": 0.88,
       "categories": [
         "economic_major",
         "international_conflict"
@@ -2071,7 +2167,7 @@
       "corroboration": []
     },
     {
-      "rank": 106,
+      "rank": 111,
       "class": "C",
       "score": 60,
       "region": "india",
@@ -2082,7 +2178,7 @@
       "source": "NDTV",
       "source_preferred": false,
       "published_at": "2026-10-20T05:54:43+05:30",
-      "age_hours": 1.61,
+      "age_hours": 1.78,
       "categories": [
         "police_operation"
       ],
@@ -2090,7 +2186,7 @@
       "corroboration": []
     },
     {
-      "rank": 107,
+      "rank": 112,
       "class": "C",
       "score": 60,
       "region": "telangana",
@@ -2101,7 +2197,7 @@
       "source": "Deccan Chronicle",
       "source_preferred": false,
       "published_at": "2026-10-20T01:19:27+05:30",
-      "age_hours": 6.2,
+      "age_hours": 6.37,
       "categories": [
         "major_crime"
       ],
@@ -2109,26 +2205,7 @@
       "corroboration": []
     },
     {
-      "rank": 108,
-      "class": "C",
-      "score": 60,
-      "region": "india",
-      "region_confidence": 1.0,
-      "suggested_headline": "📰 LATEST NEWS — INDIA",
-      "title": "Marco Rubio To Begin 3-Day India Tour Today, Will Honour 26/11 Victims",
-      "url": "https://www.ndtv.com/india-news/marco-rubio-to-begin-3-day-india-tour-today-will-honour-26-11-victims-12208382#publisher=newsstand",
-      "source": "NDTV",
-      "source_preferred": false,
-      "published_at": "2026-10-20T00:33:50+05:30",
-      "age_hours": 6.96,
-      "categories": [
-        "security_terror"
-      ],
-      "excerpt": "In addition to his meeting with S Jaishankar, Rubio's engagements in Mumbai included laying a wreath at the Taj memorial to honour the victims of the 26/11 terror attack.",
-      "corroboration": []
-    },
-    {
-      "rank": 109,
+      "rank": 113,
       "class": "C",
       "score": 60,
       "region": "telangana",
@@ -2139,7 +2216,7 @@
       "source": "Deccan Chronicle",
       "source_preferred": false,
       "published_at": "2026-10-20T00:13:56+05:30",
-      "age_hours": 7.29,
+      "age_hours": 7.46,
       "categories": [
         "major_crime",
         "police_operation"
@@ -2148,7 +2225,7 @@
       "corroboration": []
     },
     {
-      "rank": 110,
+      "rank": 114,
       "class": "C",
       "score": 60,
       "region": "telangana",
@@ -2159,7 +2236,7 @@
       "source": "Deccan Chronicle",
       "source_preferred": false,
       "published_at": "2026-10-20T00:02:40+05:30",
-      "age_hours": 7.47,
+      "age_hours": 7.65,
       "categories": [
         "major_crime",
         "police_operation"
@@ -2168,7 +2245,7 @@
       "corroboration": []
     },
     {
-      "rank": 111,
+      "rank": 115,
       "class": "C",
       "score": 60,
       "region": "india",
@@ -2179,7 +2256,7 @@
       "source": "The Hindu",
       "source_preferred": true,
       "published_at": "2026-10-19T22:25:41+05:30",
-      "age_hours": 9.09,
+      "age_hours": 9.26,
       "categories": [
         "political_major"
       ],
@@ -2187,7 +2264,7 @@
       "corroboration": []
     },
     {
-      "rank": 112,
+      "rank": 116,
       "class": "C",
       "score": 60,
       "region": "india",
@@ -2198,7 +2275,7 @@
       "source": "The Hindu",
       "source_preferred": true,
       "published_at": "2026-10-19T21:35:52+05:30",
-      "age_hours": 9.92,
+      "age_hours": 10.09,
       "categories": [
         "court_judgment",
         "political_major"
@@ -2207,7 +2284,7 @@
       "corroboration": []
     },
     {
-      "rank": 113,
+      "rank": 117,
       "class": "C",
       "score": 60,
       "region": "india",
@@ -2218,7 +2295,7 @@
       "source": "The Hindu",
       "source_preferred": true,
       "published_at": "2026-10-19T20:54:54+05:30",
-      "age_hours": 10.6,
+      "age_hours": 10.78,
       "categories": [
         "political_major"
       ],
@@ -2226,7 +2303,7 @@
       "corroboration": []
     },
     {
-      "rank": 114,
+      "rank": 118,
       "class": "C",
       "score": 60,
       "region": "world",
@@ -2237,7 +2314,7 @@
       "source": "The Hindu",
       "source_preferred": true,
       "published_at": "2026-10-19T20:08:10+05:30",
-      "age_hours": 11.38,
+      "age_hours": 11.55,
       "categories": [
         "political_major"
       ],
@@ -2245,7 +2322,7 @@
       "corroboration": []
     },
     {
-      "rank": 115,
+      "rank": 119,
       "class": "C",
       "score": 60,
       "region": "hyderabad",
@@ -2256,7 +2333,7 @@
       "source": "Telangana Today",
       "source_preferred": false,
       "published_at": "2026-10-19T19:07:59+05:30",
-      "age_hours": 12.39,
+      "age_hours": 12.56,
       "categories": [
         "traffic_disruption"
       ],
@@ -2264,7 +2341,7 @@
       "corroboration": []
     },
     {
-      "rank": 116,
+      "rank": 120,
       "class": "C",
       "score": 60,
       "region": "hyderabad",
@@ -2275,90 +2352,12 @@
       "source": "Munsif Daily",
       "source_preferred": true,
       "published_at": "2026-10-19T18:10:41+05:30",
-      "age_hours": 13.34,
+      "age_hours": 13.51,
       "categories": [
         "security_terror",
         "political_major"
       ],
       "excerpt": "Chhatrapati Sambhajinagar: Bollywood actors are being targeted for publicity and to spread terror but the Maharashtra government will defeat all such efforts, state minister Sanjay Shirsat said on Monday in the backdrop of the firing incident on Tiger Shroff. Speaking at a press conference here, the Shiv Sena minister said the state government has taken …",
-      "corroboration": []
-    },
-    {
-      "rank": 117,
-      "class": "C",
-      "score": 60,
-      "region": "hyderabad",
-      "region_confidence": 1.0,
-      "suggested_headline": "📰 LATEST NEWS — HYDERABAD",
-      "title": "Rail passengers seek better Secunderabad station facilities ahead of Dasara",
-      "url": "https://telanganatoday.com/rail-passengers-seek-better-secunderabad-station-facilities-ahead-of-dasara",
-      "source": "Telangana Today",
-      "source_preferred": false,
-      "published_at": "2026-10-19T17:26:33+05:30",
-      "age_hours": 14.08,
-      "categories": [
-        "traffic_disruption"
-      ],
-      "excerpt": "Rail passengers have urged the Railway Board and SCR to improve amenities, ease congestion at Secunderabad Railway Station and expedite pending projects ahead of Dasara. Demands include train diversions, additional stoppages, better MMTS services and safer, less congested platforms.",
-      "corroboration": []
-    },
-    {
-      "rank": 118,
-      "class": "C",
-      "score": 60,
-      "region": "india",
-      "region_confidence": 1.0,
-      "suggested_headline": "📰 LATEST NEWS — INDIA",
-      "title": "Delhi High Court permits 16-year-old rape survivor to terminate 31-week pregnancy",
-      "url": "https://www.thehindu.com/news/cities/Delhi/delhi-high-court-permits-16-year-old-rape-survivor-to-terminate-31-week-pregnancy/article71602594.ece",
-      "source": "The Hindu",
-      "source_preferred": true,
-      "published_at": "2026-10-19T17:19:56+05:30",
-      "age_hours": 14.19,
-      "categories": [
-        "major_crime",
-        "court_judgment"
-      ],
-      "excerpt": "Under the Medical Termination of Pregnancy Act, the procedure can be done till 20 weeks of gestation period in ordinary cases and 24 weeks in certain categories such as rape survivors",
-      "corroboration": []
-    },
-    {
-      "rank": 119,
-      "class": "C",
-      "score": 60,
-      "region": "india",
-      "region_confidence": 1.0,
-      "suggested_headline": "📰 LATEST NEWS — INDIA",
-      "title": "Neha Bora moves Delhi High Court against peace bond notice",
-      "url": "https://www.thehindu.com/news/cities/Delhi/neha-bora-moves-delhi-high-court-against-peace-bond-notice/article71602486.ece",
-      "source": "The Hindu",
-      "source_preferred": true,
-      "published_at": "2026-10-19T17:14:24+05:30",
-      "age_hours": 14.28,
-      "categories": [
-        "court_judgment"
-      ],
-      "excerpt": "AISA said Neha Bora’s petition seeks an immediate stay and withdrawal of the notice, and argues that the notice is prima facie ambiguous and factually incorrect",
-      "corroboration": []
-    },
-    {
-      "rank": 120,
-      "class": "C",
-      "score": 60,
-      "region": "world",
-      "region_confidence": 1.0,
-      "suggested_headline": "🌍 LATEST — WORLD",
-      "title": "France unrest: PM orders curfews, hints at declaring emergency; over 2,400 arrested",
-      "url": "https://timesofindia.indiatimes.com/world/europe/france-unrest-pm-orders-curfews-hints-at-declaring-emergency-over-2400-arrested-top-developments/articleshow/135047682.cms",
-      "source": "Times of India",
-      "source_preferred": false,
-      "published_at": "2026-10-19T17:08:30+05:30",
-      "age_hours": 14.38,
-      "categories": [
-        "police_operation",
-        "political_major"
-      ],
-      "excerpt": "France has experienced significant unrest following protests over rising living costs and public services, resulting in violence and property damage. More than 2,400 people were arrested nationwide as rioters targeted shops, city halls, and public offices. Prime Minister Sébastien Lecornu instructed local authorities to consider curfews to prevent further violence while reviewing policing policies.",
       "corroboration": []
     }
   ]
