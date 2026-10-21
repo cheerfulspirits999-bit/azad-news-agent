@@ -1,40 +1,74 @@
 {
-  "cycle": "20261022-0321",
-  "at": "2026-10-22T03:21:16.984660+05:30",
+  "cycle": "20261022-0331",
+  "at": "2026-10-22T03:37:09.959544+05:30",
   "candidates": 120,
   "published_this_cycle": 0,
-  "digest": "gate closed: ncards 3/24, gap 54 min, retry_pending=0",
-  "ru": {},
+  "digest": "PUBLISHED auto-digest-2026-10-22-s0335",
+  "ru": {
+    "pre_ru_picks": 5,
+    "to_translate": 5,
+    "engine": {
+      "ok": false,
+      "lines_in": 5,
+      "lines_want": 5,
+      "method": "fallback",
+      "problems": "['Lines [1, 2, 3, 4, 5] copy 4+ consecutive English words verbatim into the Roman Urdu. Re-express those phrases in Urdu; keep only proper nouns/brands/technica"
+    },
+    "kills": {
+      "english-echo": [
+        1,
+        2
+      ],
+      "paste": [
+        3,
+        4,
+        5
+      ]
+    },
+    "accepted": 4,
+    "salvaged": [
+      1,
+      2,
+      3,
+      4
+    ],
+    "via": {
+      "1": "gemini-3.8-flash",
+      "2": "gemini-3.5-flash",
+      "3": "gemini-3.8-flash",
+      "4": "gemini-flash-lite-latest"
+    }
+  },
   "tail": [
-    "[22 Oct 03:21:16] stale or low-score, skipped: Hyderabad: Uttar Pradesh Native Dies After Fall from Buildin",
-    "[22 Oct 03:21:16] stale or low-score, skipped: Wires, contradictory statements of injured raise red flags i",
-    "[22 Oct 03:21:16] stale or low-score, skipped: Missing labourer found dead in open well in Sangareddy",
-    "[22 Oct 03:21:16] stale or low-score, skipped: Khammam lawyer found dead at grandmother\u2019s house",
-    "[22 Oct 03:21:16] stale or low-score, skipped: Tanay Thyagarajan\u2019s 11-wicket haul powers Hyderabad to 267-r",
-    "[22 Oct 03:21:16] stale or low-score, skipped: Bolarum armoury theft: A wake-up call for cantonment securit",
-    "[22 Oct 03:21:16] stale or low-score, skipped: C\u2019garh: Surrendered Maoists Dies By Suicide At Naxal Rehab C",
-    "[22 Oct 03:21:16] stale or low-score, skipped: Will not rest until J&K is freed from separatist, terrorist ",
-    "[22 Oct 03:21:16] stale or low-score, skipped: Vummidi Ethiraj, who helped craft historic sengol kept in Pa",
-    "[22 Oct 03:21:16] stale or low-score, skipped: Six-lane Allwyn-Miyapur flyover project threatens over 350 t",
-    "[22 Oct 03:21:16] stale or low-score, skipped: Durga idol immersion: Traffic restrictions around Hyderabad\u2019",
-    "[22 Oct 03:21:16] stale or low-score, skipped: Biker Dies in Lorry Collision Near Parigi",
-    "[22 Oct 03:21:16] stale or low-score, skipped: Suryapet: Woman Killed in Huzurnagar, Gold Stolen",
-    "[22 Oct 03:21:16] stale or low-score, skipped: Bhainsa: Head Constable Dies in Road Accident",
-    "[22 Oct 03:21:16] stale or low-score, skipped: Kochi pharma firm loses \u20b999 lakh in alleged impersonation fr",
-    "[22 Oct 03:21:16] stale or low-score, skipped: Kerala Police to conduct intelligence-based operations again",
-    "[22 Oct 03:21:16] stale or low-score, skipped: Elephant goes out of control during Shivamogga Dasara proces",
-    "[22 Oct 03:21:16] stale or low-score, skipped: Tension prevails over attack by followers of Premsagar Rao, ",
-    "[22 Oct 03:21:16] stale or low-score, skipped: Drug menace next target, says Amit Shah; eyes 2029 deadline",
-    "[22 Oct 03:21:16] stale or low-score, skipped: Advisory For People Not To Stand In Open, Under Tree Or Near",
-    "[22 Oct 03:21:16] stale or low-score, skipped: Farmer killed after RTC bus hits motorbike in Kothagudem",
-    "[22 Oct 03:21:16] stale or low-score, skipped: 'Remain vigilant, avoid crowds': India issues advisory amid ",
-    "[22 Oct 03:21:16] stale or low-score, skipped: Kadapa Again turns into Battleground During Filing of ZPTC, ",
-    "[22 Oct 03:21:16] stale or low-score, skipped: Singapore couple jailed for abuse that killed their 8-month-",
-    "[22 Oct 03:21:16] stale or low-score, skipped: NH-65 Toll Plazas Witness Post-Dasara Traffic Rush",
-    "[22 Oct 03:21:16] stale or low-score, skipped: Opinion: Police Martyrs\u2014the dead and the living",
-    "[22 Oct 03:21:16] stale or low-score, skipped: Mecca pact text: No enemy named, members locked in for 10 ye",
-    "[22 Oct 03:21:16] stale or low-score, skipped: IPS officer fires AK-47 during Dussehra weapon-worship cerem",
-    "[22 Oct 03:21:16] stale or low-score, skipped: IPS Lady Singham fires AK-47 at Dussehra event, Army veteran",
-    "[22 Oct 03:21:16] stale or low-score, skipped: Beware! Don\u2019t fall for PM Modi\u2019s deepfake videos about welfa"
+    "[22 Oct 03:37:09] stale or low-score, skipped: Haryana Congress flays BJP government over its failure to ke",
+    "[22 Oct 03:37:09] stale or low-score, skipped: Wires, contradictory statements of injured raise red flags i",
+    "[22 Oct 03:37:09] stale or low-score, skipped: Missing labourer found dead in open well in Sangareddy",
+    "[22 Oct 03:37:09] stale or low-score, skipped: Khammam lawyer found dead at grandmother\u2019s house",
+    "[22 Oct 03:37:09] stale or low-score, skipped: Tanay Thyagarajan\u2019s 11-wicket haul powers Hyderabad to 267-r",
+    "[22 Oct 03:37:09] stale or low-score, skipped: Bolarum armoury theft: A wake-up call for cantonment securit",
+    "[22 Oct 03:37:09] stale or low-score, skipped: C\u2019garh: Surrendered Maoists Dies By Suicide At Naxal Rehab C",
+    "[22 Oct 03:37:09] stale or low-score, skipped: Will not rest until J&K is freed from separatist, terrorist ",
+    "[22 Oct 03:37:09] stale or low-score, skipped: Vummidi Ethiraj, who helped craft historic sengol kept in Pa",
+    "[22 Oct 03:37:09] stale or low-score, skipped: Six-lane Allwyn-Miyapur flyover project threatens over 350 t",
+    "[22 Oct 03:37:09] stale or low-score, skipped: Durga idol immersion: Traffic restrictions around Hyderabad\u2019",
+    "[22 Oct 03:37:09] stale or low-score, skipped: Biker Dies in Lorry Collision Near Parigi",
+    "[22 Oct 03:37:09] stale or low-score, skipped: Suryapet: Woman Killed in Huzurnagar, Gold Stolen",
+    "[22 Oct 03:37:09] stale or low-score, skipped: Bhainsa: Head Constable Dies in Road Accident",
+    "[22 Oct 03:37:09] stale or low-score, skipped: Kochi pharma firm loses \u20b999 lakh in alleged impersonation fr",
+    "[22 Oct 03:37:09] stale or low-score, skipped: Kerala Police to conduct intelligence-based operations again",
+    "[22 Oct 03:37:09] stale or low-score, skipped: Elephant goes out of control during Shivamogga Dasara proces",
+    "[22 Oct 03:37:09] stale or low-score, skipped: Tension prevails over attack by followers of Premsagar Rao, ",
+    "[22 Oct 03:37:09] stale or low-score, skipped: Drug menace next target, says Amit Shah; eyes 2029 deadline",
+    "[22 Oct 03:37:09] stale or low-score, skipped: Advisory For People Not To Stand In Open, Under Tree Or Near",
+    "[22 Oct 03:37:09] stale or low-score, skipped: Farmer killed after RTC bus hits motorbike in Kothagudem",
+    "[22 Oct 03:37:09] stale or low-score, skipped: 'Remain vigilant, avoid crowds': India issues advisory amid ",
+    "[22 Oct 03:37:09] stale or low-score, skipped: Kadapa Again turns into Battleground During Filing of ZPTC, ",
+    "[22 Oct 03:37:09] stale or low-score, skipped: Singapore couple jailed for abuse that killed their 8-month-",
+    "[22 Oct 03:37:09] stale or low-score, skipped: NH-65 Toll Plazas Witness Post-Dasara Traffic Rush",
+    "[22 Oct 03:37:09] stale or low-score, skipped: Opinion: Police Martyrs\u2014the dead and the living",
+    "[22 Oct 03:37:09] stale or low-score, skipped: Mecca pact text: No enemy named, members locked in for 10 ye",
+    "[22 Oct 03:37:09] stale or low-score, skipped: IPS officer fires AK-47 during Dussehra weapon-worship cerem",
+    "[22 Oct 03:37:09] stale or low-score, skipped: IPS Lady Singham fires AK-47 at Dussehra event, Army veteran",
+    "[22 Oct 03:37:09] stale or low-score, skipped: Beware! Don\u2019t fall for PM Modi\u2019s deepfake videos about welfa"
   ]
 }
