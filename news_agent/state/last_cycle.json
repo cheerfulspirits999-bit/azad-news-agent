@@ -1,40 +1,68 @@
 {
-  "cycle": "20261023-0502",
-  "at": "2026-10-23T05:02:37.299375+05:30",
+  "cycle": "20261023-0512",
+  "at": "2026-10-23T05:22:49.109665+05:30",
   "candidates": 120,
   "published_this_cycle": 0,
-  "digest": "gate closed: ncards 4/24, gap 53 min, retry_pending=0",
-  "ru": {},
+  "digest": "starved: <3 publishable Urdu lines",
+  "ru": {
+    "pre_ru_picks": 5,
+    "to_translate": 5,
+    "engine": {
+      "ok": false,
+      "lines_in": 5,
+      "lines_want": 5,
+      "method": "fallback",
+      "problems": "['Lines [1, 2, 3, 4, 5] copy 4+ consecutive English words verbatim into the Roman Urdu. Re-express those phrases in Urdu; keep only proper nouns/brands/technica"
+    },
+    "kills": {
+      "english-echo": [
+        1
+      ],
+      "paste": [
+        2,
+        3,
+        4,
+        5
+      ]
+    },
+    "accepted": 1,
+    "salvaged": [
+      1
+    ],
+    "via": {
+      "1": "gemini-3.5-flash"
+    }
+  },
   "tail": [
-    "[23 Oct 05:02:37] stale or low-score, skipped: 21 years on, double life term for Jammu terror attack that k",
-    "[23 Oct 05:02:37] stale or low-score, skipped: Govt defends cancellation of Wangchuk institute\u2019s land allot",
-    "[23 Oct 05:02:37] stale or low-score, skipped: Industries in Chennai\u2019s SIPCOT parks flag infrastructure gap",
-    "[23 Oct 05:02:37] stale or low-score, skipped: Houthis Claim They Rescued 14 Indians From Yacht, India Says",
-    "[23 Oct 05:02:37] stale or low-score, skipped: Pregnant Teen Gang-Raped In Rajasthan, Baby Dies Soon After ",
-    "[23 Oct 05:02:37] stale or low-score, skipped: Angry Over Sister's Affair, Gujarat Man Poisons Teen, Stages",
-    "[23 Oct 05:02:37] stale or low-score, skipped: Let\u2019s Make Kodangal Model for India, Says Revanth",
-    "[23 Oct 05:02:37] stale or low-score, skipped: Two more on police radar in suspected IED blast in Bengaluru",
-    "[23 Oct 05:02:37] stale or low-score, skipped: Alai Balai brings leaders across party lines together",
-    "[23 Oct 05:02:37] stale or low-score, skipped: Indian Killed, 3 Injured in Attacks on Saudi Facilities, Say",
-    "[23 Oct 05:02:37] stale or low-score, skipped: India condemns attacks on Dammam airport, Aramco oil field",
-    "[23 Oct 05:02:37] stale or low-score, skipped: Youth from Nirmal Dies in Turkey",
-    "[23 Oct 05:02:37] stale or low-score, skipped: Indian killed as Houthis attack Saudi Arabia\u2019s Dammam airpor",
-    "[23 Oct 05:02:37] stale or low-score, skipped: Could an Epilepsy Drug Change Osteoarthritis Treatment? Beyo",
-    "[23 Oct 05:02:37] stale or low-score, skipped: Yemen\u2019s Houthis say they attacked Saudi Defence Ministry, Ar",
-    "[23 Oct 05:02:37] stale or low-score, skipped: Saudi Arabia drone strike: Indian national among 2 killed in",
-    "[23 Oct 05:02:37] stale or low-score, skipped: One killed, over 100 injured in Devaragattu Dussehra stick f",
-    "[23 Oct 05:02:37] stale or low-score, skipped: 1 Dies, 115 Injured In Ritualistic Banni Festival Flashes at",
-    "[23 Oct 05:02:37] stale or low-score, skipped: Kurnool: Violent clashes erupt during Karrala Samaram at Dev",
-    "[23 Oct 05:02:37] stale or low-score, skipped: Indian dies in Saudi airport strike; MEA slams infrastructur",
-    "[23 Oct 05:02:37] stale or low-score, skipped: Tenders floated for elevated corridor from Lighthouse to Thi",
-    "[23 Oct 05:02:37] stale or low-score, skipped: Four Children Injured In Firecracker Mishap During Durga Pro",
-    "[23 Oct 05:02:37] stale or low-score, skipped: Shamonda virus: First human case reported in France; patient",
-    "[23 Oct 05:02:37] stale or low-score, skipped: Rakhi Sawant gets relief in 2010 suicide case as court cance",
-    "[23 Oct 05:02:37] stale or low-score, skipped: Hubballi Woman Killed By Kite String, Police Warn Of Strict ",
-    "[23 Oct 05:02:37] stale or low-score, skipped: When viruses strike, how do cells respond? Hyderabad\u2019s CSIR-",
-    "[23 Oct 05:02:37] stale or low-score, skipped: Bengaluru horror: Man kills wife, steals motorcycle to dump ",
-    "[23 Oct 05:02:37] stale or low-score, skipped: UP: Loud DJ music in Durga puja leaves two-day-old baby dead",
-    "[23 Oct 05:02:37] stale or low-score, skipped: Indian national among two people killed in attack on Saudi A",
-    "[23 Oct 05:02:37] stale or low-score, skipped: Saudi civil aviation says one killed, eight injured in attac"
+    "[23 Oct 05:22:49] stale or low-score, skipped: 21 years on, double life term for Jammu terror attack that k",
+    "[23 Oct 05:22:49] stale or low-score, skipped: Govt defends cancellation of Wangchuk institute\u2019s land allot",
+    "[23 Oct 05:22:49] stale or low-score, skipped: Industries in Chennai\u2019s SIPCOT parks flag infrastructure gap",
+    "[23 Oct 05:22:49] stale or low-score, skipped: Houthis Claim They Rescued 14 Indians From Yacht, India Says",
+    "[23 Oct 05:22:49] stale or low-score, skipped: Pregnant Teen Gang-Raped In Rajasthan, Baby Dies Soon After ",
+    "[23 Oct 05:22:49] stale or low-score, skipped: Angry Over Sister's Affair, Gujarat Man Poisons Teen, Stages",
+    "[23 Oct 05:22:49] stale or low-score, skipped: Let\u2019s Make Kodangal Model for India, Says Revanth",
+    "[23 Oct 05:22:49] stale or low-score, skipped: Two more on police radar in suspected IED blast in Bengaluru",
+    "[23 Oct 05:22:49] stale or low-score, skipped: Alai Balai brings leaders across party lines together",
+    "[23 Oct 05:22:49] stale or low-score, skipped: Indian Killed, 3 Injured in Attacks on Saudi Facilities, Say",
+    "[23 Oct 05:22:49] stale or low-score, skipped: India condemns attacks on Dammam airport, Aramco oil field",
+    "[23 Oct 05:22:49] stale or low-score, skipped: Youth from Nirmal Dies in Turkey",
+    "[23 Oct 05:22:49] stale or low-score, skipped: Padmaraonagar Road Remains Unusable",
+    "[23 Oct 05:22:49] stale or low-score, skipped: Indian killed as Houthis attack Saudi Arabia\u2019s Dammam airpor",
+    "[23 Oct 05:22:49] stale or low-score, skipped: Could an Epilepsy Drug Change Osteoarthritis Treatment? Beyo",
+    "[23 Oct 05:22:49] stale or low-score, skipped: Yemen\u2019s Houthis say they attacked Saudi Defence Ministry, Ar",
+    "[23 Oct 05:22:49] stale or low-score, skipped: Saudi Arabia drone strike: Indian national among 2 killed in",
+    "[23 Oct 05:22:49] stale or low-score, skipped: One killed, over 100 injured in Devaragattu Dussehra stick f",
+    "[23 Oct 05:22:49] stale or low-score, skipped: 1 Dies, 115 Injured In Ritualistic Banni Festival Flashes at",
+    "[23 Oct 05:22:49] stale or low-score, skipped: Kurnool: Violent clashes erupt during Karrala Samaram at Dev",
+    "[23 Oct 05:22:49] stale or low-score, skipped: Indian dies in Saudi airport strike; MEA slams infrastructur",
+    "[23 Oct 05:22:49] stale or low-score, skipped: Tenders floated for elevated corridor from Lighthouse to Thi",
+    "[23 Oct 05:22:49] stale or low-score, skipped: Four Children Injured In Firecracker Mishap During Durga Pro",
+    "[23 Oct 05:22:49] stale or low-score, skipped: Shamonda virus: First human case reported in France; patient",
+    "[23 Oct 05:22:49] stale or low-score, skipped: Rakhi Sawant gets relief in 2010 suicide case as court cance",
+    "[23 Oct 05:22:49] stale or low-score, skipped: Hubballi Woman Killed By Kite String, Police Warn Of Strict ",
+    "[23 Oct 05:22:49] stale or low-score, skipped: When viruses strike, how do cells respond? Hyderabad\u2019s CSIR-",
+    "[23 Oct 05:22:49] stale or low-score, skipped: Bengaluru horror: Man kills wife, steals motorcycle to dump ",
+    "[23 Oct 05:22:49] stale or low-score, skipped: UP: Loud DJ music in Durga puja leaves two-day-old baby dead",
+    "[23 Oct 05:22:49] stale or low-score, skipped: Indian national among two people killed in attack on Saudi A"
   ]
 }
