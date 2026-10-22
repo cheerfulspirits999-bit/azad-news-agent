@@ -1,6 +1,6 @@
 {
-  "cycle": "20261022-2030",
-  "at": "2026-10-22T20:36:42.045151+05:30",
+  "cycle": "20261022-2046",
+  "at": "2026-10-22T20:55:07.685125+05:30",
   "candidates": 120,
   "published_this_cycle": 0,
   "digest": "starved: <3 publishable Urdu lines",
@@ -15,14 +15,14 @@
       "problems": "['Lines [1, 2, 3, 4, 5] copy 4+ consecutive English words verbatim into the Roman Urdu. Re-express those phrases in Urdu; keep only proper nouns/brands/technica"
     },
     "kills": {
-      "paste": [
+      "english-echo": [
         1,
         2,
+        4
+      ],
+      "paste": [
         3,
         5
-      ],
-      "english-echo": [
-        4
       ]
     },
     "accepted": 1,
@@ -30,39 +30,39 @@
       2
     ],
     "via": {
-      "2": "gemini-3.5-flash"
+      "2": "gemini-flash-lite-latest"
     }
   },
   "tail": [
-    "[22 Oct 20:36:42] stale or low-score, skipped: Lion Injured, Tail Severed After Being Hit By Train In Gujar",
-    "[22 Oct 20:36:42] stale or low-score, skipped: 1 Indian killed, 2 injured in Dammam airport attack in Saudi",
-    "[22 Oct 20:36:42] stale or low-score, skipped: Yemen\u2019s Houthis say they attacked Saudi Defence Ministry, Ar",
-    "[22 Oct 20:36:42] stale or low-score, skipped: UP: Loud DJ music in Durga puja leaves two-day-old baby dead",
-    "[22 Oct 20:36:42] stale or low-score, skipped: Indian national among two people killed in attack on Saudi A",
-    "[22 Oct 20:36:42] stale or low-score, skipped: Delivery boy dies by suicide after assault over torn note in",
-    "[22 Oct 20:36:42] stale or low-score, skipped: Youth from Nirmal Dies in Turkey",
-    "[22 Oct 20:36:42] stale or low-score, skipped: Two killed in Dammam airport attack, including Indian nation",
-    "[22 Oct 20:36:42] stale or low-score, skipped: SUV runs into devotees having tea on NH 16 in Andhra Pradesh",
-    "[22 Oct 20:36:42] stale or low-score, skipped: Bengaluru horror: Man kills wife, steals motorcycle to dump ",
-    "[22 Oct 20:36:42] stale or low-score, skipped: Dasara return rush brings traffic to a crawl on Hyderabad ro",
-    "[22 Oct 20:36:42] stale or low-score, skipped: One killed, over 100 injured in Devaragattu Dussehra stick f",
-    "[22 Oct 20:36:42] stale or low-score, skipped: 1 Killed, Over 100 Injured in Dasara Banni Festival in Kurno",
-    "[22 Oct 20:36:42] stale or low-score, skipped: 3 Persons Surrendered In Truss Collapse Case",
-    "[22 Oct 20:36:42] stale or low-score, skipped: 1 More MVSR Student Discharged, 3 More In Hospital",
-    "[22 Oct 20:36:42] stale or low-score, skipped: Missing labourer found dead in open well in Sangareddy",
-    "[22 Oct 20:36:42] stale or low-score, skipped: Farmlands Crack In Odisha\u2019s Keonjhar As farmers Block Road F",
-    "[22 Oct 20:36:42] stale or low-score, skipped: Delay, Drama Over Opening Of 3 Key Bridges In Mumbai",
-    "[22 Oct 20:36:42] stale or low-score, skipped: Diljit Dosanjh warns against online scam ahead of Delhi conc",
-    "[22 Oct 20:36:42] stale or low-score, skipped: Kurnool: Violent clashes erupt during Karrala Samaram at Dev",
-    "[22 Oct 20:36:42] stale or low-score, skipped: Natco\u2019s generic SMA drug approved; \u2018clinical trial\u2019 labels t",
-    "[22 Oct 20:36:42] stale or low-score, skipped: How \u2018Kota\u2019 drug smuggled in via Myanmar is spreading in a dr",
-    "[22 Oct 20:36:42] stale or low-score, skipped: Blue Drum Murder Case: Influencer Faizan Ansari wants to rai",
-    "[22 Oct 20:36:42] stale or low-score, skipped: Speeding vehicle kills four devotees heading to Kanaka Durga",
-    "[22 Oct 20:36:42] stale or low-score, skipped: One Indian killed, three injured in Saudi attacks; India con",
-    "[22 Oct 20:36:42] stale or low-score, skipped: Two Injured in Illegal Firecracker Unit Explosion in Palakka",
-    "[22 Oct 20:36:42] stale or low-score, skipped: Four-year-old girl drowns in Yadagirigutta temple tank",
-    "[22 Oct 20:36:42] stale or low-score, skipped: Dussehra stick fight turns violent, leaving devotees injured",
-    "[22 Oct 20:36:42] stale or low-score, skipped: France reports first human case of Shamonda virus, patient d",
-    "[22 Oct 20:36:42] stale or low-score, skipped: Cow dies of dog bite, 450 who had prasad from its milk get a"
+    "[22 Oct 20:55:07] queued for editorial pass (no safe auto frame): Dandiya night tragedy: Truss erected on just two pillars instead of fo",
+    "[22 Oct 20:55:07] stale or low-score, skipped: Could an Epilepsy Drug Change Osteoarthritis Treatment? Beyo",
+    "[22 Oct 20:55:07] queued for editorial pass (no safe auto frame): Heavy Traffic Jam on Vijayawada National Highway as Vehicles Return to",
+    "[22 Oct 20:55:07] held for the next card: auto-india-condemns-attacks-on-dammam-airport-aramco-oil-field",
+    "[22 Oct 20:55:07] stale or low-score, skipped: When viruses strike, how do cells respond? Hyderabad\u2019s CSIR-",
+    "[22 Oct 20:55:07] stale or low-score, skipped: Lion Injured, Tail Severed After Being Hit By Train In Gujar",
+    "[22 Oct 20:55:07] stale or low-score, skipped: 1 Indian killed, 2 injured in Dammam airport attack in Saudi",
+    "[22 Oct 20:55:07] stale or low-score, skipped: Yemen\u2019s Houthis say they attacked Saudi Defence Ministry, Ar",
+    "[22 Oct 20:55:07] stale or low-score, skipped: UP: Loud DJ music in Durga puja leaves two-day-old baby dead",
+    "[22 Oct 20:55:07] stale or low-score, skipped: Indian national among two people killed in attack on Saudi A",
+    "[22 Oct 20:55:07] stale or low-score, skipped: Delivery boy dies by suicide after assault over torn note in",
+    "[22 Oct 20:55:07] stale or low-score, skipped: Youth from Nirmal Dies in Turkey",
+    "[22 Oct 20:55:07] stale or low-score, skipped: Asian U20, Varsity Worlds sprint medallist Jayaram Donadpati",
+    "[22 Oct 20:55:07] stale or low-score, skipped: Two killed in Dammam airport attack, including Indian nation",
+    "[22 Oct 20:55:07] stale or low-score, skipped: SUV runs into devotees having tea on NH 16 in Andhra Pradesh",
+    "[22 Oct 20:55:07] stale or low-score, skipped: Bengaluru horror: Man kills wife, steals motorcycle to dump ",
+    "[22 Oct 20:55:07] stale or low-score, skipped: Dasara return rush brings traffic to a crawl on Hyderabad ro",
+    "[22 Oct 20:55:07] stale or low-score, skipped: One killed, over 100 injured in Devaragattu Dussehra stick f",
+    "[22 Oct 20:55:07] stale or low-score, skipped: 1 Killed, Over 100 Injured in Dasara Banni Festival in Kurno",
+    "[22 Oct 20:55:07] stale or low-score, skipped: 3 Persons Surrendered In Truss Collapse Case",
+    "[22 Oct 20:55:07] stale or low-score, skipped: 1 More MVSR Student Discharged, 3 More In Hospital",
+    "[22 Oct 20:55:07] stale or low-score, skipped: Farmlands Crack In Odisha\u2019s Keonjhar As farmers Block Road F",
+    "[22 Oct 20:55:07] stale or low-score, skipped: Delay, Drama Over Opening Of 3 Key Bridges In Mumbai",
+    "[22 Oct 20:55:07] stale or low-score, skipped: Kurnool: Violent clashes erupt during Karrala Samaram at Dev",
+    "[22 Oct 20:55:07] stale or low-score, skipped: Natco\u2019s generic SMA drug approved; \u2018clinical trial\u2019 labels t",
+    "[22 Oct 20:55:07] stale or low-score, skipped: How \u2018Kota\u2019 drug smuggled in via Myanmar is spreading in a dr",
+    "[22 Oct 20:55:07] stale or low-score, skipped: Blue Drum Murder Case: Influencer Faizan Ansari wants to rai",
+    "[22 Oct 20:55:07] stale or low-score, skipped: Speeding vehicle kills four devotees heading to Kanaka Durga",
+    "[22 Oct 20:55:07] stale or low-score, skipped: One Indian killed, three injured in Saudi attacks; India con",
+    "[22 Oct 20:55:07] stale or low-score, skipped: Two Injured in Illegal Firecracker Unit Explosion in Palakka"
   ]
 }
