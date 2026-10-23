@@ -1,40 +1,72 @@
 {
-  "cycle": "20261023-1101",
-  "at": "2026-10-23T11:02:16.246478+05:30",
+  "cycle": "20261023-1112",
+  "at": "2026-10-23T11:19:06.558766+05:30",
   "candidates": 120,
   "published_this_cycle": 0,
-  "digest": "gate closed: ncards 9/24, gap 54 min, retry_pending=0",
-  "ru": {},
+  "digest": "PUBLISHED auto-digest-2026-10-23-s1117",
+  "ru": {
+    "pre_ru_picks": 5,
+    "to_translate": 5,
+    "engine": {
+      "ok": false,
+      "lines_in": 5,
+      "lines_want": 5,
+      "method": "fallback",
+      "problems": "['Lines [1, 2, 3, 4, 5] copy 4+ consecutive English words verbatim into the Roman Urdu. Re-express those phrases in Urdu; keep only proper nouns/brands/technica"
+    },
+    "kills": {
+      "paste": [
+        1,
+        5
+      ],
+      "english-echo": [
+        2,
+        3,
+        4
+      ]
+    },
+    "accepted": 3,
+    "salvaged": [
+      1,
+      3,
+      4
+    ],
+    "via": {
+      "1": "primary",
+      "3": "primary",
+      "4": "primary"
+    }
+  },
   "tail": [
-    "[23 Oct 11:02:16] queued for editorial pass (no safe auto frame): 24-year-old labourer found dead on railway tracks near Ghatkesar",
-    "[23 Oct 11:02:16] queued for editorial pass (no safe auto frame): Crop Losses, Mounting Debts Drive Two Farmers to Suicide in Telangana",
-    "[23 Oct 11:02:16] queued for editorial pass (no safe auto frame): Dandiya night tragedy: Truss erected on just two pillars instead of fo",
-    "[23 Oct 11:02:16] stale or low-score, skipped: 'Pak Didn't Accept Bodies Of Its Own Soldiers In Kargil': In",
-    "[23 Oct 11:02:16] stale or low-score, skipped: 6 Killed, 40 Hurt As Bus Hits Tree In Chhattisgarh",
-    "[23 Oct 11:02:16] stale or low-score, skipped: Hyderabad: DRDO employee dies after assault over alleged wom",
-    "[23 Oct 11:02:16] stale or low-score, skipped: Hyderabad: Waiter dies after alleged attack by colleague in ",
-    "[23 Oct 11:02:16] stale or low-score, skipped: Hyderabad accident: Fortuner hits i10, crashes into electric",
-    "[23 Oct 11:02:16] stale or low-score, skipped: SAT Hospital in Keralam rejects charges of \u2018clinical trial d",
-    "[23 Oct 11:02:16] stale or low-score, skipped: Indian killed as Houthis attack Saudi Arabia\u2019s Dammam airpor",
-    "[23 Oct 11:02:16] stale or low-score, skipped: Kuttippuram panchayat member found dead near railway tracks",
-    "[23 Oct 11:02:16] stale or low-score, skipped: 4-Year-Old Girl Dies Of Fall In Pushkarini At Yadagirigutta ",
-    "[23 Oct 11:02:16] stale or low-score, skipped: Bus Crashes Into Tree in Chhattisgarh, 6 Lose Lives and 20 I",
-    "[23 Oct 11:02:16] stale or low-score, skipped: New York City Council passes law to ban horse carriage, hono",
-    "[23 Oct 11:02:16] stale or low-score, skipped: Swiggy shares crash 12% to record low: Why is the stock fall",
-    "[23 Oct 11:02:16] stale or low-score, skipped: HMWSSB officials asked to monitor water quality, supply",
-    "[23 Oct 11:02:16] stale or low-score, skipped: Bodies of Two Indians Killed in Germany Apartment Fire Arriv",
-    "[23 Oct 11:02:16] stale or low-score, skipped: Congress MLAs burn Punjab CM effigy over poor law-and-order ",
-    "[23 Oct 11:02:16] stale or low-score, skipped: Padmaraonagar Road Remains Unusable",
-    "[23 Oct 11:02:16] stale or low-score, skipped: Let\u2019s Make Kodangal Model for India, Says Revanth",
-    "[23 Oct 11:02:16] stale or low-score, skipped: Alai Balai brings leaders across party lines together",
-    "[23 Oct 11:02:16] stale or low-score, skipped: Indian Killed, 3 Injured in Attacks on Saudi Facilities, Say",
-    "[23 Oct 11:02:16] stale or low-score, skipped: One killed, over 100 injured in Devaragattu Dussehra stick f",
-    "[23 Oct 11:02:16] stale or low-score, skipped: Slapped By Customer Over Torn Rs 10 Note, Delivery Partner D",
-    "[23 Oct 11:02:16] stale or low-score, skipped: Fire Breaks Out at Aurobindo Unit in Parawada Pharma City",
-    "[23 Oct 11:02:16] stale or low-score, skipped: Emmy-Winning Actor Tom Skerritt Dies At 93",
-    "[23 Oct 11:02:16] stale or low-score, skipped: 21 years on, double life term for Jammu terror attack that k",
-    "[23 Oct 11:02:16] stale or low-score, skipped: Govt defends cancellation of Wangchuk institute\u2019s land allot",
-    "[23 Oct 11:02:16] stale or low-score, skipped: Industries in Chennai\u2019s SIPCOT parks flag infrastructure gap",
-    "[23 Oct 11:02:16] stale or low-score, skipped: \u2018Ridiculed for eating beef\u2019 at school, 16-year-old Tamil Nad"
+    "[23 Oct 11:19:06] queued for editorial pass (no safe auto frame): 24-year-old labourer found dead on railway tracks near Ghatkesar",
+    "[23 Oct 11:19:06] queued for editorial pass (no safe auto frame): Crop Losses, Mounting Debts Drive Two Farmers to Suicide in Telangana",
+    "[23 Oct 11:19:06] queued for editorial pass (no safe auto frame): Dandiya night tragedy: Truss erected on just two pillars instead of fo",
+    "[23 Oct 11:19:06] stale or low-score, skipped: 'Pak Didn't Accept Bodies Of Its Own Soldiers In Kargil': In",
+    "[23 Oct 11:19:06] stale or low-score, skipped: 6 Killed, 40 Hurt As Bus Hits Tree In Chhattisgarh",
+    "[23 Oct 11:19:06] stale or low-score, skipped: Hyderabad: DRDO employee dies after assault over alleged wom",
+    "[23 Oct 11:19:06] stale or low-score, skipped: Hyderabad: Waiter dies after alleged attack by colleague in ",
+    "[23 Oct 11:19:06] stale or low-score, skipped: Hyderabad accident: Fortuner hits i10, crashes into electric",
+    "[23 Oct 11:19:06] stale or low-score, skipped: SAT Hospital in Keralam rejects charges of \u2018clinical trial d",
+    "[23 Oct 11:19:06] stale or low-score, skipped: Indian killed as Houthis attack Saudi Arabia\u2019s Dammam airpor",
+    "[23 Oct 11:19:06] stale or low-score, skipped: Kuttippuram panchayat member found dead near railway tracks",
+    "[23 Oct 11:19:06] stale or low-score, skipped: Bus Crashes Into Tree in Chhattisgarh, 6 Lose Lives and 20 I",
+    "[23 Oct 11:19:06] stale or low-score, skipped: Jogi Meghana\u2019s Father Suspects Jogi Ramesh\u2019s Role in Car Acc",
+    "[23 Oct 11:19:06] stale or low-score, skipped: New York City Council passes law to ban horse carriage, hono",
+    "[23 Oct 11:19:06] stale or low-score, skipped: HMWSSB officials asked to monitor water quality, supply",
+    "[23 Oct 11:19:06] stale or low-score, skipped: Bodies of Two Indians Killed in Germany Apartment Fire Arriv",
+    "[23 Oct 11:19:06] stale or low-score, skipped: 4-Year-Old Girl Dies Of Fall In Pushkarini At Yadagirigutta ",
+    "[23 Oct 11:19:06] stale or low-score, skipped: Congress MLAs burn Punjab CM effigy over poor law-and-order ",
+    "[23 Oct 11:19:06] stale or low-score, skipped: Let\u2019s Make Kodangal Model for India, Says Revanth",
+    "[23 Oct 11:19:06] stale or low-score, skipped: Alai Balai brings leaders across party lines together",
+    "[23 Oct 11:19:06] stale or low-score, skipped: Indian Killed, 3 Injured in Attacks on Saudi Facilities, Say",
+    "[23 Oct 11:19:06] stale or low-score, skipped: One killed, over 100 injured in Devaragattu Dussehra stick f",
+    "[23 Oct 11:19:06] stale or low-score, skipped: Slapped By Customer Over Torn Rs 10 Note, Delivery Partner D",
+    "[23 Oct 11:19:06] stale or low-score, skipped: Fire Breaks Out at Aurobindo Unit in Parawada Pharma City",
+    "[23 Oct 11:19:06] stale or low-score, skipped: Emmy-Winning Actor Tom Skerritt Dies At 93",
+    "[23 Oct 11:19:06] stale or low-score, skipped: 21 years on, double life term for Jammu terror attack that k",
+    "[23 Oct 11:19:06] stale or low-score, skipped: Govt defends cancellation of Wangchuk institute\u2019s land allot",
+    "[23 Oct 11:19:06] stale or low-score, skipped: Industries in Chennai\u2019s SIPCOT parks flag infrastructure gap",
+    "[23 Oct 11:19:06] stale or low-score, skipped: \u2018Ridiculed for eating beef\u2019 at school, 16-year-old Tamil Nad",
+    "[23 Oct 11:19:06] stale or low-score, skipped: Padmaraonagar Road Remains Unusable"
   ]
 }
