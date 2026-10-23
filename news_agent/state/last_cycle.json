@@ -1,6 +1,6 @@
 {
-  "cycle": "20261023-2123",
-  "at": "2026-10-23T21:31:07.874132+05:30",
+  "cycle": "20261023-2141",
+  "at": "2026-10-23T21:47:46.830728+05:30",
   "candidates": 120,
   "published_this_cycle": 0,
   "digest": "starved: <3 publishable Urdu lines",
@@ -15,56 +15,56 @@
       "problems": "['Lines [1, 2, 3, 4, 5] copy 4+ consecutive English words verbatim into the Roman Urdu. Re-express those phrases in Urdu; keep only proper nouns/brands/technica"
     },
     "kills": {
-      "paste": [
+      "english-echo": [
         1,
+        4
+      ],
+      "paste": [
+        2,
         3,
         5
-      ],
-      "english-echo": [
-        2,
-        4
       ]
     },
     "accepted": 2,
     "salvaged": [
-      1,
-      2
+      2,
+      3
     ],
     "via": {
-      "1": "gemini-flash-lite-latest",
-      "2": "gemini-flash-lite-latest"
+      "2": "gemini-flash-lite-latest",
+      "3": "gemini-flash-lite-latest"
     }
   },
   "tail": [
-    "[23 Oct 21:31:07] stale or low-score, skipped: Romania blames Russia as drone strike sinks cargo ship in Bl",
-    "[23 Oct 21:31:07] stale or low-score, skipped: Bomb scare at Kolkata airport, searches underway",
-    "[23 Oct 21:31:07] stale or low-score, skipped: Fire Breaks Out at Timber Depot in Kukatpally, No Casualties",
-    "[23 Oct 21:31:07] stale or low-score, skipped: Hyderabad: Widow wins \u20b95 L after National Insurance rejects ",
-    "[23 Oct 21:31:07] stale or low-score, skipped: Eight dead, 10 injured in Ecuador prison riots: officials",
-    "[23 Oct 21:31:07] stale or low-score, skipped: CPI(M) turns the heat on Keralam govt. over SMA drug controv",
-    "[23 Oct 21:31:07] stale or low-score, skipped: Bagalkot banker loses money to online trading scam",
-    "[23 Oct 21:31:07] stale or low-score, skipped: Parents were counselled about generic drug, says doctor in c",
-    "[23 Oct 21:31:07] stale or low-score, skipped: Four Killed as Scorpio Hits Bhavani Devotees in Kakinada Dis",
-    "[23 Oct 21:31:07] stale or low-score, skipped: Hyderabad: Retired employee loses Rs 11.69 lakh in life cert",
-    "[23 Oct 21:31:07] stale or low-score, skipped: Two women from Adilabad killed as lorry hits ambulance",
-    "[23 Oct 21:31:07] stale or low-score, skipped: Teacher Killed as Trolley Auto Hits Bike from Behind on Sury",
-    "[23 Oct 21:31:07] stale or low-score, skipped: Teen Found Dead Near Transformer in Suryapet, Police Probe O",
-    "[23 Oct 21:31:07] stale or low-score, skipped: Karimnagar: Father, Young Son Hurt in Collision with Jagtial",
-    "[23 Oct 21:31:07] stale or low-score, skipped: Fire engulfs huts in Kukatpally, two suffer injuries",
-    "[23 Oct 21:31:07] stale or low-score, skipped: 6 Killed, 40 Hurt As Bus Hits Tree In Chhattisgarh",
-    "[23 Oct 21:31:07] stale or low-score, skipped: Surat university installs 388 anti-suicide fans to prevent h",
-    "[23 Oct 21:31:07] stale or low-score, skipped: Evening news wrap: Delhi police detain SIR protesters marchi",
-    "[23 Oct 21:31:07] stale or low-score, skipped: Kanimozhi Alleges Rise in Law and Order Issues in Tamil Nadu",
-    "[23 Oct 21:31:07] stale or low-score, skipped: \u2018Murder of democracy\u2019: Raj Thackeray targets BJP over \u2018Rs 50",
-    "[23 Oct 21:31:07] stale or low-score, skipped: 12 days on, two Indian sailors remain missing off Oman",
-    "[23 Oct 21:31:07] stale or low-score, skipped: Saraca Lab Gas Tragedy: Two AP Workers Killed in Sangareddy",
-    "[23 Oct 21:31:07] stale or low-score, skipped: Jagtial: Drunk Men in Car Run Over Pedestrian, Three Held",
-    "[23 Oct 21:31:07] stale or low-score, skipped: Kumuram Bheem Asifabad: Youth Dies, Another Injured in Bike ",
-    "[23 Oct 21:31:07] stale or low-score, skipped: 4-Year-Old Girl Dies Of Fall In Pushkarini At Yadagirigutta ",
-    "[23 Oct 21:31:07] stale or low-score, skipped: Elderly man from Hyderabad loses Rs 33.39 lakh in online tra",
-    "[23 Oct 21:31:07] stale or low-score, skipped: Habit-forming drug misuse raises concern across Hyderabad an",
-    "[23 Oct 21:31:07] stale or low-score, skipped: What is Romanch\u2019s Law? New York City\u2019s historic horse carria",
-    "[23 Oct 21:31:07] stale or low-score, skipped: Let\u2019s Make Kodangal Model for India, Says Revanth",
-    "[23 Oct 21:31:07] stale or low-score, skipped: Alai Balai brings leaders across party lines together"
+    "[23 Oct 21:47:46] stale or low-score, skipped: Fire Breaks Out at Timber Depot in Kukatpally, No Casualties",
+    "[23 Oct 21:47:46] stale or low-score, skipped: Hyderabad: Widow wins \u20b95 L after National Insurance rejects ",
+    "[23 Oct 21:47:46] stale or low-score, skipped: Eight dead, 10 injured in Ecuador prison riots: officials",
+    "[23 Oct 21:47:46] stale or low-score, skipped: CPI(M) turns the heat on Keralam govt. over SMA drug controv",
+    "[23 Oct 21:47:46] stale or low-score, skipped: Bagalkot banker loses money to online trading scam",
+    "[23 Oct 21:47:46] stale or low-score, skipped: Casualties feared as multi-storey building collapses in Nair",
+    "[23 Oct 21:47:46] stale or low-score, skipped: Four Killed as Scorpio Hits Bhavani Devotees in Kakinada Dis",
+    "[23 Oct 21:47:46] stale or low-score, skipped: Hyderabad: Retired employee loses Rs 11.69 lakh in life cert",
+    "[23 Oct 21:47:46] stale or low-score, skipped: Two women from Adilabad killed as lorry hits ambulance",
+    "[23 Oct 21:47:46] stale or low-score, skipped: Teacher Killed as Trolley Auto Hits Bike from Behind on Sury",
+    "[23 Oct 21:47:46] stale or low-score, skipped: Teen Found Dead Near Transformer in Suryapet, Police Probe O",
+    "[23 Oct 21:47:46] stale or low-score, skipped: Karimnagar: Father, Young Son Hurt in Collision with Jagtial",
+    "[23 Oct 21:47:46] stale or low-score, skipped: Fire engulfs huts in Kukatpally, two suffer injuries",
+    "[23 Oct 21:47:46] stale or low-score, skipped: 6 Killed, 40 Hurt As Bus Hits Tree In Chhattisgarh",
+    "[23 Oct 21:47:46] stale or low-score, skipped: Stock Market Crash in 2026: \u0905\u092c \u0915\u093f\u0924\u0928\u093e \u0926\u0930\u094d\u0926 \u0926\u0947\u0917\u093e \u092c\u093e\u091c\u093e\u0930? 2026 \u092e",
+    "[23 Oct 21:47:46] stale or low-score, skipped: Surat university installs 388 anti-suicide fans to prevent h",
+    "[23 Oct 21:47:46] stale or low-score, skipped: Evening news wrap: Delhi police detain SIR protesters marchi",
+    "[23 Oct 21:47:46] stale or low-score, skipped: Kanimozhi Alleges Rise in Law and Order Issues in Tamil Nadu",
+    "[23 Oct 21:47:46] stale or low-score, skipped: \u2018Murder of democracy\u2019: Raj Thackeray targets BJP over \u2018Rs 50",
+    "[23 Oct 21:47:46] stale or low-score, skipped: 12 days on, two Indian sailors remain missing off Oman",
+    "[23 Oct 21:47:46] stale or low-score, skipped: Bomb scare at Kolkata airport, searches underway",
+    "[23 Oct 21:47:46] stale or low-score, skipped: Saraca Lab Gas Tragedy: Two AP Workers Killed in Sangareddy",
+    "[23 Oct 21:47:46] stale or low-score, skipped: Jagtial: Drunk Men in Car Run Over Pedestrian, Three Held",
+    "[23 Oct 21:47:46] stale or low-score, skipped: Kumuram Bheem Asifabad: Youth Dies, Another Injured in Bike ",
+    "[23 Oct 21:47:46] stale or low-score, skipped: 4-Year-Old Girl Dies Of Fall In Pushkarini At Yadagirigutta ",
+    "[23 Oct 21:47:46] stale or low-score, skipped: Elderly man from Hyderabad loses Rs 33.39 lakh in online tra",
+    "[23 Oct 21:47:46] stale or low-score, skipped: Habit-forming drug misuse raises concern across Hyderabad an",
+    "[23 Oct 21:47:46] stale or low-score, skipped: What is Romanch\u2019s Law? New York City\u2019s historic horse carria",
+    "[23 Oct 21:47:46] stale or low-score, skipped: Let\u2019s Make Kodangal Model for India, Says Revanth",
+    "[23 Oct 21:47:46] stale or low-score, skipped: Alai Balai brings leaders across party lines together"
   ]
 }
