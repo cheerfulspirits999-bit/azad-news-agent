@@ -1,40 +1,73 @@
 {
-  "cycle": "20261024-1307",
-  "at": "2026-10-24T13:07:54.376574+05:30",
+  "cycle": "20261024-1317",
+  "at": "2026-10-24T13:23:58.425058+05:30",
   "candidates": 120,
   "published_this_cycle": 0,
-  "digest": "gate closed: ncards 11/24, gap 54 min, retry_pending=0",
-  "ru": {},
+  "digest": "PUBLISHED auto-digest-2026-10-24-s1322",
+  "ru": {
+    "pre_ru_picks": 5,
+    "to_translate": 4,
+    "engine": {
+      "ok": false,
+      "lines_in": 4,
+      "lines_want": 4,
+      "method": "fallback",
+      "problems": "['Lines [1, 2, 3, 4] copy 4+ consecutive English words verbatim into the Roman Urdu. Re-express those phrases in Urdu; keep only proper nouns/brands/technical t"
+    },
+    "kills": {
+      "english-echo": [
+        1,
+        3,
+        4
+      ],
+      "paste": [
+        5
+      ]
+    },
+    "accepted": 4,
+    "salvaged": [
+      1,
+      3,
+      4,
+      5
+    ],
+    "via": {
+      "1": "gemini-flash-lite-latest",
+      "3": "primary",
+      "4": "primary",
+      "5": "primary"
+    }
+  },
   "tail": [
-    "[24 Oct 13:07:54] queued for editorial pass (no safe auto frame): Khammam Student Dies of Heart Attack in America After Completing MS",
-    "[24 Oct 13:07:54] queued for editorial pass (no safe auto frame): TG Safe Food Officials Raid Sweet Shops in Hyderabad, Find Multiple Vi",
-    "[24 Oct 13:07:54] stale or low-score, skipped: Cylinder explosion in RR Nagar injures three, including nine",
-    "[24 Oct 13:07:54] stale or low-score, skipped: 16 Killed, 65 Injured as Powerful Quake Hits Tibet, Rescue O",
-    "[24 Oct 13:07:54] stale or low-score, skipped: Seven killed, 28 injured after gunmen open fire inside a chu",
-    "[24 Oct 13:07:54] stale or low-score, skipped: Tangled TV, Internet Cables Endanger Hyderabad",
-    "[24 Oct 13:07:54] stale or low-score, skipped: Hyderabad: Man Dies by Suicide Over Fear of Visa Rejection",
-    "[24 Oct 13:07:54] stale or low-score, skipped: Hyderabad: Toddler dies after falling into water-filled buck",
-    "[24 Oct 13:07:54] stale or low-score, skipped: 16 killed, 65 injured as magnitude 7 quake hits Tibet; over ",
-    "[24 Oct 13:07:54] stale or low-score, skipped: Tiger Shroff Firing: Mumbai Cops Recover Two Firearms from S",
-    "[24 Oct 13:07:54] stale or low-score, skipped: Parents were counselled about generic drug, says doctor in c",
-    "[24 Oct 13:07:54] stale or low-score, skipped: Hyderabad: Ganja raid in Attapur leads to gun, pistol and 5 ",
-    "[24 Oct 13:07:54] stale or low-score, skipped: BJP Leader Bharati Attacked With Knife in Polavaram Region",
-    "[24 Oct 13:07:54] stale or low-score, skipped: Four pilots killed after two Philippine Air Force jets crash",
-    "[24 Oct 13:07:54] stale or low-score, skipped: Wild Elephant Dies After Coming Into Contact With Live Wires",
-    "[24 Oct 13:07:54] stale or low-score, skipped: North Korean leader Kim Jong Un visits China, South Korean m",
-    "[24 Oct 13:07:54] stale or low-score, skipped: \u2018838\u2019 number plate, pool of blood, screams: Chilling video c",
-    "[24 Oct 13:07:54] stale or low-score, skipped: Ice-Laden Lorry Overturns Near Razole, Driver Injured",
-    "[24 Oct 13:07:54] stale or low-score, skipped: ZFD initiative: Sangareddy Collector, SP survey accident-pro",
-    "[24 Oct 13:07:54] stale or low-score, skipped: Migrant worker dies under suspicious circumstances at steel ",
-    "[24 Oct 13:07:54] stale or low-score, skipped: Khammam Student Dies of Cardiac Arrest in US",
-    "[24 Oct 13:07:54] stale or low-score, skipped: Two women from Adilabad killed as lorry hits ambulance",
-    "[24 Oct 13:07:54] stale or low-score, skipped: Teacher Killed as Trolley Auto Hits Bike from Behind on Sury",
-    "[24 Oct 13:07:54] stale or low-score, skipped: Teen Found Dead Near Transformer in Suryapet, Police Probe O",
-    "[24 Oct 13:07:54] stale or low-score, skipped: Netanyahu orders West Bank closure, warns of major military ",
-    "[24 Oct 13:07:54] stale or low-score, skipped: Lulu Group loses Rs 1.64 crore in email impersonation fraud",
-    "[24 Oct 13:07:54] stale or low-score, skipped: How Jeffrey Epstein became Houthis' new weapon against Saudi",
-    "[24 Oct 13:07:54] stale or low-score, skipped: HMWSSB orders 20 pc water, power cut in its own offices",
-    "[24 Oct 13:07:54] stale or low-score, skipped: Jordan church shooting: 7 killed, 34 wounded as gunmen open ",
-    "[24 Oct 13:07:54] stale or low-score, skipped: Five Killed in Explosion at Mining Site in Alluri District"
+    "[24 Oct 13:23:58] queued for editorial pass (no safe auto frame): Khammam Student Dies of Heart Attack in America After Completing MS",
+    "[24 Oct 13:23:58] queued for editorial pass (no safe auto frame): TG Safe Food Officials Raid Sweet Shops in Hyderabad, Find Multiple Vi",
+    "[24 Oct 13:23:58] stale or low-score, skipped: Cylinder explosion in RR Nagar injures three, including nine",
+    "[24 Oct 13:23:58] stale or low-score, skipped: 16 Killed, 65 Injured as Powerful Quake Hits Tibet, Rescue O",
+    "[24 Oct 13:23:58] stale or low-score, skipped: Seven killed, 28 injured after gunmen open fire inside a chu",
+    "[24 Oct 13:23:58] stale or low-score, skipped: Tangled TV, Internet Cables Endanger Hyderabad",
+    "[24 Oct 13:23:58] stale or low-score, skipped: Hyderabad: Toddler dies after falling into water-filled buck",
+    "[24 Oct 13:23:58] stale or low-score, skipped: 16 killed, 65 injured as magnitude 7 quake hits Tibet; over ",
+    "[24 Oct 13:23:58] stale or low-score, skipped: Tiger Shroff Firing: Mumbai Cops Recover Two Firearms from S",
+    "[24 Oct 13:23:58] stale or low-score, skipped: Parents were counselled about generic drug, says doctor in c",
+    "[24 Oct 13:23:58] stale or low-score, skipped: Hyderabad: Ganja raid in Attapur leads to gun, pistol and 5 ",
+    "[24 Oct 13:23:58] stale or low-score, skipped: Lorry Hits RTC Bus in Kakinada District, Two Children Injure",
+    "[24 Oct 13:23:58] stale or low-score, skipped: BJP Leader Bharati Attacked With Knife in Polavaram Region",
+    "[24 Oct 13:23:58] stale or low-score, skipped: 4 pilots killed as two Philippine Air Force aircraft crash d",
+    "[24 Oct 13:23:58] stale or low-score, skipped: Wild Elephant Dies After Coming Into Contact With Live Wires",
+    "[24 Oct 13:23:58] stale or low-score, skipped: North Korean leader Kim Jong Un visits China, South Korean m",
+    "[24 Oct 13:23:58] stale or low-score, skipped: \u2018838\u2019 number plate, pool of blood, screams: Chilling video c",
+    "[24 Oct 13:23:58] stale or low-score, skipped: ZFD initiative: Sangareddy Collector, SP survey accident-pro",
+    "[24 Oct 13:23:58] stale or low-score, skipped: Migrant worker dies under suspicious circumstances at steel ",
+    "[24 Oct 13:23:58] stale or low-score, skipped: Khammam Student Dies of Cardiac Arrest in US",
+    "[24 Oct 13:23:58] stale or low-score, skipped: Two women from Adilabad killed as lorry hits ambulance",
+    "[24 Oct 13:23:58] stale or low-score, skipped: Teacher Killed as Trolley Auto Hits Bike from Behind on Sury",
+    "[24 Oct 13:23:58] stale or low-score, skipped: Teen Found Dead Near Transformer in Suryapet, Police Probe O",
+    "[24 Oct 13:23:58] stale or low-score, skipped: Netanyahu orders West Bank closure, warns of major military ",
+    "[24 Oct 13:23:58] stale or low-score, skipped: Lulu Group loses Rs 1.64 crore in email impersonation fraud",
+    "[24 Oct 13:23:58] stale or low-score, skipped: How Jeffrey Epstein became Houthis' new weapon against Saudi",
+    "[24 Oct 13:23:58] stale or low-score, skipped: HMWSSB orders 20 pc water, power cut in its own offices",
+    "[24 Oct 13:23:58] stale or low-score, skipped: Jordan church shooting: 7 killed, 34 wounded as gunmen open ",
+    "[24 Oct 13:23:58] stale or low-score, skipped: Ice-Laden Lorry Overturns Near Razole, Driver Injured",
+    "[24 Oct 13:23:58] stale or low-score, skipped: Five Killed in Explosion at Mining Site in Alluri District"
   ]
 }
