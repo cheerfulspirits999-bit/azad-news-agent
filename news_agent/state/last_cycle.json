@@ -1,74 +1,40 @@
 {
-  "cycle": "20261024-2246",
-  "at": "2026-10-24T22:54:37.587205+05:30",
+  "cycle": "20261024-2304",
+  "at": "2026-10-24T23:04:57.140620+05:30",
   "candidates": 120,
   "published_this_cycle": 0,
-  "digest": "PUBLISHED auto-digest-2026-10-24-s2253",
-  "ru": {
-    "pre_ru_picks": 5,
-    "to_translate": 5,
-    "engine": {
-      "ok": false,
-      "lines_in": 5,
-      "lines_want": 5,
-      "method": "fallback",
-      "problems": "['Lines [1, 2, 3, 4, 5] copy 4+ consecutive English words verbatim into the Roman Urdu. Re-express those phrases in Urdu; keep only proper nouns/brands/technica"
-    },
-    "kills": {
-      "english-echo": [
-        1,
-        2,
-        4
-      ],
-      "paste": [
-        3,
-        5
-      ]
-    },
-    "accepted": 4,
-    "salvaged": [
-      1,
-      2,
-      3,
-      4
-    ],
-    "via": {
-      "1": "gemini-3.5-flash",
-      "2": "gemini-flash-lite-latest",
-      "3": "gemini-flash-lite-latest",
-      "4": "gemini-flash-lite-latest"
-    }
-  },
+  "digest": "gate closed: ncards 20/24, gap 12 min, retry_pending=0",
+  "ru": {},
   "tail": [
-    "[24 Oct 22:54:37] stale or low-score, skipped: U.S. embassy says security ramped up in Jordan after deadly ",
-    "[24 Oct 22:54:37] stale or low-score, skipped: Israel launches major West Bank operation after soldiers kil",
-    "[24 Oct 22:54:37] stale or low-score, skipped: VISWAS to hold children\u2019s parliament on drug abuse",
-    "[24 Oct 22:54:37] stale or low-score, skipped: Houthis say Saudi strikes kill at least 11 after missiles in",
-    "[24 Oct 22:54:37] stale or low-score, skipped: Mangalhat Police Arrest Abid Bin Khalid, Seize Knife and Unr",
-    "[24 Oct 22:54:37] stale or low-score, skipped: Death toll from Jordan church attack rises to nine",
-    "[24 Oct 22:54:37] stale or low-score, skipped: Five Killed in Gelatin Stick Explosion at Road Construction ",
-    "[24 Oct 22:54:37] stale or low-score, skipped: TGHRC Takes Cognisance of 2 Deaths in Vapour Leak at Saraca ",
-    "[24 Oct 22:54:37] stale or low-score, skipped: Class 12 student dies after setting herself on fire at Delhi",
-    "[24 Oct 22:54:37] stale or low-score, skipped: Two Killed as Speeding Car Rams Lorry in Huzurabad",
-    "[24 Oct 22:54:37] stale or low-score, skipped: Unidentified Man\u2019s Body Found in Saroornagar Lake",
-    "[24 Oct 22:54:37] stale or low-score, skipped: Farmer allegedly slapped by SI over water dispute in Telanga",
-    "[24 Oct 22:54:37] stale or low-score, skipped: Karimnagar Collector Calls for Drug and Ganja Free District",
-    "[24 Oct 22:54:37] stale or low-score, skipped: Couple from Sangareddy dies, six family members injured in K",
-    "[24 Oct 22:54:37] stale or low-score, skipped: Siddipet: Class 10 student found dead under suspicious circu",
-    "[24 Oct 22:54:37] stale or low-score, skipped: Class 10 student found dead in lake in Siddipet",
-    "[24 Oct 22:54:37] stale or low-score, skipped: Future City Police Arrest 9 in Shabad Attempted Murder Case ",
-    "[24 Oct 22:54:37] stale or low-score, skipped: Cyberabad plans 7-km counterflow BRT pilot to ease congestio",
-    "[24 Oct 22:54:37] stale or low-score, skipped: 45 paise for Rs 10L cover: Rlys extends insurance to counter",
-    "[24 Oct 22:54:37] stale or low-score, skipped: Naseeruddin, Payal Kapadia stand in solidarity with SRFTI st",
-    "[24 Oct 22:54:37] stale or low-score, skipped: Alluri Sitarama Raju: Explosion at road construction site le",
-    "[24 Oct 22:54:37] stale or low-score, skipped: Class X Student\u2019s Body Found in Lake in Gajwel",
-    "[24 Oct 22:54:37] stale or low-score, skipped: Man Dies After Bike Hits Him Near Ghatkesar",
-    "[24 Oct 22:54:37] stale or low-score, skipped: Monkeys Chase Two Boys, One Dies After Falling in Suryapet",
-    "[24 Oct 22:54:37] stale or low-score, skipped: Two Sangareddy Residents Die in Karnataka Road Accident",
-    "[24 Oct 22:54:37] stale or low-score, skipped: ZFD initiative: Sangareddy Collector, SP survey accident-pro",
-    "[24 Oct 22:54:37] stale or low-score, skipped: Migrant worker dies under suspicious circumstances at steel ",
-    "[24 Oct 22:54:37] stale or low-score, skipped: CBI Registers Rs 212.34 Crore Bank Fraud Case Against IL&FS ",
-    "[24 Oct 22:54:37] stale or low-score, skipped: Karnataka MVI promotions under cloud over \u2018certificate fraud",
-    "[24 Oct 22:54:37] stale or low-score, skipped: Horrific Road Accident in East Godavari: Tipper Lorry Rams R"
+    "[24 Oct 23:04:57] stale or low-score, skipped: TNSTC driver killed as bus caught in landslip at Burliyar on",
+    "[24 Oct 23:04:57] stale or low-score, skipped: Houthis say Saudi strikes kill at least 11 after missiles in",
+    "[24 Oct 23:04:57] stale or low-score, skipped: Mangalhat Police Arrest Abid Bin Khalid, Seize Knife and Unr",
+    "[24 Oct 23:04:57] stale or low-score, skipped: Death toll from Jordan church attack rises to nine",
+    "[24 Oct 23:04:57] stale or low-score, skipped: Five Killed in Gelatin Stick Explosion at Road Construction ",
+    "[24 Oct 23:04:57] stale or low-score, skipped: TGHRC Takes Cognisance of 2 Deaths in Vapour Leak at Saraca ",
+    "[24 Oct 23:04:57] stale or low-score, skipped: Class 12 student dies after setting herself on fire at Delhi",
+    "[24 Oct 23:04:57] stale or low-score, skipped: Two Killed as Speeding Car Rams Lorry in Huzurabad",
+    "[24 Oct 23:04:57] stale or low-score, skipped: Unidentified Man\u2019s Body Found in Saroornagar Lake",
+    "[24 Oct 23:04:57] stale or low-score, skipped: Farmer allegedly slapped by SI over water dispute in Telanga",
+    "[24 Oct 23:04:57] stale or low-score, skipped: Karimnagar Collector Calls for Drug and Ganja Free District",
+    "[24 Oct 23:04:57] stale or low-score, skipped: Couple from Sangareddy dies, six family members injured in K",
+    "[24 Oct 23:04:57] stale or low-score, skipped: Siddipet: Class 10 student found dead under suspicious circu",
+    "[24 Oct 23:04:57] stale or low-score, skipped: Class 10 student found dead in lake in Siddipet",
+    "[24 Oct 23:04:57] stale or low-score, skipped: Future City Police Arrest 9 in Shabad Attempted Murder Case ",
+    "[24 Oct 23:04:57] stale or low-score, skipped: Cyberabad plans 7-km counterflow BRT pilot to ease congestio",
+    "[24 Oct 23:04:57] stale or low-score, skipped: 45 paise for Rs 10L cover: Rlys extends insurance to counter",
+    "[24 Oct 23:04:57] stale or low-score, skipped: Naseeruddin, Payal Kapadia stand in solidarity with SRFTI st",
+    "[24 Oct 23:04:57] stale or low-score, skipped: Alluri Sitarama Raju: Explosion at road construction site le",
+    "[24 Oct 23:04:57] stale or low-score, skipped: Class X Student\u2019s Body Found in Lake in Gajwel",
+    "[24 Oct 23:04:57] stale or low-score, skipped: Man Dies After Bike Hits Him Near Ghatkesar",
+    "[24 Oct 23:04:57] stale or low-score, skipped: Monkeys Chase Two Boys, One Dies After Falling in Suryapet",
+    "[24 Oct 23:04:57] stale or low-score, skipped: Two Sangareddy Residents Die in Karnataka Road Accident",
+    "[24 Oct 23:04:57] stale or low-score, skipped: ZFD initiative: Sangareddy Collector, SP survey accident-pro",
+    "[24 Oct 23:04:57] stale or low-score, skipped: Migrant worker dies under suspicious circumstances at steel ",
+    "[24 Oct 23:04:57] stale or low-score, skipped: VISWAS to hold children\u2019s parliament on drug abuse",
+    "[24 Oct 23:04:57] stale or low-score, skipped: CBI Registers Rs 212.34 Crore Bank Fraud Case Against IL&FS ",
+    "[24 Oct 23:04:57] stale or low-score, skipped: Karnataka MVI promotions under cloud over \u2018certificate fraud",
+    "[24 Oct 23:04:57] stale or low-score, skipped: Horrific Road Accident in East Godavari: Tipper Lorry Rams R",
+    "[24 Oct 23:04:57] stale or low-score, skipped: 16 Killed, 65 Injured as Powerful Quake Hits Tibet, Rescue O"
   ]
 }
