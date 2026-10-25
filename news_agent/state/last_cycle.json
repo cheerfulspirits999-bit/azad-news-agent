@@ -1,40 +1,74 @@
 {
-  "cycle": "20261025-1838",
-  "at": "2026-10-25T18:38:45.461324+05:30",
+  "cycle": "20261025-1848",
+  "at": "2026-10-25T18:55:43.647913+05:30",
   "candidates": 120,
   "published_this_cycle": 0,
-  "digest": "gate closed: ncards 16/24, gap 53 min, retry_pending=0",
-  "ru": {},
+  "digest": "PUBLISHED auto-digest-2026-10-25-s1854",
+  "ru": {
+    "pre_ru_picks": 5,
+    "to_translate": 5,
+    "engine": {
+      "ok": false,
+      "lines_in": 5,
+      "lines_want": 5,
+      "method": "fallback",
+      "problems": "['Lines [1, 2, 3, 4, 5] copy 4+ consecutive English words verbatim into the Roman Urdu. Re-express those phrases in Urdu; keep only proper nouns/brands/technica"
+    },
+    "kills": {
+      "paste": [
+        1
+      ],
+      "english-echo": [
+        2,
+        3,
+        4,
+        5
+      ]
+    },
+    "accepted": 4,
+    "salvaged": [
+      1,
+      2,
+      3,
+      4
+    ],
+    "via": {
+      "1": "gemini-3.5-flash",
+      "2": "gemini-3.5-flash",
+      "3": "gemini-3.5-flash",
+      "4": "gemini-3.5-flash"
+    }
+  },
   "tail": [
-    "[25 Oct 18:38:45] held for the next card: auto-elephant-tusk-allegedly-meant-for-tamil-nadu-sale-two-arrest",
-    "[25 Oct 18:38:45] queued for editorial pass (no safe auto frame): 4.2 magnitude earthquake jolts Nepal's Baitadi, tremors felt in nearby",
-    "[25 Oct 18:38:45] stale or low-score, skipped: Hyd techie found dead after threatening to take her life dur",
-    "[25 Oct 18:38:45] queued for editorial pass (no safe auto frame): Telangana Food Safety Officials Flag Hygiene Violations at Sweet Shops",
-    "[25 Oct 18:38:45] queued for editorial pass (no safe auto frame): Eminent painter Jogen Chowdhury dies at 87; Suvendu, Mamata pay tribut",
-    "[25 Oct 18:38:45] queued for editorial pass (no safe auto frame): When safety slips through a gaping hole in Chennai\u2019s MRTS stations",
-    "[25 Oct 18:38:45] stale or low-score, skipped: Hyderabad: Woman hangs self in Madhapur",
-    "[25 Oct 18:38:45] queued for editorial pass (no safe auto frame): At least 12 injured in shooting near football stadium in Florida",
-    "[25 Oct 18:38:45] stale or low-score, skipped: Software Engineer Found Dead in Madhapur",
-    "[25 Oct 18:38:45] stale or low-score, skipped: Medchal: B.Tech Student Found Dead at Private Hostel in Kand",
-    "[25 Oct 18:38:45] queued for editorial pass (no safe auto frame): Show cause notice issued to 125 medical shops across Hyderabad against",
-    "[25 Oct 18:38:45] queued for editorial pass (no safe auto frame): Two youths killed, four injured as car rams into lorry on NH 563 near ",
-    "[25 Oct 18:38:45] stale or low-score, skipped: Kadapa police to seek cancellation of TDP spokesperson\u2019s gun",
-    "[25 Oct 18:38:45] stale or low-score, skipped: There is no shortage of funds to handle drought, says Eshwar",
-    "[25 Oct 18:38:45] stale or low-score, skipped: Tourist bus overturns near Bekal bridge in Keralam\u2019s Kasarag",
-    "[25 Oct 18:38:45] stale or low-score, skipped: Woman Allegedly Tied to Pole, Raped in Odisha\u2019s Jaleswar; Po",
-    "[25 Oct 18:38:45] stale or low-score, skipped: Tangled, Unused Cables Continue To Endanger Hyderabad Despit",
-    "[25 Oct 18:38:45] stale or low-score, skipped: Delhi court upholds cheating case against M3M, its promoters",
-    "[25 Oct 18:38:45] stale or low-score, skipped: Dream of becoming a lawyer cut short: TN Dalit teen dies by ",
-    "[25 Oct 18:38:45] stale or low-score, skipped: Man killed in Kochi crash involving car allegedly driven by ",
-    "[25 Oct 18:38:45] stale or low-score, skipped: Elon Musk unveils X Money feature that could let users send ",
-    "[25 Oct 18:38:45] stale or low-score, skipped: Keralam man killed after Mercedes driven by judge's 17-year-",
-    "[25 Oct 18:38:45] stale or low-score, skipped: Keralam: Man Dies After Two-Wheeler Hit by Car Driven by Jud",
-    "[25 Oct 18:38:45] stale or low-score, skipped: Hyderabad: Contaminated water scare near Sunnam Cheruvu, HYD",
-    "[25 Oct 18:38:45] stale or low-score, skipped: Rs 5,000 fine, registration cancellation: HMWSSB cracks down",
-    "[25 Oct 18:38:45] stale or low-score, skipped: Military ups death toll in Mali attack to 54",
-    "[25 Oct 18:38:45] stale or low-score, skipped: Rs 100-crore hawala trail exposed as Op Trident hits drug ca",
-    "[25 Oct 18:38:45] stale or low-score, skipped: Two Youths Drown as Boat Capsizes in Krishna River",
-    "[25 Oct 18:38:45] stale or low-score, skipped: Woman Dies as Car Rams into Stationary Lorry in Krishna Dist",
-    "[25 Oct 18:38:45] stale or low-score, skipped: \"I wanted him dead\" Ex-Navy SEAL who killed Osama"
+    "[25 Oct 18:55:43] queued for editorial pass (no safe auto frame): Andhra Pradesh prepares for possible cyclone landfall on October 28",
+    "[25 Oct 18:55:43] queued for editorial pass (no safe auto frame): K Muraleedharan Backs Exempting Two Keralam Vigilance Sections From RT",
+    "[25 Oct 18:55:43] queued for editorial pass (no safe auto frame): Keralam Lok Bhavan Recommends Removal of PSC Chairman to President",
+    "[25 Oct 18:55:43] queued for editorial pass (no safe auto frame): Why India must watch President Muizzu's Pakistan outreach",
+    "[25 Oct 18:55:43] queued for editorial pass (no safe auto frame): Maharashtra FDA Seizes 43.56 Tonnes of Food Stock Worth Rs 1.56 Crore",
+    "[25 Oct 18:55:43] stale or low-score, skipped: Hyd techie found dead after threatening to take her life dur",
+    "[25 Oct 18:55:43] queued for editorial pass (no safe auto frame): Telangana Food Safety Officials Flag Hygiene Violations at Sweet Shops",
+    "[25 Oct 18:55:43] queued for editorial pass (no safe auto frame): Eminent painter Jogen Chowdhury dies at 87; Suvendu, Mamata pay tribut",
+    "[25 Oct 18:55:43] queued for editorial pass (no safe auto frame): When safety slips through a gaping hole in Chennai\u2019s MRTS stations",
+    "[25 Oct 18:55:43] stale or low-score, skipped: Hyderabad: Woman hangs self in Madhapur",
+    "[25 Oct 18:55:43] queued for editorial pass (no safe auto frame): At least 12 injured in shooting near football stadium in Florida",
+    "[25 Oct 18:55:43] stale or low-score, skipped: Software Engineer Found Dead in Madhapur",
+    "[25 Oct 18:55:43] stale or low-score, skipped: Medchal: B.Tech Student Found Dead at Private Hostel in Kand",
+    "[25 Oct 18:55:43] queued for editorial pass (no safe auto frame): Show cause notice issued to 125 medical shops across Hyderabad against",
+    "[25 Oct 18:55:43] stale or low-score, skipped: Kadapa police to seek cancellation of TDP spokesperson\u2019s gun",
+    "[25 Oct 18:55:43] stale or low-score, skipped: Darjeeling Teen Found Dead On Roof In Assam's Dhubri",
+    "[25 Oct 18:55:43] stale or low-score, skipped: There is no shortage of funds to handle drought, says Eshwar",
+    "[25 Oct 18:55:43] stale or low-score, skipped: Tourist bus overturns near Bekal bridge in Keralam\u2019s Kasarag",
+    "[25 Oct 18:55:43] stale or low-score, skipped: Woman Allegedly Tied to Pole, Raped in Odisha\u2019s Jaleswar; Po",
+    "[25 Oct 18:55:43] stale or low-score, skipped: Tangled, Unused Cables Continue To Endanger Hyderabad Despit",
+    "[25 Oct 18:55:43] stale or low-score, skipped: Delhi court upholds cheating case against M3M, its promoters",
+    "[25 Oct 18:55:43] stale or low-score, skipped: Dream of becoming a lawyer cut short: TN Dalit teen dies by ",
+    "[25 Oct 18:55:43] stale or low-score, skipped: Man killed in Kochi crash involving car allegedly driven by ",
+    "[25 Oct 18:55:43] stale or low-score, skipped: Elon Musk unveils X Money feature that could let users send ",
+    "[25 Oct 18:55:43] stale or low-score, skipped: Keralam man killed after Mercedes driven by judge's 17-year-",
+    "[25 Oct 18:55:43] stale or low-score, skipped: Hyderabad: Contaminated water scare near Sunnam Cheruvu, HYD",
+    "[25 Oct 18:55:43] stale or low-score, skipped: Rs 5,000 fine, registration cancellation: HMWSSB cracks down",
+    "[25 Oct 18:55:43] stale or low-score, skipped: Military ups death toll in Mali attack to 54",
+    "[25 Oct 18:55:43] stale or low-score, skipped: Rs 100-crore hawala trail exposed as Op Trident hits drug ca",
+    "[25 Oct 18:55:43] stale or low-score, skipped: Two Youths Drown as Boat Capsizes in Krishna River"
   ]
 }
