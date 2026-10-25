@@ -1,72 +1,40 @@
 {
-  "cycle": "20261026-0145",
-  "at": "2026-10-26T01:55:07.888015+05:30",
+  "cycle": "20261026-0155",
+  "at": "2026-10-26T01:55:41.300979+05:30",
   "candidates": 120,
   "published_this_cycle": 0,
-  "digest": "PUBLISHED auto-digest-2026-10-26-s0153",
-  "ru": {
-    "pre_ru_picks": 5,
-    "to_translate": 5,
-    "engine": {
-      "ok": false,
-      "lines_in": 5,
-      "lines_want": 5,
-      "method": "fallback",
-      "problems": "['Lines [1, 2, 3, 4, 5] copy 4+ consecutive English words verbatim into the Roman Urdu. Re-express those phrases in Urdu; keep only proper nouns/brands/technica"
-    },
-    "kills": {
-      "paste": [
-        1,
-        3,
-        4
-      ],
-      "english-echo": [
-        2,
-        5
-      ]
-    },
-    "accepted": 3,
-    "salvaged": [
-      1,
-      2,
-      3
-    ],
-    "via": {
-      "1": "gemini-flash-lite-latest",
-      "2": "gemini-flash-lite-latest",
-      "3": "gemini-flash-lite-latest"
-    }
-  },
+  "digest": "gate closed: ncards 2/24, gap 2 min, retry_pending=0",
+  "ru": {},
   "tail": [
-    "[26 Oct 01:55:07] stale or low-score, skipped: Massive Explosion At Scrap Shop In Ramanathpur, Owner Critic",
-    "[26 Oct 01:55:07] queued for editorial pass (no safe auto frame): Explosion rips through Hyderabad shop, owner suffers 70 pc burns",
-    "[26 Oct 01:55:07] stale or low-score, skipped: 3 teenage girls among 4 killed as speeding car hits immersio",
-    "[26 Oct 01:55:07] stale or low-score, skipped: Kenya: At least 24 dead in bus-truck collision on Nairobi-Mo",
-    "[26 Oct 01:55:07] queued for editorial pass (no safe auto frame): TG SAFE identifies food safety violations at several sweet shops and b",
-    "[26 Oct 01:55:07] queued for editorial pass (no safe auto frame): Telangana: Father\u2019s last message to daughter before suicide",
-    "[26 Oct 01:55:07] queued for editorial pass (no safe auto frame): Strike on Gaza university kills three: staff, hospital",
-    "[26 Oct 01:55:07] queued for editorial pass (no safe auto frame): Man killed in Keralam\u2019s Kochi as luxury car, allegedly driven by judge",
-    "[26 Oct 01:55:07] stale or low-score, skipped: Migrant woman, two girls meet watery grave in Mancherial",
-    "[26 Oct 01:55:07] stale or low-score, skipped: Hyd techie found dead after threatening to take her life dur",
-    "[26 Oct 01:55:07] stale or low-score, skipped: Kerala Judge's Minor Son Rams Mercedes-Benz Into Scooter, Ri",
-    "[26 Oct 01:55:07] stale or low-score, skipped: Hyderabad: Woman hangs self in Madhapur",
-    "[26 Oct 01:55:07] stale or low-score, skipped: At least 12 injured in shooting near football stadium in Flo",
-    "[26 Oct 01:55:07] stale or low-score, skipped: Software Engineer Found Dead in Madhapur",
-    "[26 Oct 01:55:07] stale or low-score, skipped: Medchal: B.Tech Student Found Dead at Private Hostel in Kand",
-    "[26 Oct 01:55:07] stale or low-score, skipped: Tangled, Unused Cables Continue To Endanger Hyderabad Despit",
-    "[26 Oct 01:55:07] stale or low-score, skipped: Israeli air strikes kill several across Gaza Strip: local au",
-    "[26 Oct 01:55:07] stale or low-score, skipped: Man spits gutka on electrical wire in MP, dies of burns",
-    "[26 Oct 01:55:07] stale or low-score, skipped: Man allegedly killed by brother over land dispute in Sangare",
-    "[26 Oct 01:55:07] stale or low-score, skipped: With An AI-Generated Funeral Of Himself, Man Tries To Escape",
-    "[26 Oct 01:55:07] stale or low-score, skipped: WATER Supply From Godavari To Basar IIIT Hit",
-    "[26 Oct 01:55:07] stale or low-score, skipped: Gutha Dismisses Demand of BJP MP on Dindi LIS",
-    "[26 Oct 01:55:07] stale or low-score, skipped: Pradeep C. Nair | Homalin Strike & the Growing Footprint of ",
-    "[26 Oct 01:55:07] stale or low-score, skipped: Dispute over minor\u2019s ticket leaves RTC conductor critically ",
-    "[26 Oct 01:55:07] stale or low-score, skipped: Newlywed found dead in UP hotel, family alleges murder by 'a",
-    "[26 Oct 01:55:07] stale or low-score, skipped: NHM Strike Hits Immunisation Services; Vaccine Stocks Run Dr",
-    "[26 Oct 01:55:07] stale or low-score, skipped: UP man accused of murder uses AI image to fake death and eva",
-    "[26 Oct 01:55:07] stale or low-score, skipped: ASR District Blast Leaves Houses Of Tribal  Damaged In Its W",
-    "[26 Oct 01:55:07] stale or low-score, skipped: Godavari water to meet shortfall in Singur, Manjira reservoi",
-    "[26 Oct 01:55:07] stale or low-score, skipped: Noted Painter Jogen Chowdhury Dies; Mamata, Suvendu Mourn Th"
+    "[26 Oct 01:55:41] queued for editorial pass (no safe auto frame): Explosion rips through Hyderabad shop, owner suffers 70 pc burns",
+    "[26 Oct 01:55:41] stale or low-score, skipped: 3 teenage girls among 4 killed as speeding car hits immersio",
+    "[26 Oct 01:55:41] stale or low-score, skipped: Kenya: At least 24 dead in bus-truck collision on Nairobi-Mo",
+    "[26 Oct 01:55:41] stale or low-score, skipped: 2 killed in Punjab shooting, opposition targets AAP governme",
+    "[26 Oct 01:55:41] queued for editorial pass (no safe auto frame): Telangana: Father\u2019s last message to daughter before suicide",
+    "[26 Oct 01:55:41] queued for editorial pass (no safe auto frame): Strike on Gaza university kills three: staff, hospital",
+    "[26 Oct 01:55:41] queued for editorial pass (no safe auto frame): Man killed in Keralam\u2019s Kochi as luxury car, allegedly driven by judge",
+    "[26 Oct 01:55:41] stale or low-score, skipped: Migrant woman, two girls meet watery grave in Mancherial",
+    "[26 Oct 01:55:41] stale or low-score, skipped: Kerala Judge's Minor Son Rams Mercedes-Benz Into Scooter, Ri",
+    "[26 Oct 01:55:41] stale or low-score, skipped: Hyd techie found dead after threatening to take her life dur",
+    "[26 Oct 01:55:41] stale or low-score, skipped: Hyderabad: Woman hangs self in Madhapur",
+    "[26 Oct 01:55:41] stale or low-score, skipped: At least 12 injured in shooting near football stadium in Flo",
+    "[26 Oct 01:55:41] stale or low-score, skipped: Software Engineer Found Dead in Madhapur",
+    "[26 Oct 01:55:41] stale or low-score, skipped: Medchal: B.Tech Student Found Dead at Private Hostel in Kand",
+    "[26 Oct 01:55:41] stale or low-score, skipped: Tangled, Unused Cables Continue To Endanger Hyderabad Despit",
+    "[26 Oct 01:55:41] stale or low-score, skipped: Israeli air strikes kill several across Gaza Strip: local au",
+    "[26 Oct 01:55:41] stale or low-score, skipped: Man spits gutka on electrical wire in MP, dies of burns",
+    "[26 Oct 01:55:41] stale or low-score, skipped: Man allegedly killed by brother over land dispute in Sangare",
+    "[26 Oct 01:55:41] stale or low-score, skipped: With An AI-Generated Funeral Of Himself, Man Tries To Escape",
+    "[26 Oct 01:55:41] stale or low-score, skipped: WATER Supply From Godavari To Basar IIIT Hit",
+    "[26 Oct 01:55:41] stale or low-score, skipped: Gutha Dismisses Demand of BJP MP on Dindi LIS",
+    "[26 Oct 01:55:41] stale or low-score, skipped: Pradeep C. Nair | Homalin Strike & the Growing Footprint of ",
+    "[26 Oct 01:55:41] stale or low-score, skipped: Dispute over minor\u2019s ticket leaves RTC conductor critically ",
+    "[26 Oct 01:55:41] stale or low-score, skipped: Newlywed found dead in UP hotel, family alleges murder by 'a",
+    "[26 Oct 01:55:41] stale or low-score, skipped: NHM Strike Hits Immunisation Services; Vaccine Stocks Run Dr",
+    "[26 Oct 01:55:41] stale or low-score, skipped: UP man accused of murder uses AI image to fake death and eva",
+    "[26 Oct 01:55:41] stale or low-score, skipped: ASR District Blast Leaves Houses Of Tribal  Damaged In Its W",
+    "[26 Oct 01:55:41] stale or low-score, skipped: Godavari water to meet shortfall in Singur, Manjira reservoi",
+    "[26 Oct 01:55:41] stale or low-score, skipped: Noted Painter Jogen Chowdhury Dies; Mamata, Suvendu Mourn Th",
+    "[26 Oct 01:55:41] stale or low-score, skipped: \u2018He abused us\u2019: Navy man\u2019s wife, 3 children consume rat pois"
   ]
 }
