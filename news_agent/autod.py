@@ -1457,6 +1457,36 @@ def _drop_repeats(dg):
     return out
 
 
+def _cadence_from_published(today):
+    """(cards published today, minutes since the last one) from published.json.
+
+    26 Oct owner "set the cycle to hourly" + "stop posting you posted so many
+    cards": quota.json is written by whichever run finishes last, so two runs in
+    flight silently clobber each other. At 22:30 it claimed 17 cards and a last
+    card at 19:32 while 31 cards had actually shipped - so the gate read a
+    three-hour gap and stayed wide open. published.json is the record of what
+    really went on the Page and is committed reliably, so it is the only honest
+    source for the cadence.
+    """
+    try:
+        rows = json.load(open(os.path.join(STATE, "published.json"),
+                              encoding="utf-8"))
+    except Exception:
+        return 0, 9999.0
+    if not isinstance(rows, list):
+        return 0, 9999.0
+    stamps = [r.get("published_at") or "" for r in rows]
+    stamps = [a for a in stamps if a[:10] == today]
+    gap = 9999.0
+    if stamps:
+        try:
+            gap = (datetime.now(IST) -
+                   datetime.fromisoformat(max(stamps))).total_seconds() / 60
+        except Exception:
+            gap = 9999.0
+    return len(stamps), gap
+
+
 def _another_run_just_posted(minutes=12):
     """True when ANOTHER run committed a card in the last `minutes`.
 
@@ -1504,12 +1534,9 @@ def one_cycle():
     if q0.get("day") != today0:
         q0 = {"day": today0, "regular": 0, "day_total": 0,
               "emerg_month": q0.get("emerg_month", {})}
-    ncards = q0.get("digests", {}).get(today0, 0)
-    gap_min = 9999.0
-    if q0.get("last_card_at"):
-        gap_min = (datetime.now(IST) -
-                   datetime.fromisoformat(q0["last_card_at"])
-                   ).total_seconds() / 60  # cards sit 2h+ apart
+    # 26 Oct: the cadence comes from published.json, not from quota.json -
+    # see _cadence_from_published for why the quota was lying.
+    ncards, gap_min = _cadence_from_published(today0)
     # owner 25 Sep catch-up: a manual dispatch with catchup=1 (or ANY silence
     # past 3h inside the window) drains the backlog at 30-min spacing until the
     # pool is exhausted; the normal 2h slot rhythm resumes by itself.
