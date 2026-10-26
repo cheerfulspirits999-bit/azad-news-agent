@@ -1,35 +1,34 @@
 {
-  "cycle_id": "20261026-1535",
-  "generated_at": "2026-10-26T15:35:24.677562+05:30",
-  "feeds_ok": 9,
-  "errors": [
-    "Munsif Daily https://www.siasat.com/feed/: TimeoutError The read operation timed out"
-  ],
+  "cycle_id": "20261026-1550",
+  "generated_at": "2026-10-26T15:50:08.281455+05:30",
+  "feeds_ok": 10,
+  "errors": [],
   "counts": {
-    "fetched": 1709,
-    "fresh": 760,
+    "fetched": 1753,
+    "fresh": 797,
     "candidates": 120,
-    "duplicates_suppressed": 9
+    "duplicates_suppressed": 12
   },
   "candidates": [
     {
       "rank": 1,
       "class": "A",
       "score": 82,
-      "region": "hyderabad",
+      "region": "telangana",
       "region_confidence": 1.0,
-      "suggested_headline": "📰 LATEST NEWS — HYDERABAD",
-      "title": "Hyderabad to Divert Godavari Water to Singur-Manjeera Supply Areas",
-      "url": "https://munsifdaily.com/hyderabad-to-divert-godavari-water-to-singur-manjeera-supply-areas/",
+      "suggested_headline": "📰 LATEST NEWS — TELANGANA",
+      "title": "Body of Telangana man killed in Ukraine to reach home on Oct 31",
+      "url": "https://www.siasat.com/body-of-telangana-man-killed-in-ukraine-to-reach-home-on-oct-31-3564730/",
       "source": "Munsif Daily",
       "source_preferred": true,
-      "published_at": "2026-10-26T15:03:40+05:30",
-      "age_hours": 0.53,
+      "published_at": "2026-10-26T15:37:29+05:30",
+      "age_hours": 0.21,
       "categories": [
-        "infrastructure_failure",
-        "political_major"
+        "accident_casualty",
+        "traffic_disruption",
+        "international_conflict"
       ],
-      "excerpt": "Following the directions of Chief Minister A. Revanth Reddy, the Hyderabad Metropolitan Water Supply and Sewerage Board (HMWS&SB) has intensified precautionary measures to prevent drinking water shortages in the city in view of anticipated El Niño conditions.",
+      "excerpt": "Hyderabad: The mortal remains of Avilala Sudarshan Goud, a migrant worker from Telangana’s Jagtial district killed in a Russian missile strike in Ukraine, are expected to reach Hyderabad in the early hours of Saturday, October 31, nearly two months after his death. Sudarshan, 42, of Hasnabad village in Jagtial Urban mandal, died on Tuesday, September …",
       "corroboration": []
     },
     {
@@ -44,7 +43,7 @@
       "source": "The Hindu",
       "source_preferred": true,
       "published_at": "2026-10-26T15:26:32+05:30",
-      "age_hours": 0.15,
+      "age_hours": 0.39,
       "categories": [
         "accident_casualty"
       ],
@@ -63,7 +62,7 @@
       "source": "The Hindu",
       "source_preferred": true,
       "published_at": "2026-10-26T15:18:06+05:30",
-      "age_hours": 0.29,
+      "age_hours": 0.53,
       "categories": [
         "infrastructure_failure"
       ],
@@ -82,7 +81,7 @@
       "source": "Munsif Daily",
       "source_preferred": true,
       "published_at": "2026-10-26T15:14:59+05:30",
-      "age_hours": 0.34,
+      "age_hours": 0.59,
       "categories": [
         "infrastructure_failure"
       ],
@@ -101,7 +100,7 @@
       "source": "India Today",
       "source_preferred": false,
       "published_at": "2026-10-26T14:11:01+05:30",
-      "age_hours": 1.41,
+      "age_hours": 1.65,
       "categories": [
         "accident_casualty"
       ],
@@ -110,23 +109,25 @@
     },
     {
       "rank": 6,
-      "class": "C",
-      "score": 77,
-      "region": "india",
+      "class": "B",
+      "score": 78,
+      "region": "telangana",
       "region_confidence": 1.0,
-      "suggested_headline": "📰 LATEST NEWS — INDIA",
-      "title": "Juvenile Justice Board grants bail to teen driver in fatal Cheranalloor car crash in Keralam",
-      "url": "https://www.thehindu.com/news/national/kerala/juvenile-justice-board-grants-bail-to-teen-driver-in-fatal-cheranalloor-car-crash-in-keralam/article71625550.ece",
-      "source": "The Hindu",
+      "suggested_headline": "📰 LATEST NEWS — TELANGANA",
+      "title": "Amit Shah to participate in Telangana BJP’s Nov 2 ‘padayatra’",
+      "url": "https://www.siasat.com/amit-shah-to-participate-in-telangana-bjps-nov-2-padayatra-3564742/",
+      "source": "Munsif Daily",
       "source_preferred": true,
-      "published_at": "2026-10-26T12:11:53+05:30",
-      "age_hours": 3.39,
+      "published_at": "2026-10-26T15:47:23+05:30",
+      "age_hours": 0.05,
       "categories": [
-        "accident_casualty",
-        "court_judgment"
+        "political_major",
+        "protest_major"
       ],
-      "excerpt": "Absence of any previous criminal antecedents was among grounds cited for granting bail. The decision has not gone down well with protesters demanding his arrest who have been seeking action against the 17-year-old’s father, a judicial officer and the registered owner of the car",
-      "corroboration": []
+      "excerpt": "Hyderabad: Union Home Minister Amit Shah would attend a ‘padayatra’ to be organised on November 2 by Telangana BJP to expose the “false narrative” being spread by Congress against SIR and to provoke the country’s youth, state BJP president N Ramchander Rao said on Monday, October 26. The ‘padayatra’ (foot march) assumes significance, as it …",
+      "corroboration": [
+        "Deccan Chronicle"
+      ]
     },
     {
       "rank": 7,
@@ -140,7 +141,7 @@
       "source": "The Hindu",
       "source_preferred": true,
       "published_at": "2026-10-26T15:26:44+05:30",
-      "age_hours": 0.14,
+      "age_hours": 0.39,
       "categories": [
         "accident_casualty",
         "court_judgment"
@@ -160,7 +161,7 @@
       "source": "Telangana Today",
       "source_preferred": false,
       "published_at": "2026-10-26T15:07:15+05:30",
-      "age_hours": 0.47,
+      "age_hours": 0.71,
       "categories": [
         "political_major"
       ],
@@ -179,7 +180,7 @@
       "source": "The Hindu",
       "source_preferred": true,
       "published_at": "2026-10-26T14:57:41+05:30",
-      "age_hours": 0.63,
+      "age_hours": 0.87,
       "categories": [
         "accident_casualty"
       ],
@@ -198,7 +199,7 @@
       "source": "Munsif Daily",
       "source_preferred": true,
       "published_at": "2026-10-26T14:52:41+05:30",
-      "age_hours": 0.71,
+      "age_hours": 0.96,
       "categories": [
         "accident_casualty"
       ],
@@ -217,7 +218,7 @@
       "source": "Telangana Today",
       "source_preferred": false,
       "published_at": "2026-10-26T14:52:23+05:30",
-      "age_hours": 0.72,
+      "age_hours": 0.96,
       "categories": [
         "accident_casualty"
       ],
@@ -236,7 +237,7 @@
       "source": "Telangana Today",
       "source_preferred": false,
       "published_at": "2026-10-26T14:31:23+05:30",
-      "age_hours": 1.07,
+      "age_hours": 1.31,
       "categories": [
         "political_major"
       ],
@@ -247,44 +248,6 @@
       "rank": 13,
       "class": "C",
       "score": 76,
-      "region": "telangana",
-      "region_confidence": 1.0,
-      "suggested_headline": "📰 LATEST NEWS — TELANGANA",
-      "title": "BTech Graduate Dies under Suspicious Circumstances at Yedulabad Farmhouse",
-      "url": "https://www.deccanchronicle.com/southern-states/telangana/btech-graduate-dies-under-suspicious-circumstances-at-yedulabad-farmhouse-1998957",
-      "source": "Deccan Chronicle",
-      "source_preferred": false,
-      "published_at": "2026-10-26T13:48:06+05:30",
-      "age_hours": 1.79,
-      "categories": [
-        "accident_casualty"
-      ],
-      "excerpt": "The Ghatkesar police registered a case of suspicious death and launched an investigation",
-      "corroboration": []
-    },
-    {
-      "rank": 14,
-      "class": "C",
-      "score": 76,
-      "region": "india",
-      "region_confidence": 1.0,
-      "suggested_headline": "📰 LATEST NEWS — INDIA",
-      "title": "Cyclone Arnab: 5.7 Lakh People Identified as Vulnerable in Andhra Pradesh",
-      "url": "https://munsifdaily.com/cyclone-arnab-5-7-lakh-people-identified-as/",
-      "source": "Munsif Daily",
-      "source_preferred": true,
-      "published_at": "2026-10-26T13:37:39+05:30",
-      "age_hours": 1.96,
-      "categories": [
-        "disaster_weather"
-      ],
-      "excerpt": "Cyclone Arnab is likely to intensify into a very severe cyclonic storm and cross the Andhra Pradesh and Yanam coasts between Bapatla and Visakhapatnam on October 28, the India Meteorological Department (IMD) said on Monday.",
-      "corroboration": []
-    },
-    {
-      "rank": 15,
-      "class": "C",
-      "score": 76,
       "region": "hyderabad",
       "region_confidence": 1.0,
       "suggested_headline": "📰 LATEST NEWS — HYDERABAD",
@@ -293,7 +256,7 @@
       "source": "The Hindu",
       "source_preferred": true,
       "published_at": "2026-10-25T19:29:38+05:30",
-      "age_hours": 20.1,
+      "age_hours": 20.34,
       "categories": [
         "accident_casualty"
       ],
@@ -301,7 +264,7 @@
       "corroboration": []
     },
     {
-      "rank": 16,
+      "rank": 14,
       "class": "C",
       "score": 76,
       "region": "hyderabad",
@@ -312,7 +275,7 @@
       "source": "The Hindu",
       "source_preferred": true,
       "published_at": "2026-10-25T16:54:20+05:30",
-      "age_hours": 22.68,
+      "age_hours": 22.93,
       "categories": [
         "fire_explosion",
         "accident_casualty"
@@ -321,45 +284,124 @@
       "corroboration": []
     },
     {
-      "rank": 17,
+      "rank": 15,
       "class": "C",
-      "score": 75,
-      "region": "world",
+      "score": 74,
+      "region": "hyderabad",
       "region_confidence": 1.0,
-      "suggested_headline": "🌍 LATEST — WORLD",
-      "title": "At least 22 killed in Kenya bus crash near site of previous fatal accident",
-      "url": "https://www.thehindu.com/news/international/kenya-bus-crash-several-killed-october-25-2026/article71622975.ece",
-      "source": "The Hindu",
-      "source_preferred": true,
-      "published_at": "2026-10-25T15:36:58+05:30",
-      "age_hours": 23.97,
+      "suggested_headline": "📰 LATEST NEWS — HYDERABAD",
+      "title": "Telangana High Court warns chief secretary of personal appearance over non-compliance with court orders",
+      "url": "https://newsmeter.in/hyderabad/telangana-high-court-warns-chief-secretary-of-personal-appearance-over-non-compliance-with-court-orders-778100",
+      "source": "Newsmeter",
+      "source_preferred": false,
+      "published_at": "2026-10-26T15:38:31+05:30",
+      "age_hours": 0.19,
       "categories": [
-        "accident_casualty"
+        "court_judgment"
       ],
-      "excerpt": "The crash came three weeks after 17 people died in another accident along the same highway linking the capital, Nairobi, with the coastal city of Mombasa",
+      "excerpt": "The petitions seek action against the senior official under Sections 10 to 12 of the Contempt of Courts Act, 1971, for alleged non-compliance with the court’s orders.",
       "corroboration": []
     },
     {
-      "rank": 18,
+      "rank": 16,
       "class": "C",
       "score": 74,
       "region": "telangana",
       "region_confidence": 1.0,
       "suggested_headline": "📰 LATEST NEWS — TELANGANA",
-      "title": "No Alliance With Jana Sena! Telangana BJP Leaders Voice Opposition",
-      "url": "https://munsifdaily.com/no-alliance-with-jana-sena-telangana-bjp-leaders-voice-opposition/",
+      "title": "Telangana BJP to burn Kharge effigy over ‘Modi ka baap’ remark",
+      "url": "https://www.siasat.com/telangana-bjp-chief-slams-kharge-over-modi-ka-baap-remark-3564460/",
       "source": "Munsif Daily",
       "source_preferred": true,
-      "published_at": "2026-10-26T12:21:23+05:30",
-      "age_hours": 3.23,
+      "published_at": "2026-10-26T12:06:03+05:30",
+      "age_hours": 3.73,
       "categories": [
         "political_major"
       ],
-      "excerpt": "According to reports from an internal party meeting held to discuss the upcoming graduate MLC elections, several BJP leaders conveyed their views to the party's national leadership, arguing that an alliance with Jana Sena could negatively affect the BJP's image in Telangana.",
+      "excerpt": "Hyderabad: Rao accused the Congress of making remarks about Modi’s mother in the past and his father at present. “The Congress is hollow. When it cannot find issues to criticise the Prime Minister, it makes personal remarks,” he added. Rao also said Kharge remarked on Modi’s father out of frustration. The Telangana BJP chief said …",
+      "corroboration": []
+    },
+    {
+      "rank": 17,
+      "class": "C",
+      "score": 72,
+      "region": "hyderabad",
+      "region_confidence": 1.0,
+      "suggested_headline": "📰 LATEST NEWS — HYDERABAD",
+      "title": "Amit Shah to lead 'save democracy, reject mobocracy' march in Hyderabad on Nov 2, day after Opposition rally",
+      "url": "https://www.indiatoday.in/india/story/amit-shah-to-lead-save-democracy-reject-mobocracy-march-in-hyderabad-on-nov-2-day-after-opposition-rally-3025250-2026-10-26?utm_source=rss",
+      "source": "India Today",
+      "source_preferred": false,
+      "published_at": "2026-10-26T15:47:05+05:30",
+      "age_hours": 0.05,
+      "categories": [
+        "traffic_disruption",
+        "protest_major"
+      ],
+      "excerpt": "Amit Shah to lead save democracy reject mobocracy march in Hyderabad on Nov day after Opposition rally",
+      "corroboration": []
+    },
+    {
+      "rank": 18,
+      "class": "C",
+      "score": 72,
+      "region": "india",
+      "region_confidence": 1.0,
+      "suggested_headline": "📰 LATEST NEWS — INDIA",
+      "title": "Cyclonic storm 'Arnab' to cross Andhra Pradesh-Yanam coast as very severe storm by October 28: IMD | LIVE",
+      "url": "https://www.thehindu.com/news/national/cyclone-arnab-andhra-pradesh-odisha-live-updates-imd-weather-forecast-rain-warnings-bay-of-bengal-october-26-2026/article71625447.ece",
+      "source": "The Hindu",
+      "source_preferred": true,
+      "published_at": "2026-10-26T15:44:09+05:30",
+      "age_hours": 0.1,
+      "categories": [
+        "political_major"
+      ],
+      "excerpt": "Odisha stepped up preparations, mobilising personnel and equipment, while Chief Minister Mohan Charan Majhi deputed eight ministers to vulnerable districts",
       "corroboration": []
     },
     {
       "rank": 19,
+      "class": "C",
+      "score": 72,
+      "region": "telangana",
+      "region_confidence": 1.0,
+      "suggested_headline": "📰 LATEST NEWS — TELANGANA",
+      "title": "Maharashtra and Telangana to form joint panel on Tummidihatti Barrage",
+      "url": "https://newsmeter.in/regional/telangana/maharashtra-and-telangana-to-form-joint-panel-on-tummidihatti-barrage-778101",
+      "source": "Newsmeter",
+      "source_preferred": false,
+      "published_at": "2026-10-26T15:42:47+05:30",
+      "age_hours": 0.12,
+      "categories": [
+        "political_major"
+      ],
+      "excerpt": "Telangana Irrigation Minister N Uttam Kumar Reddy delivered a detailed presentation outlining the history of the project, which dates back to October 1975.",
+      "corroboration": []
+    },
+    {
+      "rank": 20,
+      "class": "C",
+      "score": 72,
+      "region": "india",
+      "region_confidence": 1.0,
+      "suggested_headline": "📰 LATEST NEWS — INDIA",
+      "title": "Odisha’s contempt petition in Supreme Court over Kotia panchayat election | Explained",
+      "url": "https://www.thehindu.com/news/national/odishas-contempt-petition-in-supreme-court-over-kotia-panchayat-election-explained/article71626140.ece",
+      "source": "The Hindu",
+      "source_preferred": true,
+      "published_at": "2026-10-26T15:32:00+05:30",
+      "age_hours": 0.3,
+      "categories": [
+        "court_judgment",
+        "govt_announcement",
+        "political_major"
+      ],
+      "excerpt": "The Odisha government filed a contempt of court petition against the Andhra Pradesh government in the Supreme Court challenging the notification for the forthcoming election in Kotia",
+      "corroboration": []
+    },
+    {
+      "rank": 21,
       "class": "C",
       "score": 72,
       "region": "hyderabad",
@@ -370,7 +412,7 @@
       "source": "Munsif Daily",
       "source_preferred": true,
       "published_at": "2026-10-26T15:30:05+05:30",
-      "age_hours": 0.09,
+      "age_hours": 0.33,
       "categories": [
         "disaster_weather"
       ],
@@ -378,7 +420,27 @@
       "corroboration": []
     },
     {
-      "rank": 20,
+      "rank": 22,
+      "class": "C",
+      "score": 72,
+      "region": "india",
+      "region_confidence": 1.0,
+      "suggested_headline": "📰 LATEST NEWS — INDIA",
+      "title": "Bihar BJP holds protest march over Kharge’s remarks targeting Modi",
+      "url": "https://www.siasat.com/bihar-bjp-holds-protest-march-over-kharges-remarks-targeting-modi-3564575/",
+      "source": "Munsif Daily",
+      "source_preferred": true,
+      "published_at": "2026-10-26T15:19:34+05:30",
+      "age_hours": 0.51,
+      "categories": [
+        "political_major",
+        "protest_major"
+      ],
+      "excerpt": "Patna: The BJP took out a march here on Monday, October 26, to protest against Congress president Mallikarjun Kharge’s controversial remarks targeting Prime Minister Narendra Modi, claiming that his comments reflect the opposition party’s frustration. Led by BJP’s Bihar unit president Sanjay Saraogi, party leaders and supporters held the ‘Jan Akrosh March’ from its headquarters …",
+      "corroboration": []
+    },
+    {
+      "rank": 23,
       "class": "C",
       "score": 72,
       "region": "world",
@@ -389,7 +451,7 @@
       "source": "The Hindu",
       "source_preferred": true,
       "published_at": "2026-10-26T15:09:20+05:30",
-      "age_hours": 0.43,
+      "age_hours": 0.68,
       "categories": [
         "accident_casualty",
         "court_judgment",
@@ -401,7 +463,7 @@
       ]
     },
     {
-      "rank": 21,
+      "rank": 24,
       "class": "C",
       "score": 72,
       "region": "india",
@@ -412,7 +474,7 @@
       "source": "The Hindu",
       "source_preferred": true,
       "published_at": "2026-10-26T15:04:41+05:30",
-      "age_hours": 0.51,
+      "age_hours": 0.76,
       "categories": [
         "political_major"
       ],
@@ -420,7 +482,7 @@
       "corroboration": []
     },
     {
-      "rank": 22,
+      "rank": 25,
       "class": "C",
       "score": 72,
       "region": "india",
@@ -431,7 +493,7 @@
       "source": "The Hindu",
       "source_preferred": true,
       "published_at": "2026-10-26T14:47:54+05:30",
-      "age_hours": 0.79,
+      "age_hours": 1.04,
       "categories": [
         "accident_casualty"
       ],
@@ -439,7 +501,7 @@
       "corroboration": []
     },
     {
-      "rank": 23,
+      "rank": 26,
       "class": "C",
       "score": 72,
       "region": "world",
@@ -450,7 +512,7 @@
       "source": "The Hindu",
       "source_preferred": true,
       "published_at": "2026-10-26T14:47:34+05:30",
-      "age_hours": 0.8,
+      "age_hours": 1.04,
       "categories": [
         "accident_casualty"
       ],
@@ -458,7 +520,7 @@
       "corroboration": []
     },
     {
-      "rank": 24,
+      "rank": 27,
       "class": "C",
       "score": 72,
       "region": "india",
@@ -469,7 +531,7 @@
       "source": "The Hindu",
       "source_preferred": true,
       "published_at": "2026-10-26T14:42:14+05:30",
-      "age_hours": 0.89,
+      "age_hours": 1.13,
       "categories": [
         "political_major",
         "protest_major"
@@ -478,7 +540,7 @@
       "corroboration": []
     },
     {
-      "rank": 25,
+      "rank": 28,
       "class": "C",
       "score": 72,
       "region": "india",
@@ -489,7 +551,7 @@
       "source": "The Hindu",
       "source_preferred": true,
       "published_at": "2026-10-26T14:38:11+05:30",
-      "age_hours": 0.95,
+      "age_hours": 1.2,
       "categories": [
         "political_major",
         "protest_major"
@@ -498,7 +560,7 @@
       "corroboration": []
     },
     {
-      "rank": 26,
+      "rank": 29,
       "class": "C",
       "score": 72,
       "region": "india",
@@ -509,7 +571,7 @@
       "source": "The Hindu",
       "source_preferred": true,
       "published_at": "2026-10-26T14:36:23+05:30",
-      "age_hours": 0.98,
+      "age_hours": 1.23,
       "categories": [
         "accident_casualty",
         "court_judgment"
@@ -517,6 +579,7 @@
       "excerpt": "Uttar Pradesh Police constituted a Special Investigation Team (SIT) to probe the accident involving vehicles trailing the convoy of Congress leader Rahul Gandhi during his visit to Sultanpur",
       "corroboration": [
         "The Hindu",
+        "Munsif Daily",
         "Times of India",
         "Telangana Today",
         "India Today",
@@ -524,7 +587,7 @@
       ]
     },
     {
-      "rank": 27,
+      "rank": 30,
       "class": "C",
       "score": 72,
       "region": "india",
@@ -535,7 +598,7 @@
       "source": "The Hindu",
       "source_preferred": true,
       "published_at": "2026-10-26T14:35:01+05:30",
-      "age_hours": 1.01,
+      "age_hours": 1.25,
       "categories": [
         "court_judgment",
         "political_major"
@@ -544,26 +607,7 @@
       "corroboration": []
     },
     {
-      "rank": 28,
-      "class": "C",
-      "score": 72,
-      "region": "india",
-      "region_confidence": 1.0,
-      "suggested_headline": "📰 LATEST NEWS — INDIA",
-      "title": "Cyclonic storm 'Arnab' to cross Andhra Pradesh-Yanam coast as very severe storm by October 28: IMD | LIVE",
-      "url": "https://www.thehindu.com/news/national/cyclone-arnab-andhra-pradesh-odisha-live-updates-imd-weather-forecast-rain-warnings-bay-of-bengal-october-26-2026/article71625447.ece",
-      "source": "The Hindu",
-      "source_preferred": true,
-      "published_at": "2026-10-26T14:22:38+05:30",
-      "age_hours": 1.21,
-      "categories": [
-        "political_major"
-      ],
-      "excerpt": "Odisha stepped up preparations, mobilising personnel and equipment, while Chief Minister Mohan Charan Majhi deputed eight ministers to vulnerable districts",
-      "corroboration": []
-    },
-    {
-      "rank": 29,
+      "rank": 31,
       "class": "C",
       "score": 72,
       "region": "world",
@@ -574,7 +618,7 @@
       "source": "The Hindu",
       "source_preferred": true,
       "published_at": "2026-10-26T14:16:34+05:30",
-      "age_hours": 1.31,
+      "age_hours": 1.56,
       "categories": [
         "accident_casualty",
         "international_conflict"
@@ -583,7 +627,7 @@
       "corroboration": []
     },
     {
-      "rank": 30,
+      "rank": 32,
       "class": "C",
       "score": 72,
       "region": "hyderabad",
@@ -594,7 +638,7 @@
       "source": "Munsif Daily",
       "source_preferred": true,
       "published_at": "2026-10-26T13:58:18+05:30",
-      "age_hours": 1.62,
+      "age_hours": 1.86,
       "categories": [
         "accident_casualty"
       ],
@@ -602,7 +646,7 @@
       "corroboration": []
     },
     {
-      "rank": 31,
+      "rank": 33,
       "class": "C",
       "score": 72,
       "region": "india",
@@ -613,7 +657,7 @@
       "source": "The Hindu",
       "source_preferred": true,
       "published_at": "2026-10-26T13:54:55+05:30",
-      "age_hours": 1.67,
+      "age_hours": 1.92,
       "categories": [
         "major_crime",
         "govt_announcement",
@@ -623,27 +667,45 @@
       "corroboration": []
     },
     {
-      "rank": 32,
+      "rank": 34,
       "class": "C",
       "score": 72,
-      "region": "india",
-      "region_confidence": 0.4,
-      "suggested_headline": "📰 LATEST NEWS — INDIA",
-      "title": "ONGC reports blowout at gas well in Konaseema; no casualties",
-      "url": "https://www.thehindu.com/news/national/andhra-pradesh/ongc-reports-blowout-at-gas-well-in-konaseema-no-casualties/article70473873.ece",
-      "source": "The Hindu",
-      "source_preferred": true,
-      "published_at": "2026-10-26T13:44:46+05:30",
-      "age_hours": 1.84,
+      "region": "telangana",
+      "region_confidence": 1.0,
+      "suggested_headline": "📰 LATEST NEWS — TELANGANA",
+      "title": "BTech Graduate Dies under Suspicious Circumstances at Yedulabad Farmhouse",
+      "url": "https://www.deccanchronicle.com/southern-states/telangana/btech-graduate-dies-under-suspicious-circumstances-at-yedulabad-farmhouse-1998957",
+      "source": "Deccan Chronicle",
+      "source_preferred": false,
+      "published_at": "2026-10-26T13:48:06+05:30",
+      "age_hours": 2.03,
       "categories": [
-        "fire_explosion",
         "accident_casualty"
       ],
-      "excerpt": "Natural gas leak at Mori-5 well near Irusumanda village in Malkipuram mandal triggers incident during repair works; cooling operations under way and international well-control experts engaged, officials say",
+      "excerpt": "The Ghatkesar police registered a case of suspicious death and launched an investigation",
       "corroboration": []
     },
     {
-      "rank": 33,
+      "rank": 35,
+      "class": "C",
+      "score": 72,
+      "region": "india",
+      "region_confidence": 1.0,
+      "suggested_headline": "📰 LATEST NEWS — INDIA",
+      "title": "Cyclone Arnab: 5.7 Lakh People Identified as Vulnerable in Andhra Pradesh",
+      "url": "https://munsifdaily.com/cyclone-arnab-5-7-lakh-people-identified-as/",
+      "source": "Munsif Daily",
+      "source_preferred": true,
+      "published_at": "2026-10-26T13:37:39+05:30",
+      "age_hours": 2.21,
+      "categories": [
+        "disaster_weather"
+      ],
+      "excerpt": "Cyclone Arnab is likely to intensify into a very severe cyclonic storm and cross the Andhra Pradesh and Yanam coasts between Bapatla and Visakhapatnam on October 28, the India Meteorological Department (IMD) said on Monday.",
+      "corroboration": []
+    },
+    {
+      "rank": 36,
       "class": "C",
       "score": 72,
       "region": "india",
@@ -654,7 +716,7 @@
       "source": "The Hindu",
       "source_preferred": true,
       "published_at": "2026-10-26T13:19:23+05:30",
-      "age_hours": 2.27,
+      "age_hours": 2.51,
       "categories": [
         "disaster_weather"
       ],
@@ -662,7 +724,7 @@
       "corroboration": []
     },
     {
-      "rank": 34,
+      "rank": 37,
       "class": "C",
       "score": 72,
       "region": "telangana",
@@ -673,7 +735,7 @@
       "source": "Deccan Chronicle",
       "source_preferred": false,
       "published_at": "2026-10-26T13:12:50+05:30",
-      "age_hours": 2.38,
+      "age_hours": 2.62,
       "categories": [
         "disaster_weather"
       ],
@@ -681,7 +743,7 @@
       "corroboration": []
     },
     {
-      "rank": 35,
+      "rank": 38,
       "class": "C",
       "score": 72,
       "region": "india",
@@ -692,7 +754,7 @@
       "source": "The Hindu",
       "source_preferred": true,
       "published_at": "2026-10-26T12:37:16+05:30",
-      "age_hours": 2.97,
+      "age_hours": 3.21,
       "categories": [
         "accident_casualty",
         "police_operation"
@@ -703,7 +765,7 @@
       ]
     },
     {
-      "rank": 36,
+      "rank": 39,
       "class": "C",
       "score": 72,
       "region": "india",
@@ -714,7 +776,7 @@
       "source": "The Hindu",
       "source_preferred": true,
       "published_at": "2026-10-26T12:28:05+05:30",
-      "age_hours": 3.12,
+      "age_hours": 3.37,
       "categories": [
         "disaster_weather"
       ],
@@ -724,7 +786,7 @@
       ]
     },
     {
-      "rank": 37,
+      "rank": 40,
       "class": "C",
       "score": 72,
       "region": "telangana",
@@ -735,7 +797,7 @@
       "source": "Telangana Today",
       "source_preferred": false,
       "published_at": "2026-10-26T12:02:40+05:30",
-      "age_hours": 3.55,
+      "age_hours": 3.79,
       "categories": [
         "accident_casualty",
         "traffic_disruption",
@@ -745,7 +807,7 @@
       "corroboration": []
     },
     {
-      "rank": 38,
+      "rank": 41,
       "class": "C",
       "score": 72,
       "region": "telangana",
@@ -756,7 +818,7 @@
       "source": "Deccan Chronicle",
       "source_preferred": false,
       "published_at": "2026-10-26T12:01:30+05:30",
-      "age_hours": 3.57,
+      "age_hours": 3.81,
       "categories": [
         "fire_explosion",
         "accident_casualty"
@@ -765,7 +827,7 @@
       "corroboration": []
     },
     {
-      "rank": 39,
+      "rank": 42,
       "class": "C",
       "score": 72,
       "region": "telangana",
@@ -776,7 +838,7 @@
       "source": "Deccan Chronicle",
       "source_preferred": false,
       "published_at": "2026-10-26T10:54:52+05:30",
-      "age_hours": 4.68,
+      "age_hours": 4.92,
       "categories": [
         "accident_casualty"
       ],
@@ -784,7 +846,7 @@
       "corroboration": []
     },
     {
-      "rank": 40,
+      "rank": 43,
       "class": "C",
       "score": 72,
       "region": "telangana",
@@ -795,7 +857,7 @@
       "source": "Newsmeter",
       "source_preferred": false,
       "published_at": "2026-10-26T10:34:34+05:30",
-      "age_hours": 5.01,
+      "age_hours": 5.26,
       "categories": [
         "accident_casualty",
         "political_major"
@@ -804,7 +866,7 @@
       "corroboration": []
     },
     {
-      "rank": 41,
+      "rank": 44,
       "class": "C",
       "score": 72,
       "region": "telangana",
@@ -815,7 +877,7 @@
       "source": "Newsmeter",
       "source_preferred": false,
       "published_at": "2026-10-26T10:23:11+05:30",
-      "age_hours": 5.2,
+      "age_hours": 5.45,
       "categories": [
         "disaster_weather"
       ],
@@ -823,7 +885,7 @@
       "corroboration": []
     },
     {
-      "rank": 42,
+      "rank": 45,
       "class": "C",
       "score": 72,
       "region": "world",
@@ -834,7 +896,7 @@
       "source": "The Hindu",
       "source_preferred": true,
       "published_at": "2026-10-26T08:17:28+05:30",
-      "age_hours": 7.3,
+      "age_hours": 7.54,
       "categories": [
         "accident_casualty"
       ],
@@ -842,7 +904,7 @@
       "corroboration": []
     },
     {
-      "rank": 43,
+      "rank": 46,
       "class": "C",
       "score": 72,
       "region": "telangana",
@@ -853,7 +915,7 @@
       "source": "The Hindu",
       "source_preferred": true,
       "published_at": "2026-10-25T21:14:50+05:30",
-      "age_hours": 18.34,
+      "age_hours": 18.59,
       "categories": [
         "accident_casualty"
       ],
@@ -861,7 +923,7 @@
       "corroboration": []
     },
     {
-      "rank": 44,
+      "rank": 47,
       "class": "C",
       "score": 72,
       "region": "telangana",
@@ -872,7 +934,7 @@
       "source": "The Hindu",
       "source_preferred": true,
       "published_at": "2026-10-25T20:16:31+05:30",
-      "age_hours": 19.31,
+      "age_hours": 19.56,
       "categories": [
         "accident_casualty"
       ],
@@ -880,7 +942,7 @@
       "corroboration": []
     },
     {
-      "rank": 45,
+      "rank": 48,
       "class": "C",
       "score": 71,
       "region": "india",
@@ -891,7 +953,7 @@
       "source": "Deccan Chronicle",
       "source_preferred": false,
       "published_at": "2026-10-26T11:56:51+05:30",
-      "age_hours": 3.64,
+      "age_hours": 3.89,
       "categories": [
         "accident_casualty",
         "court_judgment"
@@ -900,7 +962,7 @@
       "corroboration": []
     },
     {
-      "rank": 46,
+      "rank": 49,
       "class": "C",
       "score": 71,
       "region": "world",
@@ -911,7 +973,7 @@
       "source": "The Hindu",
       "source_preferred": true,
       "published_at": "2026-10-26T11:51:32+05:30",
-      "age_hours": 3.73,
+      "age_hours": 3.98,
       "categories": [
         "security_terror",
         "police_operation"
@@ -920,7 +982,7 @@
       "corroboration": []
     },
     {
-      "rank": 47,
+      "rank": 50,
       "class": "C",
       "score": 71,
       "region": "india",
@@ -931,7 +993,7 @@
       "source": "Deccan Chronicle",
       "source_preferred": false,
       "published_at": "2026-10-26T10:22:17+05:30",
-      "age_hours": 5.22,
+      "age_hours": 5.46,
       "categories": [
         "accident_casualty",
         "court_judgment"
@@ -940,7 +1002,45 @@
       "corroboration": []
     },
     {
-      "rank": 48,
+      "rank": 51,
+      "class": "C",
+      "score": 70,
+      "region": "india",
+      "region_confidence": 1.0,
+      "suggested_headline": "📰 LATEST NEWS — INDIA",
+      "title": "Supreme Court notice to Centre, ECI on plea against MLAs ‘abandoning’ seats to shift loyalty at public expense",
+      "url": "https://www.thehindu.com/news/national/sc-notice-to-centre-ec-on-plea-against-mlas-abandoning-seats-to-shift-loyalty-at-public-expense/article71626367.ece",
+      "source": "The Hindu",
+      "source_preferred": true,
+      "published_at": "2026-10-26T15:43:42+05:30",
+      "age_hours": 0.11,
+      "categories": [
+        "court_judgment"
+      ],
+      "excerpt": "‘When a Member abandons that vote within weeks, not for any compelling cause but to change sides, he does not merely leave a seat. He breaks the trust on which representative democracy rests’",
+      "corroboration": []
+    },
+    {
+      "rank": 52,
+      "class": "C",
+      "score": 70,
+      "region": "india",
+      "region_confidence": 1.0,
+      "suggested_headline": "📰 LATEST NEWS — INDIA",
+      "title": "SC refuses to entertain plea of Delhi riots accused to attend law classes in Ghaziabad",
+      "url": "https://www.thehindu.com/news/cities/Delhi/sc-refuses-to-entertain-plea-of-delhi-riots-accused-to-attend-law-classes-in-ghaziabad/article71626278.ece",
+      "source": "The Hindu",
+      "source_preferred": true,
+      "published_at": "2026-10-26T15:36:58+05:30",
+      "age_hours": 0.22,
+      "categories": [
+        "court_judgment"
+      ],
+      "excerpt": "The Supreme Court declined to modify bail conditions barring Shadab Ahmad from leaving Delhi, after Justice Aravind Kumar questioned why he sought admission outside the capital’s law colleges",
+      "corroboration": []
+    },
+    {
+      "rank": 53,
       "class": "C",
       "score": 70,
       "region": "india",
@@ -951,7 +1051,7 @@
       "source": "The Hindu",
       "source_preferred": true,
       "published_at": "2026-10-26T14:04:37+05:30",
-      "age_hours": 1.51,
+      "age_hours": 1.76,
       "categories": [
         "court_judgment"
       ],
@@ -959,7 +1059,7 @@
       "corroboration": []
     },
     {
-      "rank": 49,
+      "rank": 54,
       "class": "C",
       "score": 70,
       "region": "india",
@@ -970,7 +1070,7 @@
       "source": "NDTV",
       "source_preferred": false,
       "published_at": "2026-10-26T14:03:34+05:30",
-      "age_hours": 1.53,
+      "age_hours": 1.78,
       "categories": [
         "accident_casualty"
       ],
@@ -978,7 +1078,7 @@
       "corroboration": []
     },
     {
-      "rank": 50,
+      "rank": 55,
       "class": "C",
       "score": 70,
       "region": "india",
@@ -989,7 +1089,7 @@
       "source": "The Hindu",
       "source_preferred": true,
       "published_at": "2026-10-26T13:55:23+05:30",
-      "age_hours": 1.67,
+      "age_hours": 1.91,
       "categories": [
         "court_judgment"
       ],
@@ -997,7 +1097,26 @@
       "corroboration": []
     },
     {
-      "rank": 51,
+      "rank": 56,
+      "class": "C",
+      "score": 70,
+      "region": "hyderabad",
+      "region_confidence": 1.0,
+      "suggested_headline": "📰 LATEST NEWS — HYDERABAD",
+      "title": "13-year-old Hyderabad girl goes missing from Rein Bazar",
+      "url": "https://www.siasat.com/13-year-old-hyderabad-girl-goes-missing-from-rein-bazar-3564504/",
+      "source": "Munsif Daily",
+      "source_preferred": true,
+      "published_at": "2026-10-26T12:10:12+05:30",
+      "age_hours": 3.67,
+      "categories": [
+        "missing_person"
+      ],
+      "excerpt": "Hyderabad: A 13-year-old girl studying at a madrasa has gone missing from Aman Nagar in the Rein Bazar area of Hyderabad. The missing girl, who has been identified as Samreen Begum, has been missing since October 24. However, her family approached the Rein Bazar police on October 25. Missing person case registered Speaking to Siasat.com, …",
+      "corroboration": []
+    },
+    {
+      "rank": 57,
       "class": "C",
       "score": 70,
       "region": "india",
@@ -1008,7 +1127,7 @@
       "source": "India Today",
       "source_preferred": false,
       "published_at": "2026-10-26T07:22:17+05:30",
-      "age_hours": 8.22,
+      "age_hours": 8.46,
       "categories": [
         "accident_casualty"
       ],
@@ -1016,7 +1135,7 @@
       "corroboration": []
     },
     {
-      "rank": 52,
+      "rank": 58,
       "class": "C",
       "score": 70,
       "region": "hyderabad",
@@ -1027,7 +1146,7 @@
       "source": "India Today",
       "source_preferred": false,
       "published_at": "2026-10-26T01:56:46+05:30",
-      "age_hours": 13.64,
+      "age_hours": 13.89,
       "categories": [
         "accident_casualty"
       ],
@@ -1035,7 +1154,27 @@
       "corroboration": []
     },
     {
-      "rank": 53,
+      "rank": 59,
+      "class": "C",
+      "score": 68,
+      "region": "india",
+      "region_confidence": 1.0,
+      "suggested_headline": "📰 LATEST NEWS — INDIA",
+      "title": "BJP to launch month-long padyatras to counter INDIA Bloc’s Nov 1 rally",
+      "url": "https://munsifdaily.com/bjp-to-launch-month-long-padyatras-to-counter/",
+      "source": "Munsif Daily",
+      "source_preferred": true,
+      "published_at": "2026-10-26T15:41:49+05:30",
+      "age_hours": 0.14,
+      "categories": [
+        "traffic_disruption",
+        "protest_major"
+      ],
+      "excerpt": "As the INDIA Bloc plans to organise a mega rally on November 1, the Bharatiya Janata Party (BJP) is launching a month-long counter-offensive starting the same day with synchronised 'padyatras (foot marches)' led by top political figures.",
+      "corroboration": []
+    },
+    {
+      "rank": 60,
       "class": "C",
       "score": 68,
       "region": "hyderabad",
@@ -1046,7 +1185,7 @@
       "source": "Munsif Daily",
       "source_preferred": true,
       "published_at": "2026-10-26T15:25:29+05:30",
-      "age_hours": 0.17,
+      "age_hours": 0.41,
       "categories": [
         "political_major"
       ],
@@ -1054,26 +1193,46 @@
       "corroboration": []
     },
     {
-      "rank": 54,
+      "rank": 61,
       "class": "C",
       "score": 68,
       "region": "hyderabad",
       "region_confidence": 0.4,
       "suggested_headline": "📰 LATEST NEWS — HYDERABAD",
-      "title": "Factional Feud Intensifies in Peddapalli Congress Between Sridhar Babu Camp and MP Gaddam Vamsi Krishna",
-      "url": "https://munsifdaily.com/factional-feud-intensifies-in-peddapalli-congress-between-sridhar-babu-camp/",
+      "title": "Netanyahu, Israeli army chief clash over Iran ahead of elections",
+      "url": "https://www.siasat.com/netanyahu-israeli-army-chief-clash-over-iran-ahead-of-elections-3564677/",
       "source": "Munsif Daily",
       "source_preferred": true,
-      "published_at": "2026-10-26T14:47:24+05:30",
-      "age_hours": 0.8,
+      "published_at": "2026-10-26T15:24:14+05:30",
+      "age_hours": 0.43,
       "categories": [
         "political_major"
       ],
-      "excerpt": "Factional differences within the Congress party in Telangana's Peddapalli district are reportedly intensifying, with tensions emerging between the camp led by Minister D. Sridhar Babu and supporters of Peddapalli MP Gaddam Vamsi Krishna.",
+      "excerpt": "Tel Aviv: Israeli Prime Minister Benjamin Netanyahu has clashed with Israel Defence Forces (IDF) Chief of Staff Eyal Zamir over a proposed military operation involving Iran, according to Israeli media, ahead of Israel’s parliamentary elections on Tuesday, October 27. Channel 12 reported on Sunday, October 25, that Zamir sought further discussions before acting on a …",
       "corroboration": []
     },
     {
-      "rank": 55,
+      "rank": 62,
+      "class": "C",
+      "score": 68,
+      "region": "hyderabad",
+      "region_confidence": 0.4,
+      "suggested_headline": "📰 LATEST NEWS — HYDERABAD",
+      "title": "Jamia orders union polls within 15 days, students jubilant",
+      "url": "https://www.siasat.com/jamia-orders-student-union-polls-within-15-days-students-jubilant-3564700/",
+      "source": "Munsif Daily",
+      "source_preferred": true,
+      "published_at": "2026-10-26T15:23:48+05:30",
+      "age_hours": 0.44,
+      "categories": [
+        "political_major",
+        "protest_major"
+      ],
+      "excerpt": "New Delhi: Jamia Millia Islamia on Monday, October 26, ordered that students’ union elections be held within 15 days of the approval of the union’s constitution and revoked suspension and show-cause notices issued to students during the ongoing protest, according to an official order. The order, issued by Registrar Md Mahtab Alam Rizvi, also provides …",
+      "corroboration": []
+    },
+    {
+      "rank": 63,
       "class": "C",
       "score": 68,
       "region": "india",
@@ -1084,7 +1243,7 @@
       "source": "The Hindu",
       "source_preferred": true,
       "published_at": "2026-10-26T14:46:52+05:30",
-      "age_hours": 0.81,
+      "age_hours": 1.05,
       "categories": [
         "political_major"
       ],
@@ -1092,7 +1251,26 @@
       "corroboration": []
     },
     {
-      "rank": 56,
+      "rank": 64,
+      "class": "C",
+      "score": 68,
+      "region": "hyderabad",
+      "region_confidence": 0.4,
+      "suggested_headline": "📰 LATEST NEWS — HYDERABAD",
+      "title": "Factional Feud Intensifies in Peddapalli Congress Between Sridhar Babu Camp and MP Gaddam Vamsi Krishna",
+      "url": "https://munsifdaily.com/factional-feud-intensifies-in-peddapalli-congress-between-sridhar-babu-camp/",
+      "source": "Munsif Daily",
+      "source_preferred": true,
+      "published_at": "2026-10-26T14:47:24+05:30",
+      "age_hours": 1.05,
+      "categories": [
+        "political_major"
+      ],
+      "excerpt": "Factional differences within the Congress party in Telangana's Peddapalli district are reportedly intensifying, with tensions emerging between the camp led by Minister D. Sridhar Babu and supporters of Peddapalli MP Gaddam Vamsi Krishna.",
+      "corroboration": []
+    },
+    {
+      "rank": 65,
       "class": "C",
       "score": 68,
       "region": "india",
@@ -1103,7 +1281,7 @@
       "source": "The Hindu",
       "source_preferred": true,
       "published_at": "2026-10-26T14:38:53+05:30",
-      "age_hours": 0.94,
+      "age_hours": 1.19,
       "categories": [
         "political_major"
       ],
@@ -1111,27 +1289,46 @@
       "corroboration": []
     },
     {
-      "rank": 57,
+      "rank": 66,
       "class": "C",
       "score": 68,
-      "region": "telangana",
-      "region_confidence": 1.0,
-      "suggested_headline": "📰 LATEST NEWS — TELANGANA",
-      "title": "Amit Shah to Attend Telangana BJP's Padayatra on Nov 2",
-      "url": "https://www.deccanchronicle.com/southern-states/telangana/amit-shah-to-attend-telangana-bjps-padayatra-on-nov-2-1998966",
-      "source": "Deccan Chronicle",
-      "source_preferred": false,
-      "published_at": "2026-10-26T14:35:53+05:30",
-      "age_hours": 0.99,
+      "region": "hyderabad",
+      "region_confidence": 0.4,
+      "suggested_headline": "📰 LATEST NEWS — HYDERABAD",
+      "title": "Trump urges Israelis to vote for Netanyahu ahead of election",
+      "url": "https://www.siasat.com/trump-urges-israelis-to-vote-for-netanyahu-ahead-of-election-3564641/",
+      "source": "Munsif Daily",
+      "source_preferred": true,
+      "published_at": "2026-10-26T14:08:52+05:30",
+      "age_hours": 1.69,
       "categories": [
-        "traffic_disruption",
-        "protest_major"
+        "political_major"
       ],
-      "excerpt": "The 'padayatra' (footmarch) assumes significance as it would be held a day after the public rally of Congress against \"vote chori\" at Ramlila Maidan on November 1",
+      "excerpt": "US President Donald Trump has urged Israelis to vote for Prime Minister Benjamin Netanyahu in the October 27 election, renewing his endorsement of the Israeli leader and saying they must “finish the job” they started. In a post on Truth Social on Monday, October 26, Trump referred to an endorsement he had issued a week …",
       "corroboration": []
     },
     {
-      "rank": 58,
+      "rank": 67,
+      "class": "C",
+      "score": 68,
+      "region": "india",
+      "region_confidence": 0.4,
+      "suggested_headline": "📰 LATEST NEWS — INDIA",
+      "title": "ONGC reports blowout at gas well in Konaseema; no casualties",
+      "url": "https://www.thehindu.com/news/national/andhra-pradesh/ongc-reports-blowout-at-gas-well-in-konaseema-no-casualties/article70473873.ece",
+      "source": "The Hindu",
+      "source_preferred": true,
+      "published_at": "2026-10-26T13:44:46+05:30",
+      "age_hours": 2.09,
+      "categories": [
+        "fire_explosion",
+        "accident_casualty"
+      ],
+      "excerpt": "Natural gas leak at Mori-5 well near Irusumanda village in Malkipuram mandal triggers incident during repair works; cooling operations under way and international well-control experts engaged, officials say",
+      "corroboration": []
+    },
+    {
+      "rank": 68,
       "class": "C",
       "score": 68,
       "region": "india",
@@ -1142,7 +1339,7 @@
       "source": "The Hindu",
       "source_preferred": true,
       "published_at": "2026-10-26T13:28:29+05:30",
-      "age_hours": 2.12,
+      "age_hours": 2.36,
       "categories": [
         "public_safety_warning",
         "political_major"
@@ -1151,7 +1348,26 @@
       "corroboration": []
     },
     {
-      "rank": 59,
+      "rank": 69,
+      "class": "C",
+      "score": 68,
+      "region": "india",
+      "region_confidence": 1.0,
+      "suggested_headline": "📰 LATEST NEWS — INDIA",
+      "title": "Bihar: Complaint filed over Kharge’s ‘baap’ remark targeting Modi",
+      "url": "https://www.siasat.com/bihar-complaint-filed-over-kharges-baap-remark-targeting-modi-3564560/",
+      "source": "Munsif Daily",
+      "source_preferred": true,
+      "published_at": "2026-10-26T13:25:09+05:30",
+      "age_hours": 2.42,
+      "categories": [
+        "political_major"
+      ],
+      "excerpt": "Patna: A BJP worker in Bihar filed a police complaint against Congress president Mallikarjun Kharge over his controversial remarks targeting Prime Minister Narendra Modi. An officer at Kotwali police station in Patna said a complaint was submitted on Sunday evening regarding Kharge’s comments. “Since the incident occurred within the Gandhi Maidan police station area, we …",
+      "corroboration": []
+    },
+    {
+      "rank": 70,
       "class": "C",
       "score": 68,
       "region": "world",
@@ -1162,7 +1378,7 @@
       "source": "The Hindu",
       "source_preferred": true,
       "published_at": "2026-10-26T12:59:46+05:30",
-      "age_hours": 2.59,
+      "age_hours": 2.84,
       "categories": [
         "disaster_weather"
       ],
@@ -1170,7 +1386,7 @@
       "corroboration": []
     },
     {
-      "rank": 60,
+      "rank": 71,
       "class": "C",
       "score": 68,
       "region": "world",
@@ -1181,7 +1397,7 @@
       "source": "The Hindu",
       "source_preferred": true,
       "published_at": "2026-10-26T12:59:04+05:30",
-      "age_hours": 2.61,
+      "age_hours": 2.85,
       "categories": [
         "disaster_weather"
       ],
@@ -1189,26 +1405,7 @@
       "corroboration": []
     },
     {
-      "rank": 61,
-      "class": "C",
-      "score": 68,
-      "region": "hyderabad",
-      "region_confidence": 0.4,
-      "suggested_headline": "📰 LATEST NEWS — HYDERABAD",
-      "title": "Sand Lorry Accident in Manthani Raises Questions Over Alleged Sand Mafia Operations",
-      "url": "https://munsifdaily.com/sand-lorry-accident-in-manthani-raises-questions-over-alleged-sand-mafia/",
-      "source": "Munsif Daily",
-      "source_preferred": true,
-      "published_at": "2026-10-26T12:41:48+05:30",
-      "age_hours": 2.89,
-      "categories": [
-        "accident_casualty"
-      ],
-      "excerpt": "Allegations of large-scale sand transportation and concerns over road safety have resurfaced in Telangana's Manthani constituency following a fatal accident in which a sand lorry reportedly crushed a young man.",
-      "corroboration": []
-    },
-    {
-      "rank": 62,
+      "rank": 72,
       "class": "C",
       "score": 68,
       "region": "india",
@@ -1219,7 +1416,7 @@
       "source": "The Hindu",
       "source_preferred": true,
       "published_at": "2026-10-26T12:41:39+05:30",
-      "age_hours": 2.9,
+      "age_hours": 3.14,
       "categories": [
         "disaster_weather",
         "political_major"
@@ -1228,7 +1425,26 @@
       "corroboration": []
     },
     {
-      "rank": 63,
+      "rank": 73,
+      "class": "C",
+      "score": 68,
+      "region": "hyderabad",
+      "region_confidence": 0.4,
+      "suggested_headline": "📰 LATEST NEWS — HYDERABAD",
+      "title": "Sand Lorry Accident in Manthani Raises Questions Over Alleged Sand Mafia Operations",
+      "url": "https://munsifdaily.com/sand-lorry-accident-in-manthani-raises-questions-over-alleged-sand-mafia/",
+      "source": "Munsif Daily",
+      "source_preferred": true,
+      "published_at": "2026-10-26T12:41:48+05:30",
+      "age_hours": 3.14,
+      "categories": [
+        "accident_casualty"
+      ],
+      "excerpt": "Allegations of large-scale sand transportation and concerns over road safety have resurfaced in Telangana's Manthani constituency following a fatal accident in which a sand lorry reportedly crushed a young man.",
+      "corroboration": []
+    },
+    {
+      "rank": 74,
       "class": "C",
       "score": 68,
       "region": "india",
@@ -1239,7 +1455,7 @@
       "source": "The Hindu",
       "source_preferred": true,
       "published_at": "2026-10-26T12:40:17+05:30",
-      "age_hours": 2.92,
+      "age_hours": 3.16,
       "categories": [
         "political_major"
       ],
@@ -1247,7 +1463,7 @@
       "corroboration": []
     },
     {
-      "rank": 64,
+      "rank": 75,
       "class": "C",
       "score": 68,
       "region": "india",
@@ -1258,7 +1474,7 @@
       "source": "The Hindu",
       "source_preferred": true,
       "published_at": "2026-10-26T12:28:31+05:30",
-      "age_hours": 3.11,
+      "age_hours": 3.36,
       "categories": [
         "political_major"
       ],
@@ -1266,7 +1482,7 @@
       "corroboration": []
     },
     {
-      "rank": 65,
+      "rank": 76,
       "class": "C",
       "score": 68,
       "region": "india",
@@ -1277,7 +1493,7 @@
       "source": "The Hindu",
       "source_preferred": true,
       "published_at": "2026-10-26T12:25:04+05:30",
-      "age_hours": 3.17,
+      "age_hours": 3.42,
       "categories": [
         "major_crime",
         "political_major"
@@ -1286,7 +1502,7 @@
       "corroboration": []
     },
     {
-      "rank": 66,
+      "rank": 77,
       "class": "C",
       "score": 68,
       "region": "world",
@@ -1297,7 +1513,7 @@
       "source": "The Hindu",
       "source_preferred": true,
       "published_at": "2026-10-26T12:18:46+05:30",
-      "age_hours": 3.28,
+      "age_hours": 3.52,
       "categories": [
         "accident_casualty",
         "political_major"
@@ -1306,7 +1522,86 @@
       "corroboration": []
     },
     {
-      "rank": 67,
+      "rank": 78,
+      "class": "C",
+      "score": 68,
+      "region": "india",
+      "region_confidence": 1.0,
+      "suggested_headline": "📰 LATEST NEWS — INDIA",
+      "title": "Israel election unlikely to alter ties with India, says analyst",
+      "url": "https://www.siasat.com/israel-election-unlikely-to-alter-ties-with-india-says-analyst-3564542/",
+      "source": "Munsif Daily",
+      "source_preferred": true,
+      "published_at": "2026-10-26T11:53:08+05:30",
+      "age_hours": 3.95,
+      "categories": [
+        "political_major"
+      ],
+      "excerpt": "Tel Aviv: Strong ties between India and Israel are likely to remain unaffected by the outcome of the upcoming Israeli elections, with Prime Minister Narendra Modi’s close personal relationship with his Israeli counterpart Benjamin Netanyahu and growing cooperation in defence and technology underpinning the partnership, Israeli author and political analyst Alec Pollard has said. “Whoever …",
+      "corroboration": []
+    },
+    {
+      "rank": 79,
+      "class": "C",
+      "score": 68,
+      "region": "hyderabad",
+      "region_confidence": 0.4,
+      "suggested_headline": "📰 LATEST NEWS — HYDERABAD",
+      "title": "Cyclone Arnab to turn very severe by Oct 27, AP issues advisory",
+      "url": "https://www.siasat.com/cyclone-arnab-to-turn-very-severe-by-oct-27-ap-issues-advisory-3564513/",
+      "source": "Munsif Daily",
+      "source_preferred": true,
+      "published_at": "2026-10-26T11:28:35+05:30",
+      "age_hours": 4.36,
+      "categories": [
+        "disaster_weather",
+        "public_safety_warning"
+      ],
+      "excerpt": "Amaravati: The IMD on Monday, October 26, said a deep depression over the Bay of Bengal has intensified into Cyclone Arnab and is likely to strengthen into a very severe cyclonic storm by October 27 before crossing the Andhra Pradesh coast the following morning. The cyclone lay centred over the eastcentral and adjoining westcentral Bay …",
+      "corroboration": []
+    },
+    {
+      "rank": 80,
+      "class": "C",
+      "score": 68,
+      "region": "hyderabad",
+      "region_confidence": 0.4,
+      "suggested_headline": "📰 LATEST NEWS — HYDERABAD",
+      "title": "Jordan arrests 3 suspects over church attack that killed 9",
+      "url": "https://www.siasat.com/jordan-arrests-3-suspects-over-church-attack-that-killed-9-3564530/",
+      "source": "Munsif Daily",
+      "source_preferred": true,
+      "published_at": "2026-10-26T11:26:55+05:30",
+      "age_hours": 4.39,
+      "categories": [
+        "accident_casualty",
+        "security_terror",
+        "police_operation"
+      ],
+      "excerpt": "Amman: Jordanian security forces arrested three men Monday, October 26, for an attack on a Greek Orthodox church that killed nine people and wounded more than two dozen. The Public Security Directorate said the three suspects were arrested following a shootout and that all three were wounded. No members of the security forces were injured …",
+      "corroboration": []
+    },
+    {
+      "rank": 81,
+      "class": "C",
+      "score": 68,
+      "region": "hyderabad",
+      "region_confidence": 0.4,
+      "suggested_headline": "📰 LATEST NEWS — HYDERABAD",
+      "title": "Woman, 26, dies of electrocution from water heater in Borabanda",
+      "url": "https://www.siasat.com/woman-26-dies-of-electrocution-from-water-heater-in-borabanda-3564462/",
+      "source": "Munsif Daily",
+      "source_preferred": true,
+      "published_at": "2026-10-26T10:36:38+05:30",
+      "age_hours": 5.23,
+      "categories": [
+        "accident_casualty"
+      ],
+      "excerpt": "Hyderabad: A 26-year-old woman died of electrocution after coming into contact with a water heater at her residence in Bharath Nagar, Borabanda, on Sunday evening, October 25. The deceased, Ayesha Begum, wife of Abdul Rauf, was a homemaker. According to preliminary information, she suffered an electric shock when her hand came into contact with the …",
+      "corroboration": []
+    },
+    {
+      "rank": 82,
       "class": "C",
       "score": 68,
       "region": "telangana",
@@ -1317,7 +1612,7 @@
       "source": "Deccan Chronicle",
       "source_preferred": false,
       "published_at": "2026-10-26T09:08:49+05:30",
-      "age_hours": 6.44,
+      "age_hours": 6.69,
       "categories": [
         "accident_casualty"
       ],
@@ -1325,7 +1620,7 @@
       "corroboration": []
     },
     {
-      "rank": 68,
+      "rank": 83,
       "class": "C",
       "score": 68,
       "region": "telangana",
@@ -1336,7 +1631,7 @@
       "source": "Deccan Chronicle",
       "source_preferred": false,
       "published_at": "2026-10-26T08:18:12+05:30",
-      "age_hours": 7.29,
+      "age_hours": 7.53,
       "categories": [
         "accident_casualty"
       ],
@@ -1344,7 +1639,7 @@
       "corroboration": []
     },
     {
-      "rank": 69,
+      "rank": 84,
       "class": "C",
       "score": 68,
       "region": "india",
@@ -1355,7 +1650,7 @@
       "source": "The Hindu",
       "source_preferred": true,
       "published_at": "2026-10-26T07:35:41+05:30",
-      "age_hours": 8.0,
+      "age_hours": 8.24,
       "categories": [
         "accident_casualty",
         "infrastructure_failure"
@@ -1364,7 +1659,7 @@
       "corroboration": []
     },
     {
-      "rank": 70,
+      "rank": 85,
       "class": "C",
       "score": 68,
       "region": "telangana",
@@ -1375,7 +1670,7 @@
       "source": "Deccan Chronicle",
       "source_preferred": false,
       "published_at": "2026-10-26T07:32:13+05:30",
-      "age_hours": 8.05,
+      "age_hours": 8.3,
       "categories": [
         "accident_casualty"
       ],
@@ -1383,7 +1678,7 @@
       "corroboration": []
     },
     {
-      "rank": 71,
+      "rank": 86,
       "class": "C",
       "score": 68,
       "region": "telangana",
@@ -1394,7 +1689,7 @@
       "source": "The Hindu",
       "source_preferred": true,
       "published_at": "2026-10-25T19:35:08+05:30",
-      "age_hours": 20.0,
+      "age_hours": 20.25,
       "categories": [
         "political_major"
       ],
@@ -1402,7 +1697,7 @@
       "corroboration": []
     },
     {
-      "rank": 72,
+      "rank": 87,
       "class": "C",
       "score": 68,
       "region": "telangana",
@@ -1413,7 +1708,7 @@
       "source": "The Hindu",
       "source_preferred": true,
       "published_at": "2026-10-25T19:32:05+05:30",
-      "age_hours": 20.06,
+      "age_hours": 20.3,
       "categories": [
         "political_major"
       ],
@@ -1421,7 +1716,7 @@
       "corroboration": []
     },
     {
-      "rank": 73,
+      "rank": 88,
       "class": "C",
       "score": 67,
       "region": "telangana",
@@ -1432,19 +1727,37 @@
       "source": "Telangana Today",
       "source_preferred": false,
       "published_at": "2026-10-26T11:43:49+05:30",
-      "age_hours": 3.86,
+      "age_hours": 4.11,
       "categories": [
         "accident_casualty"
       ],
       "excerpt": "A massive fire gutted around 40 shops at Shiv Market near Jammu Railway Station, causing extensive property damage but no reported casualties. Preliminary investigations suggest a short circuit triggered the blaze, which firefighters brought under control after more than five hours",
       "corroboration": [
-        "The Hindu",
         "Times of India",
         "India Today"
       ]
     },
     {
-      "rank": 74,
+      "rank": 89,
+      "class": "C",
+      "score": 66,
+      "region": "world",
+      "region_confidence": 1.0,
+      "suggested_headline": "🌍 LATEST — WORLD",
+      "title": "'His Father Saving Him': Mercedes Crash Victim's Daughter On Teen Accused",
+      "url": "https://www.ndtv.com/india-news/kerala-hit-and-run-case-his-father-saving-him-mercedes-crash-victims-daughter-on-teen-accused-12237174#publisher=newsstand",
+      "source": "NDTV",
+      "source_preferred": false,
+      "published_at": "2026-10-26T15:37:53+05:30",
+      "age_hours": 0.2,
+      "categories": [
+        "accident_casualty"
+      ],
+      "excerpt": "The father, in whose name the Mercedes is registered, said his 17-year-old son was driving for the first time on that day. Bhadrakeerthi, the victim's daughter, claims that is not true.",
+      "corroboration": []
+    },
+    {
+      "rank": 90,
       "class": "C",
       "score": 66,
       "region": "world",
@@ -1455,7 +1768,7 @@
       "source": "India Today",
       "source_preferred": false,
       "published_at": "2026-10-26T15:26:35+05:30",
-      "age_hours": 0.15,
+      "age_hours": 0.39,
       "categories": [
         "disaster_weather"
       ],
@@ -1463,7 +1776,7 @@
       "corroboration": []
     },
     {
-      "rank": 75,
+      "rank": 91,
       "class": "C",
       "score": 66,
       "region": "india",
@@ -1474,7 +1787,7 @@
       "source": "LiveMint",
       "source_preferred": false,
       "published_at": "2026-10-26T15:11:09+05:30",
-      "age_hours": 0.4,
+      "age_hours": 0.65,
       "categories": [
         "political_major"
       ],
@@ -1482,7 +1795,7 @@
       "corroboration": []
     },
     {
-      "rank": 76,
+      "rank": 92,
       "class": "C",
       "score": 66,
       "region": "india",
@@ -1493,7 +1806,7 @@
       "source": "Times of India",
       "source_preferred": false,
       "published_at": "2026-10-26T15:00:00+05:30",
-      "age_hours": 0.59,
+      "age_hours": 0.84,
       "categories": [
         "court_judgment",
         "public_safety_warning"
@@ -1502,7 +1815,46 @@
       "corroboration": []
     },
     {
-      "rank": 77,
+      "rank": 93,
+      "class": "C",
+      "score": 66,
+      "region": "india",
+      "region_confidence": 1.0,
+      "suggested_headline": "📰 LATEST NEWS — INDIA",
+      "title": "Rajasthan man arrested in interstate ATM theft case",
+      "url": "https://www.siasat.com/rajasthan-man-arrested-in-interstate-atm-theft-case-3564651/",
+      "source": "Munsif Daily",
+      "source_preferred": true,
+      "published_at": "2026-10-26T14:56:24+05:30",
+      "age_hours": 0.9,
+      "categories": [
+        "police_operation"
+      ],
+      "excerpt": "Hyderabad: A 30-year-old man from Rajasthan has been arrested in connection with an interstate ATM theft in which miscreants allegedly used a gas cutter to break open an ATM and fled with five cash boxes in a black Mahindra Scorpio, police said on Monday, October 26. The accused, identified as Rashid, was arrested by a …",
+      "corroboration": []
+    },
+    {
+      "rank": 94,
+      "class": "C",
+      "score": 66,
+      "region": "world",
+      "region_confidence": 1.0,
+      "suggested_headline": "🌍 LATEST — WORLD",
+      "title": "Former Japan PM Yasuo Fukuda, Who Sought Better China Ties, Dies At 90",
+      "url": "https://www.ndtv.com/world-news/former-japan-pm-yasuo-fukuda-who-sought-better-china-ties-dies-at-90-12236947#publisher=newsstand",
+      "source": "NDTV",
+      "source_preferred": false,
+      "published_at": "2026-10-26T14:53:20+05:30",
+      "age_hours": 0.95,
+      "categories": [
+        "accident_casualty",
+        "political_major"
+      ],
+      "excerpt": "During his stint in power, Yasuo Fukuda sought to improve relations with China and invited then-Chinese president Hu Jintao to visit Japan.",
+      "corroboration": []
+    },
+    {
+      "rank": 95,
       "class": "C",
       "score": 66,
       "region": "telangana",
@@ -1513,7 +1865,7 @@
       "source": "Deccan Chronicle",
       "source_preferred": false,
       "published_at": "2026-10-26T14:45:52+05:30",
-      "age_hours": 0.83,
+      "age_hours": 1.07,
       "categories": [
         "police_operation"
       ],
@@ -1521,7 +1873,26 @@
       "corroboration": []
     },
     {
-      "rank": 78,
+      "rank": 96,
+      "class": "C",
+      "score": 66,
+      "region": "world",
+      "region_confidence": 1.0,
+      "suggested_headline": "🌍 LATEST — WORLD",
+      "title": "On Camera, 28-Year-Old Newlywed Collapses Outside UP Hotel Room, Dies",
+      "url": "https://www.ndtv.com/india-news/newlywed-woman-collapse-in-jhansi-news-on-camera-28-year-old-newlywed-collapses-outside-up-hotel-room-dies-12236766#publisher=newsstand",
+      "source": "NDTV",
+      "source_preferred": false,
+      "published_at": "2026-10-26T14:35:07+05:30",
+      "age_hours": 1.25,
+      "categories": [
+        "accident_casualty"
+      ],
+      "excerpt": "The incident took place at Rishabh Hotel in Jhansi on Monday at around 10:50 am. A 47-second CCTV clip that has surfaced on social media shows three people walking through a hotel corridor towards a room.",
+      "corroboration": []
+    },
+    {
+      "rank": 97,
       "class": "C",
       "score": 66,
       "region": "india",
@@ -1532,7 +1903,7 @@
       "source": "NDTV",
       "source_preferred": false,
       "published_at": "2026-10-26T14:22:24+05:30",
-      "age_hours": 1.22,
+      "age_hours": 1.46,
       "categories": [
         "major_crime",
         "court_judgment",
@@ -1542,7 +1913,7 @@
       "corroboration": []
     },
     {
-      "rank": 79,
+      "rank": 98,
       "class": "C",
       "score": 66,
       "region": "india",
@@ -1553,7 +1924,7 @@
       "source": "Times of India",
       "source_preferred": false,
       "published_at": "2026-10-26T14:19:32+05:30",
-      "age_hours": 1.26,
+      "age_hours": 1.51,
       "categories": [
         "political_major"
       ],
@@ -1561,7 +1932,7 @@
       "corroboration": []
     },
     {
-      "rank": 80,
+      "rank": 99,
       "class": "C",
       "score": 66,
       "region": "telangana",
@@ -1572,7 +1943,7 @@
       "source": "Telangana Today",
       "source_preferred": false,
       "published_at": "2026-10-26T14:00:07+05:30",
-      "age_hours": 1.59,
+      "age_hours": 1.83,
       "categories": [
         "disaster_weather",
         "infrastructure_failure"
@@ -1581,7 +1952,7 @@
       "corroboration": []
     },
     {
-      "rank": 81,
+      "rank": 100,
       "class": "C",
       "score": 66,
       "region": "india",
@@ -1592,7 +1963,7 @@
       "source": "Times of India",
       "source_preferred": false,
       "published_at": "2026-10-26T13:55:48+05:30",
-      "age_hours": 1.66,
+      "age_hours": 1.91,
       "categories": [
         "political_major"
       ],
@@ -1600,7 +1971,7 @@
       "corroboration": []
     },
     {
-      "rank": 82,
+      "rank": 101,
       "class": "C",
       "score": 66,
       "region": "india",
@@ -1611,7 +1982,7 @@
       "source": "India Today",
       "source_preferred": false,
       "published_at": "2026-10-26T13:33:32+05:30",
-      "age_hours": 2.03,
+      "age_hours": 2.28,
       "categories": [
         "accident_casualty"
       ],
@@ -1619,7 +1990,7 @@
       "corroboration": []
     },
     {
-      "rank": 83,
+      "rank": 102,
       "class": "C",
       "score": 66,
       "region": "india",
@@ -1630,7 +2001,7 @@
       "source": "The Hindu",
       "source_preferred": true,
       "published_at": "2026-10-26T13:00:04+05:30",
-      "age_hours": 2.59,
+      "age_hours": 2.83,
       "categories": [
         "fire_explosion"
       ],
@@ -1638,7 +2009,7 @@
       "corroboration": []
     },
     {
-      "rank": 84,
+      "rank": 103,
       "class": "C",
       "score": 66,
       "region": "india",
@@ -1649,7 +2020,7 @@
       "source": "The Hindu",
       "source_preferred": true,
       "published_at": "2026-10-26T12:58:07+05:30",
-      "age_hours": 2.62,
+      "age_hours": 2.87,
       "categories": [
         "court_judgment"
       ],
@@ -1657,7 +2028,7 @@
       "corroboration": []
     },
     {
-      "rank": 85,
+      "rank": 104,
       "class": "C",
       "score": 66,
       "region": "india",
@@ -1668,7 +2039,7 @@
       "source": "Deccan Chronicle",
       "source_preferred": false,
       "published_at": "2026-10-26T12:55:38+05:30",
-      "age_hours": 2.66,
+      "age_hours": 2.91,
       "categories": [
         "fire_explosion",
         "accident_casualty"
@@ -1677,7 +2048,7 @@
       "corroboration": []
     },
     {
-      "rank": 86,
+      "rank": 105,
       "class": "C",
       "score": 66,
       "region": "india",
@@ -1688,7 +2059,7 @@
       "source": "The Hindu",
       "source_preferred": true,
       "published_at": "2026-10-26T12:23:13+05:30",
-      "age_hours": 3.2,
+      "age_hours": 3.45,
       "categories": [
         "major_crime",
         "court_judgment"
@@ -1697,7 +2068,7 @@
       "corroboration": []
     },
     {
-      "rank": 87,
+      "rank": 106,
       "class": "C",
       "score": 66,
       "region": "india",
@@ -1708,7 +2079,7 @@
       "source": "LiveMint",
       "source_preferred": false,
       "published_at": "2026-10-26T11:36:51+05:30",
-      "age_hours": 3.98,
+      "age_hours": 4.22,
       "categories": [
         "accident_casualty"
       ],
@@ -1718,7 +2089,7 @@
       ]
     },
     {
-      "rank": 88,
+      "rank": 107,
       "class": "C",
       "score": 66,
       "region": "india",
@@ -1729,7 +2100,7 @@
       "source": "Deccan Chronicle",
       "source_preferred": false,
       "published_at": "2026-10-26T11:34:58+05:30",
-      "age_hours": 4.01,
+      "age_hours": 4.25,
       "categories": [
         "disaster_weather"
       ],
@@ -1737,7 +2108,7 @@
       "corroboration": []
     },
     {
-      "rank": 89,
+      "rank": 108,
       "class": "C",
       "score": 66,
       "region": "india",
@@ -1748,7 +2119,7 @@
       "source": "India Today",
       "source_preferred": false,
       "published_at": "2026-10-26T11:00:00+05:30",
-      "age_hours": 4.59,
+      "age_hours": 4.84,
       "categories": [
         "disaster_weather"
       ],
@@ -1756,7 +2127,26 @@
       "corroboration": []
     },
     {
-      "rank": 90,
+      "rank": 109,
+      "class": "C",
+      "score": 66,
+      "region": "india",
+      "region_confidence": 1.0,
+      "suggested_headline": "📰 LATEST NEWS — INDIA",
+      "title": "CBI books inspector, six others in Sai Krishna custodial death",
+      "url": "https://www.siasat.com/cbi-books-inspector-six-others-in-sai-krishna-custodial-death-3564454/",
+      "source": "Munsif Daily",
+      "source_preferred": true,
+      "published_at": "2026-10-26T10:12:49+05:30",
+      "age_hours": 5.62,
+      "categories": [
+        "court_judgment"
+      ],
+      "excerpt": "Hyderabad: The Central Bureau of Investigation (CBI) in Hyderabad has booked seven people in connection with the custodial death of 25-year-old Gade Sai Krishna at Krishnalanka police station in Vijayawada, following an Andhra Pradesh High Court order transferring the investigation. On October 22, inspector Suda Suresh Veera Venkata Nagaraju; head constables Potarlanka Ashok Kumar, Janjam …",
+      "corroboration": []
+    },
+    {
+      "rank": 110,
       "class": "C",
       "score": 66,
       "region": "india",
@@ -1767,7 +2157,7 @@
       "source": "LiveMint",
       "source_preferred": false,
       "published_at": "2026-10-26T10:09:38+05:30",
-      "age_hours": 5.43,
+      "age_hours": 5.68,
       "categories": [
         "disaster_weather"
       ],
@@ -1775,7 +2165,7 @@
       "corroboration": []
     },
     {
-      "rank": 91,
+      "rank": 111,
       "class": "C",
       "score": 66,
       "region": "telangana",
@@ -1786,7 +2176,7 @@
       "source": "Telangana Today",
       "source_preferred": false,
       "published_at": "2026-10-25T22:17:50+05:30",
-      "age_hours": 17.29,
+      "age_hours": 17.54,
       "categories": [
         "accident_casualty"
       ],
@@ -1794,7 +2184,7 @@
       "corroboration": []
     },
     {
-      "rank": 92,
+      "rank": 112,
       "class": "C",
       "score": 66,
       "region": "india",
@@ -1805,7 +2195,7 @@
       "source": "The Hindu",
       "source_preferred": true,
       "published_at": "2026-10-25T22:10:19+05:30",
-      "age_hours": 17.42,
+      "age_hours": 17.66,
       "categories": [
         "disaster_weather"
       ],
@@ -1813,7 +2203,7 @@
       "corroboration": []
     },
     {
-      "rank": 93,
+      "rank": 113,
       "class": "C",
       "score": 66,
       "region": "telangana",
@@ -1824,7 +2214,7 @@
       "source": "The Hindu",
       "source_preferred": true,
       "published_at": "2026-10-25T21:58:54+05:30",
-      "age_hours": 17.61,
+      "age_hours": 17.85,
       "categories": [
         "major_crime",
         "economic_major"
@@ -1833,7 +2223,7 @@
       "corroboration": []
     },
     {
-      "rank": 94,
+      "rank": 114,
       "class": "C",
       "score": 66,
       "region": "hyderabad",
@@ -1844,7 +2234,7 @@
       "source": "Deccan Chronicle",
       "source_preferred": false,
       "published_at": "2026-10-25T21:03:50+05:30",
-      "age_hours": 18.53,
+      "age_hours": 18.77,
       "categories": [
         "political_major",
         "protest_major"
@@ -1853,7 +2243,7 @@
       "corroboration": []
     },
     {
-      "rank": 95,
+      "rank": 115,
       "class": "C",
       "score": 66,
       "region": "telangana",
@@ -1864,7 +2254,7 @@
       "source": "Telangana Today",
       "source_preferred": false,
       "published_at": "2026-10-25T19:42:25+05:30",
-      "age_hours": 19.88,
+      "age_hours": 20.13,
       "categories": [
         "disaster_weather"
       ],
@@ -1872,7 +2262,7 @@
       "corroboration": []
     },
     {
-      "rank": 96,
+      "rank": 116,
       "class": "C",
       "score": 66,
       "region": "telangana",
@@ -1883,7 +2273,7 @@
       "source": "Telangana Today",
       "source_preferred": false,
       "published_at": "2026-10-25T19:08:07+05:30",
-      "age_hours": 20.45,
+      "age_hours": 20.7,
       "categories": [
         "accident_casualty"
       ],
@@ -1891,7 +2281,26 @@
       "corroboration": []
     },
     {
-      "rank": 97,
+      "rank": 117,
+      "class": "C",
+      "score": 64,
+      "region": "world",
+      "region_confidence": 1.0,
+      "suggested_headline": "🌍 LATEST — WORLD",
+      "title": "How Houthis Found An Unlikely Weapon Against Saudis In Epstein Files",
+      "url": "https://www.ndtv.com/world-news/how-houthis-found-an-unlikely-weapon-against-saudis-in-epstein-files-12237063#publisher=newsstand",
+      "source": "NDTV",
+      "source_preferred": false,
+      "published_at": "2026-10-26T15:13:05+05:30",
+      "age_hours": 0.62,
+      "categories": [
+        "security_terror"
+      ],
+      "excerpt": "Houthies are projecting themselves as defenders of Islam against corrupt foreign influences, even Saudi Arabia, where the holiest site of Islam is situated.",
+      "corroboration": []
+    },
+    {
+      "rank": 118,
       "class": "C",
       "score": 64,
       "region": "hyderabad",
@@ -1902,7 +2311,7 @@
       "source": "Munsif Daily",
       "source_preferred": true,
       "published_at": "2026-10-26T15:11:31+05:30",
-      "age_hours": 0.4,
+      "age_hours": 0.64,
       "categories": [
         "major_crime",
         "police_operation"
@@ -1911,7 +2320,7 @@
       "corroboration": []
     },
     {
-      "rank": 98,
+      "rank": 119,
       "class": "C",
       "score": 64,
       "region": "world",
@@ -1922,7 +2331,7 @@
       "source": "Deccan Chronicle",
       "source_preferred": false,
       "published_at": "2026-10-26T15:06:29+05:30",
-      "age_hours": 0.48,
+      "age_hours": 0.73,
       "categories": [
         "fire_explosion"
       ],
@@ -1930,7 +2339,7 @@
       "corroboration": []
     },
     {
-      "rank": 99,
+      "rank": 120,
       "class": "C",
       "score": 64,
       "region": "india",
@@ -1941,425 +2350,11 @@
       "source": "India Today",
       "source_preferred": false,
       "published_at": "2026-10-26T14:58:32+05:30",
-      "age_hours": 0.61,
+      "age_hours": 0.86,
       "categories": [
         "court_judgment"
       ],
       "excerpt": "Supreme Court seeks ED reply on Anil Mithas bail plea in Rs crore case",
-      "corroboration": []
-    },
-    {
-      "rank": 100,
-      "class": "C",
-      "score": 64,
-      "region": "india",
-      "region_confidence": 1.0,
-      "suggested_headline": "📰 LATEST NEWS — INDIA",
-      "title": "Supreme Court to examine challenge to Maharashtra electoral roll revision",
-      "url": "https://www.indiatoday.in/india/law-news/story/maharashtra-electoral-rolls-supreme-court-voter-deletions-challenge-ptag-3025201-2026-10-26?utm_source=rss",
-      "source": "India Today",
-      "source_preferred": false,
-      "published_at": "2026-10-26T14:30:34+05:30",
-      "age_hours": 1.08,
-      "categories": [
-        "court_judgment"
-      ],
-      "excerpt": "Supreme Court to examine challenge to Maharashtra electoral roll revision",
-      "corroboration": []
-    },
-    {
-      "rank": 101,
-      "class": "C",
-      "score": 64,
-      "region": "india",
-      "region_confidence": 0.4,
-      "suggested_headline": "📰 LATEST NEWS — INDIA",
-      "title": "Tell Modi to sack Gyanesh Kumar, protests will stop in 30 seconds: Rahul to traders",
-      "url": "https://www.thehindu.com/news/national/tell-modi-to-sack-gyanesh-kumar-protests-will-stop-in-30-seconds-rahul-to-traders/article71626135.ece",
-      "source": "The Hindu",
-      "source_preferred": true,
-      "published_at": "2026-10-26T14:18:07+05:30",
-      "age_hours": 1.29,
-      "categories": [
-        "traffic_disruption",
-        "protest_major"
-      ],
-      "excerpt": "The Chamber of Trade and Industry (CTI) has urged Mr. Gandhi to postpone the INDIA bloc's November 1 rally at Delhi's Ramlila Maidan until after November 10, warning that it could disrupt business worth ₹10,000 crore during the peak Diwali shopping season",
-      "corroboration": [
-        "Deccan Chronicle"
-      ]
-    },
-    {
-      "rank": 102,
-      "class": "C",
-      "score": 64,
-      "region": "world",
-      "region_confidence": 1.0,
-      "suggested_headline": "🌍 LATEST — WORLD",
-      "title": "Israel Election: 4 Possible Scenarios That Can Decide Who Leads Country Next",
-      "url": "https://www.ndtv.com/world-news/israel-election-4-possible-scenarios-that-can-decide-who-leads-country-next-12236103#publisher=newsstand",
-      "source": "NDTV",
-      "source_preferred": false,
-      "published_at": "2026-10-26T13:57:25+05:30",
-      "age_hours": 1.63,
-      "categories": [
-        "security_terror",
-        "political_major",
-        "international_conflict"
-      ],
-      "excerpt": "Israelis are set to vote on October 27 in the country's first national election since the Hamas-led attack on October 7, 2023, and the war in Gaza that followed.",
-      "corroboration": []
-    },
-    {
-      "rank": 103,
-      "class": "C",
-      "score": 64,
-      "region": "india",
-      "region_confidence": 1.0,
-      "suggested_headline": "📰 LATEST NEWS — INDIA",
-      "title": "Human-wildlife conflict: Preventive measures on the cards around hotspots in Keralam’s Perambra estate",
-      "url": "https://www.thehindu.com/news/national/kerala/human-wildlife-conflict-preventive-measures-on-the-cards-around-hotspots-in-keralams-perambra-estate/article71625732.ece",
-      "source": "The Hindu",
-      "source_preferred": true,
-      "published_at": "2026-10-26T13:52:12+05:30",
-      "age_hours": 1.72,
-      "categories": [
-        "international_conflict"
-      ],
-      "excerpt": "Latest intervention comes amid sharp escalation in wild animal incursions across Peruvannamuzhi forest range, impacting Chakkittapara, Muthukad and surrounding plantation belts. Local residents and workers point out that the situation has become critical, particularly during early-morning hours when rubber tapping takes place",
-      "corroboration": []
-    },
-    {
-      "rank": 104,
-      "class": "C",
-      "score": 64,
-      "region": "world",
-      "region_confidence": 1.0,
-      "suggested_headline": "🌍 LATEST — WORLD",
-      "title": "TDP Leader Protests With Bed Outside Police Station Over Attack On Colleagues",
-      "url": "https://www.ndtv.com/india-news/tdp-leader-jc-prabhakar-reddy-protests-with-bed-outside-police-station-over-attack-on-colleagues-12236556#publisher=newsstand",
-      "source": "NDTV",
-      "source_preferred": false,
-      "published_at": "2026-10-26T13:44:30+05:30",
-      "age_hours": 1.85,
-      "categories": [
-        "security_terror",
-        "political_major",
-        "protest_major"
-      ],
-      "excerpt": "The protest followed reports of a clash between TDP and YSRCP supporters in Thimmampalli village under Yellanur mandal, where members of both groups allegedly resorted to stone-pelting.",
-      "corroboration": []
-    },
-    {
-      "rank": 105,
-      "class": "C",
-      "score": 64,
-      "region": "india",
-      "region_confidence": 0.4,
-      "suggested_headline": "📰 LATEST NEWS — INDIA",
-      "title": "Modi govt using every possible trick to protect Gyanesh Kumar: Kharge",
-      "url": "https://www.thehindu.com/news/national/modi-govt-using-every-possible-trick-to-protect-gyanesh-kumar-kharge/article71626008.ece",
-      "source": "The Hindu",
-      "source_preferred": true,
-      "published_at": "2026-10-26T13:41:49+05:30",
-      "age_hours": 1.89,
-      "categories": [
-        "traffic_disruption",
-        "protest_major"
-      ],
-      "excerpt": "Mr. Kharge also urged people to join the Dilli Chalo march on November 1 to join the public rally against \"vote chori\" at Ramlila Maidan",
-      "corroboration": []
-    },
-    {
-      "rank": 106,
-      "class": "C",
-      "score": 64,
-      "region": "india",
-      "region_confidence": 0.4,
-      "suggested_headline": "📰 LATEST NEWS — INDIA",
-      "title": "Extremely unfortunate: Rajnath Singh on Mallikarjun Kharge’s PM remarks",
-      "url": "https://www.thehindu.com/news/national/mallikarjun-kharge-remarks-on-pm-modi-rajnath-singh-replies/article71626019.ece",
-      "source": "The Hindu",
-      "source_preferred": true,
-      "published_at": "2026-10-26T13:26:54+05:30",
-      "age_hours": 2.14,
-      "categories": [
-        "political_major"
-      ],
-      "excerpt": "Congress president Mallikarjun Kharge sparked a controversy with his remarks \"Modi ka baap bhi jayega\", in response to an audience member's comment that \"the PM would not go anywhere\", during an event in Patna",
-      "corroboration": []
-    },
-    {
-      "rank": 107,
-      "class": "C",
-      "score": 64,
-      "region": "world",
-      "region_confidence": 1.0,
-      "suggested_headline": "🌍 LATEST — WORLD",
-      "title": "Trump says Canada trade deal coming ‘soon’",
-      "url": "https://www.thehindu.com/news/international/trump-says-canada-trade-deal-coming-soon/article71625788.ece",
-      "source": "The Hindu",
-      "source_preferred": true,
-      "published_at": "2026-10-26T12:15:26+05:30",
-      "age_hours": 3.33,
-      "categories": [
-        "traffic_disruption",
-        "political_major",
-        "protest_major"
-      ],
-      "excerpt": "President Trump said at a Michigan rally that Canada was “willing to give us anything,” as the White House eased some tariffs following a request from Senator Susan Collins",
-      "corroboration": []
-    },
-    {
-      "rank": 108,
-      "class": "C",
-      "score": 64,
-      "region": "telangana",
-      "region_confidence": 0.4,
-      "suggested_headline": "📰 LATEST NEWS — TELANGANA",
-      "title": "Kenya: At least 24 dead in bus-truck collision on Nairobi-Mombasa highway",
-      "url": "https://telanganatoday.com/kenya-at-least-24-dead-in-bus-truck-collision-on-nairobi-mombasa-highway",
-      "source": "Telangana Today",
-      "source_preferred": false,
-      "published_at": "2026-10-26T00:58:18+05:30",
-      "age_hours": 14.62,
-      "categories": [
-        "accident_casualty"
-      ],
-      "excerpt": "At least 24 people were killed and 24 others injured when a bus collided with a truck on Kenya's main Nairobi-Mombasa highway on Sunday. The victims were returning from a church pastor's funeral when the crash occurred.",
-      "corroboration": []
-    },
-    {
-      "rank": 109,
-      "class": "C",
-      "score": 64,
-      "region": "telangana",
-      "region_confidence": 1.0,
-      "suggested_headline": "📰 LATEST NEWS — TELANGANA",
-      "title": "KTR targets Rahul Gandhi over silence on Telangana corruption",
-      "url": "https://telanganatoday.com/ktr-targets-rahul-gandhi-over-silence-on-telangana-corruption",
-      "source": "Telangana Today",
-      "source_preferred": false,
-      "published_at": "2026-10-25T21:30:03+05:30",
-      "age_hours": 18.09,
-      "categories": [
-        "security_terror",
-        "political_major"
-      ],
-      "excerpt": "BRS working president KT Rama Rao launched a sharp attack on Congress leader Rahul Gandhi and the Telangana government, alleging corruption, unfulfilled poll promises and misgovernance. Addressing party workers after a minority leader joined the BRS, he claimed Telangana had become an \"ATM\" for the Congress leadership.",
-      "corroboration": []
-    },
-    {
-      "rank": 110,
-      "class": "C",
-      "score": 62,
-      "region": "world",
-      "region_confidence": 1.0,
-      "suggested_headline": "🌍 LATEST — WORLD",
-      "title": "Israel election tests Netanyahu amid October 7 accountability demands",
-      "url": "https://www.indiatoday.in/world/story/israel-election-netanyahu-october-7-accountability-military-draft-ptag-3025232-2026-10-26?utm_source=rss",
-      "source": "India Today",
-      "source_preferred": false,
-      "published_at": "2026-10-26T15:24:30+05:30",
-      "age_hours": 0.18,
-      "categories": [
-        "political_major"
-      ],
-      "excerpt": "Israel election tests Netanyahu amid October accountability demands",
-      "corroboration": []
-    },
-    {
-      "rank": 111,
-      "class": "C",
-      "score": 62,
-      "region": "world",
-      "region_confidence": 1.0,
-      "suggested_headline": "🌍 LATEST — WORLD",
-      "title": "Storm before Israel polls: Katz reacts to 'Netanyahu-IDF rift' over Iran strike plans",
-      "url": "https://timesofindia.indiatimes.com/world/middle-east/storm-before-israel-polls-katz-reacts-to-netanyahu-idf-rift-over-iran-strike-plans/articleshow/135207807.cms",
-      "source": "Times of India",
-      "source_preferred": false,
-      "published_at": "2026-10-26T14:51:47+05:30",
-      "age_hours": 0.73,
-      "categories": [
-        "traffic_disruption",
-        "political_major"
-      ],
-      "excerpt": "Israeli Defense Minister Israel Katz has firmly denied rumors of discord between Prime Minister Benjamin Netanyahu and IDF Chief Eyal Zamir, despite rising concerns about possible military actions against Iran amidst an election cycle. Katz reassured that there are no current plans to strike Iran during this sensitive political time.",
-      "corroboration": []
-    },
-    {
-      "rank": 112,
-      "class": "C",
-      "score": 62,
-      "region": "world",
-      "region_confidence": 1.0,
-      "suggested_headline": "🌍 LATEST — WORLD",
-      "title": "Jamia students write to VC: Fix union election date, drop apology clause, address expulsion",
-      "url": "https://news.google.com/rss/articles/CBMiugFBVV95cUxPSDVnRm51VnJTamVQbkJsb0E5cW5qMFhteGdqLVNTVk5lOHJpT0dmZGs2b09kWHBWYVNlVVlHSE1ERzIwUUs2eVR1R2I2ZWlkZUVMamU0clJDTFoycGFaaVlqUGtiNG1hcmFuc2Jva2FKMVlyUUV3cW9XeHZ5Wmo1WjhiaHZtQnFWTzJTQnFkWTZDeVdVbGhNQ1ZDaktoM2RNc3BKazFnaWExWDA0Vm5yMERTazdOTDRqekHSAcABQVVfeXFMUGNtS1JhTFZnY1lpdXowRmNjZ0NKREhlQ3dFSGRyZU42SnFmUFdaQ0JJZTNyQjlMMnlobjc2ODcxUTBXR08zb0xkQXVMZENmbTYxTzJ5SWhMUEw1ckFfUTBYNERiOTIwMDNObG04b2NPOFRsV084VlBld1U2d0dzZzBMT05CMTVENUROYXg2TElvbk9BT0xBaWxqVUxHNkFfNTgzQmhINGs0R2hGR19NYURzUDhkclJIVjd0RUZCT0ZL?oc=5",
-      "source": "Indian Express",
-      "source_preferred": false,
-      "published_at": "2026-10-26T14:46:04+05:30",
-      "age_hours": 0.82,
-      "categories": [
-        "political_major"
-      ],
-      "excerpt": "Jamia students write to VC: Fix union election date, drop apology clause, address expulsion &nbsp;&nbsp; The Indian Express",
-      "corroboration": []
-    },
-    {
-      "rank": 113,
-      "class": "C",
-      "score": 62,
-      "region": "world",
-      "region_confidence": 1.0,
-      "suggested_headline": "🌍 LATEST — WORLD",
-      "title": "Israel polls: What's at stake for Netanyahu? Key challengers, seats needed to win & more",
-      "url": "https://timesofindia.indiatimes.com/world/middle-east/israel-elections-2026-whats-at-stake-for-netanyahu-key-challengers-seats-needed-to-win-and-more/articleshow/135206597.cms",
-      "source": "Times of India",
-      "source_preferred": false,
-      "published_at": "2026-10-26T14:24:25+05:30",
-      "age_hours": 1.18,
-      "categories": [
-        "political_major"
-      ],
-      "excerpt": "",
-      "corroboration": []
-    },
-    {
-      "rank": 114,
-      "class": "C",
-      "score": 62,
-      "region": "world",
-      "region_confidence": 1.0,
-      "suggested_headline": "🌍 LATEST — WORLD",
-      "title": "BJP Holds Protests Across Country, Seeks M Kharge's Apology Over \"Baap\" Jibe",
-      "url": "https://www.ndtv.com/india-news/bjp-holds-protests-across-india-seeks-mallikarjun-kharges-apology-over-baap-jibe-12236750#publisher=newsstand",
-      "source": "NDTV",
-      "source_preferred": false,
-      "published_at": "2026-10-26T14:00:54+05:30",
-      "age_hours": 1.58,
-      "categories": [
-        "political_major"
-      ],
-      "excerpt": "Union Minister Pralhad Joshi said the BJP had known about Rahul Gandhi's immaturity, but it seems others in the party have also got infected due to keeping bad company",
-      "corroboration": []
-    },
-    {
-      "rank": 115,
-      "class": "C",
-      "score": 62,
-      "region": "telangana",
-      "region_confidence": 0.4,
-      "suggested_headline": "📰 LATEST NEWS — TELANGANA",
-      "title": "Modi, Jaishankar, Tharoor meet Iranian parliamentary delegation",
-      "url": "https://telanganatoday.com/modi-jaishankar-tharoor-meet-iranian-parliamentary-delegation",
-      "source": "Telangana Today",
-      "source_preferred": false,
-      "published_at": "2026-10-26T13:53:59+05:30",
-      "age_hours": 1.69,
-      "categories": [
-        "political_major"
-      ],
-      "excerpt": "Prime Minister Narendra Modi, External Affairs Minister S Jaishankar and Congress MP Shashi Tharoor met Iranian parliamentary representatives during the 12th BRICS Parliamentary Forum in New Delhi. The two-day forum focuses on parliamentary cooperation and people-centric development.",
-      "corroboration": []
-    },
-    {
-      "rank": 116,
-      "class": "C",
-      "score": 62,
-      "region": "india",
-      "region_confidence": 1.0,
-      "suggested_headline": "📰 LATEST NEWS — INDIA",
-      "title": "'We hear you': Rahul's message to traders in Delhi amid anti-CEC stir",
-      "url": "https://timesofindia.indiatimes.com/india/we-hear-you-rahul-gandhis-message-to-traders-in-delhi-amid-anti-cec-stir/articleshow/135206564.cms",
-      "source": "Times of India",
-      "source_preferred": false,
-      "published_at": "2026-10-26T13:51:24+05:30",
-      "age_hours": 1.73,
-      "categories": [
-        "traffic_disruption",
-        "protest_major"
-      ],
-      "excerpt": "Rahul Gandhi has publicly backed the traders in Delhi struggling from the ramifications of ongoing protests and governmental restrictions. He pointed fingers at the administration for hampering commerce by suspending metro services and blocking roads. Traders are reportedly facing losses of around Rs 3,000 crore following previous rallies in October.",
-      "corroboration": []
-    },
-    {
-      "rank": 117,
-      "class": "C",
-      "score": 62,
-      "region": "telangana",
-      "region_confidence": 0.4,
-      "suggested_headline": "📰 LATEST NEWS — TELANGANA",
-      "title": "Jamia students reject administration’s notice, say protest will continue until demands are met",
-      "url": "https://telanganatoday.com/jamia-students-reject-administrations-notice-say-protest-will-continue-until-demands-are-met",
-      "source": "Telangana Today",
-      "source_preferred": false,
-      "published_at": "2026-10-26T13:35:44+05:30",
-      "age_hours": 1.99,
-      "categories": [
-        "traffic_disruption",
-        "political_major",
-        "protest_major"
-      ],
-      "excerpt": "Jamia Millia Islamia students have rejected the administration’s notice on holding students’ union elections, saying it lacks a clear timeline for approving the union constitution. They will continue their protest and hunger strike until their demands are addressed.",
-      "corroboration": []
-    },
-    {
-      "rank": 118,
-      "class": "C",
-      "score": 62,
-      "region": "world",
-      "region_confidence": 1.0,
-      "suggested_headline": "🌍 LATEST — WORLD",
-      "title": "AI-Generated Political Ads Flood US Midterms, Raising Deepfake Concerns",
-      "url": "https://www.ndtv.com/world-news/us-midterm-elections-ai-generated-political-ads-flood-us-midterms-raising-deepfake-concerns-12236548#publisher=newsstand",
-      "source": "NDTV",
-      "source_preferred": false,
-      "published_at": "2026-10-26T13:16:48+05:30",
-      "age_hours": 2.31,
-      "categories": [
-        "disaster_weather"
-      ],
-      "excerpt": "Reality-bending deepfake ads -- dubbed AI \"slopaganda\" by researchers and used by both sides of the political aisle to target rivals -- are proliferating ahead of the November 3 vote.",
-      "corroboration": []
-    },
-    {
-      "rank": 119,
-      "class": "C",
-      "score": 62,
-      "region": "india",
-      "region_confidence": 1.0,
-      "suggested_headline": "📰 LATEST NEWS — INDIA",
-      "title": "Bihar DM joins schoolgirls for basketball during high school inspection",
-      "url": "https://timesofindia.indiatimes.com/life-style/people/jehanabad-district-magistrate-tshering-y-bhutia-came-to-inspect-an-upgraded-high-school-in-bihars-kazisarai-but-instead-of-simply-reviewing-the-facilities-and-leaving-she-joined-the-girls-on-the-basketball-court/articleshow/135205776.cms",
-      "source": "Times of India",
-      "source_preferred": false,
-      "published_at": "2026-10-26T13:00:10+05:30",
-      "age_hours": 2.59,
-      "categories": [
-        "political_major"
-      ],
-      "excerpt": "Tshering Y. Bhutia visited a government school in Kazisarai, Bihar, where she played basketball with students. Her engagement highlighted the importance of sports and regular physical activity in children's education. During another visit, she shared a midday meal with students to assess food quality and attendance. Bhutia's inspections focused on infrastructure and student concerns raised through the Vidyarthi Sahayog Portal.",
-      "corroboration": []
-    },
-    {
-      "rank": 120,
-      "class": "C",
-      "score": 62,
-      "region": "india",
-      "region_confidence": 0.4,
-      "suggested_headline": "📰 LATEST NEWS — INDIA",
-      "title": "Set aside Mann Ki Baat to focus on people's concerns: Cong slams PM on inflation",
-      "url": "https://www.thehindu.com/news/national/set-aside-mann-ki-baat-to-focus-on-peoples-concerns-cong-slams-pm-on-inflation/article71625907.ece",
-      "source": "The Hindu",
-      "source_preferred": true,
-      "published_at": "2026-10-26T12:56:51+05:30",
-      "age_hours": 2.64,
-      "categories": [
-        "economic_major"
-      ],
-      "excerpt": "Jairam Ramesh shared on X a media report which cited the RBI to state that the prices of certain food items are continuously rising which is impacting the expenses of every household",
       "corroboration": []
     }
   ]
