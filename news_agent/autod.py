@@ -1327,7 +1327,64 @@ def build_digest(cands, catchup=False):
     }
 
 
+def sync_published():
+    """Pull every card any other run has committed, before this cycle decides.
+
+    WHY (owner 26 Oct "stop posting the same card again and again"): a relay run
+    checks the repo out ONCE and then runs six cycles over an hour. If a cycle
+    posts nothing, no commit happens, so the working copy keeps the
+    published.json it was born with - and a card posted by the owner's manual
+    push in the meantime is invisible to it. Proven on 26 Oct: the 19:56 IST
+    card was committed at 15:00Z, yet the relay's 15:12Z cycle (checked out at
+    14:34Z) re-published its lead story.
+
+    So every cycle re-reads published.json from origin and unions it with the
+    local copy. Never loses a card, never blocks on a failure - a fetch that
+    fails just leaves the local copy alone.
+    """
+    path = os.path.join(STATE, "published.json")
+    if not os.path.exists(path):
+        return
+    try:
+        import subprocess
+        subprocess.run(["git", "fetch", "--quiet", "origin", "HEAD"],
+                       capture_output=True, timeout=90)
+        r = subprocess.run(["git", "show", "origin/HEAD:news_agent/state/published.json"],
+                           capture_output=True, text=True, timeout=90)
+        if r.returncode != 0 or not r.stdout.strip():
+            return
+        remote = json.loads(r.stdout)
+        if not isinstance(remote, list):
+            return
+        local = json.load(open(path, encoding="utf-8"))
+        if not isinstance(local, list):
+            return
+
+        def _key(x):
+            return x.get("fb_post_id") or (x.get("published_at"), x.get("title"))
+
+        seen, out = set(), []
+        for rec in list(local) + list(remote):
+            k = _key(rec)
+            if k in seen:
+                continue
+            seen.add(k)
+            out.append(rec)
+        try:
+            out.sort(key=lambda x: x.get("published_at") or "")
+        except Exception:
+            pass
+        if len(out) > len(local):
+            json.dump(out, open(path, "w", encoding="utf-8"),
+                      ensure_ascii=False, indent=1)
+            log(f"[sync] published.json {len(local)} -> {len(out)} "
+                f"(+{len(out) - len(local)} from other runs)")
+    except Exception as _e:
+        log(f"[sync] skipped: {type(_e).__name__} {_e}")
+
+
 def one_cycle():
+    sync_published()
     cfg = json.load(open(os.path.join(BASE, "config.json"), encoding="utf-8"))
     log("=== cycle start ===")
     _cu = os.environ.get("DIGEST_CATCHUP") == "1"
