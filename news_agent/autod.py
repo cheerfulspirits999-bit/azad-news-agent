@@ -109,6 +109,13 @@ _RU_FALLBACK_MODELS = (
     "qwen/qwen3-30b-a3b",
 )
 
+# 6 Oct: how many live translator lanes one cycle may try for the BATCH, and
+# how many lines a card needs before the cycle is worth publishing. A single
+# batch that echoes costs the whole hour, so the batch now retries on a fresh
+# lane before falling back to the (much more expensive) per-line salvage pass.
+_RU_BATCH_TRIES = int(os.environ.get("RU_BATCH_TRIES", "3"))
+_RU_CARD_MIN = 3
+
 _RU_DAILY_CAP = int(os.environ.get("RU_DAILY_CAP", "46"))
 _RU_DAILY_HARD = int(os.environ.get("RU_DAILY_HARD", "150"))
 
@@ -1077,8 +1084,6 @@ def build_digest(cands, catchup=False):
     def _killed(i, why):
         _kill.setdefault(why, []).append(i + 1)
     if _pend and _ru_on():
-        _ru_kw = {}
-        _ru_lbl = "primary"
         _am = [x for x in _ru_attempts() if x[0] != "primary"]
         if _am:
             # 6 Oct: prefer the first LIVE lane. The rotation index only
@@ -1091,32 +1096,48 @@ def build_digest(cands, catchup=False):
                 _lbl2, _kw2 = _am[(_rot - 1) % len(_am)]
                 if _ru_lane_alive(_lbl2):
                     _head = (_lbl2, _kw2)
-            _ru_lbl, _ru_kw = _head
-        if not _ru_spend(force=True, free=_ru_is_free(_ru_kw)):
-            _res = {"ok": False, "lines": [], "method": "budget",
-                    "problems": ["daily translator HARD budget reached"]}
+            # chosen lane first, every other live lane behind it as a retry
+            _order = [_head] + [x for x in _am if x[0] != _head[0]]
         else:
+            _order = []
+        _bad = set(_pend)
+        _RU_STATS["kills"] = {}
+        # 6 Oct: retry the BATCH on a fresh live lane instead of starving.
+        # Observed 26 Oct: the head lane (gemini-3.8-flash) echoed all five
+        # lines; the per-line salvage pass then rescued only 2 of the remaining
+        # 3 through gemini-3.5-flash, so the card missed the 3-line gate by one
+        # and the hour was lost. One fresh batch beats four private re-asks.
+        for _try, (_lbl, _kw) in enumerate(_order[:_RU_BATCH_TRIES]):
+            _need = [i for i in _pend if i in _bad]
+            if not _need:
+                break
+            if not _ru_spend(force=True, free=_ru_is_free(_kw)):
+                if _try == 0:
+                    _RU_STATS["engine"] = {
+                        "ok": False, "lines_in": 0, "lines_want": len(_pend),
+                        "method": "budget",
+                        "problems": "daily translator HARD budget reached"}
+                break
             _res = roman_urdu.translate_lines(
-                [picks[i][1] for i in _pend], **_ru_kw)
+                [picks[i][1] for i in _need], **_kw)
             # 3 Oct: if this lane answered 429/401/402, park it so the salvage
             # loop below does not spend the rest of the daily quota on it.
-            if _ru_lane_failed(_ru_lbl, _res.get("problems")):
-                log(f"[digest] lane '{_ru_lbl}' hard-failed "
+            if _ru_lane_failed(_lbl, _res.get("problems")):
+                log(f"[digest] lane '{_lbl}' hard-failed "
                     f"(rate limit/no credits) - parked for 30 min")
-        _cand = _res.get("lines") or []
-        _bad = set(_pend)
-        _RU_STATS["engine"] = {"ok": bool(_res.get("ok")),
-                               "lines_in": len(_cand), "lines_want": len(_pend),
-                               "method": str(_res.get("method") or "?")[:16],
-                               "problems": str(_res.get("problems") or [])[:160]}
-        if len(_cand) != len(_pend):
-            _RU_STATS["kills"] = {"count-mismatch": "all"}
-        # 27 Sep CI lesson: the engine's blanket 4-word English-paste rule
-        # kills legitimate name runs ("Ganesh idol immersion"), so judge every
-        # line it returned - even when its overall verdict was ok=False - with
-        # OUR OWN name-aware checks. Facts first; style second.
-        if len(_cand) == len(_pend):
-            for _k, i in enumerate(_pend):
+            _cand = _res.get("lines") or []
+            if _try == 0:
+                _RU_STATS["engine"] = {
+                    "ok": bool(_res.get("ok")),
+                    "lines_in": len(_cand), "lines_want": len(_pend),
+                    "method": str(_res.get("method") or "?")[:16],
+                    "problems": str(_res.get("problems") or [])[:160]}
+            if len(_cand) != len(_need):
+                if _try == 0:
+                    _RU_STATS["kills"] = {"count-mismatch": "all"}
+                continue
+            _got = 0
+            for _k, i in enumerate(_need):
                 _l = (_cand[_k] or "").strip()
                 _en = picks[i][1]
                 if not _l:
@@ -1136,6 +1157,12 @@ def build_digest(cands, catchup=False):
                     _killed(i, "english-echo"); continue  # verbatim/wholesale
                 picks[i] = picks[i][:2] + (_l,) + picks[i][3:]
                 _bad.discard(i)
+                _got += 1
+            if _got:
+                log(f"[digest] lane '{_lbl}' batch: {_got}/{len(_need)} "
+                    f"accepted ({len(_pend) - len(_bad)}/{len(_pend)} total)")
+            if len(_pend) - len(_bad) >= _RU_CARD_MIN:
+                break
         _RU_STATS["kills"] = _RU_STATS.get("kills") or _kill
         _RU_STATS["accepted"] = len(_pend) - len(_bad)
         # 28 Sep salvage pass, WIDENED 29 Sep: every killed line (not just a
