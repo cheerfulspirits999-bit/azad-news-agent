@@ -1,13 +1,13 @@
 {
-  "cycle_id": "20261026-1726",
-  "generated_at": "2026-10-26T17:26:32.107046+05:30",
+  "cycle_id": "20261026-1736",
+  "generated_at": "2026-10-26T17:36:46.784699+05:30",
   "feeds_ok": 10,
   "errors": [],
   "counts": {
-    "fetched": 1749,
-    "fresh": 829,
+    "fetched": 1751,
+    "fresh": 834,
     "candidates": 120,
-    "duplicates_suppressed": 11
+    "duplicates_suppressed": 10
   },
   "candidates": [
     {
@@ -22,7 +22,7 @@
       "source": "The Hindu",
       "source_preferred": true,
       "published_at": "2026-10-26T16:39:15+05:30",
-      "age_hours": 0.79,
+      "age_hours": 0.96,
       "categories": [
         "accident_casualty",
         "police_operation"
@@ -42,7 +42,7 @@
       "source": "Munsif Daily",
       "source_preferred": true,
       "published_at": "2026-10-26T16:03:38+05:30",
-      "age_hours": 1.38,
+      "age_hours": 1.55,
       "categories": [
         "political_major",
         "protest_major"
@@ -62,7 +62,7 @@
       "source": "The Hindu",
       "source_preferred": true,
       "published_at": "2026-10-26T15:50:02+05:30",
-      "age_hours": 1.61,
+      "age_hours": 1.78,
       "categories": [
         "disaster_weather"
       ],
@@ -81,7 +81,7 @@
       "source": "Munsif Daily",
       "source_preferred": true,
       "published_at": "2026-10-26T15:37:29+05:30",
-      "age_hours": 1.82,
+      "age_hours": 1.99,
       "categories": [
         "accident_casualty",
         "traffic_disruption",
@@ -93,25 +93,6 @@
     {
       "rank": 5,
       "class": "A",
-      "score": 81,
-      "region": "india",
-      "region_confidence": 1.0,
-      "suggested_headline": "📰 LATEST NEWS — INDIA",
-      "title": "Fatal luxury car crash: Keralam judge booked under MV Act as registered owner of vehicle driven by minor son",
-      "url": "https://www.thehindu.com/news/national/kerala/fatal-luxury-car-crash-keralam-judge-booked-under-mv-act-as-registered-owner-of-vehicle-driven-by-minor-son/article71625774.ece",
-      "source": "The Hindu",
-      "source_preferred": true,
-      "published_at": "2026-10-26T15:26:32+05:30",
-      "age_hours": 2.0,
-      "categories": [
-        "accident_casualty"
-      ],
-      "excerpt": "Section 199A of Motor Vehicles Act stipulates that where an offence has been committed by a juvenile, the guardian or the owner of the motor vehicle shall be deemed guilty and liable to be proceeded against and punished accordingly",
-      "corroboration": []
-    },
-    {
-      "rank": 6,
-      "class": "A",
       "score": 80,
       "region": "hyderabad",
       "region_confidence": 1.0,
@@ -121,7 +102,7 @@
       "source": "Deccan Chronicle",
       "source_preferred": false,
       "published_at": "2026-10-26T16:55:49+05:30",
-      "age_hours": 0.51,
+      "age_hours": 0.68,
       "categories": [
         "accident_casualty"
       ],
@@ -129,7 +110,7 @@
       "corroboration": []
     },
     {
-      "rank": 7,
+      "rank": 6,
       "class": "B",
       "score": 78,
       "region": "telangana",
@@ -140,7 +121,7 @@
       "source": "Munsif Daily",
       "source_preferred": true,
       "published_at": "2026-10-26T16:00:12+05:30",
-      "age_hours": 1.44,
+      "age_hours": 1.61,
       "categories": [
         "political_major"
       ],
@@ -148,7 +129,7 @@
       "corroboration": []
     },
     {
-      "rank": 8,
+      "rank": 7,
       "class": "B",
       "score": 78,
       "region": "telangana",
@@ -159,7 +140,7 @@
       "source": "Munsif Daily",
       "source_preferred": true,
       "published_at": "2026-10-26T15:47:23+05:30",
-      "age_hours": 1.65,
+      "age_hours": 1.82,
       "categories": [
         "political_major",
         "protest_major"
@@ -170,7 +151,45 @@
       ]
     },
     {
+      "rank": 8,
+      "class": "C",
+      "score": 77,
+      "region": "india",
+      "region_confidence": 1.0,
+      "suggested_headline": "📰 LATEST NEWS — INDIA",
+      "title": "Fatal luxury car crash: Keralam judge booked under MV Act as registered owner of vehicle driven by minor son",
+      "url": "https://www.thehindu.com/news/national/kerala/fatal-luxury-car-crash-keralam-judge-booked-under-mv-act-as-registered-owner-of-vehicle-driven-by-minor-son/article71625774.ece",
+      "source": "The Hindu",
+      "source_preferred": true,
+      "published_at": "2026-10-26T15:26:32+05:30",
+      "age_hours": 2.17,
+      "categories": [
+        "accident_casualty"
+      ],
+      "excerpt": "Section 199A of Motor Vehicles Act stipulates that where an offence has been committed by a juvenile, the guardian or the owner of the motor vehicle shall be deemed guilty and liable to be proceeded against and punished accordingly",
+      "corroboration": []
+    },
+    {
       "rank": 9,
+      "class": "C",
+      "score": 76,
+      "region": "india",
+      "region_confidence": 1.0,
+      "suggested_headline": "📰 LATEST NEWS — INDIA",
+      "title": "Father-son duo killed as old building collapses in Northeast Delhi’s Harsh Vihar",
+      "url": "https://www.thehindu.com/news/cities/Delhi/delhi-harsh-vihar-building-collapse-deaths-october-26-2026/article71626601.ece",
+      "source": "The Hindu",
+      "source_preferred": true,
+      "published_at": "2026-10-26T17:28:17+05:30",
+      "age_hours": 0.14,
+      "categories": [
+        "accident_casualty"
+      ],
+      "excerpt": "The two men were pulled out from beneath the debris during the overnight rescue operation and rushed to GTB Hospital, where doctors declared them brought dead",
+      "corroboration": []
+    },
+    {
+      "rank": 10,
       "class": "C",
       "score": 76,
       "region": "india",
@@ -181,7 +200,7 @@
       "source": "The Hindu",
       "source_preferred": true,
       "published_at": "2026-10-26T16:50:10+05:30",
-      "age_hours": 0.61,
+      "age_hours": 0.78,
       "categories": [
         "accident_casualty",
         "political_major",
@@ -191,7 +210,7 @@
       "corroboration": []
     },
     {
-      "rank": 10,
+      "rank": 11,
       "class": "C",
       "score": 76,
       "region": "telangana",
@@ -202,31 +221,11 @@
       "source": "India Today",
       "source_preferred": false,
       "published_at": "2026-10-26T16:03:34+05:30",
-      "age_hours": 1.38,
+      "age_hours": 1.55,
       "categories": [
         "disaster_weather"
       ],
       "excerpt": "Cyclone Arnab closing in on Andhra coast states on alert ahead of landfall",
-      "corroboration": []
-    },
-    {
-      "rank": 11,
-      "class": "C",
-      "score": 76,
-      "region": "india",
-      "region_confidence": 1.0,
-      "suggested_headline": "📰 LATEST NEWS — INDIA",
-      "title": "Nedumbassery luxury car crash: Audio clip of an accused describing incident emerges as possible key evidence",
-      "url": "https://www.thehindu.com/news/national/kerala/nedumbassery-luxury-car-crash-audio-clip-of-an-accused-describing-incident-emerges-as-possible-key-evidence/article71626202.ece",
-      "source": "The Hindu",
-      "source_preferred": true,
-      "published_at": "2026-10-26T15:26:44+05:30",
-      "age_hours": 2.0,
-      "categories": [
-        "accident_casualty",
-        "court_judgment"
-      ],
-      "excerpt": "Ernakulam Additional District Court reserves verdict in bail pleas for October 28",
       "corroboration": []
     },
     {
@@ -241,7 +240,7 @@
       "source": "The Hindu",
       "source_preferred": true,
       "published_at": "2026-10-26T15:18:06+05:30",
-      "age_hours": 2.14,
+      "age_hours": 2.31,
       "categories": [
         "infrastructure_failure"
       ],
@@ -260,7 +259,7 @@
       "source": "Munsif Daily",
       "source_preferred": true,
       "published_at": "2026-10-26T15:14:59+05:30",
-      "age_hours": 2.19,
+      "age_hours": 2.36,
       "categories": [
         "infrastructure_failure"
       ],
@@ -279,7 +278,7 @@
       "source": "India Today",
       "source_preferred": false,
       "published_at": "2026-10-26T14:11:01+05:30",
-      "age_hours": 3.26,
+      "age_hours": 3.43,
       "categories": [
         "accident_casualty"
       ],
@@ -298,7 +297,7 @@
       "source": "The Hindu",
       "source_preferred": true,
       "published_at": "2026-10-25T19:29:38+05:30",
-      "age_hours": 21.95,
+      "age_hours": 22.12,
       "categories": [
         "accident_casualty"
       ],
@@ -317,7 +316,7 @@
       "source": "Munsif Daily",
       "source_preferred": true,
       "published_at": "2026-10-26T17:14:11+05:30",
-      "age_hours": 0.21,
+      "age_hours": 0.38,
       "categories": [
         "security_terror"
       ],
@@ -336,7 +335,7 @@
       "source": "Newsmeter",
       "source_preferred": false,
       "published_at": "2026-10-26T15:38:31+05:30",
-      "age_hours": 1.8,
+      "age_hours": 1.97,
       "categories": [
         "court_judgment"
       ],
@@ -355,7 +354,7 @@
       "source": "Munsif Daily",
       "source_preferred": true,
       "published_at": "2026-10-26T12:06:03+05:30",
-      "age_hours": 5.34,
+      "age_hours": 5.51,
       "categories": [
         "political_major"
       ],
@@ -366,6 +365,45 @@
       "rank": 19,
       "class": "C",
       "score": 72,
+      "region": "world",
+      "region_confidence": 1.0,
+      "suggested_headline": "🌍 LATEST — WORLD",
+      "title": "Israeli strikes in Gaza kill five including child: Civil Defence",
+      "url": "https://www.thehindu.com/news/international/israeli-strikes-in-gaza-kill-five-including-child-civil-defence/article71626788.ece",
+      "source": "The Hindu",
+      "source_preferred": true,
+      "published_at": "2026-10-26T17:25:14+05:30",
+      "age_hours": 0.19,
+      "categories": [
+        "accident_casualty"
+      ],
+      "excerpt": "Civil defence spokesman Mahmoud Bassal said a total of 13 people had been killed and about 60 wounded by Israeli fire and airstrikes in Gaza in the past 24 hours",
+      "corroboration": []
+    },
+    {
+      "rank": 20,
+      "class": "C",
+      "score": 72,
+      "region": "india",
+      "region_confidence": 1.0,
+      "suggested_headline": "📰 LATEST NEWS — INDIA",
+      "title": "DMK Women’s Wing to stage protest across Tamil Nadu over law and order on October 31",
+      "url": "https://www.thehindu.com/news/national/tamil-nadu/dmk-women-wing-to-stage-protest-across-tamil-nadu-over-law-and-order-on-october-31-2026/article71626524.ece",
+      "source": "The Hindu",
+      "source_preferred": true,
+      "published_at": "2026-10-26T17:23:57+05:30",
+      "age_hours": 0.21,
+      "categories": [
+        "political_major",
+        "protest_major"
+      ],
+      "excerpt": "Mr. Stalin pointed to the recent criminal incidents in the State.",
+      "corroboration": []
+    },
+    {
+      "rank": 21,
+      "class": "C",
+      "score": 72,
       "region": "hyderabad",
       "region_confidence": 0.4,
       "suggested_headline": "📰 LATEST NEWS — HYDERABAD",
@@ -374,7 +412,7 @@
       "source": "Munsif Daily",
       "source_preferred": true,
       "published_at": "2026-10-26T17:21:40+05:30",
-      "age_hours": 0.08,
+      "age_hours": 0.25,
       "categories": [
         "accident_casualty"
       ],
@@ -382,7 +420,7 @@
       "corroboration": []
     },
     {
-      "rank": 20,
+      "rank": 22,
       "class": "C",
       "score": 72,
       "region": "india",
@@ -393,7 +431,7 @@
       "source": "The Hindu",
       "source_preferred": true,
       "published_at": "2026-10-26T17:09:12+05:30",
-      "age_hours": 0.29,
+      "age_hours": 0.46,
       "categories": [
         "political_major"
       ],
@@ -401,7 +439,7 @@
       "corroboration": []
     },
     {
-      "rank": 21,
+      "rank": 23,
       "class": "C",
       "score": 72,
       "region": "india",
@@ -412,7 +450,7 @@
       "source": "The Hindu",
       "source_preferred": true,
       "published_at": "2026-10-26T17:05:42+05:30",
-      "age_hours": 0.35,
+      "age_hours": 0.52,
       "categories": [
         "court_judgment",
         "govt_announcement",
@@ -422,7 +460,7 @@
       "corroboration": []
     },
     {
-      "rank": 22,
+      "rank": 24,
       "class": "C",
       "score": 72,
       "region": "india",
@@ -433,7 +471,7 @@
       "source": "Munsif Daily",
       "source_preferred": true,
       "published_at": "2026-10-26T16:55:50+05:30",
-      "age_hours": 0.51,
+      "age_hours": 0.68,
       "categories": [
         "political_major"
       ],
@@ -441,7 +479,7 @@
       "corroboration": []
     },
     {
-      "rank": 23,
+      "rank": 25,
       "class": "C",
       "score": 72,
       "region": "india",
@@ -452,7 +490,7 @@
       "source": "The Hindu",
       "source_preferred": true,
       "published_at": "2026-10-26T16:42:47+05:30",
-      "age_hours": 0.73,
+      "age_hours": 0.9,
       "categories": [
         "political_major"
       ],
@@ -460,7 +498,7 @@
       "corroboration": []
     },
     {
-      "rank": 24,
+      "rank": 26,
       "class": "C",
       "score": 72,
       "region": "hyderabad",
@@ -471,7 +509,7 @@
       "source": "Newsmeter",
       "source_preferred": false,
       "published_at": "2026-10-26T16:38:05+05:30",
-      "age_hours": 0.81,
+      "age_hours": 0.98,
       "categories": [
         "major_crime"
       ],
@@ -479,7 +517,7 @@
       "corroboration": []
     },
     {
-      "rank": 25,
+      "rank": 27,
       "class": "C",
       "score": 72,
       "region": "india",
@@ -490,7 +528,7 @@
       "source": "The Hindu",
       "source_preferred": true,
       "published_at": "2026-10-26T16:37:23+05:30",
-      "age_hours": 0.82,
+      "age_hours": 0.99,
       "categories": [
         "political_major"
       ],
@@ -498,7 +536,7 @@
       "corroboration": []
     },
     {
-      "rank": 26,
+      "rank": 28,
       "class": "C",
       "score": 72,
       "region": "hyderabad",
@@ -509,7 +547,7 @@
       "source": "Munsif Daily",
       "source_preferred": true,
       "published_at": "2026-10-26T16:36:44+05:30",
-      "age_hours": 0.83,
+      "age_hours": 1.0,
       "categories": [
         "accident_casualty",
         "police_operation"
@@ -518,7 +556,7 @@
       "corroboration": []
     },
     {
-      "rank": 27,
+      "rank": 29,
       "class": "C",
       "score": 72,
       "region": "world",
@@ -529,7 +567,7 @@
       "source": "The Hindu",
       "source_preferred": true,
       "published_at": "2026-10-26T15:55:42+05:30",
-      "age_hours": 1.51,
+      "age_hours": 1.68,
       "categories": [
         "accident_casualty",
         "international_conflict"
@@ -538,7 +576,7 @@
       "corroboration": []
     },
     {
-      "rank": 28,
+      "rank": 30,
       "class": "C",
       "score": 72,
       "region": "hyderabad",
@@ -549,7 +587,7 @@
       "source": "India Today",
       "source_preferred": false,
       "published_at": "2026-10-26T15:47:05+05:30",
-      "age_hours": 1.66,
+      "age_hours": 1.83,
       "categories": [
         "traffic_disruption",
         "protest_major"
@@ -558,7 +596,7 @@
       "corroboration": []
     },
     {
-      "rank": 29,
+      "rank": 31,
       "class": "C",
       "score": 72,
       "region": "telangana",
@@ -569,7 +607,7 @@
       "source": "Newsmeter",
       "source_preferred": false,
       "published_at": "2026-10-26T15:42:47+05:30",
-      "age_hours": 1.73,
+      "age_hours": 1.9,
       "categories": [
         "political_major"
       ],
@@ -577,26 +615,27 @@
       "corroboration": []
     },
     {
-      "rank": 30,
+      "rank": 32,
       "class": "C",
       "score": 72,
-      "region": "hyderabad",
-      "region_confidence": 0.4,
-      "suggested_headline": "📰 LATEST NEWS — HYDERABAD",
-      "title": "Cyclone Alert: Educational Institutions in Kakinada to Remain Closed for Two Days",
-      "url": "https://munsifdaily.com/cyclone-alert-educational-institutions-in-kakinada/",
-      "source": "Munsif Daily",
+      "region": "india",
+      "region_confidence": 1.0,
+      "suggested_headline": "📰 LATEST NEWS — INDIA",
+      "title": "Nedumbassery luxury car crash: Audio clip of an accused describing incident emerges as possible key evidence",
+      "url": "https://www.thehindu.com/news/national/kerala/nedumbassery-luxury-car-crash-audio-clip-of-an-accused-describing-incident-emerges-as-possible-key-evidence/article71626202.ece",
+      "source": "The Hindu",
       "source_preferred": true,
-      "published_at": "2026-10-26T15:30:05+05:30",
-      "age_hours": 1.94,
+      "published_at": "2026-10-26T15:26:44+05:30",
+      "age_hours": 2.17,
       "categories": [
-        "disaster_weather"
+        "accident_casualty",
+        "court_judgment"
       ],
-      "excerpt": "Educational institutions across Kakinada district will remain closed on Tuesday and Wednesday as a precautionary measure in view of the prevailing weather conditions and the possible impact of the cyclone.",
+      "excerpt": "Ernakulam Additional District Court reserves verdict in bail pleas for October 28",
       "corroboration": []
     },
     {
-      "rank": 31,
+      "rank": 33,
       "class": "C",
       "score": 72,
       "region": "hyderabad",
@@ -607,7 +646,7 @@
       "source": "Telangana Today",
       "source_preferred": false,
       "published_at": "2026-10-26T15:07:15+05:30",
-      "age_hours": 2.32,
+      "age_hours": 2.49,
       "categories": [
         "political_major"
       ],
@@ -615,7 +654,7 @@
       "corroboration": []
     },
     {
-      "rank": 32,
+      "rank": 34,
       "class": "C",
       "score": 72,
       "region": "india",
@@ -626,7 +665,7 @@
       "source": "The Hindu",
       "source_preferred": true,
       "published_at": "2026-10-26T14:57:41+05:30",
-      "age_hours": 2.48,
+      "age_hours": 2.65,
       "categories": [
         "accident_casualty"
       ],
@@ -634,7 +673,7 @@
       "corroboration": []
     },
     {
-      "rank": 33,
+      "rank": 35,
       "class": "C",
       "score": 72,
       "region": "india",
@@ -645,7 +684,7 @@
       "source": "Munsif Daily",
       "source_preferred": true,
       "published_at": "2026-10-26T14:52:41+05:30",
-      "age_hours": 2.56,
+      "age_hours": 2.73,
       "categories": [
         "accident_casualty"
       ],
@@ -653,7 +692,7 @@
       "corroboration": []
     },
     {
-      "rank": 34,
+      "rank": 36,
       "class": "C",
       "score": 72,
       "region": "telangana",
@@ -664,7 +703,7 @@
       "source": "Telangana Today",
       "source_preferred": false,
       "published_at": "2026-10-26T14:52:23+05:30",
-      "age_hours": 2.57,
+      "age_hours": 2.74,
       "categories": [
         "accident_casualty"
       ],
@@ -672,7 +711,7 @@
       "corroboration": []
     },
     {
-      "rank": 35,
+      "rank": 37,
       "class": "C",
       "score": 72,
       "region": "hyderabad",
@@ -683,7 +722,7 @@
       "source": "Telangana Today",
       "source_preferred": false,
       "published_at": "2026-10-26T14:31:23+05:30",
-      "age_hours": 2.92,
+      "age_hours": 3.09,
       "categories": [
         "political_major"
       ],
@@ -691,7 +730,7 @@
       "corroboration": []
     },
     {
-      "rank": 36,
+      "rank": 38,
       "class": "C",
       "score": 72,
       "region": "telangana",
@@ -702,7 +741,7 @@
       "source": "Deccan Chronicle",
       "source_preferred": false,
       "published_at": "2026-10-26T13:48:06+05:30",
-      "age_hours": 3.64,
+      "age_hours": 3.81,
       "categories": [
         "accident_casualty"
       ],
@@ -710,26 +749,7 @@
       "corroboration": []
     },
     {
-      "rank": 37,
-      "class": "C",
-      "score": 72,
-      "region": "india",
-      "region_confidence": 1.0,
-      "suggested_headline": "📰 LATEST NEWS — INDIA",
-      "title": "Heavy rain inundates streets, homes in Coimbatore city",
-      "url": "https://www.thehindu.com/news/cities/Coimbatore/heavy-rain-inundates-streets-homes-in-coimbatore-city/article71625848.ece",
-      "source": "The Hindu",
-      "source_preferred": true,
-      "published_at": "2026-10-26T13:19:23+05:30",
-      "age_hours": 4.12,
-      "categories": [
-        "disaster_weather"
-      ],
-      "excerpt": "The Collector said Coimbatore city had received more than 80 mm of rain within three hours, between 2.30 p.m. and 5.30 p.m. on October 25, resulting in a sudden increase in runoff.",
-      "corroboration": []
-    },
-    {
-      "rank": 38,
+      "rank": 39,
       "class": "C",
       "score": 72,
       "region": "telangana",
@@ -740,7 +760,7 @@
       "source": "Deccan Chronicle",
       "source_preferred": false,
       "published_at": "2026-10-26T13:12:50+05:30",
-      "age_hours": 4.23,
+      "age_hours": 4.4,
       "categories": [
         "disaster_weather"
       ],
@@ -748,7 +768,7 @@
       "corroboration": []
     },
     {
-      "rank": 39,
+      "rank": 40,
       "class": "C",
       "score": 72,
       "region": "telangana",
@@ -759,7 +779,7 @@
       "source": "Telangana Today",
       "source_preferred": false,
       "published_at": "2026-10-26T12:02:40+05:30",
-      "age_hours": 5.4,
+      "age_hours": 5.57,
       "categories": [
         "accident_casualty",
         "traffic_disruption",
@@ -769,7 +789,7 @@
       "corroboration": []
     },
     {
-      "rank": 40,
+      "rank": 41,
       "class": "C",
       "score": 72,
       "region": "telangana",
@@ -780,7 +800,7 @@
       "source": "Deccan Chronicle",
       "source_preferred": false,
       "published_at": "2026-10-26T12:01:30+05:30",
-      "age_hours": 5.42,
+      "age_hours": 5.59,
       "categories": [
         "fire_explosion",
         "accident_casualty"
@@ -789,7 +809,7 @@
       "corroboration": []
     },
     {
-      "rank": 41,
+      "rank": 42,
       "class": "C",
       "score": 72,
       "region": "world",
@@ -800,7 +820,7 @@
       "source": "The Hindu",
       "source_preferred": true,
       "published_at": "2026-10-26T08:17:28+05:30",
-      "age_hours": 9.15,
+      "age_hours": 9.32,
       "categories": [
         "accident_casualty"
       ],
@@ -808,7 +828,7 @@
       "corroboration": []
     },
     {
-      "rank": 42,
+      "rank": 43,
       "class": "C",
       "score": 72,
       "region": "telangana",
@@ -819,7 +839,7 @@
       "source": "The Hindu",
       "source_preferred": true,
       "published_at": "2026-10-25T21:14:50+05:30",
-      "age_hours": 20.2,
+      "age_hours": 20.37,
       "categories": [
         "accident_casualty"
       ],
@@ -827,7 +847,7 @@
       "corroboration": []
     },
     {
-      "rank": 43,
+      "rank": 44,
       "class": "C",
       "score": 72,
       "region": "telangana",
@@ -838,7 +858,7 @@
       "source": "The Hindu",
       "source_preferred": true,
       "published_at": "2026-10-25T20:16:31+05:30",
-      "age_hours": 21.17,
+      "age_hours": 21.34,
       "categories": [
         "accident_casualty"
       ],
@@ -846,7 +866,7 @@
       "corroboration": []
     },
     {
-      "rank": 44,
+      "rank": 45,
       "class": "C",
       "score": 71,
       "region": "india",
@@ -857,7 +877,7 @@
       "source": "Deccan Chronicle",
       "source_preferred": false,
       "published_at": "2026-10-26T11:56:51+05:30",
-      "age_hours": 5.49,
+      "age_hours": 5.67,
       "categories": [
         "accident_casualty",
         "court_judgment"
@@ -866,7 +886,7 @@
       "corroboration": []
     },
     {
-      "rank": 45,
+      "rank": 46,
       "class": "C",
       "score": 71,
       "region": "world",
@@ -877,7 +897,7 @@
       "source": "The Hindu",
       "source_preferred": true,
       "published_at": "2026-10-26T11:51:32+05:30",
-      "age_hours": 5.58,
+      "age_hours": 5.75,
       "categories": [
         "security_terror",
         "police_operation"
@@ -886,7 +906,65 @@
       "corroboration": []
     },
     {
-      "rank": 46,
+      "rank": 47,
+      "class": "C",
+      "score": 70,
+      "region": "india",
+      "region_confidence": 0.4,
+      "suggested_headline": "📰 LATEST NEWS — INDIA",
+      "title": "Award-winning director-cinematographer Chezhiyan no more",
+      "url": "https://www.thehindu.com/news/national/tamil-nadu/award-winning-director-cinematographer-chezhiyan-is-no-more/article71205403.ece",
+      "source": "The Hindu",
+      "source_preferred": true,
+      "published_at": "2026-10-26T17:30:26+05:30",
+      "age_hours": 0.11,
+      "categories": [
+        "security_terror"
+      ],
+      "excerpt": "Chezhiyan’s minimalist approach to filmmaking was evident in To Let, in which he deliberately chose not to use background score, despite music being an integral element of Tamil cinema",
+      "corroboration": []
+    },
+    {
+      "rank": 48,
+      "class": "C",
+      "score": 70,
+      "region": "india",
+      "region_confidence": 1.0,
+      "suggested_headline": "📰 LATEST NEWS — INDIA",
+      "title": "Supreme Court assures no deleted voters will be prosecuted for submitting Form 6",
+      "url": "https://www.thehindu.com/news/national/maharashtra-sir-supreme-court-assures-no-deleted-voters-will-be-prosecuted-for-submitting-form-6/article71626077.ece",
+      "source": "The Hindu",
+      "source_preferred": true,
+      "published_at": "2026-10-26T17:29:37+05:30",
+      "age_hours": 0.12,
+      "categories": [
+        "court_judgment"
+      ],
+      "excerpt": "The oral observations came during a hearing in which the court agreed to urgently take up in November 5, a plea challenging the deletion of voters in the Maharashtra SIR",
+      "corroboration": []
+    },
+    {
+      "rank": 49,
+      "class": "C",
+      "score": 70,
+      "region": "india",
+      "region_confidence": 1.0,
+      "suggested_headline": "📰 LATEST NEWS — INDIA",
+      "title": "Madras High Court denies anticipatory bail to Anbil Mahesh Poyyamozhi in ₹100-crore private schools fraud case",
+      "url": "https://www.thehindu.com/news/national/tamil-nadu/madras-high-court-denies-anticipatory-bail-to-anbil-mahesh-poyyamozhi-in-rs-100-crore-private-schools-fraud-case/article71625866.ece",
+      "source": "The Hindu",
+      "source_preferred": true,
+      "published_at": "2026-10-26T17:25:16+05:30",
+      "age_hours": 0.19,
+      "categories": [
+        "major_crime",
+        "court_judgment"
+      ],
+      "excerpt": "Justice V. Lakshminarayanan dismisses his advance bail plea in a case being investigated by the Chennai Central Crime Branch police",
+      "corroboration": []
+    },
+    {
+      "rank": 50,
       "class": "C",
       "score": 70,
       "region": "india",
@@ -897,7 +975,7 @@
       "source": "Deccan Chronicle",
       "source_preferred": false,
       "published_at": "2026-10-26T17:18:32+05:30",
-      "age_hours": 0.13,
+      "age_hours": 0.3,
       "categories": [
         "disaster_weather"
       ],
@@ -905,7 +983,45 @@
       "corroboration": []
     },
     {
-      "rank": 47,
+      "rank": 51,
+      "class": "C",
+      "score": 70,
+      "region": "india",
+      "region_confidence": 1.0,
+      "suggested_headline": "📰 LATEST NEWS — INDIA",
+      "title": "CMRL pay-off case: Kerala HC stays order to lodge FIR against ex-CM Pinarayi Vijayan, kin",
+      "url": "https://www.thehindu.com/news/national/kerala/cmrl-pay-off-case-kerala-hc-stays-order-to-lodge-fir-against-ex-keralam-cm-pinarayi-kin/article71626592.ece",
+      "source": "The Hindu",
+      "source_preferred": true,
+      "published_at": "2026-10-26T17:17:28+05:30",
+      "age_hours": 0.32,
+      "categories": [
+        "court_judgment"
+      ],
+      "excerpt": "Further investigation in the case has also been stayed",
+      "corroboration": []
+    },
+    {
+      "rank": 52,
+      "class": "C",
+      "score": 70,
+      "region": "india",
+      "region_confidence": 1.0,
+      "suggested_headline": "📰 LATEST NEWS — INDIA",
+      "title": "CMRL-Exalogic payoff case: Ex-Keralam CM Pinarayi Vijayan to skip questioning by ED on October 23",
+      "url": "https://www.thehindu.com/news/national/kerala/cmrl-exalogic-payoff-case-ex-keralam-cm-pinarayi-vijayan-to-skip-questioning-by-ed-on-october-23/article71611043.ece",
+      "source": "The Hindu",
+      "source_preferred": true,
+      "published_at": "2026-10-26T17:15:21+05:30",
+      "age_hours": 0.36,
+      "categories": [
+        "court_judgment"
+      ],
+      "excerpt": "Counsel for Pinarayi informs ED officials in Kochi that he will not appear for questioning as Supreme Court has stayed a Kerala Police probe into FIR registered against him, daughter T. Veena and son-in-law Mohamed Riyas in the case",
+      "corroboration": []
+    },
+    {
+      "rank": 53,
       "class": "C",
       "score": 70,
       "region": "india",
@@ -916,7 +1032,7 @@
       "source": "Munsif Daily",
       "source_preferred": true,
       "published_at": "2026-10-26T16:51:45+05:30",
-      "age_hours": 0.58,
+      "age_hours": 0.75,
       "categories": [
         "court_judgment"
       ],
@@ -924,7 +1040,7 @@
       "corroboration": []
     },
     {
-      "rank": 48,
+      "rank": 54,
       "class": "C",
       "score": 70,
       "region": "india",
@@ -935,7 +1051,7 @@
       "source": "The Hindu",
       "source_preferred": true,
       "published_at": "2026-10-26T16:42:05+05:30",
-      "age_hours": 0.74,
+      "age_hours": 0.91,
       "categories": [
         "court_judgment"
       ],
@@ -943,26 +1059,7 @@
       "corroboration": []
     },
     {
-      "rank": 49,
-      "class": "C",
-      "score": 70,
-      "region": "india",
-      "region_confidence": 1.0,
-      "suggested_headline": "📰 LATEST NEWS — INDIA",
-      "title": "CMRL pay-off case: Kerala HC stays order to lodge FIR against ex-CM Pinarayi Vijayan, kin",
-      "url": "https://www.thehindu.com/news/national/kerala/cmrl-pay-off-case-kerala-hc-stays-order-to-lodge-fir-against-ex-keralam-cm-pinarayi-kin/article71626592.ece",
-      "source": "The Hindu",
-      "source_preferred": true,
-      "published_at": "2026-10-26T16:40:04+05:30",
-      "age_hours": 0.77,
-      "categories": [
-        "court_judgment"
-      ],
-      "excerpt": "Court also keeps in abeyance FIRs registered by Vigilance and Anti-Corruption Bureau and the further probe by the agency in the case till further orders in appeals filed by Pinarayi and others",
-      "corroboration": []
-    },
-    {
-      "rank": 50,
+      "rank": 55,
       "class": "C",
       "score": 70,
       "region": "india",
@@ -973,7 +1070,7 @@
       "source": "Deccan Chronicle",
       "source_preferred": false,
       "published_at": "2026-10-26T16:29:38+05:30",
-      "age_hours": 0.95,
+      "age_hours": 1.12,
       "categories": [
         "disaster_weather"
       ],
@@ -981,7 +1078,7 @@
       "corroboration": []
     },
     {
-      "rank": 51,
+      "rank": 56,
       "class": "C",
       "score": 70,
       "region": "india",
@@ -992,7 +1089,7 @@
       "source": "LiveMint",
       "source_preferred": false,
       "published_at": "2026-10-26T16:22:39+05:30",
-      "age_hours": 1.06,
+      "age_hours": 1.24,
       "categories": [
         "disaster_weather"
       ],
@@ -1000,27 +1097,7 @@
       "corroboration": []
     },
     {
-      "rank": 52,
-      "class": "C",
-      "score": 70,
-      "region": "india",
-      "region_confidence": 1.0,
-      "suggested_headline": "📰 LATEST NEWS — INDIA",
-      "title": "Madras High Court denies anticipatory bail to Anbil Mahesh Poyyamozhi in ₹100-crore private schools fraud case",
-      "url": "https://www.thehindu.com/news/national/tamil-nadu/madras-high-court-denies-anticipatory-bail-to-anbil-mahesh-poyyamozhi-in-rs-100-crore-private-schools-fraud-case/article71625866.ece",
-      "source": "The Hindu",
-      "source_preferred": true,
-      "published_at": "2026-10-26T16:16:58+05:30",
-      "age_hours": 1.16,
-      "categories": [
-        "major_crime",
-        "court_judgment"
-      ],
-      "excerpt": "Justice V. Lakshminarayanan dismisses his advance bail plea in a case being investigated by the Chennai Central Crime Branch police",
-      "corroboration": []
-    },
-    {
-      "rank": 53,
+      "rank": 57,
       "class": "C",
       "score": 70,
       "region": "india",
@@ -1031,7 +1108,7 @@
       "source": "The Hindu",
       "source_preferred": true,
       "published_at": "2026-10-26T16:11:03+05:30",
-      "age_hours": 1.26,
+      "age_hours": 1.43,
       "categories": [
         "court_judgment"
       ],
@@ -1039,7 +1116,7 @@
       "corroboration": []
     },
     {
-      "rank": 54,
+      "rank": 58,
       "class": "C",
       "score": 70,
       "region": "hyderabad",
@@ -1050,7 +1127,7 @@
       "source": "Munsif Daily",
       "source_preferred": true,
       "published_at": "2026-10-26T12:10:12+05:30",
-      "age_hours": 5.27,
+      "age_hours": 5.44,
       "categories": [
         "missing_person"
       ],
@@ -1058,7 +1135,26 @@
       "corroboration": []
     },
     {
-      "rank": 55,
+      "rank": 59,
+      "class": "C",
+      "score": 68,
+      "region": "india",
+      "region_confidence": 1.0,
+      "suggested_headline": "📰 LATEST NEWS — INDIA",
+      "title": "Fire at Delhi's North Block, home to key ministries",
+      "url": "https://www.indiatoday.in/newsmo/short-videos/fire-at-delhis-north-block-home-to-key-ministries-3025349-2026-10-26?utm_source=rss",
+      "source": "India Today",
+      "source_preferred": false,
+      "published_at": "2026-10-26T17:32:06+05:30",
+      "age_hours": 0.08,
+      "categories": [
+        "fire_explosion"
+      ],
+      "excerpt": "Fire at Delhis North Block home to key ministries",
+      "corroboration": []
+    },
+    {
+      "rank": 60,
       "class": "C",
       "score": 68,
       "region": "india",
@@ -1068,8 +1164,8 @@
       "url": "https://www.thehindu.com/news/national/tamil-nadu/former-dmk-minister-anbil-mahesh-poyyamozhi-arrested/article71626605.ece",
       "source": "The Hindu",
       "source_preferred": true,
-      "published_at": "2026-10-26T17:08:28+05:30",
-      "age_hours": 0.3,
+      "published_at": "2026-10-26T17:20:44+05:30",
+      "age_hours": 0.27,
       "categories": [
         "major_crime",
         "police_operation",
@@ -1080,7 +1176,7 @@
       "corroboration": []
     },
     {
-      "rank": 56,
+      "rank": 61,
       "class": "C",
       "score": 68,
       "region": "hyderabad",
@@ -1091,7 +1187,7 @@
       "source": "Munsif Daily",
       "source_preferred": true,
       "published_at": "2026-10-26T17:07:04+05:30",
-      "age_hours": 0.32,
+      "age_hours": 0.5,
       "categories": [
         "police_operation",
         "political_major",
@@ -1101,7 +1197,7 @@
       "corroboration": []
     },
     {
-      "rank": 57,
+      "rank": 62,
       "class": "C",
       "score": 68,
       "region": "hyderabad",
@@ -1112,7 +1208,7 @@
       "source": "Munsif Daily",
       "source_preferred": true,
       "published_at": "2026-10-26T16:59:16+05:30",
-      "age_hours": 0.45,
+      "age_hours": 0.63,
       "categories": [
         "political_major"
       ],
@@ -1120,27 +1216,7 @@
       "corroboration": []
     },
     {
-      "rank": 58,
-      "class": "C",
-      "score": 68,
-      "region": "india",
-      "region_confidence": 0.4,
-      "suggested_headline": "📰 LATEST NEWS — INDIA",
-      "title": "DMK Women’s Wing to stage Statewide protest over law and order on October 31, says Stalin",
-      "url": "https://www.thehindu.com/news/national/tamil-nadu/dmk-womens-wing-to-stage-statewide-protest-over-law-and-order-on-october-31-says-stalin/article71626524.ece",
-      "source": "The Hindu",
-      "source_preferred": true,
-      "published_at": "2026-10-26T16:58:52+05:30",
-      "age_hours": 0.46,
-      "categories": [
-        "political_major",
-        "protest_major"
-      ],
-      "excerpt": "",
-      "corroboration": []
-    },
-    {
-      "rank": 59,
+      "rank": 63,
       "class": "C",
       "score": 68,
       "region": "india",
@@ -1151,7 +1227,7 @@
       "source": "The Hindu",
       "source_preferred": true,
       "published_at": "2026-10-26T16:55:16+05:30",
-      "age_hours": 0.52,
+      "age_hours": 0.69,
       "categories": [
         "political_major"
       ],
@@ -1159,7 +1235,7 @@
       "corroboration": []
     },
     {
-      "rank": 60,
+      "rank": 64,
       "class": "C",
       "score": 68,
       "region": "hyderabad",
@@ -1170,7 +1246,7 @@
       "source": "Munsif Daily",
       "source_preferred": true,
       "published_at": "2026-10-26T16:28:10+05:30",
-      "age_hours": 0.97,
+      "age_hours": 1.14,
       "categories": [
         "political_major"
       ],
@@ -1178,7 +1254,7 @@
       "corroboration": []
     },
     {
-      "rank": 61,
+      "rank": 65,
       "class": "C",
       "score": 68,
       "region": "hyderabad",
@@ -1189,7 +1265,7 @@
       "source": "Munsif Daily",
       "source_preferred": true,
       "published_at": "2026-10-26T16:13:45+05:30",
-      "age_hours": 1.21,
+      "age_hours": 1.38,
       "categories": [
         "political_major"
       ],
@@ -1197,7 +1273,7 @@
       "corroboration": []
     },
     {
-      "rank": 62,
+      "rank": 66,
       "class": "C",
       "score": 68,
       "region": "world",
@@ -1208,7 +1284,7 @@
       "source": "The Hindu",
       "source_preferred": true,
       "published_at": "2026-10-26T15:56:41+05:30",
-      "age_hours": 1.5,
+      "age_hours": 1.67,
       "categories": [
         "political_major",
         "international_conflict"
@@ -1217,7 +1293,7 @@
       "corroboration": []
     },
     {
-      "rank": 63,
+      "rank": 67,
       "class": "C",
       "score": 68,
       "region": "india",
@@ -1228,7 +1304,7 @@
       "source": "The Hindu",
       "source_preferred": true,
       "published_at": "2026-10-26T15:46:56+05:30",
-      "age_hours": 1.66,
+      "age_hours": 1.83,
       "categories": [
         "political_major"
       ],
@@ -1236,7 +1312,7 @@
       "corroboration": []
     },
     {
-      "rank": 64,
+      "rank": 68,
       "class": "C",
       "score": 68,
       "region": "india",
@@ -1247,7 +1323,7 @@
       "source": "Munsif Daily",
       "source_preferred": true,
       "published_at": "2026-10-26T15:41:49+05:30",
-      "age_hours": 1.75,
+      "age_hours": 1.92,
       "categories": [
         "traffic_disruption",
         "protest_major"
@@ -1256,7 +1332,26 @@
       "corroboration": []
     },
     {
-      "rank": 65,
+      "rank": 69,
+      "class": "C",
+      "score": 68,
+      "region": "hyderabad",
+      "region_confidence": 0.4,
+      "suggested_headline": "📰 LATEST NEWS — HYDERABAD",
+      "title": "Cyclone Alert: Educational Institutions in Kakinada to Remain Closed for Two Days",
+      "url": "https://munsifdaily.com/cyclone-alert-educational-institutions-in-kakinada/",
+      "source": "Munsif Daily",
+      "source_preferred": true,
+      "published_at": "2026-10-26T15:30:05+05:30",
+      "age_hours": 2.11,
+      "categories": [
+        "disaster_weather"
+      ],
+      "excerpt": "Educational institutions across Kakinada district will remain closed on Tuesday and Wednesday as a precautionary measure in view of the prevailing weather conditions and the possible impact of the cyclone.",
+      "corroboration": []
+    },
+    {
+      "rank": 70,
       "class": "C",
       "score": 68,
       "region": "india",
@@ -1267,7 +1362,7 @@
       "source": "Munsif Daily",
       "source_preferred": true,
       "published_at": "2026-10-26T15:19:34+05:30",
-      "age_hours": 2.12,
+      "age_hours": 2.29,
       "categories": [
         "political_major",
         "protest_major"
@@ -1276,7 +1371,7 @@
       "corroboration": []
     },
     {
-      "rank": 66,
+      "rank": 71,
       "class": "C",
       "score": 68,
       "region": "world",
@@ -1287,7 +1382,7 @@
       "source": "The Hindu",
       "source_preferred": true,
       "published_at": "2026-10-26T15:09:20+05:30",
-      "age_hours": 2.29,
+      "age_hours": 2.46,
       "categories": [
         "accident_casualty",
         "court_judgment",
@@ -1299,7 +1394,7 @@
       ]
     },
     {
-      "rank": 67,
+      "rank": 72,
       "class": "C",
       "score": 68,
       "region": "india",
@@ -1310,7 +1405,7 @@
       "source": "The Hindu",
       "source_preferred": true,
       "published_at": "2026-10-26T15:04:41+05:30",
-      "age_hours": 2.36,
+      "age_hours": 2.53,
       "categories": [
         "political_major"
       ],
@@ -1318,7 +1413,7 @@
       "corroboration": []
     },
     {
-      "rank": 68,
+      "rank": 73,
       "class": "C",
       "score": 68,
       "region": "india",
@@ -1329,7 +1424,7 @@
       "source": "The Hindu",
       "source_preferred": true,
       "published_at": "2026-10-26T14:47:54+05:30",
-      "age_hours": 2.64,
+      "age_hours": 2.81,
       "categories": [
         "accident_casualty"
       ],
@@ -1337,7 +1432,7 @@
       "corroboration": []
     },
     {
-      "rank": 69,
+      "rank": 74,
       "class": "C",
       "score": 68,
       "region": "world",
@@ -1348,7 +1443,7 @@
       "source": "The Hindu",
       "source_preferred": true,
       "published_at": "2026-10-26T14:47:34+05:30",
-      "age_hours": 2.65,
+      "age_hours": 2.82,
       "categories": [
         "accident_casualty"
       ],
@@ -1356,7 +1451,7 @@
       "corroboration": []
     },
     {
-      "rank": 70,
+      "rank": 75,
       "class": "C",
       "score": 68,
       "region": "india",
@@ -1367,7 +1462,7 @@
       "source": "The Hindu",
       "source_preferred": true,
       "published_at": "2026-10-26T14:42:14+05:30",
-      "age_hours": 2.74,
+      "age_hours": 2.91,
       "categories": [
         "political_major",
         "protest_major"
@@ -1376,7 +1471,7 @@
       "corroboration": []
     },
     {
-      "rank": 71,
+      "rank": 76,
       "class": "C",
       "score": 68,
       "region": "india",
@@ -1387,7 +1482,7 @@
       "source": "The Hindu",
       "source_preferred": true,
       "published_at": "2026-10-26T14:38:11+05:30",
-      "age_hours": 2.81,
+      "age_hours": 2.98,
       "categories": [
         "political_major",
         "protest_major"
@@ -1396,7 +1491,7 @@
       "corroboration": []
     },
     {
-      "rank": 72,
+      "rank": 77,
       "class": "C",
       "score": 68,
       "region": "india",
@@ -1407,7 +1502,7 @@
       "source": "The Hindu",
       "source_preferred": true,
       "published_at": "2026-10-26T14:36:23+05:30",
-      "age_hours": 2.84,
+      "age_hours": 3.01,
       "categories": [
         "accident_casualty",
         "court_judgment"
@@ -1417,12 +1512,11 @@
         "Munsif Daily",
         "Times of India",
         "Telangana Today",
-        "India Today",
         "Indian Express"
       ]
     },
     {
-      "rank": 73,
+      "rank": 78,
       "class": "C",
       "score": 68,
       "region": "india",
@@ -1433,7 +1527,7 @@
       "source": "The Hindu",
       "source_preferred": true,
       "published_at": "2026-10-26T14:35:01+05:30",
-      "age_hours": 2.86,
+      "age_hours": 3.03,
       "categories": [
         "court_judgment",
         "political_major"
@@ -1442,7 +1536,7 @@
       "corroboration": []
     },
     {
-      "rank": 74,
+      "rank": 79,
       "class": "C",
       "score": 68,
       "region": "india",
@@ -1453,7 +1547,7 @@
       "source": "The Hindu",
       "source_preferred": true,
       "published_at": "2026-10-26T13:54:55+05:30",
-      "age_hours": 3.53,
+      "age_hours": 3.7,
       "categories": [
         "major_crime",
         "govt_announcement",
@@ -1463,7 +1557,7 @@
       "corroboration": []
     },
     {
-      "rank": 75,
+      "rank": 80,
       "class": "C",
       "score": 68,
       "region": "india",
@@ -1474,7 +1568,7 @@
       "source": "The Hindu",
       "source_preferred": true,
       "published_at": "2026-10-26T13:44:46+05:30",
-      "age_hours": 3.7,
+      "age_hours": 3.87,
       "categories": [
         "fire_explosion",
         "accident_casualty"
@@ -1483,7 +1577,7 @@
       "corroboration": []
     },
     {
-      "rank": 76,
+      "rank": 81,
       "class": "C",
       "score": 68,
       "region": "india",
@@ -1494,7 +1588,7 @@
       "source": "The Hindu",
       "source_preferred": true,
       "published_at": "2026-10-26T13:28:29+05:30",
-      "age_hours": 3.97,
+      "age_hours": 4.14,
       "categories": [
         "public_safety_warning",
         "political_major"
@@ -1503,7 +1597,7 @@
       "corroboration": []
     },
     {
-      "rank": 77,
+      "rank": 82,
       "class": "C",
       "score": 68,
       "region": "india",
@@ -1514,7 +1608,7 @@
       "source": "Munsif Daily",
       "source_preferred": true,
       "published_at": "2026-10-26T13:25:09+05:30",
-      "age_hours": 4.02,
+      "age_hours": 4.19,
       "categories": [
         "political_major"
       ],
@@ -1522,7 +1616,7 @@
       "corroboration": []
     },
     {
-      "rank": 78,
+      "rank": 83,
       "class": "C",
       "score": 68,
       "region": "world",
@@ -1533,7 +1627,7 @@
       "source": "The Hindu",
       "source_preferred": true,
       "published_at": "2026-10-26T12:59:46+05:30",
-      "age_hours": 4.45,
+      "age_hours": 4.62,
       "categories": [
         "disaster_weather"
       ],
@@ -1541,7 +1635,7 @@
       "corroboration": []
     },
     {
-      "rank": 79,
+      "rank": 84,
       "class": "C",
       "score": 68,
       "region": "world",
@@ -1552,7 +1646,7 @@
       "source": "The Hindu",
       "source_preferred": true,
       "published_at": "2026-10-26T12:18:46+05:30",
-      "age_hours": 5.13,
+      "age_hours": 5.3,
       "categories": [
         "accident_casualty",
         "political_major"
@@ -1561,7 +1655,7 @@
       "corroboration": []
     },
     {
-      "rank": 80,
+      "rank": 85,
       "class": "C",
       "score": 68,
       "region": "india",
@@ -1572,7 +1666,7 @@
       "source": "Munsif Daily",
       "source_preferred": true,
       "published_at": "2026-10-26T11:53:08+05:30",
-      "age_hours": 5.56,
+      "age_hours": 5.73,
       "categories": [
         "political_major"
       ],
@@ -1580,7 +1674,7 @@
       "corroboration": []
     },
     {
-      "rank": 81,
+      "rank": 86,
       "class": "C",
       "score": 68,
       "region": "telangana",
@@ -1591,7 +1685,7 @@
       "source": "Deccan Chronicle",
       "source_preferred": false,
       "published_at": "2026-10-26T10:54:52+05:30",
-      "age_hours": 6.53,
+      "age_hours": 6.7,
       "categories": [
         "accident_casualty"
       ],
@@ -1599,7 +1693,7 @@
       "corroboration": []
     },
     {
-      "rank": 82,
+      "rank": 87,
       "class": "C",
       "score": 68,
       "region": "telangana",
@@ -1610,7 +1704,7 @@
       "source": "Newsmeter",
       "source_preferred": false,
       "published_at": "2026-10-26T10:34:34+05:30",
-      "age_hours": 6.87,
+      "age_hours": 7.04,
       "categories": [
         "accident_casualty",
         "political_major"
@@ -1619,7 +1713,7 @@
       "corroboration": []
     },
     {
-      "rank": 83,
+      "rank": 88,
       "class": "C",
       "score": 68,
       "region": "telangana",
@@ -1630,7 +1724,7 @@
       "source": "Newsmeter",
       "source_preferred": false,
       "published_at": "2026-10-26T10:23:11+05:30",
-      "age_hours": 7.06,
+      "age_hours": 7.23,
       "categories": [
         "disaster_weather"
       ],
@@ -1638,7 +1732,7 @@
       "corroboration": []
     },
     {
-      "rank": 84,
+      "rank": 89,
       "class": "C",
       "score": 68,
       "region": "telangana",
@@ -1649,7 +1743,7 @@
       "source": "Deccan Chronicle",
       "source_preferred": false,
       "published_at": "2026-10-26T09:08:49+05:30",
-      "age_hours": 8.3,
+      "age_hours": 8.47,
       "categories": [
         "accident_casualty"
       ],
@@ -1657,7 +1751,7 @@
       "corroboration": []
     },
     {
-      "rank": 85,
+      "rank": 90,
       "class": "C",
       "score": 68,
       "region": "telangana",
@@ -1668,7 +1762,7 @@
       "source": "Deccan Chronicle",
       "source_preferred": false,
       "published_at": "2026-10-26T08:18:12+05:30",
-      "age_hours": 9.14,
+      "age_hours": 9.31,
       "categories": [
         "accident_casualty"
       ],
@@ -1676,7 +1770,7 @@
       "corroboration": []
     },
     {
-      "rank": 86,
+      "rank": 91,
       "class": "C",
       "score": 68,
       "region": "india",
@@ -1687,7 +1781,7 @@
       "source": "The Hindu",
       "source_preferred": true,
       "published_at": "2026-10-26T07:35:41+05:30",
-      "age_hours": 9.85,
+      "age_hours": 10.02,
       "categories": [
         "accident_casualty",
         "infrastructure_failure"
@@ -1696,7 +1790,7 @@
       "corroboration": []
     },
     {
-      "rank": 87,
+      "rank": 92,
       "class": "C",
       "score": 68,
       "region": "telangana",
@@ -1707,7 +1801,7 @@
       "source": "Deccan Chronicle",
       "source_preferred": false,
       "published_at": "2026-10-26T07:32:13+05:30",
-      "age_hours": 9.91,
+      "age_hours": 10.08,
       "categories": [
         "accident_casualty"
       ],
@@ -1715,7 +1809,7 @@
       "corroboration": []
     },
     {
-      "rank": 88,
+      "rank": 93,
       "class": "C",
       "score": 68,
       "region": "telangana",
@@ -1726,7 +1820,7 @@
       "source": "The Hindu",
       "source_preferred": true,
       "published_at": "2026-10-25T19:35:08+05:30",
-      "age_hours": 21.86,
+      "age_hours": 22.03,
       "categories": [
         "political_major"
       ],
@@ -1734,7 +1828,7 @@
       "corroboration": []
     },
     {
-      "rank": 89,
+      "rank": 94,
       "class": "C",
       "score": 68,
       "region": "telangana",
@@ -1745,7 +1839,7 @@
       "source": "The Hindu",
       "source_preferred": true,
       "published_at": "2026-10-25T19:32:05+05:30",
-      "age_hours": 21.91,
+      "age_hours": 22.08,
       "categories": [
         "political_major"
       ],
@@ -1753,7 +1847,7 @@
       "corroboration": []
     },
     {
-      "rank": 90,
+      "rank": 95,
       "class": "C",
       "score": 67,
       "region": "telangana",
@@ -1764,7 +1858,7 @@
       "source": "Telangana Today",
       "source_preferred": false,
       "published_at": "2026-10-26T11:43:49+05:30",
-      "age_hours": 5.71,
+      "age_hours": 5.88,
       "categories": [
         "accident_casualty"
       ],
@@ -1772,7 +1866,7 @@
       "corroboration": []
     },
     {
-      "rank": 91,
+      "rank": 96,
       "class": "C",
       "score": 67,
       "region": "india",
@@ -1783,7 +1877,7 @@
       "source": "Deccan Chronicle",
       "source_preferred": false,
       "published_at": "2026-10-26T10:22:17+05:30",
-      "age_hours": 7.07,
+      "age_hours": 7.24,
       "categories": [
         "accident_casualty",
         "court_judgment"
@@ -1792,7 +1886,26 @@
       "corroboration": []
     },
     {
-      "rank": 92,
+      "rank": 97,
+      "class": "C",
+      "score": 66,
+      "region": "world",
+      "region_confidence": 1.0,
+      "suggested_headline": "🌍 LATEST — WORLD",
+      "title": "China's $168 billion Brahmaputra dam faces fresh concerns as researchers warn of rising flood risks",
+      "url": "https://www.livemint.com/news/world/chinas-168-billion-brahmaputra-dam-faces-fresh-concerns-as-researchers-warn-of-rising-flood-risks-11793014411104.html",
+      "source": "LiveMint",
+      "source_preferred": false,
+      "published_at": "2026-10-26T17:23:29+05:30",
+      "age_hours": 0.22,
+      "categories": [
+        "disaster_weather"
+      ],
+      "excerpt": "Chinese researchers warn that rising runoff in Tibet’s Yarlung Tsangpo, which flows into India as the Brahmaputra, could heighten flood risks this century. The findings raise fresh concerns as China builds its $168 billion mega hydropower project.",
+      "corroboration": []
+    },
+    {
+      "rank": 98,
       "class": "C",
       "score": 66,
       "region": "telangana",
@@ -1803,7 +1916,7 @@
       "source": "Telangana Today",
       "source_preferred": false,
       "published_at": "2026-10-26T17:15:45+05:30",
-      "age_hours": 0.18,
+      "age_hours": 0.35,
       "categories": [
         "accident_casualty",
         "major_crime",
@@ -1813,7 +1926,7 @@
       "corroboration": []
     },
     {
-      "rank": 93,
+      "rank": 99,
       "class": "C",
       "score": 66,
       "region": "telangana",
@@ -1824,7 +1937,7 @@
       "source": "Telangana Today",
       "source_preferred": false,
       "published_at": "2026-10-26T17:14:42+05:30",
-      "age_hours": 0.2,
+      "age_hours": 0.37,
       "categories": [
         "accident_casualty",
         "major_crime"
@@ -1833,7 +1946,7 @@
       "corroboration": []
     },
     {
-      "rank": 94,
+      "rank": 100,
       "class": "C",
       "score": 66,
       "region": "world",
@@ -1844,7 +1957,7 @@
       "source": "LiveMint",
       "source_preferred": false,
       "published_at": "2026-10-26T17:14:11+05:30",
-      "age_hours": 0.21,
+      "age_hours": 0.38,
       "categories": [
         "disaster_weather"
       ],
@@ -1852,7 +1965,7 @@
       "corroboration": []
     },
     {
-      "rank": 95,
+      "rank": 101,
       "class": "C",
       "score": 66,
       "region": "world",
@@ -1863,7 +1976,7 @@
       "source": "NDTV",
       "source_preferred": false,
       "published_at": "2026-10-26T16:59:17+05:30",
-      "age_hours": 0.45,
+      "age_hours": 0.62,
       "categories": [
         "accident_casualty"
       ],
@@ -1871,7 +1984,7 @@
       "corroboration": []
     },
     {
-      "rank": 96,
+      "rank": 102,
       "class": "C",
       "score": 66,
       "region": "telangana",
@@ -1882,7 +1995,7 @@
       "source": "Telangana Today",
       "source_preferred": false,
       "published_at": "2026-10-26T16:51:06+05:30",
-      "age_hours": 0.59,
+      "age_hours": 0.76,
       "categories": [
         "accident_casualty"
       ],
@@ -1890,7 +2003,7 @@
       "corroboration": []
     },
     {
-      "rank": 97,
+      "rank": 103,
       "class": "C",
       "score": 66,
       "region": "telangana",
@@ -1901,7 +2014,7 @@
       "source": "Telangana Today",
       "source_preferred": false,
       "published_at": "2026-10-26T16:41:38+05:30",
-      "age_hours": 0.75,
+      "age_hours": 0.92,
       "categories": [
         "accident_casualty"
       ],
@@ -1909,7 +2022,7 @@
       "corroboration": []
     },
     {
-      "rank": 98,
+      "rank": 104,
       "class": "C",
       "score": 66,
       "region": "world",
@@ -1920,7 +2033,7 @@
       "source": "Newsmeter",
       "source_preferred": false,
       "published_at": "2026-10-26T16:35:46+05:30",
-      "age_hours": 0.85,
+      "age_hours": 1.02,
       "categories": [
         "disaster_weather",
         "political_major"
@@ -1929,7 +2042,7 @@
       "corroboration": []
     },
     {
-      "rank": 99,
+      "rank": 105,
       "class": "C",
       "score": 66,
       "region": "india",
@@ -1940,7 +2053,7 @@
       "source": "Deccan Chronicle",
       "source_preferred": false,
       "published_at": "2026-10-26T16:35:50+05:30",
-      "age_hours": 0.85,
+      "age_hours": 1.02,
       "categories": [
         "court_judgment",
         "political_major"
@@ -1949,7 +2062,7 @@
       "corroboration": []
     },
     {
-      "rank": 100,
+      "rank": 106,
       "class": "C",
       "score": 66,
       "region": "india",
@@ -1960,7 +2073,7 @@
       "source": "Times of India",
       "source_preferred": false,
       "published_at": "2026-10-26T16:32:44+05:30",
-      "age_hours": 0.9,
+      "age_hours": 1.07,
       "categories": [
         "traffic_disruption",
         "political_major",
@@ -1970,7 +2083,7 @@
       "corroboration": []
     },
     {
-      "rank": 101,
+      "rank": 107,
       "class": "C",
       "score": 66,
       "region": "india",
@@ -1981,7 +2094,7 @@
       "source": "Times of India",
       "source_preferred": false,
       "published_at": "2026-10-26T16:24:41+05:30",
-      "age_hours": 1.03,
+      "age_hours": 1.2,
       "categories": [
         "police_operation",
         "court_judgment",
@@ -1991,7 +2104,7 @@
       "corroboration": []
     },
     {
-      "rank": 102,
+      "rank": 108,
       "class": "C",
       "score": 66,
       "region": "world",
@@ -2002,7 +2115,7 @@
       "source": "Indian Express",
       "source_preferred": false,
       "published_at": "2026-10-26T16:18:44+05:30",
-      "age_hours": 1.13,
+      "age_hours": 1.3,
       "categories": [
         "accident_casualty"
       ],
@@ -2010,7 +2123,7 @@
       "corroboration": []
     },
     {
-      "rank": 103,
+      "rank": 109,
       "class": "C",
       "score": 66,
       "region": "world",
@@ -2021,7 +2134,7 @@
       "source": "NDTV",
       "source_preferred": false,
       "published_at": "2026-10-26T16:10:20+05:30",
-      "age_hours": 1.27,
+      "age_hours": 1.44,
       "categories": [
         "accident_casualty"
       ],
@@ -2029,7 +2142,7 @@
       "corroboration": []
     },
     {
-      "rank": 104,
+      "rank": 110,
       "class": "C",
       "score": 66,
       "region": "india",
@@ -2040,7 +2153,7 @@
       "source": "Deccan Chronicle",
       "source_preferred": false,
       "published_at": "2026-10-26T15:58:02+05:30",
-      "age_hours": 1.48,
+      "age_hours": 1.65,
       "categories": [
         "political_major",
         "protest_major"
@@ -2049,7 +2162,7 @@
       "corroboration": []
     },
     {
-      "rank": 105,
+      "rank": 111,
       "class": "C",
       "score": 66,
       "region": "india",
@@ -2060,7 +2173,7 @@
       "source": "Times of India",
       "source_preferred": false,
       "published_at": "2026-10-26T15:54:16+05:30",
-      "age_hours": 1.54,
+      "age_hours": 1.71,
       "categories": [
         "political_major"
       ],
@@ -2068,7 +2181,7 @@
       "corroboration": []
     },
     {
-      "rank": 106,
+      "rank": 112,
       "class": "C",
       "score": 66,
       "region": "india",
@@ -2079,7 +2192,7 @@
       "source": "Deccan Chronicle",
       "source_preferred": false,
       "published_at": "2026-10-26T14:25:02+05:30",
-      "age_hours": 3.03,
+      "age_hours": 3.2,
       "categories": [
         "disaster_weather"
       ],
@@ -2087,7 +2200,7 @@
       "corroboration": []
     },
     {
-      "rank": 107,
+      "rank": 113,
       "class": "C",
       "score": 66,
       "region": "india",
@@ -2098,7 +2211,7 @@
       "source": "The Hindu",
       "source_preferred": true,
       "published_at": "2026-10-26T14:04:37+05:30",
-      "age_hours": 3.37,
+      "age_hours": 3.54,
       "categories": [
         "court_judgment"
       ],
@@ -2106,7 +2219,7 @@
       "corroboration": []
     },
     {
-      "rank": 108,
+      "rank": 114,
       "class": "C",
       "score": 66,
       "region": "india",
@@ -2117,7 +2230,7 @@
       "source": "NDTV",
       "source_preferred": false,
       "published_at": "2026-10-26T14:03:34+05:30",
-      "age_hours": 3.38,
+      "age_hours": 3.55,
       "categories": [
         "accident_casualty"
       ],
@@ -2125,26 +2238,7 @@
       "corroboration": []
     },
     {
-      "rank": 109,
-      "class": "C",
-      "score": 66,
-      "region": "india",
-      "region_confidence": 1.0,
-      "suggested_headline": "📰 LATEST NEWS — INDIA",
-      "title": "Supreme Court assures no deleted voters will be prosecuted for submitting Form 6",
-      "url": "https://www.thehindu.com/news/national/maharashtra-sir-supreme-court-assures-no-deleted-voters-will-be-prosecuted-for-submitting-form-6/article71626077.ece",
-      "source": "The Hindu",
-      "source_preferred": true,
-      "published_at": "2026-10-26T13:55:23+05:30",
-      "age_hours": 3.52,
-      "categories": [
-        "court_judgment"
-      ],
-      "excerpt": "The oral observations came during a hearing in which the court agreed to urgently take up in November 5, a plea challenging the deletion of voters in the Maharashtra SIR",
-      "corroboration": []
-    },
-    {
-      "rank": 110,
+      "rank": 115,
       "class": "C",
       "score": 66,
       "region": "india",
@@ -2155,7 +2249,7 @@
       "source": "India Today",
       "source_preferred": false,
       "published_at": "2026-10-26T13:33:32+05:30",
-      "age_hours": 3.88,
+      "age_hours": 4.05,
       "categories": [
         "accident_casualty"
       ],
@@ -2163,7 +2257,7 @@
       "corroboration": []
     },
     {
-      "rank": 111,
+      "rank": 116,
       "class": "C",
       "score": 66,
       "region": "india",
@@ -2174,7 +2268,7 @@
       "source": "Deccan Chronicle",
       "source_preferred": false,
       "published_at": "2026-10-26T12:55:38+05:30",
-      "age_hours": 4.52,
+      "age_hours": 4.69,
       "categories": [
         "fire_explosion",
         "accident_casualty"
@@ -2183,7 +2277,7 @@
       "corroboration": []
     },
     {
-      "rank": 112,
+      "rank": 117,
       "class": "C",
       "score": 66,
       "region": "india",
@@ -2194,7 +2288,7 @@
       "source": "LiveMint",
       "source_preferred": false,
       "published_at": "2026-10-26T11:36:51+05:30",
-      "age_hours": 5.83,
+      "age_hours": 6.0,
       "categories": [
         "accident_casualty"
       ],
@@ -2204,26 +2298,7 @@
       ]
     },
     {
-      "rank": 113,
-      "class": "C",
-      "score": 66,
-      "region": "india",
-      "region_confidence": 1.0,
-      "suggested_headline": "📰 LATEST NEWS — INDIA",
-      "title": "Torrential Rains Inundate Puducherry as Depression Prevails",
-      "url": "https://www.deccanchronicle.com/southern-states/tamil-nadu/torrential-rains-inundate-puducherry-as-depression-prevails-1998925",
-      "source": "Deccan Chronicle",
-      "source_preferred": false,
-      "published_at": "2026-10-26T11:34:58+05:30",
-      "age_hours": 5.86,
-      "categories": [
-        "disaster_weather"
-      ],
-      "excerpt": "The rapid downpour overwhelmed local drainage systems, causing primary canals — including the Periya Vaikkal, Uppanar, and Vellavari — to overflow",
-      "corroboration": []
-    },
-    {
-      "rank": 114,
+      "rank": 118,
       "class": "C",
       "score": 66,
       "region": "telangana",
@@ -2234,7 +2309,7 @@
       "source": "Telangana Today",
       "source_preferred": false,
       "published_at": "2026-10-25T22:17:50+05:30",
-      "age_hours": 19.15,
+      "age_hours": 19.32,
       "categories": [
         "accident_casualty"
       ],
@@ -2242,7 +2317,7 @@
       "corroboration": []
     },
     {
-      "rank": 115,
+      "rank": 119,
       "class": "C",
       "score": 66,
       "region": "india",
@@ -2253,7 +2328,7 @@
       "source": "The Hindu",
       "source_preferred": true,
       "published_at": "2026-10-25T22:10:19+05:30",
-      "age_hours": 19.27,
+      "age_hours": 19.44,
       "categories": [
         "disaster_weather"
       ],
@@ -2261,7 +2336,7 @@
       "corroboration": []
     },
     {
-      "rank": 116,
+      "rank": 120,
       "class": "C",
       "score": 66,
       "region": "telangana",
@@ -2272,89 +2347,12 @@
       "source": "The Hindu",
       "source_preferred": true,
       "published_at": "2026-10-25T21:58:54+05:30",
-      "age_hours": 19.46,
+      "age_hours": 19.63,
       "categories": [
         "major_crime",
         "economic_major"
       ],
       "excerpt": "",
-      "corroboration": []
-    },
-    {
-      "rank": 117,
-      "class": "C",
-      "score": 66,
-      "region": "hyderabad",
-      "region_confidence": 1.0,
-      "suggested_headline": "📰 LATEST NEWS — HYDERABAD",
-      "title": "Un-Fur-Gettable Protests",
-      "url": "https://www.deccanchronicle.com/tabloid/hyderabad-chronicle/un-fur-gettable-protests-1998787",
-      "source": "Deccan Chronicle",
-      "source_preferred": false,
-      "published_at": "2026-10-25T21:03:50+05:30",
-      "age_hours": 20.38,
-      "categories": [
-        "political_major",
-        "protest_major"
-      ],
-      "excerpt": "From bloodied sheep outside fashion stores to animal-themed street theatre, animal-rights groups are turning protest into theatrical performance to make cruelty impossible to ignore",
-      "corroboration": []
-    },
-    {
-      "rank": 118,
-      "class": "C",
-      "score": 66,
-      "region": "telangana",
-      "region_confidence": 1.0,
-      "suggested_headline": "📰 LATEST NEWS — TELANGANA",
-      "title": "IMD forecasts intense rain in Telangana from October 27",
-      "url": "https://telanganatoday.com/imd-forecasts-intense-rain-in-telangana-from-october-27",
-      "source": "Telangana Today",
-      "source_preferred": false,
-      "published_at": "2026-10-25T19:42:25+05:30",
-      "age_hours": 21.74,
-      "categories": [
-        "disaster_weather"
-      ],
-      "excerpt": "The IMD has warned of extremely heavy rainfall in parts of Telangana on October 28 as a weather system develops over the Bay of Bengal. Mulugu, Bhadradri Kothagudem and Khammam are under a red alert for intense rainfall",
-      "corroboration": []
-    },
-    {
-      "rank": 119,
-      "class": "C",
-      "score": 66,
-      "region": "telangana",
-      "region_confidence": 1.0,
-      "suggested_headline": "📰 LATEST NEWS — TELANGANA",
-      "title": "Man allegedly killed by brother over land dispute in Sangareddy",
-      "url": "https://telanganatoday.com/man-allegedly-killed-by-brother-over-land-dispute-in-sangareddy",
-      "source": "Telangana Today",
-      "source_preferred": false,
-      "published_at": "2026-10-25T19:08:07+05:30",
-      "age_hours": 22.31,
-      "categories": [
-        "accident_casualty"
-      ],
-      "excerpt": "A man was killed in Makthalur village after a dispute with his brother over a 40-square-yard plot of land. Police said he was allegedly attacked with a stick and died at the scene on Saturday night. The incident caused tension",
-      "corroboration": []
-    },
-    {
-      "rank": 120,
-      "class": "C",
-      "score": 64,
-      "region": "india",
-      "region_confidence": 1.0,
-      "suggested_headline": "📰 LATEST NEWS — INDIA",
-      "title": "Delhi High Court grants bail, flags police inaction over hostile POCSO witness",
-      "url": "https://www.indiatoday.in/india/law-news/story/delhi-high-court-pocso-bail-police-inaction-hostile-witness-ptag-3025344-2026-10-26?utm_source=rss",
-      "source": "India Today",
-      "source_preferred": false,
-      "published_at": "2026-10-26T17:24:17+05:30",
-      "age_hours": 0.04,
-      "categories": [
-        "court_judgment"
-      ],
-      "excerpt": "Delhi High Court grants bail flags police inaction over hostile POCSO witness",
       "corroboration": []
     }
   ]
