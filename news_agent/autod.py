@@ -718,6 +718,11 @@ def _lead_ok(b):
 
 
 
+def _norm_bullet(text):
+    """Punctuation-free lowercase key for a published bullet (exact-dup test)."""
+    return " ".join(re.findall(r"[a-z0-9]+", (text or "").lower()))
+
+
 def _same_story(t1, t2):
     """Cross-feed duplicates: same story, different headline wording."""
     a = {w for w in re.findall(r"[a-z0-9]{5,}", t1.lower())}
@@ -789,11 +794,29 @@ def build_digest(cands, catchup=False):
     ride a backlog card; quality gates are identical."""
     pub = os.path.join(STATE, "published.json")
     done = set()
+    done_urls = set()
+    done_bullets = set()
     if os.path.exists(pub):
         try:
             for r in json.load(open(pub, encoding="utf-8")):
                 done.add(r.get("topic"))
                 done |= set(r.get("story_topics", []))  # no story repeats across cards
+                # 6 Oct (owner: "stop posting the same card again and again"):
+                # the card record only ever stored ONE url - the FIRST story's -
+                # and never stored story_topics at all, so a digest's other 3-4
+                # stories had no persisted identity whatsoever and rode later
+                # cards again. Proven on 26 Oct: "Supreme Court issued notice
+                # against Andhra Pradesh." rode four different cards on 24 Oct,
+                # each time as bullet #3/#4 behind a different lead story.
+                for _u in [r.get("url")] + list(r.get("source_urls") or []):
+                    if _u:
+                        done_urls.add(_u.split("?")[0])
+                # bullets_en IS stored for every card ever published, so this
+                # also covers the 562 cards published before the identity
+                # fields existed.
+                for _b in (r.get("bullets_en") or []):
+                    if _b:
+                        done_bullets.add(_norm_bullet(_b))
         except Exception:
             pass
     blocked = retracted_slugs()
@@ -801,10 +824,29 @@ def build_digest(cands, catchup=False):
         _pub = json.load(open(pub, encoding="utf-8")) if os.path.exists(pub) else []
     except Exception:
         _pub = []
+    # 6 Oct: the old "already rode a card" guard looked at only the last 40
+    # cards. A story can be re-picked from a different feed with different
+    # wording well outside that window, so index EVERY published bullet by its
+    # long words and compare only against bullets that share one - cheap enough
+    # to run over all history, thorough enough to catch a reworded re-run.
     done_heads = []
-    for r in _pub[-40:]:
+    for r in _pub:
         done_heads.append(r.get("title") or "")
-        done_heads += list(r.get("bullets_en") or [])[:5]
+        done_heads += list(r.get("bullets_en") or [])
+    _LONG_WORD = re.compile(r"[a-z0-9]{9,}")
+    _bullets_by_word = {}
+    for _b in done_bullets:
+        for _w in set(_LONG_WORD.findall(_b)):
+            _bullets_by_word.setdefault(_w, []).append(_b)
+
+    def _already_published(lead):
+        """True when this exact story already rode a card, however worded."""
+        if _norm_bullet(lead) in done_bullets:
+            return True
+        _cand = set()
+        for _w in set(_LONG_WORD.findall((lead or "").lower())):
+            _cand.update(_bullets_by_word.get(_w, ()))
+        return any(_same_story(lead, b) for b in _cand)
     today = datetime.now(IST).strftime("%Y-%m-%d")
     TAG = {"hyderabad": "Hyderabad ki khabar",
            "telangana": "Telangana ki khabar",
@@ -888,6 +930,15 @@ def build_digest(cands, catchup=False):
                         else:
                             _skip["conv"] += 1
                             continue
+                # 6 Oct: exact url match first (cheap, covers every story the
+                # card recorded), then the lead-bullet match over all history.
+                _u = (c.get("url") or "").split("?")[0]
+                if _u and _u in done_urls:
+                    _skip["dup"] += 1
+                    continue
+                if _already_published(lead):
+                    _skip["dup"] += 1
+                    continue
                 topic = c["region"] + "-" + slugify(c["title"])[:40]
                 if topic in done or topic in blocked:
                     continue
