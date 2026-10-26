@@ -48,8 +48,13 @@ BULLET_SIZES = (46, 44, 42, 40, 38, 36)   # largest-first, floor 36px (owner rea
 # bilingual bullet blocks keep full content width and their readability floor;
 # when no photo resolves, PHOTO_H reserves nothing and the card is byte-for-byte
 # the card it always was.
-PHOTO_H = 340
-PHOTO_GAP = 24
+# owner 26 Oct "the pic fit the frame": the old 1096x340 band was a 3.2:1
+# letterbox sliver - a 16:9 news photo was cropped to a thin horizontal strip
+# and the subject was cut off. The reference card's panel is ~2.3:1, so the
+# photo now gets a real frame and the cover-crop keeps nearly all of it.
+# Language, bullets, cadence, footer and credit line are untouched.
+PHOTO_H = 470
+PHOTO_GAP = 28
 
 
 def font(size, bold=True):
@@ -73,6 +78,29 @@ def wrap(d, text, fnt, max_w):
     if cur:
         lines.append(cur)
     return lines
+
+
+_MONTHS = {"jan": 1, "feb": 2, "mar": 3, "apr": 4, "may": 5, "jun": 6,
+           "jul": 7, "aug": 8, "sep": 9, "oct": 10, "nov": 11, "dec": 12}
+
+
+def _date_pill(stamp):
+    """'06 OCT 2026, 06:30 PM IST' -> '06-10-2026 (Today)', as on the
+    owner's reference card. Falls back to the stamp itself if unparseable."""
+    import re as _re
+    m = _re.search(r"(\d{1,2})\s+([A-Za-z]{3})[a-z]*\s+(\d{4})", stamp or "")
+    if m:
+        dd = int(m.group(1))
+        mm = _MONTHS.get(m.group(2).lower()[:3])
+        yy = int(m.group(3))
+        if mm:
+            try:
+                dt = datetime(yy, mm, dd)
+                tag = " (Today)" if dt.date() == datetime.now().date() else ""
+                return f"{dd:02d}-{mm:02d}-{yy}{tag}"
+            except Exception:
+                pass
+    return (stamp or "").upper()
 
 
 MIN_B, MAX_B = 3, 5
@@ -163,6 +191,21 @@ def render(story, out_path):
 
     probe = ImageDraw.Draw(Image.new("RGB", (8, 8)))
 
+    # ---------------- headline, wrapped before the budget ------------------
+    # The ribbon is a fixed band, so its height has to be known before the
+    # vertical budget is computed. A long headline wraps to two lines instead
+    # of running off the pointed end of the ribbon.
+    _ribbon_tip = 58
+    _head_maxw = (W - 2 * PAD) - 14 - 12 - _ribbon_tip
+    _hf = font(52)
+    _hlines = wrap(probe, headline_png, _hf, _head_maxw)
+    while len(_hlines) > 2 and _hf.size > 34:
+        _hf = font(_hf.size - 2)
+        _hlines = wrap(probe, headline_png, _hf, _head_maxw)
+    _hlines = _hlines[:2]
+    _head_lead = int(_hf.size * 1.16)
+    _band_h = max(74, len(_hlines) * _head_lead + 26)
+
     # ---------------- news photo (owner 6 Oct) ----------------------------
     # Resolved before the vertical budget so the band can be reserved exactly.
     # cardphoto never raises: on any failure the card renders with no photo,
@@ -187,7 +230,7 @@ def render(story, out_path):
         "logo": logo_h + 20,
         "rule": 24,
         "photo": (PHOTO_H + PHOTO_GAP) if photo is not None else 0,
-        "band": 86 + 18,
+        "band": _band_h + 18,
         "stamp": 44,
         "labels": 2 * 58,
         "pre_footer": 26,
@@ -208,7 +251,7 @@ def render(story, out_path):
         h_ur, r_ur = measure_blocks(probe, bullets_ur, BULLET_SIZES[-1], content_w)
         chosen = BULLET_SIZES[-1]
         rows_en, rows_ur = r_en, r_ur
-        H = fixed_h + h_en + h_ur + 40
+        H = fixed_h + h_en + h_ur + fixed["footer"] + fixed["pre_footer"] + 70
         print(f"[render] content tall -> canvas stretched to {W}x{H}", file=sys.stderr)
 
     canvas = Image.new("RGBA", (W, H), rgb(BLACK) + (255,))
@@ -254,6 +297,19 @@ def render(story, out_path):
 
     # (red LIVE badge removed on owner's instruction - header keeps only the logo)
 
+    # ---------------- date pill, as on the reference card ------------------
+    # "26-10-2026 (Today)" top-right in a gold-outlined pill, balancing the logo.
+    pill_txt = _date_pill(stamp)
+    f_pill = font(26, False)
+    pw = d.textlength(pill_txt, font=f_pill) + 46
+    ph = 54
+    px1, px0 = W - PAD, W - PAD - pw
+    py0 = y + (logo_h - ph) // 2
+    d.rounded_rectangle([px0, py0, px1, py0 + ph], radius=ph // 2,
+                        outline=rgb(GOLD), width=3)
+    d.text((px0 + 23, py0 + (ph - f_pill.size) // 2 - 2), pill_txt,
+           font=f_pill, fill=rgb(GOLD_BRIGHT))
+
     y += fixed["logo"]
     d.line([PAD, y, W - PAD, y], fill=rgb(GOLD), width=3)
     y += fixed["rule"]
@@ -265,27 +321,28 @@ def render(story, out_path):
         # rounded mask so the photo follows the card's own geometry
         mask = Image.new("L", (bx1 - bx0, by1 - by0), 0)
         ImageDraw.Draw(mask).rounded_rectangle(
-            [0, 0, bx1 - bx0 - 1, by1 - by0 - 1], radius=18, fill=255)
+            [0, 0, bx1 - bx0 - 1, by1 - by0 - 1], radius=22, fill=255)
         canvas.paste(photo, (bx0, by0), mask)
-        d.rounded_rectangle([bx0 - 2, by0 - 2, bx1 + 2, by1 + 2],
-                            radius=20, outline=rgb(GOLD), width=4)
+        # double gold frame, exactly as on the owner's reference card
+        d.rounded_rectangle([bx0 - 3, by0 - 3, bx1 + 3, by1 + 3],
+                            radius=25, outline=rgb(GOLD), width=4)
+        d.rounded_rectangle([bx0 + 10, by0 + 10, bx1 - 10, by1 - 10],
+                            radius=15, outline=rgb(GOLD), width=2)
         y += fixed["photo"]
 
-    # ---------------- headline band with drawn alert badge ----------------
-    f_head = font(56)
-    avail = W - 2 * PAD - 96
-    while d.textlength(headline_png, font=f_head) > avail and f_head.size > 30:
-        f_head = font(f_head.size - 2)
-    d.rounded_rectangle([PAD - 14, y - 8, W - PAD + 14, y - 8 + fixed["band"] - 30],
-                        radius=12, fill=rgb(RED))
-    # drawn alert triangle (vector, no emoji glyph needed)
-    ty = y - 8
-    tri = [(PAD + 12, ty + 62), (PAD + 34, ty + 20), (PAD + 56, ty + 62)]
-    d.polygon(tri, fill=(255, 255, 255))
-    d.line([(PAD + 34, ty + 30), (PAD + 34, ty + 48)], fill=rgb(RED), width=6)
-    d.ellipse([PAD + 31, ty + 52, PAD + 37, ty + 58], fill=rgb(RED))
-    d.text((PAD + 74, ty + (fixed["band"] - 30 - f_head.size) / 2 - 6), headline_png,
-           font=f_head, fill=(255, 255, 255))
+    # ---------------- headline ribbon (reference card treatment) -----------
+    # Gold band with a pointed right end and black bold headline, replacing the
+    # old red alert badge. Purely visual - the headline text itself is unchanged.
+    by0 = y - 8
+    bh = _band_h
+    by1 = by0 + bh
+    bx0, bx1 = PAD - 14, W - PAD + 14
+    d.polygon([(bx0, by0), (bx1 - _ribbon_tip, by0), (bx1, (by0 + by1) // 2),
+               (bx1 - _ribbon_tip, by1), (bx0, by1)], fill=rgb(GOLD))
+    _ty = by0 + (bh - len(_hlines) * _head_lead) / 2 - 4
+    for _ln in _hlines:
+        d.text((PAD + 14, _ty), _ln, font=_hf, fill=rgb(BLACK))
+        _ty += _head_lead
     y += fixed["band"]
 
     f_ts = font(28, False)
@@ -301,8 +358,10 @@ def render(story, out_path):
         f = font(chosen)
         lead = int(chosen * (1.20 if COMPACT["on"] else 1.28))
         gap = 8 if COMPACT["on"] else 18
-        for lines in rows:
-            d.ellipse([PAD + 4, y + 16, PAD + 20, y + 32], fill=rgb(GOLD))
+        for n, lines in enumerate(rows, 1):
+            # numbered 1. 2. 3. as on the reference card (was a gold dot)
+            d.text((PAD + 2, y), f"{n}.", font=font(chosen),
+                   fill=rgb(GOLD_BRIGHT))
             ly = y
             for ln in lines:
                 d.text((PAD + 46, ly), ln, font=f, fill=rgb(WHITE))
