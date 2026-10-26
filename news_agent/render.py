@@ -42,6 +42,15 @@ F_REG = os.path.join(FONT_DIR, "DejaVuSans.ttf")
 PAD = 52
 BULLET_SIZES = (46, 44, 42, 40, 38, 36)   # largest-first, floor 36px (owner readability spec)
 
+# News photo band (owner 6 Oct: "add photos to the card ... my other bots are
+# posting with pic"). A hero panel under the header rule, above the headline
+# band - the same position the owner's reference cards use. Sized so the two
+# bilingual bullet blocks keep full content width and their readability floor;
+# when no photo resolves, PHOTO_H reserves nothing and the card is byte-for-byte
+# the card it always was.
+PHOTO_H = 340
+PHOTO_GAP = 24
+
 
 def font(size, bold=True):
     return ImageFont.truetype(F_BOLD if bold else F_REG, size)
@@ -154,6 +163,22 @@ def render(story, out_path):
 
     probe = ImageDraw.Draw(Image.new("RGB", (8, 8)))
 
+    # ---------------- news photo (owner 6 Oct) ----------------------------
+    # Resolved before the vertical budget so the band can be reserved exactly.
+    # cardphoto never raises: on any failure the card renders with no photo,
+    # exactly as it did before this feature existed.
+    photo = None
+    try:
+        import cardphoto
+        photo = cardphoto.prepare(story, int(content_w), PHOTO_H)
+    except Exception as _pe:
+        print(f"[render] photo skipped: {type(_pe).__name__} {_pe}",
+              file=sys.stderr)
+        photo = None
+    if photo is not None:
+        print(f"[render] news photo attached ({photo.size[0]}x{photo.size[1]})",
+              file=sys.stderr)
+
     # ---------------- vertical budget -------------------------------------
     logo_h = 112
     fixed = {
@@ -161,6 +186,7 @@ def render(story, out_path):
         "top_gap": 34,
         "logo": logo_h + 20,
         "rule": 24,
+        "photo": (PHOTO_H + PHOTO_GAP) if photo is not None else 0,
         "band": 86 + 18,
         "stamp": 44,
         "labels": 2 * 58,
@@ -232,6 +258,19 @@ def render(story, out_path):
     d.line([PAD, y, W - PAD, y], fill=rgb(GOLD), width=3)
     y += fixed["rule"]
 
+    # ---------------- news photo band -------------------------------------
+    if photo is not None:
+        bx0, bx1 = PAD, W - PAD
+        by0, by1 = y, y + PHOTO_H
+        # rounded mask so the photo follows the card's own geometry
+        mask = Image.new("L", (bx1 - bx0, by1 - by0), 0)
+        ImageDraw.Draw(mask).rounded_rectangle(
+            [0, 0, bx1 - bx0 - 1, by1 - by0 - 1], radius=18, fill=255)
+        canvas.paste(photo, (bx0, by0), mask)
+        d.rounded_rectangle([bx0 - 2, by0 - 2, bx1 + 2, by1 + 2],
+                            radius=20, outline=rgb(GOLD), width=4)
+        y += fixed["photo"]
+
     # ---------------- headline band with drawn alert badge ----------------
     f_head = font(56)
     avail = W - 2 * PAD - 96
@@ -297,6 +336,7 @@ def render(story, out_path):
     canvas.convert("RGB").save(out_path, "PNG", optimize=True)
     return out_path, {"logo_found": logo_found, "logo_path": logo_path,
                       "size": [W, H], "bullet_font_px": chosen,
+                      "photo": bool(photo is not None),
                       "content_bottom": y, "footer_top": foot_top}
 
 
