@@ -1,40 +1,74 @@
 {
-  "cycle": "20261026-1308",
-  "at": "2026-10-26T13:08:22.526951+05:30",
+  "cycle": "20261026-1318",
+  "at": "2026-10-26T13:27:36.843795+05:30",
   "candidates": 120,
   "published_this_cycle": 0,
-  "digest": "gate closed: ncards 11/24, gap 54 min, retry_pending=0",
-  "ru": {},
+  "digest": "PUBLISHED auto-digest-2026-10-26-s1326",
+  "ru": {
+    "pre_ru_picks": 5,
+    "to_translate": 5,
+    "engine": {
+      "ok": false,
+      "lines_in": 5,
+      "lines_want": 5,
+      "method": "fallback",
+      "problems": "['Lines [1, 2, 3, 4, 5] copy 4+ consecutive English words verbatim into the Roman Urdu. Re-express those phrases in Urdu; keep only proper nouns/brands/technica"
+    },
+    "kills": {
+      "paste": [
+        1,
+        3,
+        5
+      ],
+      "english-echo": [
+        2,
+        4
+      ]
+    },
+    "accepted": 4,
+    "salvaged": [
+      1,
+      2,
+      3,
+      4
+    ],
+    "via": {
+      "1": "primary",
+      "2": "primary",
+      "3": "primary",
+      "4": "gemini-3.5-flash"
+    }
+  },
   "tail": [
-    "[26 Oct 13:08:22] stale or low-score, skipped: Massive Explosion At Scrap Shop In Ramanathpur, Owner Critic",
-    "[26 Oct 13:08:22] queued for editorial pass (no safe auto frame): 13-year-old Hyderabad girl goes missing from Rein Bazar",
-    "[26 Oct 13:08:22] stale or low-score, skipped: Another Building Collapses In Delhi Weeks After Satya Niketa",
-    "[26 Oct 13:08:22] stale or low-score, skipped: 2 killed as building collapses in Delhi, bodies recovered af",
-    "[26 Oct 13:08:22] queued for editorial pass (no safe auto frame): Sand Lorry Accident in Manthani Raises Questions Over Alleged Sand Maf",
-    "[26 Oct 13:08:22] queued for editorial pass (no safe auto frame): Rahul Gandhi\u2019s convoy vehicles collide on Purvanchal Expressway in UP;",
-    "[26 Oct 13:08:22] stale or low-score, skipped: Retired SI\u2019s Son Dies Under Suspicious Circumstances at Farm",
-    "[26 Oct 13:08:22] stale or low-score, skipped: One Dead, Two Injured as Car Hits Pedestrians in Nakrekal",
-    "[26 Oct 13:08:22] stale or low-score, skipped: Warangal: B.Tech Student Found Dead in Parkal",
-    "[26 Oct 13:08:22] held for the next card: auto-serbia-s-student-movement-ousts-longtime-leader-in-parliamen",
-    "[26 Oct 13:08:22] stale or low-score, skipped: VC Sajjanar Hails Family for Donating Brain-Dead Man\u2019s Organ",
-    "[26 Oct 13:08:22] stale or low-score, skipped: Hyderabad techie threatens suicide, gives partner marriage u",
-    "[26 Oct 13:08:22] queued for editorial pass (no safe auto frame): TGSRTC woman conductor pushed off a moving bus by passenger, injured",
-    "[26 Oct 13:08:22] held for the next card: auto-two-killed-after-van-hits-median-worker-and-collides-with-hm",
-    "[26 Oct 13:08:22] stale or low-score, skipped: Massive fire ravages market near Jammu Railway Station, arou",
-    "[26 Oct 13:08:22] stale or low-score, skipped: Natural gas leak from ONGC pipeline in Andhra\u2019s Konaseema; w",
-    "[26 Oct 13:08:22] stale or low-score, skipped: Minor Fire Breaks Out at Delhi\u2019s North Block",
-    "[26 Oct 13:08:22] stale or low-score, skipped: Rahul Gandhi\u2019s convoy involved in accident: Four cars collid",
-    "[26 Oct 13:08:22] stale or low-score, skipped: '15-20 rounds fired': 2 killed, 2 injured as assailants open",
-    "[26 Oct 13:08:22] stale or low-score, skipped: Woman, 26, dies of electrocution from water heater in Boraba",
-    "[26 Oct 13:08:22] stale or low-score, skipped: One killed as off-road vehicle plunges into gorge at Kakkada",
-    "[26 Oct 13:08:22] stale or low-score, skipped: Walking in Delhi, Mumbai or Bengaluru? Here\u2019s what nobody te",
-    "[26 Oct 13:08:22] stale or low-score, skipped: Fire Guts 40 Shops in Market Near Jammu Railway Station, No ",
-    "[26 Oct 13:08:22] stale or low-score, skipped: Reels Wiped, 3 Fled: Victim's Family Alleges Cover-Up In Ker",
-    "[26 Oct 13:08:22] stale or low-score, skipped: Father, Son Killed in Building Collapse in Delhi",
-    "[26 Oct 13:08:22] stale or low-score, skipped: Migrant woman, two girls meet watery grave in Mancherial",
-    "[26 Oct 13:08:22] stale or low-score, skipped: Man allegedly killed by brother over land dispute in Sangare",
-    "[26 Oct 13:08:22] stale or low-score, skipped: Why did Tinder\u2019s scam detection fail, and what should Indian",
-    "[26 Oct 13:08:22] stale or low-score, skipped: Strike on Gaza university kills three: staff, hospital",
-    "[26 Oct 13:08:22] stale or low-score, skipped: Kenya: At least 24 dead in bus-truck collision on Nairobi-Mo"
+    "[26 Oct 13:27:36] queued for editorial pass (no safe auto frame): Woman found dead in Madhapur flat after video call to colleague",
+    "[26 Oct 13:27:36] queued for editorial pass (no safe auto frame): Scrap dealer critically injured in explosion at Ramanthapur shop in Hy",
+    "[26 Oct 13:27:36] held for the next card: auto-at-least-22-killed-in-kenya-bus-crash-near-site-of-previous-",
+    "[26 Oct 13:27:36] stale or low-score, skipped: Massive Explosion At Scrap Shop In Ramanathpur, Owner Critic",
+    "[26 Oct 13:27:36] queued for editorial pass (no safe auto frame): 13-year-old Hyderabad girl goes missing from Rein Bazar",
+    "[26 Oct 13:27:36] stale or low-score, skipped: 2 killed as building collapses in Delhi, bodies recovered af",
+    "[26 Oct 13:27:36] queued for editorial pass (no safe auto frame): Sand Lorry Accident in Manthani Raises Questions Over Alleged Sand Maf",
+    "[26 Oct 13:27:36] queued for editorial pass (no safe auto frame): Rahul Gandhi\u2019s convoy vehicles collide on Purvanchal Expressway in UP;",
+    "[26 Oct 13:27:36] stale or low-score, skipped: Retired SI\u2019s Son Dies Under Suspicious Circumstances at Farm",
+    "[26 Oct 13:27:36] stale or low-score, skipped: One Dead, Two Injured as Car Hits Pedestrians in Nakrekal",
+    "[26 Oct 13:27:36] stale or low-score, skipped: Warangal: B.Tech Student Found Dead in Parkal",
+    "[26 Oct 13:27:36] held for the next card: auto-serbia-s-student-movement-ousts-longtime-leader-in-parliamen",
+    "[26 Oct 13:27:36] stale or low-score, skipped: VC Sajjanar Hails Family for Donating Brain-Dead Man\u2019s Organ",
+    "[26 Oct 13:27:36] stale or low-score, skipped: Hyderabad techie threatens suicide, gives partner marriage u",
+    "[26 Oct 13:27:36] queued for editorial pass (no safe auto frame): TGSRTC woman conductor pushed off a moving bus by passenger, injured",
+    "[26 Oct 13:27:36] held for the next card: auto-two-killed-after-van-hits-median-worker-and-collides-with-hm",
+    "[26 Oct 13:27:36] stale or low-score, skipped: Massive fire ravages market near Jammu Railway Station, arou",
+    "[26 Oct 13:27:36] stale or low-score, skipped: Natural gas leak from ONGC pipeline in Andhra\u2019s Konaseema; w",
+    "[26 Oct 13:27:36] stale or low-score, skipped: Minor Fire Breaks Out at Delhi\u2019s North Block",
+    "[26 Oct 13:27:36] stale or low-score, skipped: Rahul Gandhi\u2019s convoy involved in accident: Four cars collid",
+    "[26 Oct 13:27:36] stale or low-score, skipped: '15-20 rounds fired': 2 killed, 2 injured as assailants open",
+    "[26 Oct 13:27:36] stale or low-score, skipped: Woman, 26, dies of electrocution from water heater in Boraba",
+    "[26 Oct 13:27:36] stale or low-score, skipped: One killed as off-road vehicle plunges into gorge at Kakkada",
+    "[26 Oct 13:27:36] stale or low-score, skipped: Father, Son Killed in Building Collapse in Delhi",
+    "[26 Oct 13:27:36] stale or low-score, skipped: Migrant woman, two girls meet watery grave in Mancherial",
+    "[26 Oct 13:27:36] stale or low-score, skipped: Man allegedly killed by brother over land dispute in Sangare",
+    "[26 Oct 13:27:36] stale or low-score, skipped: ONGC Gas Leak in Machavaram Under Control, Says Collector",
+    "[26 Oct 13:27:36] stale or low-score, skipped: 22-Year-Old Engineer Executed Attack On Tiger Shroff, Arrang",
+    "[26 Oct 13:27:36] stale or low-score, skipped: Why did Tinder\u2019s scam detection fail, and what should Indian",
+    "[26 Oct 13:27:36] stale or low-score, skipped: Kenya: At least 24 dead in bus-truck collision on Nairobi-Mo"
   ]
 }
