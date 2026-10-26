@@ -87,12 +87,12 @@ jobs:
             echo "=== cycle $i/6  $(date -u +%FT%TZ) ==="
             DIGEST_CATCHUP="${{ github.event.inputs.catchup || '0' }}" \
               python3 news_agent/autod.py --once || echo "cycle $i exited non-zero - continuing"
-            git add news_agent/state news_agent/stories
-            if ! git diff --cached --quiet; then
-              git commit -q -m "cycle $i $(date -u +%FT%TZ)"
-              git pull --rebase origin "$GITHUB_REF_NAME" >/dev/null 2>&1 || true
-              git push -q origin HEAD:"$GITHUB_REF_NAME" 2>/dev/null || echo "push failed - will retry next cycle"
-            fi
+            # 6 Oct: `git pull --rebase ... || true` swallowed the conflict and
+            # the push was then rejected, so a posted card was never recorded -
+            # and an unrecorded card is a card the next cycle can publish again.
+            # commit_state.py merges the state semantically and retries.
+            COMMIT_MSG="cycle $i $(date -u +%FT%TZ)" \
+              python3 news_agent/commit_state.py || echo "commit step failed - continuing"
             [ "$i" = "6" ] && break
             echo "--- sleeping 10 min ---"
             sleep 600
