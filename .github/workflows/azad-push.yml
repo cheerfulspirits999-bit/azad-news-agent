@@ -45,6 +45,12 @@ jobs:
       RU_DAILY_HARD: 220
       GEMINI_API_KEY: ${{ secrets.GEMINI_API_KEY }}
       OPENAI_API_KEY: ${{ secrets.OPENAI_API_KEY || secrets.OPENAI_API_KETS }}
+      # 6 Oct (owner: "i am adding pixabay api also for free photos"): free
+      # stock art for digest stories whose feed carried no image. Optional -
+      # with the secret absent cardphoto resolves no photo and the card is
+      # exactly the card it always was. Add the secret and it starts working
+      # with no code change.
+      PIXABAY_API_KEY: ${{ secrets.PIXABAY_API_KEY }}
     steps:
       - uses: actions/checkout@v4
       - uses: actions/setup-python@v5
