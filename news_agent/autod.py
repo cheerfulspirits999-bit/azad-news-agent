@@ -1383,6 +1383,105 @@ def sync_published():
         log(f"[sync] skipped: {type(_e).__name__} {_e}")
 
 
+def _origin_json(rel):
+    """A state file exactly as it exists on origin, or None."""
+    import subprocess
+    try:
+        subprocess.run(["git", "fetch", "--quiet", "origin", "HEAD"],
+                       capture_output=True, timeout=90)
+        r = subprocess.run(["git", "show", "origin/HEAD:" + rel],
+                           capture_output=True, text=True, timeout=90)
+        if r.returncode != 0 or not r.stdout.strip():
+            return None
+        return json.loads(r.stdout)
+    except Exception:
+        return None
+
+
+def _drop_repeats(dg):
+    """Return dg with any bullet that already rode a card removed, or None.
+
+    Owner 26 Oct: "in the cards you are repeating 1-3 news ans 2 new news".
+    Every bullet - not just the lead - has to be a story no card has carried.
+    This re-reads the history from origin (so another run's just-committed card
+    counts) and prunes until at least three clean bullets remain.
+    """
+    if not isinstance(dg, dict):
+        return None
+    remote = _origin_json("news_agent/state/published.json")
+    if not isinstance(remote, list):
+        return dg
+    try:
+        local = json.load(open(os.path.join(STATE, "published.json"),
+                               encoding="utf-8"))
+        if isinstance(local, list):
+            have = {json.dumps(r, sort_keys=True) for r in remote}
+            remote = remote + [r for r in local
+                               if json.dumps(r, sort_keys=True) not in have]
+    except Exception:
+        pass
+
+    seen_b, seen_u = set(), set()
+    for rec in remote:
+        for b in (rec.get("bullets_en") or []):
+            if b:
+                seen_b.add(_norm_bullet(b))
+        for u in [rec.get("url")] + list(rec.get("source_urls") or []):
+            if u:
+                seen_u.add(u.split("?")[0])
+
+    keep_en, keep_ur, keep_src = [], [], []
+    for en, ur, src in zip(dg.get("bullets_en") or [],
+                           dg.get("bullets_ur") or [],
+                           dg.get("source_urls") or []):
+        u = (src or "").split("?")[0]
+        if u and u in seen_u:
+            log(f"[drop] url already published: {u[:70]}")
+            continue
+        if _norm_bullet(en) in seen_b:
+            log(f"[drop] bullet already published: {en[:70]}")
+            continue
+        keep_en.append(en)
+        keep_ur.append(ur)
+        keep_src.append(src)
+
+    if len(keep_en) < 3:
+        return None
+    out = dict(dg)
+    out["bullets_en"] = keep_en
+    out["bullets_ur"] = keep_ur[:len(keep_en)]
+    out["source_urls"] = keep_src
+    out["story_topics"] = list(keep_src)
+    log(f"[drop] kept {len(keep_en)}/{len(dg.get('bullets_en') or [])} "
+        f"bullets that no card has carried")
+    return out
+
+
+def _another_run_just_posted(minutes=12):
+    """True when ANOTHER run committed a card in the last `minutes`.
+
+    WHY (owner 26 Oct "stop posting you posted so many cards"): the hourly relay
+    and the owner's manual push use different concurrency groups, so both were
+    in flight at once. Each read the same quota, each picked the same fresh
+    stories, and each published them - the 22:20 and 22:23 cards shared three
+    stories, all under the same source url. Re-reading the quota from origin
+    immediately before publishing closes that window: if the other run already
+    landed a card, this one stands down.
+    """
+    q = _origin_json("news_agent/state/quota.json")
+    if not isinstance(q, dict):
+        return False
+    at = q.get("last_card_at")
+    if not at:
+        return False
+    try:
+        gap = (datetime.now(IST) -
+               datetime.fromisoformat(at)).total_seconds() / 60
+    except Exception:
+        return False
+    return 0 <= gap < minutes
+
+
 def one_cycle():
     sync_published()
     cfg = json.load(open(os.path.join(BASE, "config.json"), encoding="utf-8"))
@@ -1423,12 +1522,19 @@ def one_cycle():
     # 28 Sep ~15:45 owner: "pls now post hourly" - catch-up draining is
     # over; steady hourly card rhythm from here, any hour of the day.
     # (55 so the 10-min cycle lands each hour without skipping a slot.)
-    _due = gap_min >= 55 or os.environ.get("DIGEST_FORCE") == "1"  # owner 2 Oct: manual push
+    # 26 Oct owner: "set the cycle to hourly" and "stop posting you posted so
+    # many cards". 31 cards went out on 26 Oct because DIGEST_FORCE=1 let a
+    # manual push publish on top of the relay's own card. The 55-minute floor is
+    # now the cadence and NOTHING overrides it - FORCE only means "this slot is
+    # allowed to fire", never "fire sooner than hourly".
+    _due = gap_min >= 55
     global _DIGEST_NOTE
-    if not (ncards < cap and _due and posted != 5):
+    _collide = _another_run_just_posted(12)
+    if not (ncards < cap and _due and posted != 5) or _collide:
         _DIGEST_NOTE = (f"gate closed: ncards {ncards}/{cap}, gap {gap_min:.0f} min, "
-                        f"retry_pending={posted}")
-    if (ncards < cap and _due and posted != 5):
+                        f"retry_pending={posted}"
+                        + (", another run posted <12 min ago" if _collide else ""))
+    if (ncards < cap and _due and posted != 5 and not _collide):
         try:
             dg = build_digest(cyc["candidates"], catchup=catchup)
         except Exception as ex:
@@ -1439,7 +1545,18 @@ def one_cycle():
         if dg:
             _DIGEST_NOTE = "ready"
             log("DIGEST ready: 3 fresh stories, one card")
-            rc, _ = try_publish(dg)
+            # 26 Oct owner "dont repest the news in the cards": the pool loop
+            # checks each story as it is picked, but by the time the card is
+            # ready another run may have published one of them. Re-pull the
+            # history and drop any bullet that already rode a card, so a card
+            # only ever ships stories nobody has seen.
+            dg = _drop_repeats(dg)
+            if dg is None:
+                _DIGEST_NOTE = ("starved: every pick had already ridden a card "
+                                "on another run")
+                log("DIGEST dropped: all picks already published elsewhere")
+            else:
+                rc, _ = try_publish(dg)
             if rc == 0:
                 q0["digests"] = {today0: ncards + 1}
                 q0["last_card_at"] = datetime.now(IST).isoformat()
