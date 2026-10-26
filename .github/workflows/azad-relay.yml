@@ -30,8 +30,14 @@ permissions:
   issues: write                   # fail-loud issue when publishing is blocked
   actions: write                  # dispatch our own successor
 concurrency:
-  group: news-cycle               # never two cycles at once (no double posts)
-  cancel-in-progress: false
+  # 26 Oct owner: the relay used group "news-cycle" and the push used group
+  # "azad-push", so BOTH ran at once - each read the same quota, picked the
+  # same fresh stories, and published them minutes apart (cards at 22:20 and
+  # 22:23 shared three stories). One shared group makes that impossible: a
+  # manual push takes the slot and the relay it interrupted resumes via its
+  # own handoff step.
+  group: azad-daily-publish
+  cancel-in-progress: true
 jobs:
   cycle:
     runs-on: ubuntu-latest
@@ -110,22 +116,44 @@ jobs:
           import os, json, time, urllib.request, urllib.error
           TOK = os.environ["GH_TOKEN"]
           REPO = os.environ["REPO"]
-          URL = f"https://api.github.com/repos/{REPO}/actions/workflows/azad-relay.yml/dispatches"
-          for attempt in range(8):
+          API = f"https://api.github.com/repos/{REPO}"
+          HDR = {"Authorization": "Bearer " + TOK,
+                 "Accept": "application/vnd.github+json"}
+
+          def _runs(status):
               req = urllib.request.Request(
-                  URL, data=json.dumps({"ref": "main"}).encode(),
-                  headers={"Authorization": "Bearer " + TOK,
-                           "Accept": "application/vnd.github+json"})
+                  f"{API}/actions/runs?per_page=30&status={status}", headers=HDR)
               try:
                   with urllib.request.urlopen(req, timeout=30) as r:
-                      print(f"successor queued (HTTP {r.status}) - cadence continues")
-                      break
-              except urllib.error.HTTPError as e:
-                  body = e.read().decode()[:160]
-                  print(f"handoff attempt {attempt}: HTTP {e.code} {body}")
-                  time.sleep(10 * (attempt + 1))
+                      return json.loads(r.read()).get("workflow_runs", [])
+              except Exception as e:
+                  print("run list failed:", e)
+                  return []
+
+          # 26 Oct: with a shared concurrency group a fresh dispatch would
+          # CANCEL whatever is already running - so if the owner's push is in
+          # flight, stand down and let IT hand off instead. Whichever run
+          # finishes last queues the next relay, so the hourly chain never dies.
+          busy = [r for r in _runs("in_progress") + _runs("queued")
+                  if r.get("name") == "azad-relay"]
+          if busy:
+              print(f"another azad-relay run is already {busy[0].get('status')} "
+                    f"- not queueing a duplicate; it will hand off itself")
           else:
-              print("HANDOFF FAILED - relying on the cron backup trigger")
+              url = f"{API}/actions/workflows/azad-relay.yml/dispatches"
+              for attempt in range(8):
+                  req = urllib.request.Request(
+                      url, data=json.dumps({"ref": "main"}).encode(), headers=HDR)
+                  try:
+                      with urllib.request.urlopen(req, timeout=30) as r:
+                          print(f"successor queued (HTTP {r.status}) - cadence continues")
+                          break
+                  except urllib.error.HTTPError as e:
+                      print(f"handoff attempt {attempt}: HTTP {e.code} "
+                            f"{e.read().decode()[:160]}")
+                      time.sleep(10 * (attempt + 1))
+              else:
+                  print("HANDOFF FAILED - relying on the cron backup trigger")
           PY
 
       # ---- fail loud if a card was built but Facebook refused it ----
