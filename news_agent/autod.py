@@ -984,10 +984,19 @@ def build_digest(cands, catchup=False):
     # stage yields >= 3 clean bullets. Previously the nets could drop picks
     # below 3 AFTER the stage loop and the run went silent with pool=3.
     def _build_picks():
-        def rank(x):  # politics first, then Class A, then score
+        def rank(x):  # politics first, then Class A, then FRESHEST, then score
             c = x[0]
+            # 26 Oct owner "set the cycle to hourly and breaking news": inside a
+            # tier the freshest story now leads, so an hour-old item beats a
+            # twenty-hour-old one and the card reads as breaking news rather
+            # than a round-up of yesterday.
+            try:
+                age_bucket = round(min(float(c.get("age_hours") or 99), 48) / 6)
+            except Exception:
+                age_bucket = 8
             return (0 if "political_major" in c.get("categories", []) else 1,
-                    0 if c["class"] == "A" else 1, -(c.get("score") or 0))
+                    0 if c["class"] == "A" else 1,
+                    age_bucket, -(c.get("score") or 0))
         picks = []
         for reg in DIGEST_REGIONS:
             best = sorted((x for x in pool if x[0]["region"] == reg
