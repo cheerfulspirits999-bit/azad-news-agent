@@ -51,6 +51,11 @@ jobs:
       # exactly the card it always was. Add the secret and it starts working
       # with no code change.
       PIXABAY_API_KEY: ${{ secrets.PIXABAY_API_KEY }}
+      # 6 Oct (owner: "not random imade added to all the cards"): stock art is
+      # OFF by default. A card carries the news story's OWN photo or no photo -
+      # a random stock picture on a news card misleads the reader. Flip this to
+      # "1" only if you want Pixabay art when a feed carried none.
+      CARD_PIXABAY: "0"
     steps:
       - uses: actions/checkout@v4
       - uses: actions/setup-python@v5
