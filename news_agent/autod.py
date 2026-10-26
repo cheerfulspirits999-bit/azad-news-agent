@@ -1226,6 +1226,14 @@ def build_digest(cands, catchup=False):
         "story_topics": [p[3] for p in picks],
         "bullets_en": [p[1] for p in picks],
         "bullets_ur": [p[2] for p in picks],
+        # 6 Oct (owner: "add photos to the card"): the card now carries a news
+        # photo. The digest picks 4-5 stories; take the artwork from the first
+        # pick that actually has some, so the picture is always a story on the
+        # card. Selection itself is untouched - this only reads what the feed
+        # already published.
+        "image_url": next((p[0].get("image") for p in picks
+                           if isinstance(p[0].get("image"), str)
+                           and p[0].get("image", "").strip()), ""),
     }
 
 
