@@ -587,6 +587,11 @@ def run_cycle(max_age_hours, limit):
                 "categories": c["categories"],
                 "excerpt": c["excerpt"][:500],
                 "corroboration": c.get("corroboration", []),
+                # 6 Oct (owner: "add photos to the card"): carry the feed's
+                # artwork through to the candidate so build_digest can put the
+                # story's own picture on the card. Without this the image is
+                # parsed and then dropped here.
+                "image": (c.get("image") or "").strip(),
             }
             for n, c in enumerate(queue)
         ],
