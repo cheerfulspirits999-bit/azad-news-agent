@@ -154,7 +154,7 @@ def verify_public(post_id, pg):
             f = _get(f"https://graph.facebook.com/{ver}/{pid}/published_posts"
                      f"?limit=6&fields=id,is_hidden,feed_targeting")
             for p in (f.get("data") or []):
-                if p.get("id") == post_id:
+                if str(p.get("id")) == str(post_id):
                     d = p
                     break
         except Exception as e2:
@@ -552,6 +552,12 @@ def run(story_path, do_publish):
         "title": story.get("title", story["headline"]),
         "topic": story.get("topic"),
         "url": (story.get("source_urls") or [""])[0],
+        # 6 Oct (owner: "stop posting the same card again and again"): a digest
+        # carries 4-5 stories, but only the FIRST one's url was ever recorded,
+        # so the other 3-4 had no persisted identity and rode later cards again.
+        # build_digest() reads exactly these two fields to refuse a repeat.
+        "story_topics": story.get("story_topics", []),
+        "source_urls": story.get("source_urls", []),
         "source": story["source"],
         "region": story["region"],
         "classification": story["classification"],
