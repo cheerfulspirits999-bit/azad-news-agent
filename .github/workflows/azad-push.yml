@@ -22,8 +22,11 @@ on:
         default: "4"
 permissions: { contents: write }
 concurrency:
-  group: azad-push
-  cancel-in-progress: false
+  # 26 Oct owner: shared with the relay so a manual push can never publish on
+  # top of a relay card. cancel-in-progress: true means the owner's button wins
+  # the slot immediately instead of queueing behind a whole hour of cycles.
+  group: azad-daily-publish
+  cancel-in-progress: true
 jobs:
   push:
     runs-on: ubuntu-latest
@@ -62,16 +65,13 @@ jobs:
         with: { python-version: "3.11" }
       - run: pip install -r requirements.txt -q
 
-      - name: forced card 1
-        continue-on-error: true
-        run: python3 news_agent/autod.py --once
-      - name: forced card 2
-        continue-on-error: true
-        run: python3 news_agent/autod.py --once
-      - name: forced card 3
-        continue-on-error: true
-        run: python3 news_agent/autod.py --once
-      - name: forced card 4
+      # 26 Oct owner: "stop posting you posted so many cards" + "set the cycle
+      # to hourly". This button used to run four forced cycles back to back, so
+      # one press dumped up to five cards on the page in 40 minutes. It now runs
+      # ONE cycle: the gate inside autod.py still enforces the 55-minute hourly
+      # floor, so a press inside the hour correctly does nothing and the report
+      # step below says exactly why.
+      - name: one hourly card
         continue-on-error: true
         run: python3 news_agent/autod.py --once
       - name: retry anything still queued
@@ -99,6 +99,59 @@ jobs:
               print(f"still pending: {len(q)}")
           except Exception:
               print("still pending: 0")
+          PY
+
+      # 26 Oct: a manual push can cancel the relay mid-hour (shared concurrency
+      # group). This step puts the hourly chain back on its feet, so pressing
+      # the button never costs the page its cadence.
+      - name: relay handoff - resume the hourly chain
+        if: always()
+        env:
+          GH_TOKEN: ${{ github.token }}
+          REPO: ${{ github.repository }}
+        run: |
+          python3 - <<'PY'
+          import os, json, time, urllib.request, urllib.error
+          TOK = os.environ["GH_TOKEN"]
+          REPO = os.environ["REPO"]
+          API = f"https://api.github.com/repos/{REPO}"
+          HDR = {"Authorization": "Bearer " + TOK,
+                 "Accept": "application/vnd.github+json"}
+
+          def _runs(status):
+              req = urllib.request.Request(
+                  f"{API}/actions/runs?per_page=30&status={status}", headers=HDR)
+              try:
+                  with urllib.request.urlopen(req, timeout=30) as r:
+                      return json.loads(r.read()).get("workflow_runs", [])
+              except Exception as e:
+                  print("run list failed:", e)
+                  return []
+
+          # 26 Oct: with a shared concurrency group a fresh dispatch would
+          # CANCEL whatever is already running - so if the owner's push is in
+          # flight, stand down and let IT hand off instead. Whichever run
+          # finishes last queues the next relay, so the hourly chain never dies.
+          busy = [r for r in _runs("in_progress") + _runs("queued")
+                  if r.get("name") == "azad-relay"]
+          if busy:
+              print(f"another azad-relay run is already {busy[0].get('status')} "
+                    f"- not queueing a duplicate; it will hand off itself")
+          else:
+              url = f"{API}/actions/workflows/azad-relay.yml/dispatches"
+              for attempt in range(8):
+                  req = urllib.request.Request(
+                      url, data=json.dumps({"ref": "main"}).encode(), headers=HDR)
+                  try:
+                      with urllib.request.urlopen(req, timeout=30) as r:
+                          print(f"successor queued (HTTP {r.status}) - cadence continues")
+                          break
+                  except urllib.error.HTTPError as e:
+                      print(f"handoff attempt {attempt}: HTTP {e.code} "
+                            f"{e.read().decode()[:160]}")
+                      time.sleep(10 * (attempt + 1))
+              else:
+                  print("HANDOFF FAILED - relying on the cron backup trigger")
           PY
 
       - name: commit memory
