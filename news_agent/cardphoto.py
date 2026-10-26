@@ -7,8 +7,10 @@ were text-only. This module resolves ONE photo per card, in priority order:
   1. the news story's own image, carried out of the RSS feed
      (<media:content> / <enclosure> / <media:thumbnail> / an <img> inside the
      description). This is the correct image because it IS the story.
-  2. Pixabay free stock, when PIXABAY_API_KEY is set - a topical, licensed
-     photo for stories whose feed carried no artwork.
+  2. Pixabay free stock - ONLY when the operator sets CARD_PIXABAY=1 AND a
+     PIXABAY_API_KEY exists. Off by default on owner instruction (6 Oct): a
+     random stock photo on a news card misleads the reader about what the
+     picture shows, so a card with no photo beats a card with the wrong one.
 
 GOVERNING RULE, same as the logo: nothing here may break a card. Every failure
 path returns None, and the renderer then draws exactly the card it drew before
@@ -107,6 +109,17 @@ def _crop_cover(img, w, h):
     return img.resize((tw, th), Image.LANCZOS)
 
 
+def _pixabay_on():
+    """Stock art is OPT-IN (owner 6 Oct).
+
+    "i ask you to post the news with pic it had photo related to the new not
+    random imade added to all the cards" - a stock scenery photo on a news card
+    is worse than no photo, because it implies the picture is of the story. It
+    only ever runs when the operator explicitly sets CARD_PIXABAY=1.
+    """
+    return os.environ.get("CARD_PIXABAY", "").strip() == "1"
+
+
 def _cache_key(*parts):
     return hashlib.sha1("|".join(str(p) for p in parts).encode()).hexdigest()[:16]
 
@@ -170,7 +183,7 @@ def prepare(story, w, h, use_pixabay=True):
     """
     slug = str(story.get("slug") or "card")
     cand = story_image(story)
-    if not cand and use_pixabay:
+    if not cand and use_pixabay and _pixabay_on():
         cand = pixabay_image(story, os.environ.get("PIXABAY_API_KEY", ""))
         if cand:
             _log(f"pixabay art for {slug}: {_query(story)!r}")
