@@ -834,10 +834,19 @@ def build_digest(cands, catchup=False):
         done_heads.append(r.get("title") or "")
         done_heads += list(r.get("bullets_en") or [])
     _LONG_WORD = re.compile(r"[a-z0-9]{9,}")
+    # 6 Oct: a bullet with no 9+ letter word ("Cyclone Arnab closing in on
+    # Andhra coast...") indexed nothing at all, so a REWORDED re-run of it
+    # slipped past the fuzzy test. Every bullet is therefore also indexed by
+    # its 7-8 letter words, and that second index is consulted only when the
+    # first finds nothing - cheap in the common case, no blind spot left.
+    _MID_WORD = re.compile(r"[a-z0-9]{7,8}")
     _bullets_by_word = {}
+    _bullets_by_mid = {}
     for _b in done_bullets:
         for _w in set(_LONG_WORD.findall(_b)):
             _bullets_by_word.setdefault(_w, []).append(_b)
+        for _w in set(_MID_WORD.findall(_b)):
+            _bullets_by_mid.setdefault(_w, []).append(_b)
 
     def _already_published(lead):
         """True when this exact story already rode a card, however worded."""
@@ -846,6 +855,9 @@ def build_digest(cands, catchup=False):
         _cand = set()
         for _w in set(_LONG_WORD.findall((lead or "").lower())):
             _cand.update(_bullets_by_word.get(_w, ()))
+        if not _cand:
+            for _w in set(_MID_WORD.findall((lead or "").lower())):
+                _cand.update(_bullets_by_mid.get(_w, ()))
         return any(_same_story(lead, b) for b in _cand)
     today = datetime.now(IST).strftime("%Y-%m-%d")
     TAG = {"hyderabad": "Hyderabad ki khabar",
