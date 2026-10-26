@@ -171,6 +171,55 @@ def clean_excerpt(text):
     return t
 
 
+# --- feed artwork (owner 6 Oct: the digest card now carries a news photo) -----
+# Feeds publish their lead image in four different shapes. All four are tried,
+# most reliable first, so the card can use the story's OWN picture.
+_IMG_TAG = re.compile(r"<(?:media:content|enclosure)\b([^>]*)>", re.I)
+_IMG_THUMB = re.compile(r"<media:thumbnail\b([^>]*)>", re.I)
+_ATTR_URL = re.compile(r"""\b(?:url|href)\s*=\s*["']([^"']+)["']""", re.I)
+_ATTR_TYPE = re.compile(r"""\btype\s*=\s*["']([^"']*)["']""", re.I)
+_ATTR_MEDIUM = re.compile(r"""\bmedium\s*=\s*["']([^"']*)["']""", re.I)
+_IMG_SRC = re.compile(r"""<img\b[^>]*\bsrc\s*=\s*["']([^"']+)["']""", re.I)
+
+
+def _attr(rx, attrs):
+    m = rx.search(attrs)
+    return m.group(1).strip() if m else ""
+
+
+def _item_image(block, desc_html):
+    """The artwork a feed published with this item, or "".
+
+    Order: media:content / enclosure (only when it declares itself an image -
+    many feeds attach audio/video enclosures we must never try to render),
+    then media:thumbnail, then an <img> inside the description HTML.
+    """
+    for m in _IMG_TAG.finditer(block or ""):
+        attrs = m.group(1)
+        typ = _attr(_ATTR_TYPE, attrs).lower()
+        med = _attr(_ATTR_MEDIUM, attrs).lower()
+        if "image" not in typ and med != "image":
+            continue
+        u = _attr(_ATTR_URL, attrs)
+        if u.lower().startswith(("http://", "https://")):
+            return u
+    for m in _IMG_THUMB.finditer(block or ""):
+        u = _attr(_ATTR_URL, m.group(1))
+        if u.lower().startswith(("http://", "https://")):
+            return u
+    if desc_html:
+        u = _attr(_IMG_SRC, desc_html)
+        if u.lower().startswith(("http://", "https://")):
+            return u
+    # last resort: any <img> anywhere in the item. Telangana Today (and other
+    # WordPress feeds) publish their lead art inside <content:encoded> rather
+    # than the description, so scanning only the description missed it.
+    u = _attr(_IMG_SRC, block or "")
+    if u.lower().startswith(("http://", "https://")):
+        return u
+    return ""
+
+
 def parse_rss(xml_text):
     out = []
     blocks = re.findall(r"<item[\s>](.*?)</item>", xml_text, re.S)
@@ -189,11 +238,13 @@ def parse_rss(xml_text):
         desc = strip_cdata((re.search(r"<description[^>]*>(.*?)</description>", b, re.S)
                             or re.search(r"<summary[^>]*>(.*?)</summary>", b, re.S)
                             or [None, ""])[1])
+        image = _item_image(b, desc)          # before the HTML strip
         desc = re.sub(r"<[^>]+>", " ", desc)
         desc = clean_excerpt(desc)
         if not title:
             continue
-        out.append({"title": title, "url": link, "pub_raw": pub, "excerpt": desc[:900]})
+        out.append({"title": title, "url": link, "pub_raw": pub,
+                    "excerpt": desc[:900], "image": image})
     return out
 
 
