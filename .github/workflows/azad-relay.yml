@@ -111,11 +111,13 @@ jobs:
         env:
           GH_TOKEN: ${{ github.token }}
           REPO: ${{ github.repository }}
+          RUN_ID: ${{ github.run_id }}
         run: |
           python3 - <<'PY'
           import os, json, time, urllib.request, urllib.error
           TOK = os.environ["GH_TOKEN"]
           REPO = os.environ["REPO"]
+          SELF = os.environ.get("RUN_ID", "")
           API = f"https://api.github.com/repos/{REPO}"
           HDR = {"Authorization": "Bearer " + TOK,
                  "Accept": "application/vnd.github+json"}
@@ -134,8 +136,13 @@ jobs:
           # CANCEL whatever is already running - so if the owner's push is in
           # flight, stand down and let IT hand off instead. Whichever run
           # finishes last queues the next relay, so the hourly chain never dies.
+          # The run executing THIS step is itself in progress, so it has to be
+          # excluded - otherwise the guard always sees "another relay" and never
+          # queues a successor, which kills the self-driving chain and leaves
+          # only the cron (it fires with hours of jitter: a 4-hour hole opened
+          # at 18:56Z on 26 Oct because of exactly this).
           busy = [r for r in _runs("in_progress") + _runs("queued")
-                  if r.get("name") == "azad-relay"]
+                  if r.get("name") == "azad-relay" and str(r.get("id")) != SELF]
           if busy:
               print(f"another azad-relay run is already {busy[0].get('status')} "
                     f"- not queueing a duplicate; it will hand off itself")
