@@ -232,6 +232,7 @@ def render(story, out_path):
         "photo": (PHOTO_H + PHOTO_GAP) if photo is not None else 0,
         "band": _band_h + 18,
         "stamp": 44,
+        "divider": 34,
         "labels": 2 * 58,
         "pre_footer": 26,
         "footer": 84,
@@ -301,13 +302,22 @@ def render(story, out_path):
     # "26-10-2026 (Today)" top-right in a gold-outlined pill, balancing the logo.
     pill_txt = _date_pill(stamp)
     f_pill = font(26, False)
-    pw = d.textlength(pill_txt, font=f_pill) + 46
     ph = 54
+    # small calendar glyph, drawn as vectors so it needs no special font
+    ic = 22
+    pad_l, gap, pad_r = 20, 12, 24
+    pw = pad_l + ic + gap + d.textlength(pill_txt, font=f_pill) + pad_r
     px1, px0 = W - PAD, W - PAD - pw
     py0 = y + (logo_h - ph) // 2
     d.rounded_rectangle([px0, py0, px1, py0 + ph], radius=ph // 2,
                         outline=rgb(GOLD), width=3)
-    d.text((px0 + 23, py0 + (ph - f_pill.size) // 2 - 2), pill_txt,
+    icx, icy = px0 + pad_l, py0 + (ph - ic) // 2
+    d.rounded_rectangle([icx, icy + 2, icx + ic, icy + ic], radius=4,
+                        outline=rgb(GOLD_BRIGHT), width=3)
+    d.line([icx, icy + 8, icx + ic, icy + 8], fill=rgb(GOLD_BRIGHT), width=3)
+    for hx in (icx + 5, icx + ic - 5):
+        d.line([hx, icy - 2, hx, icy + 6], fill=rgb(GOLD_BRIGHT), width=3)
+    d.text((px0 + pad_l + ic + gap, py0 + (ph - f_pill.size) // 2 - 2), pill_txt,
            font=f_pill, fill=rgb(GOLD_BRIGHT))
 
     y += fixed["logo"]
@@ -370,6 +380,20 @@ def render(story, out_path):
         return y
 
     y = block("ENGLISH", rows_en, y)
+
+    # ---------------- diamond divider (owner's reference card) -------------
+    # A thin gold rule with a gold diamond at its centre, separating the two
+    # language blocks. Decorative only - no text is added or changed.
+    dy = y + 6
+    d.line([PAD, dy, W - PAD, dy], fill=rgb(GOLD), width=2)
+    cx = W // 2
+    r = 10
+    d.polygon([(cx, dy - r), (cx + r, dy), (cx, dy + r), (cx - r, dy)],
+              fill=rgb(GOLD))
+    d.polygon([(cx, dy - r + 5), (cx + r - 5, dy), (cx, dy + r - 5),
+               (cx - r + 5, dy)], fill=rgb(BLACK))
+    y += fixed["divider"]
+
     y = block("ROMAN URDU", rows_ur, y)
 
     # ---------------- footer ----------------------------------------------
@@ -390,6 +414,20 @@ def render(story, out_path):
                cred, font=f_cred, fill=rgb(GOLD_BRIGHT))
 
     assert y <= foot_top - 18, f"content overran footer: {y} > {foot_top}"
+
+    # ---------------- outer gold frame (owner's reference card) -------------
+    # A double keyline running the full height of the card with brighter gold
+    # corner accents, exactly as on the reference. It sits well inside the
+    # content margins (PAD = 52), so it can never overlap a bullet.
+    ins1, ins2 = 12, 21
+    d.rectangle([ins1, ins1, W - ins1, H - ins1], outline=rgb(GOLD), width=2)
+    d.rectangle([ins2, ins2, W - ins2, H - ins2], outline=rgb(GOLD), width=2)
+    cc = 30
+    for (x0, y0, sx, sy) in ((ins1, ins1, 1, 1), (W - ins1, ins1, -1, 1),
+                             (ins1, H - ins1, 1, -1),
+                             (W - ins1, H - ins1, -1, -1)):
+        d.line([x0, y0, x0 + sx * cc, y0], fill=rgb(GOLD_BRIGHT), width=4)
+        d.line([x0, y0, x0, y0 + sy * cc], fill=rgb(GOLD_BRIGHT), width=4)
 
     os.makedirs(os.path.dirname(os.path.abspath(out_path)), exist_ok=True)
     canvas.convert("RGB").save(out_path, "PNG", optimize=True)
