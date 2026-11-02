@@ -1,5 +1,5 @@
 {
- "at": "2026-11-01T05:49:52Z",
+ "at": "2026-11-02T05:49:50Z",
  "keys": {
   "RU_API_KEY": "set(len=73)",
   "GEMINI_API_KEY": "set(len=53)",
@@ -9,12 +9,18 @@
  "endpoint": "https://openrouter.ai/api/v1/chat/completions",
  "lanes": {
   "openrouter_free_raw": {
-   "http": 429,
-   "body": "{\"error\":{\"message\":\"Rate limit exceeded: free-models-per-day. Add 10 credits to unlock 1000 free model requests per day\",\"code\":429,\"metadata\":{\"headers\":{\"X-RateLimit-Limit\":\"50\",\"X-RateLimit-Remaining\":\"0\",\"X-RateLimit-Reset\":\"1793577600000\"},\"limit_source\":\"openrouter_free_tier_daily\",\"remedy_hi"
+   "http": 200,
+   "body": "\n         \n\n         \n\n         \n\n         \n\n         \n\n         \n{\"id\":\"gen-1793598590-IdTtv49h0wbcR2fwXoOu\",\"object\":\"chat.completion\",\"created\":1793598590,\"model\":\"nvidia/nemotron-3-ultra-550b-a55b:free\",\"provider\":\"Nvidia\",\"system_fingerprint\":null,\"service_tier\":null,\"choices\":[{\"index\":0,\"logp"
   },
   "openrouter_free_engine": {
-   "skipped": true,
-   "reason": "raw probe HTTP 429"
+   "method": "llm",
+   "ok": true,
+   "problems": "[]",
+   "lines": [
+    "Telangana hukumat nayi data centre policy manzoor kar di",
+    "Afsaron ka kehna hai ke yeh project 5 hazar rozgar paida karega",
+    "Cabinet ne bhi aik single-window clearance system manzoor kar diya"
+   ]
   },
   "openai_direct": {
    "skipped": true,
