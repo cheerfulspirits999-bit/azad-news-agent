@@ -1,78 +1,79 @@
 {
- "cycle": "20261109-2355",
- "at": "2026-11-10T00:04:55.054730+05:30",
+ "cycle": "20261110-0014",
+ "at": "2026-11-10T00:22:16.634779+05:30",
  "candidates": 120,
  "published_this_cycle": 0,
- "digest": "starved: <3 publishable Urdu lines",
+ "digest": "PUBLISHED auto-digest-2026-11-10-s0020",
  "ru": {
   "pre_ru_picks": 5,
-  "to_translate": 5,
+  "to_translate": 4,
   "kills": {
-   "english-echo": [
-    1,
-    1,
-    1
-   ],
    "paste": [
+    1,
     2,
     3,
     4,
-    5,
+    1,
     2,
     3,
     4,
-    5,
+    1,
     2,
     3,
-    4,
-    5
+    4
    ]
   },
   "engine": {
    "ok": false,
-   "lines_in": 5,
-   "lines_want": 5,
+   "lines_in": 4,
+   "lines_want": 4,
    "method": "fallback",
-   "problems": "['Lines [1, 2, 3, 4, 5] copy 4+ consecutive English words verbatim into the Roman Urdu. Re-express those phrases in Urdu; keep only proper nouns/brands/technica"
+   "problems": "['Lines [1, 2, 3, 4] copy 4+ consecutive English words verbatim into the Roman Urdu. Re-express those phrases in Urdu; keep only proper nouns/brands/technical t"
   },
-  "accepted": 1,
+  "accepted": 4,
   "salvaged": [
-   2
+   1,
+   2,
+   3,
+   4
   ],
   "via": {
-   "2": "gemini-flash-lite-latest"
+   "1": "gemini-flash-lite-latest",
+   "2": "gemini-3.5-flash",
+   "3": "gemini-flash-lite-latest",
+   "4": "gemini-flash-lite-latest"
   }
  },
  "tail": [
-  "[10 Nov 00:04:55] stale or low-score, skipped: Godavari Pipeline Link To Be Ready by Nov. 15",
-  "[10 Nov 00:04:55] stale or low-score, skipped: BEST bus goes out of control in Mumbai; 6 hurt, driver held",
-  "[10 Nov 00:04:55] stale or low-score, skipped: India’s wildest Diwali? Why two groups pelt stones at each o",
-  "[10 Nov 00:04:55] stale or low-score, skipped: 30 Injured in Diwali Related Fire Incidents",
-  "[10 Nov 00:04:55] stale or low-score, skipped: House gutted in fire in Adilabad, property loss estimated at",
-  "[10 Nov 00:04:55] stale or low-score, skipped: Five Killed, 14 Injured As Truck Rams Stationary Van In Jhar",
-  "[10 Nov 00:04:55] stale or low-score, skipped: Hyderabad: 45-year-old man dies after alleged altercation at",
-  "[10 Nov 00:04:55] stale or low-score, skipped: Hyderabad Witnesses Multiple Fire Accidents, Firefighters Ru",
-  "[10 Nov 00:04:55] stale or low-score, skipped: At 63, Woman Pedals For Drug-Free India",
-  "[10 Nov 00:04:55] stale or low-score, skipped: Godavari, Krishna River Boards Fail To Meet for Months",
-  "[10 Nov 00:04:55] stale or low-score, skipped: Hyderabad pharmacies face hurdles in implementing cancer dru",
-  "[10 Nov 00:04:55] stale or low-score, skipped: Six dead in blast at steel factory near Turkiye’s Izmir: off",
-  "[10 Nov 00:04:55] stale or low-score, skipped: Bangladeshi woman uses fake Aadhaar, PAN to pose as Indian; ",
-  "[10 Nov 00:04:55] stale or low-score, skipped: Pakistani TV anchorperson shot dead at home in Rawalpindi; h",
-  "[10 Nov 00:04:55] stale or low-score, skipped: All 7 bodies recovered in Bengaluru cab driver family’s murd",
-  "[10 Nov 00:04:55] stale or low-score, skipped: Owaisi backs Hyderabad hotel owners’ demand for fair and tra",
-  "[10 Nov 00:04:55] stale or low-score, skipped: Major Fire Breaks Out at Industrial Unit in Kathedan, Spread",
-  "[10 Nov 00:04:55] stale or low-score, skipped: Ghaziabad Blast: Shahzad Bhatti Network Angle Under Probe, S",
-  "[10 Nov 00:04:55] stale or low-score, skipped: Lakdikapul One-Way Trial On Nov. 22",
-  "[10 Nov 00:04:55] stale or low-score, skipped: Who was Rabia Ahsan, the Pakistani TV anchor found shot dead",
-  "[10 Nov 00:04:55] stale or low-score, skipped: Wife, lover strangle Bengaluru man, try to pass off murder a",
-  "[10 Nov 00:04:55] stale or low-score, skipped: Arpita Singh, celebrated artist who painted real women, dies",
-  "[10 Nov 00:04:55] stale or low-score, skipped: Chevalla: Fire Breaks Out at Old MRO Office, Old Office Reco",
-  "[10 Nov 00:04:55] stale or low-score, skipped: Gadwal: Five injured as car hits highway railing near Vemula",
-  "[10 Nov 00:04:55] stale or low-score, skipped: At peak of air pollution on Deepavali night, data goes missi",
-  "[10 Nov 00:04:55] stale or low-score, skipped: 6 Friends From Haryana Burnt To Death After Car Crashes, Cat",
-  "[10 Nov 00:04:55] stale or low-score, skipped: Cancer drug price cuts bring relief to patients in Telangana",
-  "[10 Nov 00:04:55] stale or low-score, skipped: Laser weapon to shoot down drones at low cost: How close is ",
-  "[10 Nov 00:04:55] stale or low-score, skipped: Krakow shooting suspect dies: Poland police",
-  "[10 Nov 00:04:55] stale or low-score, skipped: 12 killed in twin fire tragedies in MP on Diwali night; two "
+  "[10 Nov 00:22:16] stale or low-score, skipped: Six injured as speeding BEST bus rams two cars at Mumbai's W",
+  "[10 Nov 00:22:16] stale or low-score, skipped: Hydraa receives 36 complaints over illegal borewells",
+  "[10 Nov 00:22:16] stale or low-score, skipped: Godavari Pipeline Link To Be Ready by Nov. 15",
+  "[10 Nov 00:22:16] stale or low-score, skipped: BEST bus goes out of control in Mumbai; 6 hurt, driver held",
+  "[10 Nov 00:22:16] stale or low-score, skipped: India’s wildest Diwali? Why two groups pelt stones at each o",
+  "[10 Nov 00:22:16] stale or low-score, skipped: 30 Injured in Diwali Related Fire Incidents",
+  "[10 Nov 00:22:16] stale or low-score, skipped: House gutted in fire in Adilabad, property loss estimated at",
+  "[10 Nov 00:22:16] stale or low-score, skipped: Five Killed, 14 Injured As Truck Rams Stationary Van In Jhar",
+  "[10 Nov 00:22:16] stale or low-score, skipped: Hyderabad: 45-year-old man dies after alleged altercation at",
+  "[10 Nov 00:22:16] stale or low-score, skipped: Hyderabad Witnesses Multiple Fire Accidents, Firefighters Ru",
+  "[10 Nov 00:22:16] stale or low-score, skipped: At 63, Woman Pedals For Drug-Free India",
+  "[10 Nov 00:22:16] stale or low-score, skipped: Godavari, Krishna River Boards Fail To Meet for Months",
+  "[10 Nov 00:22:16] stale or low-score, skipped: Hyderabad pharmacies face hurdles in implementing cancer dru",
+  "[10 Nov 00:22:16] stale or low-score, skipped: Six dead in blast at steel factory near Turkiye’s Izmir: off",
+  "[10 Nov 00:22:16] stale or low-score, skipped: All 7 bodies recovered in Bengaluru cab driver family’s murd",
+  "[10 Nov 00:22:16] stale or low-score, skipped: Owaisi backs Hyderabad hotel owners’ demand for fair and tra",
+  "[10 Nov 00:22:16] stale or low-score, skipped: Major Fire Breaks Out at Industrial Unit in Kathedan, Spread",
+  "[10 Nov 00:22:16] stale or low-score, skipped: Ghaziabad Blast: Shahzad Bhatti Network Angle Under Probe, S",
+  "[10 Nov 00:22:16] stale or low-score, skipped: Lakdikapul One-Way Trial On Nov. 22",
+  "[10 Nov 00:22:16] stale or low-score, skipped: Wife, lover strangle Bengaluru man, try to pass off murder a",
+  "[10 Nov 00:22:16] stale or low-score, skipped: Arpita Singh, celebrated artist who painted real women, dies",
+  "[10 Nov 00:22:16] stale or low-score, skipped: Chevalla: Fire Breaks Out at Old MRO Office, Old Office Reco",
+  "[10 Nov 00:22:16] stale or low-score, skipped: Gadwal: Five injured as car hits highway railing near Vemula",
+  "[10 Nov 00:22:16] stale or low-score, skipped: At peak of air pollution on Deepavali night, data goes missi",
+  "[10 Nov 00:22:16] stale or low-score, skipped: 6 Friends From Haryana Burnt To Death After Car Crashes, Cat",
+  "[10 Nov 00:22:16] stale or low-score, skipped: Cancer drug price cuts bring relief to patients in Telangana",
+  "[10 Nov 00:22:16] stale or low-score, skipped: Laser weapon to shoot down drones at low cost: How close is ",
+  "[10 Nov 00:22:16] stale or low-score, skipped: Bangladeshi woman uses fake Aadhaar, PAN to pose as Indian; ",
+  "[10 Nov 00:22:16] stale or low-score, skipped: Pakistani TV anchorperson shot dead at home in Rawalpindi; h",
+  "[10 Nov 00:22:16] stale or low-score, skipped: Krakow shooting suspect dies: Poland police"
  ]
 }
