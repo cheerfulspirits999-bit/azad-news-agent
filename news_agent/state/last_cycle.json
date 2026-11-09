@@ -1,6 +1,6 @@
 {
- "cycle": "20261109-2157",
- "at": "2026-11-09T22:07:04.710495+05:30",
+ "cycle": "20261109-2207",
+ "at": "2026-11-09T22:17:34.600500+05:30",
  "candidates": 120,
  "published_this_cycle": 0,
  "digest": "starved: <3 publishable Urdu lines",
@@ -8,24 +8,24 @@
   "pre_ru_picks": 5,
   "to_translate": 5,
   "kills": {
-   "english-echo": [
-    1,
-    4,
-    1,
-    4,
-    1,
-    4
-   ],
    "paste": [
+    1,
     2,
     3,
     5,
+    1,
     2,
     3,
     5,
+    1,
     2,
     3,
     5
+   ],
+   "english-echo": [
+    4,
+    4,
+    4
    ]
   },
   "engine": {
@@ -35,44 +35,46 @@
    "method": "fallback",
    "problems": "['Lines [1, 2, 3, 4, 5] copy 4+ consecutive English words verbatim into the Roman Urdu. Re-express those phrases in Urdu; keep only proper nouns/brands/technica"
   },
-  "accepted": 1,
+  "accepted": 2,
   "salvaged": [
+   1,
    2
   ],
   "via": {
-   "2": "gemini-flash-lite-latest"
+   "1": "gemini-3.5-flash",
+   "2": "gemini-3.5-flash"
   }
  },
  "tail": [
-  "[09 Nov 22:07:04] stale or low-score, skipped: Hyderabad Witnesses Multiple Fire Accidents, Firefighters Ru",
-  "[09 Nov 22:07:04] stale or low-score, skipped: 6 Friends From Haryana Burnt To Death After Car Crashes, Cat",
-  "[09 Nov 22:07:04] stale or low-score, skipped: Hyderabad pharmacies face hurdles in implementing cancer dru",
-  "[09 Nov 22:07:04] stale or low-score, skipped: Six dead in blast at steel factory near Turkiye’s Izmir: off",
-  "[09 Nov 22:07:04] stale or low-score, skipped: Bangladeshi woman uses fake Aadhaar, PAN to pose as Indian; ",
-  "[09 Nov 22:07:04] stale or low-score, skipped: Pakistani TV anchorperson shot dead at home in Rawalpindi; h",
-  "[09 Nov 22:07:04] stale or low-score, skipped: Krakow shooting suspect dies: Poland police",
-  "[09 Nov 22:07:04] stale or low-score, skipped: Gadwal: Five injured as car hits highway railing near Vemula",
-  "[09 Nov 22:07:04] stale or low-score, skipped: White House lockdown as car crashes near North Lawn, driver ",
-  "[09 Nov 22:07:04] stale or low-score, skipped: Three killed in two road accidents in erstwhile Medak distri",
-  "[09 Nov 22:07:04] stale or low-score, skipped: Nvidia shares crash 7% as CEO Jensen Huang affair scandal ra",
-  "[09 Nov 22:07:04] stale or low-score, skipped: Telangana: After message to mother, 20-yr-old man goes missi",
-  "[09 Nov 22:07:04] stale or low-score, skipped: Woman who remarries after husband’s death in road accident c",
-  "[09 Nov 22:07:04] stale or low-score, skipped: Couple dies as Himachal car dealer rams SUV into neighbours ",
-  "[09 Nov 22:07:04] stale or low-score, skipped: Chevalla: Fire Breaks Out at Old MRO Office, Old Office Reco",
-  "[09 Nov 22:07:04] stale or low-score, skipped: 12 killed in twin fire tragedies in MP on Diwali night; two ",
-  "[09 Nov 22:07:04] stale or low-score, skipped: Cancer drug price cuts bring relief to patients in Telangana",
-  "[09 Nov 22:07:04] stale or low-score, skipped: Laser weapon to shoot down drones at low cost: How close is ",
-  "[09 Nov 22:07:04] stale or low-score, skipped: Hyderabad youth missing after sending distressing WhatsApp m",
-  "[09 Nov 22:07:04] stale or low-score, skipped: Engineering student heading to college dies in accident in N",
-  "[09 Nov 22:07:04] stale or low-score, skipped: Seven killed, over 100 injured in train collision south of C",
-  "[09 Nov 22:07:04] stale or low-score, skipped: Rape-Murder Accused Killed In Bengal Encounter, Suvendu Adhi",
-  "[09 Nov 22:07:04] stale or low-score, skipped: Pak Anchor Rabia Ahsan Found Dead At Home, Husband Confesses",
-  "[09 Nov 22:07:04] stale or low-score, skipped: Delhi HC Allows Sale Of Rana Kapoor Book, Restrains Four Pas",
-  "[09 Nov 22:07:04] stale or low-score, skipped: Two killed, woman injured in motorcycle collision in Palonch",
-  "[09 Nov 22:07:04] stale or low-score, skipped: Indian-Origin Woman Shot Dead In London; Man Charged With Mu",
-  "[09 Nov 22:07:04] stale or low-score, skipped: Osmania University student killed as RTC bus hits two-wheele",
-  "[09 Nov 22:07:04] stale or low-score, skipped: 34-year-old man dies after allegedly consuming acid in Ghatk",
-  "[09 Nov 22:07:04] stale or low-score, skipped: Mumbai bans rockets, aerial firecrackers in BMC limits till ",
-  "[09 Nov 22:07:04] stale or low-score, skipped: Diwali Mishaps Claim Minor’s Life, Injure Over 100 Across Od"
+  "[09 Nov 22:17:34] stale or low-score, skipped: House gutted in fire in Adilabad, property loss estimated at",
+  "[09 Nov 22:17:34] stale or low-score, skipped: Five Killed, 14 Injured As Truck Rams Stationary Van In Jhar",
+  "[09 Nov 22:17:34] stale or low-score, skipped: Hyderabad Witnesses Multiple Fire Accidents, Firefighters Ru",
+  "[09 Nov 22:17:34] stale or low-score, skipped: 6 Friends From Haryana Burnt To Death After Car Crashes, Cat",
+  "[09 Nov 22:17:34] stale or low-score, skipped: Hyderabad pharmacies face hurdles in implementing cancer dru",
+  "[09 Nov 22:17:34] stale or low-score, skipped: Six dead in blast at steel factory near Turkiye’s Izmir: off",
+  "[09 Nov 22:17:34] stale or low-score, skipped: Bangladeshi woman uses fake Aadhaar, PAN to pose as Indian; ",
+  "[09 Nov 22:17:34] stale or low-score, skipped: Pakistani TV anchorperson shot dead at home in Rawalpindi; h",
+  "[09 Nov 22:17:34] stale or low-score, skipped: Krakow shooting suspect dies: Poland police",
+  "[09 Nov 22:17:34] stale or low-score, skipped: Gadwal: Five injured as car hits highway railing near Vemula",
+  "[09 Nov 22:17:34] stale or low-score, skipped: White House lockdown as car crashes near North Lawn, driver ",
+  "[09 Nov 22:17:34] stale or low-score, skipped: Three killed in two road accidents in erstwhile Medak distri",
+  "[09 Nov 22:17:34] stale or low-score, skipped: Nvidia shares crash 7% as CEO Jensen Huang affair scandal ra",
+  "[09 Nov 22:17:34] stale or low-score, skipped: Telangana: After message to mother, 20-yr-old man goes missi",
+  "[09 Nov 22:17:34] stale or low-score, skipped: Woman who remarries after husband’s death in road accident c",
+  "[09 Nov 22:17:34] stale or low-score, skipped: Couple dies as Himachal car dealer rams SUV into neighbours ",
+  "[09 Nov 22:17:34] stale or low-score, skipped: Chevalla: Fire Breaks Out at Old MRO Office, Old Office Reco",
+  "[09 Nov 22:17:34] stale or low-score, skipped: 12 killed in twin fire tragedies in MP on Diwali night; two ",
+  "[09 Nov 22:17:34] stale or low-score, skipped: Cancer drug price cuts bring relief to patients in Telangana",
+  "[09 Nov 22:17:34] stale or low-score, skipped: Laser weapon to shoot down drones at low cost: How close is ",
+  "[09 Nov 22:17:34] stale or low-score, skipped: Engineering student heading to college dies in accident in N",
+  "[09 Nov 22:17:34] stale or low-score, skipped: Seven killed, over 100 injured in train collision south of C",
+  "[09 Nov 22:17:34] stale or low-score, skipped: Rape-Murder Accused Killed In Bengal Encounter, Suvendu Adhi",
+  "[09 Nov 22:17:34] stale or low-score, skipped: Pak Anchor Rabia Ahsan Found Dead At Home, Husband Confesses",
+  "[09 Nov 22:17:34] stale or low-score, skipped: Delhi HC Allows Sale Of Rana Kapoor Book, Restrains Four Pas",
+  "[09 Nov 22:17:34] stale or low-score, skipped: Two killed, woman injured in motorcycle collision in Palonch",
+  "[09 Nov 22:17:34] stale or low-score, skipped: Indian-Origin Woman Shot Dead In London; Man Charged With Mu",
+  "[09 Nov 22:17:34] stale or low-score, skipped: Osmania University student killed as RTC bus hits two-wheele",
+  "[09 Nov 22:17:34] stale or low-score, skipped: 34-year-old man dies after allegedly consuming acid in Ghatk",
+  "[09 Nov 22:17:34] stale or low-score, skipped: Mumbai bans rockets, aerial firecrackers in BMC limits till "
  ]
 }
