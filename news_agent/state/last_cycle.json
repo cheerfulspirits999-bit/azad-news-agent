@@ -1,12 +1,12 @@
 {
- "cycle": "20261111-0450",
- "at": "2026-11-11T04:58:59.753905+05:30",
+ "cycle": "20261111-0509",
+ "at": "2026-11-11T05:17:42.765619+05:30",
  "candidates": 120,
  "published_this_cycle": 0,
- "digest": "starved: <3 publishable Urdu lines",
+ "digest": "PUBLISHED auto-digest-2026-11-11-s0516",
  "ru": {
   "pre_ru_picks": 5,
-  "to_translate": 5,
+  "to_translate": 4,
   "kills": {
    "paste": [
     1,
@@ -20,53 +20,58 @@
     5
    ],
    "english-echo": [
-    2,
     3,
-    2,
     3,
-    2,
     3
    ]
   },
   "engine": {
    "ok": false,
-   "lines_in": 5,
-   "lines_want": 5,
+   "lines_in": 4,
+   "lines_want": 4,
    "method": "fallback",
-   "problems": "['Lines [1, 2, 3, 4, 5] copy 4+ consecutive English words verbatim into the Roman Urdu. Re-express those phrases in Urdu; keep only proper nouns/brands/technica"
+   "problems": "['Lines [1, 2, 3, 4] copy 4+ consecutive English words verbatim into the Roman Urdu. Re-express those phrases in Urdu; keep only proper nouns/brands/technical t"
   },
-  "accepted": 0
+  "accepted": 2,
+  "salvaged": [
+   3,
+   4
+  ],
+  "via": {
+   "3": "gemini-flash-lite-latest",
+   "4": "gemini-flash-lite-latest"
+  }
  },
  "tail": [
-  "[11 Nov 04:58:59] stale or low-score, skipped: Domestic Dispute Ends In Home Guard’s Murder",
-  "[11 Nov 04:58:59] stale or low-score, skipped: LB Nagar: Inter Student Collapses, Dies During Sadar Sammela",
-  "[11 Nov 04:58:59] stale or low-score, skipped: Hyderabad Traffic Police Plan One-Way Systems in Cyberabad, ",
-  "[11 Nov 04:58:59] stale or low-score, skipped: Gujarat Diwali tragedy: Father dies trying to save 2-year-ol",
-  "[11 Nov 04:58:59] stale or low-score, skipped: New Bridge On Ralla Vagu To Connect Old And New Mancherial",
-  "[11 Nov 04:58:59] stale or low-score, skipped: Cheating case accused alleges custodial torture, OU police d",
-  "[11 Nov 04:58:59] stale or low-score, skipped: Nalgonda Home Guard Found Dead, Husband Suspected Of Killing",
-  "[11 Nov 04:58:59] stale or low-score, skipped: Female Home Guard allegedly strangled to death in Nalgonda p",
-  "[11 Nov 04:58:59] stale or low-score, skipped: Hanamkonda: 20-Year-Old Woman Found Dead, Police Register Ca",
-  "[11 Nov 04:58:59] stale or low-score, skipped: Intermediate Student Found Dead In Hanamkonda District",
-  "[11 Nov 04:58:59] stale or low-score, skipped: Sangareddy: Man Dies After Snapped Electric Wire Falls On Hi",
-  "[11 Nov 04:58:59] stale or low-score, skipped: US Charges 3 'Iranian Operatives' Over Alleged Terrorist Plo",
-  "[11 Nov 04:58:59] stale or low-score, skipped: Bengaluru Man Held With Weapons For Plotting Attack On Rival",
-  "[11 Nov 04:58:59] stale or low-score, skipped: Abhiram murder: personal enmity behind the crime, says prime",
-  "[11 Nov 04:58:59] stale or low-score, skipped: Israeli forces shoot dead 14-year-old in West Bank: Palestin",
-  "[11 Nov 04:58:59] stale or low-score, skipped: Bunker Roy, founder of Barefoot College, dies at 81",
-  "[11 Nov 04:58:59] stale or low-score, skipped: Police Shoot At Rowdy, Arrest Him For History-Sheeter’s Murd",
-  "[11 Nov 04:58:59] stale or low-score, skipped: Cops Make Elaborate Arrangements For Smooth Traffic Flow As ",
-  "[11 Nov 04:58:59] stale or low-score, skipped: Days after talks with NC ‘rebels’, Farooq moots advisory gro",
-  "[11 Nov 04:58:59] stale or low-score, skipped: Student Injured After Falling From College Building In Anant",
-  "[11 Nov 04:58:59] stale or low-score, skipped: 2008 CRPF camp attack convict shot dead by unknown gunman in",
-  "[11 Nov 04:58:59] stale or low-score, skipped: Gajanur blast: Police rule out bomb attack, blame firecracke",
-  "[11 Nov 04:58:59] stale or low-score, skipped: A hole in the wall, 8.5 kg of silver gone: Burglars strike j",
-  "[11 Nov 04:58:59] stale or low-score, skipped: Mystery of a missing sewage treatment plant tells the tale o",
-  "[11 Nov 04:58:59] stale or low-score, skipped: Kia Car Overturns Multiple Times On PVNR Expressway, Driver ",
-  "[11 Nov 04:58:59] stale or low-score, skipped: SDRF finds body of missing youth while searching for boat in",
-  "[11 Nov 04:58:59] stale or low-score, skipped: National Conference plans advisory councils of MLAs to addre",
-  "[11 Nov 04:58:59] stale or low-score, skipped: Pensioner Loses ₹87.73 Lakh to ‘Digital Arrest’ Fraud",
-  "[11 Nov 04:58:59] stale or low-score, skipped: Sonia Gandhi memoir: From Parliament attack to anti-terror b",
-  "[11 Nov 04:58:59] stale or low-score, skipped: Apple, Tata to probe deaths of three workers at iPhone parts"
+  "[11 Nov 05:17:42] stale or low-score, skipped: TG SAFE suspends licences of eight Hyderabad eateries over v",
+  "[11 Nov 05:17:42] stale or low-score, skipped: Domestic Dispute Ends In Home Guard’s Murder",
+  "[11 Nov 05:17:42] stale or low-score, skipped: LB Nagar: Inter Student Collapses, Dies During Sadar Sammela",
+  "[11 Nov 05:17:42] stale or low-score, skipped: Hyderabad Traffic Police Plan One-Way Systems in Cyberabad, ",
+  "[11 Nov 05:17:42] stale or low-score, skipped: Gujarat Diwali tragedy: Father dies trying to save 2-year-ol",
+  "[11 Nov 05:17:42] stale or low-score, skipped: New Bridge On Ralla Vagu To Connect Old And New Mancherial",
+  "[11 Nov 05:17:42] stale or low-score, skipped: Cheating case accused alleges custodial torture, OU police d",
+  "[11 Nov 05:17:42] stale or low-score, skipped: Nalgonda Home Guard Found Dead, Husband Suspected Of Killing",
+  "[11 Nov 05:17:42] stale or low-score, skipped: Female Home Guard allegedly strangled to death in Nalgonda p",
+  "[11 Nov 05:17:42] stale or low-score, skipped: Hanamkonda: 20-Year-Old Woman Found Dead, Police Register Ca",
+  "[11 Nov 05:17:42] stale or low-score, skipped: Intermediate Student Found Dead In Hanamkonda District",
+  "[11 Nov 05:17:42] stale or low-score, skipped: Sangareddy: Man Dies After Snapped Electric Wire Falls On Hi",
+  "[11 Nov 05:17:42] stale or low-score, skipped: US Charges 3 'Iranian Operatives' Over Alleged Terrorist Plo",
+  "[11 Nov 05:17:42] stale or low-score, skipped: Abhiram murder: personal enmity behind the crime, says prime",
+  "[11 Nov 05:17:42] stale or low-score, skipped: Israeli forces shoot dead 14-year-old in West Bank: Palestin",
+  "[11 Nov 05:17:42] stale or low-score, skipped: Bunker Roy, founder of Barefoot College, dies at 81",
+  "[11 Nov 05:17:42] stale or low-score, skipped: Police Shoot At Rowdy, Arrest Him For History-Sheeter’s Murd",
+  "[11 Nov 05:17:42] stale or low-score, skipped: Cops Make Elaborate Arrangements For Smooth Traffic Flow As ",
+  "[11 Nov 05:17:42] stale or low-score, skipped: Days after talks with NC ‘rebels’, Farooq moots advisory gro",
+  "[11 Nov 05:17:42] stale or low-score, skipped: 2008 CRPF camp attack convict shot dead by unknown gunman in",
+  "[11 Nov 05:17:42] stale or low-score, skipped: Gajanur blast: Police rule out bomb attack, blame firecracke",
+  "[11 Nov 05:17:42] stale or low-score, skipped: A hole in the wall, 8.5 kg of silver gone: Burglars strike j",
+  "[11 Nov 05:17:42] stale or low-score, skipped: Mystery of a missing sewage treatment plant tells the tale o",
+  "[11 Nov 05:17:42] stale or low-score, skipped: Kia Car Overturns Multiple Times On PVNR Expressway, Driver ",
+  "[11 Nov 05:17:42] stale or low-score, skipped: SDRF finds body of missing youth while searching for boat in",
+  "[11 Nov 05:17:42] stale or low-score, skipped: Bengaluru Man Held With Weapons For Plotting Attack On Rival",
+  "[11 Nov 05:17:42] stale or low-score, skipped: National Conference plans advisory councils of MLAs to addre",
+  "[11 Nov 05:17:42] stale or low-score, skipped: Pensioner Loses ₹87.73 Lakh to ‘Digital Arrest’ Fraud",
+  "[11 Nov 05:17:42] stale or low-score, skipped: Sonia Gandhi memoir: From Parliament attack to anti-terror b",
+  "[11 Nov 05:17:42] stale or low-score, skipped: Apple, Tata to probe deaths of three workers at iPhone parts"
  ]
 }
