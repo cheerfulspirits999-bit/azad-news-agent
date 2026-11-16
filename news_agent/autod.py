@@ -140,6 +140,25 @@ _RU_FALLBACK_MODELS = (
 # lines went 1 -> 2, and gemini-flash-lite-latest (lane 5) started being reached.
 _RU_BATCH_TRIES = int(os.environ.get("RU_BATCH_TRIES", "7"))
 _RU_CARD_MIN = 3
+# 16 Nov: the owner's "cover full up election" ranking is working (5/5
+# election picks), but it collides with the translator's gates. Election
+# headlines are the most proper-noun-dense copy in the pool - "Talasani
+# Srinivas Yadav flags low graduate voter registration", "BJP, Congress
+# leaders spar in Haveri over vote chori" - and a correct Roman Urdu
+# rendering necessarily carries 4+ consecutive English words (the names,
+# plus "voter", "registration", "polls", "graduate" which are the natural
+# Roman Urdu newsroom words). The paste gate kills those lines, so all five
+# picks die identically and the cycle starves at "<3 publishable Urdu lines".
+#
+# Measured: 7 model families (5 Gemini, GPT-4o-mini, Nemotron) each failed
+# the SAME five lines - deterministic input problem, not a model problem.
+#
+# So the card keeps election LEADING (the lead bullet and the majority of
+# the card stay election - "full up election" is still covered) but at most
+# _ELECTION_PICK_CAP of the five bullets may be election, leaving slots for
+# stories the translator can actually render. Nothing is weakened: the
+# ranking, the score, the paste/echo gates and _RU_CARD_MIN are untouched.
+_ELECTION_PICK_CAP = 3
 
 _RU_DAILY_CAP = int(os.environ.get("RU_DAILY_CAP", "46"))
 _RU_DAILY_HARD = int(os.environ.get("RU_DAILY_HARD", "150"))
@@ -1118,6 +1137,10 @@ def build_digest(cands, catchup=False):
                 if not b[2] and _line_h(b[1]) in _miss_bank:
                     _skip["bank"] += 1
                     continue  # banked (recently failed RU) - next story tries
+                if _is_election(_cand_text(b[0])) and \
+                   sum(1 for x in picks if _is_election(_cand_text(x[0]))) \
+                       >= _ELECTION_PICK_CAP:
+                    continue  # card already carries its election quota
                 if b not in picks and \
                    not any(_same_story(b[0]["title"], x[0]["title"]) for x in picks):
                     picks.append(b)
@@ -1128,6 +1151,10 @@ def build_digest(cands, catchup=False):
             if not x[2] and _line_h(x[1]) in _miss_bank:
                 _skip["bank"] += 1
                 continue  # banked line: give the slot to a fresh story
+            if _is_election(_cand_text(x[0])) and \
+               sum(1 for p in picks if _is_election(_cand_text(p[0]))) \
+                   >= _ELECTION_PICK_CAP:
+                continue  # leave the slot for a story the translator can render
             if x not in picks and \
                not any(_same_story(x[0]["title"], p[0]["title"]) for p in picks):
                 picks.append(x)
