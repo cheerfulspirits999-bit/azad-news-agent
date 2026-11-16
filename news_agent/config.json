@@ -16,7 +16,7 @@
     "panel_black": "#141414",
     "image_width": 1200,
     "image_height": 1500,
-    "default_footer": "Verified latest news: Hyderabad \u2022 Telangana \u2022 India \u2022 World",
+    "default_footer": "Verified latest news: Hyderabad • Telangana • India • World",
     "credit_line": "Abu Aimal & Aimal Akram"
   },
   "feeds": [
@@ -138,7 +138,7 @@
       "hyderabad": 40,
       "telangana": 36,
       "india": 30,
-      "world": 26
+      "world": 20
     },
     "category_weights": {
       "accident_casualty": 30,
@@ -159,7 +159,8 @@
       "routine": 0,
       "security_terror": 28,
       "traffic_disruption": 20
-    }
+    },
+    "world_minor_penalty": 24
   },
   "publish": {
     "route": "graph",
