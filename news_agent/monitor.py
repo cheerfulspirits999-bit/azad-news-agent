@@ -53,7 +53,19 @@ REGION_KEYS = {
               "haryana", "chandigarh", "goa", "puducherry", "karnataka", "mysuru",
               "mangaluru", "hubballi", "thiruvananthapuram", "kozhikode", "kochi",
               "coimbatore", "madurai", "vijayawada", "visakhapatnam", "amaravati",
-              "tirupati", "aiims", "drdo", "iiser", "iit ", "ediic", "delhi"],
+              "tirupati", "aiims", "drdo", "iiser", "iit ", "ediic", "delhi",
+              "jammu", "kashmir", "srinagar", "j&k", "leh", "ladakh",
+              "morena", "kuno", "gwalior", "indore", "bengal", "west bengal",
+              "mamata", "stalin", "dmk", "aiadmk", "tvk", "naidu", "apepdcl",
+              "ap cm", "chandrababu", "lokesh", "andhra", "telugu desam",
+              "tdp", "ysrcp", "janasena", "pawan kalyan", "kcr", "ktr",
+              "bjd", "naveen", "shiv sena", "udhav", "thackeray",
+              "rjd", "jd(u)", "samajwadi", "akhilesh", "mayawati", "bsp",
+              "trinamool", "tmc",
+              # NOT "congress" - it also means the US Congress, and this URL check
+              # runs before the /international/ check, so "us-congress-passes-bill"
+              # would have been misfiled as an Indian story.
+              "election commission of india", "eci", "chief election commissioner"],
 }
 
 CATEGORY_RULES = [
@@ -314,6 +326,16 @@ def detect_region(item):
     for region in ("hyderabad", "telangana", "india"):
         if any(kw_hit(title, k) for k in REGION_KEYS[region]):
             return region
+    # 16 Nov: seven Indian stories were being tagged "world" because their only
+    # Indian signal was in the URL slug -- /nation/, /india-news/, or a city name
+    # like .../cities/Visakhapatnam/ or .../andhra-pradesh/. Normalise hyphens so
+    # "andhra pradesh" can match "andhra-pradesh", then re-run the india keys over
+    # the whole URL before anything is allowed to fall through to world.
+    url_norm = url.replace("-", " ").replace("/", " ").replace("_", " ")
+    if any(kw_hit(url_norm, k) for k in REGION_KEYS["india"]):
+        return "india"
+    if "/nation" in url or "india-news" in url or "national-news" in url:
+        return "india"
     # URL section path is a reliable editorial signal
     if "/international/" in url or "/world/" in url:
         return "world"
@@ -374,6 +396,24 @@ def is_blocked(item):
     return False
 
 
+# 16 Nov: only these countries/actors count as "important world news". Anything
+# foreign that names none of them is minor world news and gets demoted in score().
+WORLD_MAJOR = re.compile(
+    r"(?<![a-z0-9])(united states|u\.s\.|u s |usa|america|american|washington|"
+    r"white house|pentagon|trump|biden|iran|tehran|khamenei|israel|israeli|gaza|"
+    r"jerusalem|netanyahu|russia|russian|moscow|putin|ukraine|kyiv|zelensky|"
+    r"china|chinese|beijing|xi jinping|taiwan|hong kong|united kingdom|britain|"
+    r"british|london|europe|european union|nato|un security council|united nations|"
+    r"pakistan|pakistani|islamabad|japan|japanese|tokyo|south korea|north korea|"
+    r"saudi|saudi arabia|riyadh|syria|iraq|afghanistan|taliban|france|french|paris|"
+    r"germany|german|berlin|india|indian|modi)(?![a-z0-9])")
+
+# a real mass-casualty incident abroad stays important even without a named power
+WORLD_SEVERE_CATS = {"accident_casualty", "fire_explosion", "security_terror",
+                     "disaster_weather", "infrastructure_failure",
+                     "public_safety_warning"}
+
+
 def region_confidence(item):
     """1.0 = region named in title/URL, 0.4 = only inferred from dateline."""
     region = item["region"]
@@ -420,6 +460,15 @@ def score(item):
             s -= 8
     if is_blocked(item):
         s -= 60
+    # 16 Nov owner instruction: "lessen world news, only important world news like
+    # US, IRAN, ISREAL". A foreign story naming no major power is minor world news
+    # and sinks below every local/national story, so the card's slots go to
+    # Hyderabad / Telangana / India. A mass-casualty incident abroad is exempt:
+    # that is important world news by severity, not by geography.
+    if region == "world" and not WORLD_MAJOR.search(title):
+        if not (set(cats) & WORLD_SEVERE_CATS) or \
+           not re.search(r"\b\d+\s?(dead|killed|died|injured)\b", title):
+            s -= CFG["scoring"].get("world_minor_penalty", 24)
     return max(0, min(100, s))
 
 
