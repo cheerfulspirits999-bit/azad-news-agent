@@ -57,6 +57,23 @@ REGION_KEYS = {
 }
 
 CATEGORY_RULES = [
+    # owner 16 Nov "cover full up election": election and poll coverage gets its
+    # own category so it can be ranked on merit instead of being buried inside
+    # political_major. All matching rules are collected, so this ADDS a tag
+    # without taking anything away from the existing categories.
+    # "run-off" is absent on purpose - it also means rain running off a dam.
+    ("election_poll", ["election", "elections", "electoral", "polls", "polling",
+                       "ballot", "voter", "voters", "voting", "votes", "vote chori",
+                       "vote chor", "candidate", "candidates", "nomination",
+                       "nominations", "constituency", "constituencies",
+                       "by-election", "bypoll", "by-poll", "booth", "booths",
+                       "franchise", "suffrage", "referendum", "plebiscite",
+                       "canvassing", "manifesto", "mlc", "mla",
+                       "member of parliament", "legislative council",
+                       "legislative assembly", "assembly polls", "local body polls",
+                       "municipal election", "panchayat polls", "graduate constituency",
+                       "teachers constituency", "election commission",
+                       "chief electoral officer", "electoral rolls", "repoll"]),
     ("fire_explosion", ["fire breaks", "fire erupts", "blast", "explosion", "boiler burst",
                         "gas leak", "fire at", "major fire", "caught fire"]),
     ("accident_casualty", ["dead", "killed", "dies", "death toll", "casualties", "injured",
