@@ -239,13 +239,34 @@ def _ru_attempts():
     translate where the batch echo'd), then free-tier, direct keys (skipped
     silently until the owner's git secrets exist), then paid slugs.
 
-    3 Oct: every free/salvage attempt now carries use_few_shot=True. The
+    3 Oct: every free/salvage attempt carried use_few_shot=True, because the
     owner will not top up OpenRouter ("free tier option only"), so the free
     lane IS the pipeline - and the engine was dropping to its deterministic
     English passthrough, which our echo gate correctly kills. The engine
     ships few-shot examples that teach exactly the output contract (same
     bullet count, names/numbers untouched, idiomatic Roman Urdu); the shim
     had been forcing use_few_shot=False. A weak free model needs them.
+
+    16 Nov ROOT-CAUSE FIX: that flag was applied to EVERY fallback lane,
+    including the five direct-key Gemini lanes and the OpenAI lane, which are
+    not weak free models - so the 3 Oct rationale never applied to them. It
+    also silently defeated roman_urdu.py's own protection: the shim does
+    kw.setdefault("use_few_shot", False), which is a no-op the moment the
+    caller passes the key explicitly.
+
+    roman_urdu.py's post-mortem of the 27-28 Sep outage describes the result
+    exactly: few-shot ON makes the model mirror the shipped code-mixed EN+UR
+    examples, "the package's own strict paste validator then rejects those
+    lines, every retry fails the same way, and cycles starve at 0-1/5 accepted
+    lines." That is a verbatim description of the 20:38-22:15 IST starvation,
+    which sat at 1-2 of 5 accepted with every retry killed identically.
+
+    So the flag now follows the model's strength, honouring BOTH decisions:
+      * direct-key lanes (Gemini, OpenAI - strong models on the owner's own
+        key): use_few_shot=False, the documented-safe setting that validated
+        5/5 in the post-mortem.
+      * OpenRouter :free slugs (the weak free models the 3 Oct note was
+        actually about): use_few_shot=True, unchanged.
     Lanes parked by _ru_lane_failed() are skipped. The primary keeps its
     old setting."""
     yield "primary", {}
@@ -254,9 +275,11 @@ def _ru_attempts():
             prov, mdl, envi = m
             k = os.environ.get(envi, "")
             if k and _ru_lane_alive(mdl):
+                # strong model on the owner's own key -> documented-safe OFF
                 yield mdl, {"provider": prov, "model": mdl, "api_key": k,
-                            "use_few_shot": True}
+                            "use_few_shot": False}
         elif _ru_lane_alive(m):
+            # weak OpenRouter :free model -> the 3 Oct rationale still applies
             yield m, {"model": m, "use_few_shot": True}
 
 
