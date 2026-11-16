@@ -309,6 +309,39 @@ def kw_hit(text, kw):
     return re.search(r"(?<![a-z0-9])" + re.escape(kw.lower()) + r"(?![a-z0-9])", text) is not None
 
 
+# 16 Nov: a Hyderabad outlet (Siasat, Munsif) runs wire copy from abroad, and the
+# domain prior below tags EVERY story on those domains "hyderabad". Ten stories in
+# the live pool were decided by that prior alone, and two of them were foreign:
+#   "Saudi Aramco unsafe for investors, lost USD 100 billion..."
+#   "Israel election outcome makes no difference to Tehran: Iran..."
+# Both then took the guaranteed hyderabad slot and pushed a real Hyderabad story
+# off the card. This regex is checked on the SUBJECT of the headline (first 6 words
+# only) and ONLY after every Indian signal has already failed, so a local story
+# that merely mentions a foreign place later on ("...Nepal-based gang held") keeps
+# its correct region.
+FOREIGN_SUBJECT_RE = re.compile(
+    r"(?<![a-z0-9])(saudi|saudi arabia|aramco|riyadh|uae|emirates|dubai|abu dhabi|"
+    r"qatar|doha|kuwait|bahrain|oman|muscat|yemen|houthi|sanaa|iran|tehran|"
+    r"khamenei|iraq|baghdad|syria|damascus|assad|lebanon|beirut|hezbollah|"
+    r"jordan|amman|israel|israeli|gaza|jerusalem|netanyahu|hamas|palestine|"
+    r"west bank|turkey|ankara|erdogan|istanbul|egypt|cairo|pakistan|pakistani|"
+    r"islamabad|karachi|lahore|peshawar|quetta|imran khan|shehbaz|bangladesh|"
+    r"dhaka|hasina|sri lanka|colombo|nepal|kathmandu|myanmar|yangon|afghanistan|"
+    r"kabul|taliban|china|chinese|beijing|xi jinping|taiwan|taipei|hong kong|"
+    r"japan|japanese|tokyo|south korea|seoul|north korea|pyongyang|russia|"
+    r"russian|moscow|putin|kremlin|ukraine|kyiv|zelensky|belarus|poland|warsaw|"
+    r"germany|berlin|france|french|paris|macron|britain|british|london|uk |"
+    r"england|starmer|scotland|europe|european union|nato|united nations|"
+    r"united states|u s |u\.s\.|usa|america|american|washington|white house|"
+    r"pentagon|trump|biden|canada|ottawa|australia|canberra|sydney|new zealand|"
+    r"brazil|lula|mexico|nigeria|lagos|kenya|nairobi|ethiopia|somalia|"
+    r"south africa|johannesburg|pretoria|ghana|senegal|sudan|khartoum|libya|"
+    r"morocco|tunisia|algeria|greece|athens|italy|rome|spain|madrid|barcelona|"
+    r"netherlands|amsterdam|belgium|brussels|sweden|stockholm|norway|oslo|"
+    r"denmark|copenhagen|finland|helsinki|austria|vienna|switzerland|zurich|"
+    r"portugal|lisbon|ireland|dublin)(?![a-z0-9])")
+
+
 def detect_region(item):
     """Region is decided from the TITLE and URL only.
     Excerpts mention Hyderabad in passing far too often (taglines, related links,
@@ -341,6 +374,13 @@ def detect_region(item):
         return "world"
     if "/national/" in url or "/india/" in url:
         return "india"
+    # 16 Nov: foreign wire copy on a local domain must not inherit that domain's
+    # region. Only the SUBJECT of the headline counts, so "...4 members of a
+    # Nepal-based gang held" (a Hyderabad crime story) keeps its region while
+    # "Saudi Aramco unsafe for investors..." and "Israel election outcome..." do
+    # not steal the hyderabad slot from a real Hyderabad story.
+    if FOREIGN_SUBJECT_RE.search(" ".join(title.split()[:6])):
+        return "world"
     # domain priors for locally-focused outlets
     if "telanganatoday.com" in url:
         return "telangana"
