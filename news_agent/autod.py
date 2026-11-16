@@ -113,7 +113,20 @@ _RU_FALLBACK_MODELS = (
 # how many lines a card needs before the cycle is worth publishing. A single
 # batch that echoes costs the whole hour, so the batch now retries on a fresh
 # lane before falling back to the (much more expensive) per-line salvage pass.
-_RU_BATCH_TRIES = int(os.environ.get("RU_BATCH_TRIES", "3"))
+#
+# 16 Nov: raised 3 -> 5. Ten translator lanes are configured but only three were
+# ever tried, so seven sat idle. Observed live at 20:38 and 20:58 IST: all five
+# picked headlines were killed for pasting English on lanes 1, 2 AND 3, the
+# per-line salvage pass then rescued only one line, and the cycle starved at
+# <3 publishable Urdu lines - a 100-minute hole in the hourly cadence, which is
+# exactly what the owner's "hourly" and "breaking news" instructions forbid.
+# Different models echo differently, so lanes 4 and 5 are a genuine second
+# chance. Nothing is weakened: every paste/echo/quality gate is unchanged, the
+# extra tries only happen while lines are still bad, and the spend is still
+# bounded by _RU_DAILY_HARD (24 cycles x 5 lanes = 120 in a pathological day,
+# under the 150 hard ceiling). Free lanes (Gemini, OpenRouter :free) bypass the
+# budget entirely.
+_RU_BATCH_TRIES = int(os.environ.get("RU_BATCH_TRIES", "5"))
 _RU_CARD_MIN = 3
 
 _RU_DAILY_CAP = int(os.environ.get("RU_DAILY_CAP", "46"))
