@@ -824,12 +824,22 @@ def translate_news(
     if max_line_len:
         fb = "\n".join(trim_to(ln, max_line_len) for ln in fb.split("\n"))
     ok_fb, problems_fb = validate(text, fb, max_line_len, paste_n)
+    # 16 Nov: `problems` used to be REPLACED by the dictionary fallback's own
+    # validation issues. That threw away the real reason the LLM attempts
+    # failed, so every starved cycle reported "copy 4+ consecutive English
+    # words verbatim" - a symptom of the fallback output, not the cause - and
+    # the actual error (rate limit / 402 no credits / bad model / network /
+    # timeout) was invisible in last_cycle.json. Keep the LLM's problems and
+    # prefix them so the cycle log names the true cause. Behaviour is
+    # unchanged: when the fallback passes, problems is still [].
+    if not ok_fb:
+        problems_fb = problems_fb + ["llm: " + str(p) for p in (problems or [])]
     result.update(
         ok=ok_fb,
         roman_urdu=fb,
         lines_ur=fb.split("\n"),
         method="fallback",
-        problems=[] if ok_fb else problems_fb,
+        problems=problems_fb,
         warning=(
             "LLM translation failed validation after "
             f"{result['attempts']} attempts; dictionary fallback used. "
