@@ -394,7 +394,38 @@ MAX_AGE_HOURS = 26.0  # owner 27 Sep: "take and post" - anything within the
                       # last day across ALL regions/categories is fair game;
                       # hourly silence only when the day is truly exhausted
                       # (old 6h window caused the dead morning hours)
-MAIN_CATS = {"political_major", "govt_announcement", "economic_major",
+# owner 16 Nov "cover full up election": election and poll coverage leads the
+# card. The text test is deliberately wider than the category keywords - it also
+# catches a story whose headline carries the election angle without the feed
+# tagging it, so nothing that belongs on an election card gets missed.
+# "run-off" is deliberately absent: it matched a story about RAIN runoff off a
+# dam ("Rising runoff, flood risks"), which is weather, not an election.
+# Bare "ec" and "mp" are absent too - "MP" is also Madhya Pradesh and "EC" any
+# number of committees. The Election Commission is matched by its full name.
+ELECTION_RE = re.compile(
+    r"\b(election|elections|electoral|electorate|poll|polls|ballot|ballots|"
+    r"voter|voters|voting|vote chori|vote chor|candidate|candidates|"
+    r"nomination|nominations|constituency|constituencies|by-?election|"
+    r"by-?poll|booth|booths|franchise|suffrage|referendum|plebiscite|"
+    r"canvass|canvassing|manifesto|mlc|mla|member of parliament|"
+    r"legislative council|legislative assembly|assembly polls?|"
+    r"local body polls?|municipal election|panchayat polls?|"
+    r"graduate constituency|teachers constituency|election commission|eci|"
+    r"chief electoral officer|electoral rolls?|repoll|uncontested|"
+    r"run-?off (?:election|poll|vote))\b", re.I)
+
+
+def _is_election(text):
+    """True when a story is about an election, a poll, or the machinery of one."""
+    return bool(ELECTION_RE.search(text or ""))
+
+
+def _cand_text(c):
+    return " ".join([(c.get("title") or ""), (c.get("excerpt") or ""),
+                     (c.get("suggested_headline") or "")])
+
+
+MAIN_CATS = {"election_poll", "political_major", "govt_announcement", "economic_major",
              "court_judgment", "protest_major", "police_operation",
              "disaster_weather", "international_conflict"}
 MIN_GAP_HOURS = 0.33  # owner 26 Sep: breaking solos may run every ~20 min
@@ -984,8 +1015,16 @@ def build_digest(cands, catchup=False):
     # stage yields >= 3 clean bullets. Previously the nets could drop picks
     # below 3 AFTER the stage loop and the run went silent with pool=3.
     def _build_picks():
-        def rank(x):  # politics first, then Class A, then FRESHEST, then score
+        def rank(x):  # ELECTION first (owner 16 Nov), then politics, then Class A,
+                      # then FRESHEST, then score
             c = x[0]
+            # 16 Nov owner "cover full up election": election and poll stories
+            # lead the card. They used to lose every slot to a class-A accident
+            # or disaster because classify() only ever awards class A to the
+            # "hard" incident categories, so a pure election story could never
+            # be class A however high it scored. Ranking them first fixes that
+            # without touching the score or the gates.
+            #
             # 26 Oct owner "set the cycle to hourly and breaking news": inside a
             # tier the freshest story now leads, so an hour-old item beats a
             # twenty-hour-old one and the card reads as breaking news rather
@@ -994,7 +1033,8 @@ def build_digest(cands, catchup=False):
                 age_bucket = round(min(float(c.get("age_hours") or 99), 48) / 6)
             except Exception:
                 age_bucket = 8
-            return (0 if "political_major" in c.get("categories", []) else 1,
+            return (0 if _is_election(_cand_text(c)) else 1,
+                    0 if "political_major" in c.get("categories", []) else 1,
                     0 if c["class"] == "A" else 1,
                     age_bucket, -(c.get("score") or 0))
         picks = []
@@ -1529,9 +1569,11 @@ def one_cycle():
     cyc = monitor.run_cycle(26 if _cu else cfg["rules"]["max_post_age_hours"],
                             120)  # owner 27 Sep: full breadth every run
 
-    def _prio(c):  # politics & main news first, then by score
+    def _prio(c):  # owner 16 Nov "cover full up election": election & poll
+                   # coverage first, then politics & main news, then by score
+        elec = _is_election(_cand_text(c))
         main = bool(set(c.get("categories", [])) & MAIN_CATS) or c.get("class") == "A"
-        return (0 if main else 1, -(c.get("score") or 0))
+        return (0 if elec else 1, 0 if main else 1, -(c.get("score") or 0))
     cyc["candidates"].sort(key=_prio)
     if cyc["errors"] and cyc["feeds_ok"] == 0:
         alert("All monitored feeds failed", "\n".join(cyc["errors"]))
