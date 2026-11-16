@@ -662,7 +662,16 @@ def casualty_allowed(c):
 DIGEST_SLOTS = tuple(range(24))  # owner 26 Sep: hourly, 24/7, never stop
 CARDS_PER_DAY = 24          # cap only guards flooding; cadence = gap_min >= 60
 DIGEST_SIZE = 5   # owner 16 Sep: every card carries 5 important news items
-DIGEST_REGIONS = ("hyderabad", "telangana", "india", "world")  # 26 Sep: + world
+# 26 Sep: + world.  16 Nov owner "lessen world news, only important world news
+# like US, IRAN, ISREAL": "world" is NO LONGER a guaranteed slot. Every card used
+# to spend 1 of its 5 bullets on world news whether or not anything important was
+# happening abroad, which is exactly what the owner objected to. World stories now
+# only ride the card when they outrank local/national news on merit, and the
+# WORLD_MAJOR gate in monitor.score() only lets major-power stories (US, Iran,
+# Israel, Russia, China, UK, EU, NATO, Pakistan, Japan, France, Germany, Saudi,
+# Syria, Iraq, Korea, Afghanistan) reach that bar - plus a genuine mass-casualty
+# incident abroad, which stays important by severity.
+DIGEST_REGIONS = ("hyderabad", "telangana", "india")
 # owner 16 Sep + REFINED 26 Sep: casualty news rides cards ONLY as MAJOR
 # accidents (5+ dead / 15+ injured / train-plane-collapse-stampede class, with
 # a named place) or famous-personality deaths - always neutral wire tone,
