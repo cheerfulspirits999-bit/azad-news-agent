@@ -412,7 +412,23 @@ ELECTION_RE = re.compile(
     r"local body polls?|municipal election|panchayat polls?|"
     r"graduate constituency|teachers constituency|election commission|eci|"
     r"chief electoral officer|electoral rolls?|repoll|uncontested|"
-    r"run-?off (?:election|poll|vote))\b", re.I)
+    r"run-?off (?:election|poll|vote)|polling|poll turnout|voter turnout|"
+    # 16 Nov owner "cover full up election": these were missing, and a story
+    # about the ELECTION MACHINERY alone - "Model code of conduct enforced
+    # across Uttar Pradesh from tonight", "Electioneering peaks in UP as
+    # campaign trail enters last leg" - carried no other election keyword, so
+    # it fell through and lost its slot. Proven by /tmp/test_up_election.py.
+    r"model code of conduct|election code of conduct|electioneering|"
+    r"campaign trail|evm|vvpat|sarpanch|gram panchayat|zila parishad|"
+    r"panchayati raj|corporator|councillor|postal ballot|ballot box|"
+    r"unopposed|vote share|vote bank|nomination filing|"
+    r"municipal corporation election|corporation election|"
+    r"urban local bod(?:y|ies)|local body election|panchayat election|"
+    r"election results?|assembly election|parliamentary election|"
+    r"lok sabha election|reelection|re-election|seat sharing|"
+    # a bare "turnout" would false-positive on a protest ("big turnout of
+    # protesters"), so only a PERCENTAGE turnout counts as election news.
+    r"\d+\s?(?:%|per cent|percent)\s?(?:voter\s?)?turnout)\b", re.I)
 
 
 def _is_election(text):
