@@ -16,7 +16,7 @@
     "panel_black": "#141414",
     "image_width": 1200,
     "image_height": 1500,
-    "default_footer": "Verified latest news: Hyderabad • Telangana • India • World",
+    "default_footer": "Verified latest news: Hyderabad \u2022 Telangana \u2022 India \u2022 World",
     "credit_line": "Abu Aimal & Aimal Akram"
   },
   "feeds": [
@@ -142,22 +142,23 @@
     },
     "category_weights": {
       "accident_casualty": 30,
-      "disaster_weather": 30,
-      "fire_explosion": 28,
-      "security_terror": 28,
-      "major_crime": 22,
-      "police_operation": 20,
       "court_judgment": 24,
-      "govt_announcement": 24,
-      "political_major": 26,
-      "traffic_disruption": 20,
-      "public_safety_warning": 26,
-      "infrastructure_failure": 24,
-      "protest_major": 22,
+      "disaster_weather": 30,
       "economic_major": 24,
+      "election_poll": 30,
+      "fire_explosion": 28,
+      "govt_announcement": 24,
+      "infrastructure_failure": 24,
       "international_conflict": 18,
+      "major_crime": 22,
       "missing_person": 18,
-      "routine": 0
+      "police_operation": 20,
+      "political_major": 26,
+      "protest_major": 22,
+      "public_safety_warning": 26,
+      "routine": 0,
+      "security_terror": 28,
+      "traffic_disruption": 20
     }
   },
   "publish": {
