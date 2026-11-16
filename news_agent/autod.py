@@ -126,7 +126,19 @@ _RU_FALLBACK_MODELS = (
 # bounded by _RU_DAILY_HARD (24 cycles x 5 lanes = 120 in a pathological day,
 # under the 150 hard ceiling). Free lanes (Gemini, OpenRouter :free) bypass the
 # budget entirely.
-_RU_BATCH_TRIES = int(os.environ.get("RU_BATCH_TRIES", "5"))
+#
+# 16 Nov round 2: 5 -> 7. The diag-translator probe run at 06:11 UTC today settled
+# which lanes are actually reachable:
+#     GEMINI_API_KEY  set(len=53)   -> lanes 1-5 live, all free
+#     OPENAI_API_KEY  MISSING       -> lane 6 is DEAD and is skipped for free
+#     RU_API_KEY      set(len=73)   -> OpenRouter reachable
+#     RAW HTTP PROBE, OpenRouter :free model -> HTTP 200, real completion
+# so lane 7 (nvidia/nemotron-3-ultra-550b-a55b:free) is a LIVE lane of a completely
+# different model family from the five Gemini variants that just echoed, and it is
+# a :free slug so _ru_is_free() returns True and it bypasses the paid budget
+# entirely - the two extra tries cost nothing. Measured effect of 3 -> 5: accepted
+# lines went 1 -> 2, and gemini-flash-lite-latest (lane 5) started being reached.
+_RU_BATCH_TRIES = int(os.environ.get("RU_BATCH_TRIES", "7"))
 _RU_CARD_MIN = 3
 
 _RU_DAILY_CAP = int(os.environ.get("RU_DAILY_CAP", "46"))
