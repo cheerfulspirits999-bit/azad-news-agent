@@ -508,6 +508,60 @@ def _cand_text(c):
                      (c.get("suggested_headline") or "")])
 
 
+# 16 Nov owner "cover all war news, cyber attacks etc, all big incidents
+# whichever section it may be": a war / terror / cyber / major-disaster /
+# mass-casualty story is a big incident and must reach the card whatever its
+# region or category. classify() is keyword-based and misses some of these
+# (e.g. "Israeli strikes in Gaza kill five" was tagged only
+# accident_casualty), so the digest detects them from the text directly,
+# the same way it detects election stories.
+_WAR_CYBER_WORDS = (
+    "war|wars|wartime|missile|missiles|airstrike|airstrikes|air strike|"
+    "bomb|bombs|bombing|bombed|invasion|invade|invaded|ceasefire|military|"
+    "battle|battles|combat|weapon|weapons|airbase|air base|shelling|shelled|"
+    "grenade|grenades|fighter jet|fighter jets|warship|warships|nuclear|"
+    "army|armies|soldier|soldiers|navy|air force|"
+    "terror|terrorist|terrorists|terrorism|hezbollah|houthi|houthis|hamas|"
+    "militant|militants|suicide bomb|suicide bomber|extremist|extremists|"
+    "isis|taliban|al[- ]?qaeda|jaish|lashkar|hijack|hijacked|"
+    "cyber ?attack|cyberattack|cyber strike|cyber warfare|cyber threat|"
+    "hacked|hacking|hacker|hackers|ransomware|malware|data breach|phishing|"
+    "spyware|trojan|"
+    "drone attack|drone strike|rocket attack|rocket strike|missile strike|"
+    "strike|strikes|strike on|strikes on|strike in|strikes in|strike at|strikes at|"
+    "strike kills|strikes kill|strike hits|strikes hit|"
+    "(?<!heart )(?<!panic )attack|attacks|attacked")
+_OTHER_BIG_WORDS = (
+    "earthquake|tsunami|volcano|volcanic|landslide|hurricane|tornado|"
+    "wildfire|avalanche|"
+    "blast|explosion|explosions|stampede|building collapse|bridge collapse|"
+    "mass casualty|mass casualties|deadly|"
+    "massive fire|massive blast|massive explosion|massive crash")
+_BI_NUM = (r"(?:ten|eleven|twelve|dozens|scores|many|multiple|\d{2,})")
+_BI_CAS = r"(?:killed|dead|injured|wounded|missing)"
+WAR_CYBER_RE = re.compile(r"\b(?:" + _WAR_CYBER_WORDS + r")\b", re.I)
+BIG_INCIDENT_RE = re.compile(
+    r"(\b(?:" + _WAR_CYBER_WORDS + r"|" + _OTHER_BIG_WORDS + r")\b"
+    r"|\b" + _BI_NUM + r"\s+" + _BI_CAS + r"\b"
+    r"|\b(?:kill|kills|killed|killing|dead|injured|wounded)\s+"
+    + _BI_NUM + r"\b)",
+    re.I)
+
+
+def _is_war_cyber(text):
+    """True for war, terror or cyber-attack stories (owner 16 Nov, top tier).
+
+    Called on the HEADLINE: genuine war news announces itself there, whereas
+    excerpt-only matches ("a Yemeni military source", "attacks on
+    candidates") are big incidents but not war headlines."""
+    return bool(WAR_CYBER_RE.search(text or ""))
+
+
+def _is_big_incident(text):
+    """True when a story is a war, terror, cyber or other major incident."""
+    return bool(BIG_INCIDENT_RE.search(text or ""))
+
+
 MAIN_CATS = {"election_poll", "political_major", "govt_announcement", "economic_major",
              "court_judgment", "protest_major", "police_operation",
              "disaster_weather", "international_conflict"}
@@ -1002,8 +1056,12 @@ def build_digest(cands, catchup=False):
                     continue  # 28 Sep: stories that rode a recent card must
                               # never re-enter the pool - they only came here
                               # to be net-dropped, starving picks to <3
-                _ban = bool(set(c.get("categories", [])) & NO_CARD_CATS) \
-                       or bool(NO_CARD_RX.search(c["title"]))
+                # 16 Nov owner "cover all war news, cyber attacks etc, all big
+                # incidents whichever section": a war / cyber / major-incident
+                # story is never casualty-banned, whatever its category.
+                _ban = (bool(set(c.get("categories", [])) & NO_CARD_CATS)
+                        or bool(NO_CARD_RX.search(c["title"]))) \
+                       and not _is_big_incident(_cand_text(c))
                 _cv = casualty_allowed(c) if _ban else False
                 if _ban and not (_cv == "celeb"
                                  or (_cv == "major"
@@ -1125,12 +1183,34 @@ def build_digest(cands, catchup=False):
                 age_bucket = round(min(float(c.get("age_hours") or 99), 48) / 6)
             except Exception:
                 age_bucket = 8
-            return (0 if _is_election(_cand_text(c)) else 1,
+            # 16 Nov owner "cover all war news, cyber attacks etc, all big
+            # incidents": war / cyber first, then other big incidents, then
+            # election, then politics, then Class A, freshest, score.
+            return (0 if _is_war_cyber(c.get("title")) else 1,
+                    0 if _is_big_incident(_cand_text(c)) else 1,
+                    0 if _is_election(_cand_text(c)) else 1,
                     0 if "political_major" in c.get("categories", []) else 1,
                     0 if c["class"] == "A" else 1,
                     age_bucket, -(c.get("score") or 0))
         picks = []
+        # 16 Nov owner "cover all war news, cyber attacks etc, all big
+        # incidents whichever section it may be": war / cyber / major-incident
+        # stories are picked FIRST, before the region leads, so a major
+        # incident is never crowded out by local leads or the election quota.
+        for x in sorted(pool, key=rank):
+            if len(picks) >= DIGEST_SIZE:
+                break
+            if not _is_war_cyber(x[0].get("title")):
+                continue
+            if not x[2] and _line_h(x[1]) in _miss_bank:
+                _skip["bank"] += 1
+                continue  # banked (recently failed RU) - next story tries
+            if x not in picks and \
+               not any(_same_story(x[0]["title"], p[0]["title"]) for p in picks):
+                picks.append(x)
         for reg in DIGEST_REGIONS:
+            if len(picks) >= DIGEST_SIZE:
+                break
             best = sorted((x for x in pool if x[0]["region"] == reg
                            and x not in picks), key=rank)
             for b in best:
