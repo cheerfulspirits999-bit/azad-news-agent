@@ -403,6 +403,30 @@ FIRE_METAPHOR = re.compile(r"(fires?\s+back|under\s+fire|opening\s+fire|"
                            r"line\s+of\s+fire|fire\s+brands)")
 
 
+MILITARY_RX = re.compile(
+    r"\b(missile|air ?strikes?|airstrikes?|drone (?:attack|strike)s?|"
+    r"shelling|shelled|bombard\w+|artillery|war ?planes?|fighter jets?|"
+    r"troops|soldiers|militants?|insurgents?|rebels?|militia|ceasefire|"
+    r"invasion|incursion|front ?line|air defence|air defense|"
+    r"military (?:strike|operation|offensive|action|base)|war)\b", re.I)
+# a conflict EVENT plus a conflict PLACE is also war ("Iran attacks on
+# Kuwait") - the event word alone would drag in "heart attack" and "knife
+# attack", and the place alone would drag in ordinary foreign politics.
+WAR_EVENT_RX = re.compile(
+    r"\b(attacks?|attacked|strikes?|struck|shelled|killed|offensive|"
+    r"raids?|retaliat\w+|bombed|bombing)\b", re.I)
+WAR_PLACE_RX = re.compile(
+    r"\b(Ukraine|Russia|Russian|Crimea|Kyiv|Odesa|Moscow|Gaza|Israel|"
+    r"Israeli|Palestin\w+|West Bank|Lebanon|Beirut|Syria|Damascus|Yemen|"
+    r"Houthi|Iran|Iranian|Tehran|Iraq|Baghdad|Kuwait|Bahrain|Qatar|Qeshm|"
+    r"Saudi|Riyadh|Jordan|Sudan|Khartoum|Somalia|Libya|Mali|Nigeria|"
+    r"Afghanistan|Kabul|Taiwan|Myanmar|Armenia|Azerbaijan|Hamas|Hezbollah|"
+    r"Al-?Qaeda|ISIS|Islamic State|NATO|Pentagon)\b", re.I)
+LABOUR_RX = re.compile(
+    r"\b(bandh|trade union|workers|employees|hunger strike|dharna|"
+    r"rail roko|transport strike|auto strike|bus strike|rtc)\b", re.I)
+
+
 def detect_categories(item):
     """Category is decided from the TITLE. Excerpt is only used to corroborate,
     never to invent a category -- this is what keeps celebrity fluff from
@@ -417,6 +441,17 @@ def detect_categories(item):
                 break
     if "fire_explosion" in hits and FIRE_METAPHOR.search(title):
         hits.remove("fire_explosion")
+    # 16 Nov: a MILITARY strike is not a labour strike. "Kuwait, Bahrain face
+    # new Iran attacks after US strike on Qeshm Island" was tagged
+    # traffic_disruption on the word "strike" and framed as a bandh, so war
+    # news could never be written up correctly.
+    _war_txt = title + " " + excerpt
+    if MILITARY_RX.search(_war_txt) or \
+            (WAR_EVENT_RX.search(_war_txt) and WAR_PLACE_RX.search(_war_txt)):
+        if "international_conflict" not in hits:
+            hits.append("international_conflict")
+        if "traffic_disruption" in hits and not LABOUR_RX.search(_war_txt):
+            hits.remove("traffic_disruption")
     return hits or ["routine"]
 
 
