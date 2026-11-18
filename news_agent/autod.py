@@ -562,6 +562,48 @@ def _is_big_incident(text):
     return bool(BIG_INCIDENT_RE.search(text or ""))
 
 
+# 16 Nov owner "cricket matches are also going to start, cover that also, give
+# updates on that also": cricket (and other sport) stories are covered on the
+# card. Detected from the text like election and war stories.
+CRICKET_RE = re.compile(
+    r"\b(cricket|IPL|T20|ODI|BCCI|ICC|batsman|batsmen|bowler|bowlers|"
+    r"wicket|wickets|innings|fielder|fielders|umpire|umpires|Ashes|Ranji|"
+    r"Duleep|Irani Cup|Cricket World Cup|T20 World Cup|ODI World Cup|"
+    r"Test match|one-day international|twenty20|all-rounder|"
+    r"spinner|pacers?|wicket-keeper|boundary|sixer|sixers|maiden over|"
+    r"powerplay|death over|DRS|no-ball|free hit|impact player|super over|"
+    r"Duckworth|DLS|rain rule|LBW|stumped|Mankad|hat-trick|five-wicket|"
+    r"ten-wicket|double century|golden duck|not out|retired hurt|"
+    r"concussion substitute|slow over rate|playing XI|final XI|"
+    r"purple cap|orange cap|player of the match|man of the match|"
+    r"player of the series|man of the series|most runs|most wickets|"
+    r"leading run-scorer|leading wicket-taker|net run rate|points table|"
+    r"playoffs?|eliminator|challenger|league stage|knockout|"
+    r"semi-final|quarter-final|title clash|"
+    r"first-class|List A|T20I|county cricket|The Hundred|Big Bash|"
+    r"BBL|PSL|CPL|SA20|ILT20|ICC rankings|World Test Championship|"
+    r"Champions Trophy|Super Six|Super 12|group stage|knockout stage|"
+    r"run rate|strike rate|batting average|bowling average|"
+    r"match-winner|centurion|half-century|fifty|hundred|duck|"
+    r"partnership|chase|target|defend the total|"
+    r"strategic timeout|team huddle|dressing room|warm-up match|"
+    r"tour match|international career|domestic career|"
+    r"auction|retention|purse|released|traded|draft pick|"
+    r"marquee|uncapped|overseas player|domestic player|"
+    r"rookie|debut|debutant|"
+    r"kabaddi|football|hockey|badminton|tennis|"
+    r"Olympics|Asian Games|Commonwealth Games|"
+    r"gold medal|silver medal|bronze medal|"
+    r"FIFA|Premier League|Champions League|"
+    r"NBA|NFL|Formula 1|Grand Prix)\b",
+    re.I)
+
+
+def _is_cricket(text):
+    """True for cricket / sport stories (owner 16 Nov)."""
+    return bool(CRICKET_RE.search(text or ""))
+
+
 MAIN_CATS = {"election_poll", "political_major", "govt_announcement", "economic_major",
              "court_judgment", "protest_major", "police_operation",
              "disaster_weather", "international_conflict"}
@@ -1189,6 +1231,7 @@ def build_digest(cands, catchup=False):
             return (0 if _is_war_cyber(c.get("title")) else 1,
                     0 if _is_big_incident(_cand_text(c)) else 1,
                     0 if _is_election(_cand_text(c)) else 1,
+                    0 if _is_cricket(_cand_text(c)) else 1,
                     0 if "political_major" in c.get("categories", []) else 1,
                     0 if c["class"] == "A" else 1,
                     age_bucket, -(c.get("score") or 0))
@@ -1865,8 +1908,18 @@ def one_cycle():
             continue
         # owner 26 Sep: BREAKING posts as it happens; everything else rides
         # the hourly card. Breaking = Class A, score >= 88, politics/main-news.
-        _breaking = (c.get("class") == "A" and (c.get("score") or 0) >= 88
-                     and bool(set(c.get("categories", [])) & MAIN_CATS))
+        # 16 Nov owner "any major incident post breaking news immediately":
+        # war / cyber and other big-incident stories also break at once, so a
+        # major incident never waits for the hourly card.
+        _breaking = ((c.get("class") == "A" and (c.get("score") or 0) >= 88
+                      and bool(set(c.get("categories", [])) & MAIN_CATS))
+                     or (_is_war_cyber(c.get("title"))
+                         and (c.get("score") or 0) >= 55)
+                     or (_is_big_incident(_cand_text(c))
+                         and (c.get("score") or 0) >= 65))
+        # never post as breaking a story that already rode this cycle's card
+        if _breaking and dg and story.get("topic") in (dg.get("story_topics") or []):
+            _breaking = False
         if not _breaking:
             log("held for the next card:", story["slug"])
             continue
