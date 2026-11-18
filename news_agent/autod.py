@@ -566,36 +566,22 @@ def _is_big_incident(text):
 # updates on that also": cricket (and other sport) stories are covered on the
 # card. Detected from the text like election and war stories.
 CRICKET_RE = re.compile(
-    r"\b(cricket|IPL|T20|ODI|BCCI|ICC|batsman|batsmen|bowler|bowlers|"
-    r"wicket|wickets|innings|fielder|fielders|umpire|umpires|Ashes|Ranji|"
-    r"Duleep|Irani Cup|Cricket World Cup|T20 World Cup|ODI World Cup|"
-    r"Test match|one-day international|twenty20|all-rounder|"
-    r"spinner|pacers?|wicket-keeper|boundary|sixer|sixers|maiden over|"
-    r"powerplay|death over|DRS|no-ball|free hit|impact player|super over|"
-    r"Duckworth|DLS|rain rule|LBW|stumped|Mankad|hat-trick|five-wicket|"
-    r"ten-wicket|double century|golden duck|not out|retired hurt|"
-    r"concussion substitute|slow over rate|playing XI|final XI|"
-    r"purple cap|orange cap|player of the match|man of the match|"
-    r"player of the series|man of the series|most runs|most wickets|"
-    r"leading run-scorer|leading wicket-taker|net run rate|points table|"
-    r"playoffs?|eliminator|challenger|league stage|knockout|"
-    r"semi-final|quarter-final|title clash|"
-    r"first-class|List A|T20I|county cricket|The Hundred|Big Bash|"
-    r"BBL|PSL|CPL|SA20|ILT20|ICC rankings|World Test Championship|"
-    r"Champions Trophy|Super Six|Super 12|group stage|knockout stage|"
-    r"run rate|strike rate|batting average|bowling average|"
-    r"match-winner|centurion|half-century|fifty|hundred|duck|"
-    r"partnership|chase|target|defend the total|"
-    r"strategic timeout|team huddle|dressing room|warm-up match|"
-    r"tour match|international career|domestic career|"
-    r"auction|retention|purse|released|traded|draft pick|"
-    r"marquee|uncapped|overseas player|domestic player|"
-    r"rookie|debut|debutant|"
-    r"kabaddi|football|hockey|badminton|tennis|"
-    r"Olympics|Asian Games|Commonwealth Games|"
-    r"gold medal|silver medal|bronze medal|"
-    r"FIFA|Premier League|Champions League|"
-    r"NBA|NFL|Formula 1|Grand Prix)\b",
+    r"\b(cricket|cricketer|IPL|BCCI|ICC|T20I?|ODIs?|Ranji|Duleep|"
+    r"Irani Cup|Ashes|Asia Cup|World Cup|Champions Trophy|"
+    r"World Test Championship|county cricket|Big Bash|BBL|PSL|CPL|"
+    r"SA20|ILT20|Test match|Test series|one-day international|"
+    r"wickets?|batsman|batsmen|batters?|bowlers?|bowling|innings|"
+    r"all-rounder|wicket-keeper|spinners?|pacers?|seamers?|fielders?|"
+    r"umpires?|LBW|no-ball|free hit|super over|powerplay|maiden over|"
+    r"hat-trick|five-wicket|ten-wicket|half-century|"
+    r"(?:scored|hits?|smashed|struck) (?:a|his|her) century|"
+    r"double century|century stand|net run rate|run-chase|"
+    r"playing XI|man of the (?:match|series)|player of the (?:match|series)|"
+    r"stumped|Mankad|Duckworth|DRS|DLS|"
+    r"football|soccer|hockey|kabaddi|badminton|Wimbledon|Grand Slam|"
+    r"Olympics|Asian Games|Commonwealth Games|FIFA|Premier League|"
+    r"Champions League|NBA|NFL|Formula 1|Grand Prix|"
+    r"gold medal|silver medal|bronze medal)\b",
     re.I)
 
 
@@ -615,6 +601,14 @@ def eligible(c):
     age = c.get("age_hours") or 99
     if age > MAX_AGE_HOURS:
         return False  # stale news is refused outright
+    # 16 Nov owner "any major incident post breaking news immediately": a war,
+    # cyber or other big incident clears the class/score bar on its own. Before
+    # this, a BBC/Al Jazeera war story (class C, score ~62, needs >=72) was
+    # refused here and never reached the breaking test at all.
+    if _is_war_cyber(c.get("title")) and score >= 50:
+        return True
+    if _is_big_incident(_cand_text(c)) and score >= 60:
+        return True
     if cls in ("A", "B"):
         return True
     if set(c.get("categories", [])) & MAIN_CATS and score >= 60:
@@ -1236,12 +1230,17 @@ def build_digest(cands, catchup=False):
                     0 if c["class"] == "A" else 1,
                     age_bucket, -(c.get("score") or 0))
         picks = []
+        # 16 Nov owner "cricket matches are also going to start, cover that
+        # also": when the pool holds a cricket story one slot is kept for it,
+        # so a heavy war day cannot leave the card with no cricket at all.
+        _cric_avail = any(_is_cricket(_cand_text(x[0])) for x in pool)
+        _war_cap = DIGEST_SIZE - 1 if _cric_avail else DIGEST_SIZE
         # 16 Nov owner "cover all war news, cyber attacks etc, all big
         # incidents whichever section it may be": war / cyber / major-incident
         # stories are picked FIRST, before the region leads, so a major
         # incident is never crowded out by local leads or the election quota.
         for x in sorted(pool, key=rank):
-            if len(picks) >= DIGEST_SIZE:
+            if len(picks) >= _war_cap:
                 break
             if not _is_war_cyber(x[0].get("title")):
                 continue
@@ -1251,6 +1250,19 @@ def build_digest(cands, catchup=False):
             if x not in picks and \
                not any(_same_story(x[0]["title"], p[0]["title"]) for p in picks):
                 picks.append(x)
+        # cricket slot: one match story rides every card when one is available
+        for x in sorted(pool, key=rank):
+            if len(picks) >= DIGEST_SIZE:
+                break
+            if not _is_cricket(_cand_text(x[0])):
+                continue
+            if not x[2] and _line_h(x[1]) in _miss_bank:
+                _skip["bank"] += 1
+                continue  # banked (recently failed RU) - next story tries
+            if x not in picks and \
+               not any(_same_story(x[0]["title"], p[0]["title"]) for p in picks):
+                picks.append(x)
+                break  # exactly one cricket slot per card
         for reg in DIGEST_REGIONS:
             if len(picks) >= DIGEST_SIZE:
                 break
@@ -1914,7 +1926,7 @@ def one_cycle():
         _breaking = ((c.get("class") == "A" and (c.get("score") or 0) >= 88
                       and bool(set(c.get("categories", [])) & MAIN_CATS))
                      or (_is_war_cyber(c.get("title"))
-                         and (c.get("score") or 0) >= 55)
+                         and (c.get("score") or 0) >= 50)
                      or (_is_big_incident(_cand_text(c))
                          and (c.get("score") or 0) >= 65))
         # never post as breaking a story that already rode this cycle's card
