@@ -447,7 +447,7 @@ ALLOWED_TOKENS = {"Police", "Union", "Officials", "Reports", "Government",
                   "Railway", "Station", "Airport", "Services", "Workers"}
 
 
-UR_TOKENS = {"Mazeed", "Waqia", "Mutabiq", "Mulzameen", "Mulzim", "Giraftaar",
+UR_TOKENS = {"Zarai", "Hamla", "Halak", "Afraad", "Larai", "Mazeed", "Waqia", "Mutabiq", "Mulzameen", "Mulzim", "Giraftaar",
              "Zabt", "Tehqiqat", "Jaari", "Kaha", "Ne", "Ke", "Ko", "Mein",
              "Par", "Hai", "Hain", "Gaya", "Gayi", "Kar", "Liya", "Ka", "Ki",
              "Kiya", "Gaye", "Lon", "Log", "Silsile", "Tehat", "Darj", "Qeemat",
@@ -500,20 +500,12 @@ def _extend(c, en, ur):
             continue
         en.append(line_en)
         ur.append(line_ur)
-    # fill towards the owner's 5-bullet card with grounded excerpt sentences
-    for sent in re.split(r"(?<=[.!?])\s+", _dedateline(c.get("excerpt", ""))):
-        if len(en) >= 5:
-            break
-        s2 = sent.strip()
-        if not (40 <= len(s2) <= 95):
-            continue
-        if any(s2 == x for x in en):
-            continue
-        if re.search(r"^(He|She|They|It|His|Her|Their|This|That|There|The same)\b", s2):
-            continue
-        s2 = s2 if s2.endswith(".") else s2 + "."
-        en.append(s2)
-        ur.append(f"Zarai ke mutabiq {s2}")
+    # 16 Nov: this used to pad the post with raw excerpt sentences whose
+    # "Roman Urdu" was the SAME English sentence behind "Zarai ke mutabiq",
+    # which (a) put English in the Urdu line and (b) failed the grounding
+    # check on the word "Zarai", refusing the whole post. Owner's rule is
+    # English + clean Roman Urdu, so the padding is gone: build() completes
+    # short posts with a properly written Roman-Urdu line instead.
     return en, ur
 
 
@@ -618,7 +610,118 @@ def _frame_politics(c):
     return [en1, en2, en3], [ur1, ur2, ur3]
 
 
+# --------------------------------------------------------------------------
+# 16 Nov owner "cover all war news ... for war news you have to see either BBC
+# or Al-Jazeera". There was no war frame at all: a BBC/Al Jazeera war story hit
+# the casualty or labour-strike builder and was refused, so it could never be
+# posted as breaking news. This frame reports a conflict plainly and keeps
+# every proper noun and digit inside the source text.
+CONFLICT_PLACE = re.compile(
+    r"\b(Ukraine|Russia|Russian|Crimea|Odesa|Kyiv|Moscow|Gaza|Israel|Israeli|"
+    r"Palestinian|Palestinians|West Bank|Lebanon|Beirut|Syria|Damascus|Yemen|"
+    r"Houthi|Iran|Iranian|Tehran|Iraq|Baghdad|Kuwait|Bahrain|Qatar|Qeshm|"
+    r"Saudi|Riyadh|Jordan|Egypt|Sudan|Khartoum|Somalia|Mali|Nigeria|Libya|"
+    r"Afghanistan|Kabul|Pakistan|Taiwan|China|Myanmar|Armenia|Azerbaijan|"
+    r"Kashmir|Manipur|Imphal|Poland|Belarus|Estonia|Finland|Venezuela)\b")
+CONFLICT_MEANS = re.compile(
+    r"\b(missile|drone|rocket|artillery|shelling|air ?strike|airstrike|"
+    r"bomb|bombing|gunfire|shooting|explosion)\b", re.I)
+CONFLICT_EVENT = re.compile(
+    r"\b(attack|attacks|attacked|strike|strikes|struck|shelling|shelled|"
+    r"bombard\w*|offensive|invasion|incursion|raid|raids|war|fighting|"
+    r"clash|clashes|killed|kill|kills|militants?|rebels?|troops|forces|"
+    r"blast|explosion|collapse|collapses|collapsed|operation|drone|"
+    r"missile|ceasefire|captured|seizes|advance)\b", re.I)
+
+
+DEMONYM = {"Russian": "Russia", "Israeli": "Israel", "Iranian": "Iran",
+           "Ukrainian": "Ukraine", "Syrian": "Syria", "Yemeni": "Yemen",
+           "Iraqi": "Iraq", "Afghan": "Afghanistan", "Pakistani": "Pakistan",
+           "Lebanese": "Lebanon", "Egyptian": "Egypt", "Sudanese": "Sudan",
+           "Palestinians": "Palestinian", "Houthi": "Yemen"}
+CONFLICT_TOLL = re.compile(
+    r"(?:kill\w*|dead|died|death toll\w*)\D{0,24}?\b(\d{1,4}|one|two|three|"
+    r"four|five|six|seven|eight|nine|ten)\b|"
+    r"\b(\d{1,4}|one|two|three|four|five|six|seven|eight|nine|ten)\b"
+    r"\D{0,16}?(?:killed|dead|died)", re.I)
+
+
+def _conflict_place(title, excerpt):
+    """The place the report is ABOUT - and only when the text actually puts
+    the event THERE ("attacks on Ukraine", "killed in Gaza"). The attacker in
+    subject position ("Israel launches ground push") is never used as the
+    location, because the casualties are usually somewhere else."""
+    victim = re.compile(
+        r"\b(?:attacks?|attacked|strikes?|struck|shelling|shelled|raids?|"
+        r"bombard\w*|killed|died|fighting|clashes?|offensive|operation|"
+        r"war|blast|explosion)\b[^.]{0,30}?\b(?:on|in|at|into|inside|"
+        r"across)\s+(?:the\s+)?([A-Z][\w-]+)", re.I)
+    for src in (title, excerpt):
+        for m in victim.finditer(src or ""):
+            cand = m.group(1)
+            if CONFLICT_PLACE.fullmatch(cand) and cand not in DEMONYM:
+                return cand
+    # "Kuwait, Bahrain face new Iran attacks": the place that is ACTED UPON
+    # leads the headline and is followed by a receiving verb.
+    recv = re.compile(
+        r"^([A-Z][\w-]+)(?:,\s*[A-Z][\w-]+)?\s+(?:faces?|faced|hit|hits|"
+        r"struck|mourns?|reels?|braces?|repels?|says?|reports?)\b")
+    m = recv.match(title or "")
+    if m and CONFLICT_PLACE.fullmatch(m.group(1)) and m.group(1) not in DEMONYM:
+        return m.group(1)
+    return None
+
+
+def _conflict_toll(text):
+    m = CONFLICT_TOLL.search(_strip_money(_dedateline(text)))
+    if not m:
+        return None
+    v = (m.group(1) or m.group(2) or "").strip()
+    if v.lower() in WORD_NUM:
+        return WORD_NUM[v.lower()]
+    return v if re.fullmatch(r"\d{1,4}", v) and v != "0" else None
+
+
+def _frame_conflict(c):
+    title, excerpt = c["title"], _dedateline(c["excerpt"])
+    if not CONFLICT_EVENT.search(title):
+        return None
+    text = title + " " + excerpt
+    place = _conflict_place(title, excerpt)
+    n = _conflict_toll(text)
+    if not place and not n:
+        return None  # nothing solid to report: leave it to the hourly card
+    low = text.lower()
+    if n and place:
+        en1 = f"At least {n} people were killed in {place}, reports said."
+        ur1 = f"{place} mein kam az kam {n} afraad halak ho gaye."
+    elif n:
+        # the text names no clear location for the casualties - say so plainly
+        # rather than pinning the deaths on the attacker's country
+        en1 = f"At least {n} people were killed, reports said."
+        ur1 = f"Kam az kam {n} afraad halak ho gaye."
+    elif re.search(r"\battack", low):
+        en1 = f"An attack was reported in {place}, reports said."
+        ur1 = f"{place} mein hamla report hua hai."
+    elif re.search(r"\bstrike|\bstruck", low):
+        en1 = f"A strike was reported in {place}, reports said."
+        ur1 = f"{place} mein strike report hui hai."
+    else:
+        en1 = f"Fighting was reported in {place}, reports said."
+        ur1 = f"{place} mein larai report hui hai."
+    means = _m(CONFLICT_MEANS, text)
+    if means:
+        en2 = f"{means.capitalize()} attacks were reported, officials said."
+        ur2 = f"Officials ke mutabiq {means.lower()} hamle report hue."
+    else:
+        en2 = "Officials said the situation is being monitored."
+        ur2 = "Officials ke mutabiq soorat-e-haal par nazar rakhi ja rahi hai."
+    return [en1, en2, AWAIT_EN], [ur1, ur2, AWAIT_UR]
+
+
 BUILDERS = [
+    # war first: a conflict story must not be framed as a bandh or a road crash
+    (("international_conflict",), _frame_conflict),
     (("traffic_disruption", "protest_major"), _frame_strike),
     (("accident_casualty", "missing_person"), _frame_casualty),
     (("fire_explosion",), _frame_fire),
@@ -1849,8 +1952,12 @@ def build(candidate):
                 continue  # a bullet failed safety sanitisation - refuse frame
             en, ur = _drop_bad_pairs(en_s, ur_s)
             src_txt = candidate["title"] + " " + _dedateline(candidate["excerpt"])
-            if cats & {"fire_explosion", "accident_casualty"} and not _has_loc(src_txt):
-                continue  # casualty/fire stories must say WHERE
+            if cats & {"fire_explosion", "accident_casualty"} and not _has_loc(src_txt) \
+                    and not ("international_conflict" in cats
+                             and CONFLICT_PLACE.search(src_txt)):
+                continue  # casualty/fire stories must say WHERE (a war story
+                # says where with a country - _has_loc only knows Indian towns,
+                # so every foreign war report was refused here)
             ex_txt = _dedateline(candidate.get("excerpt", ""))
             if len(ex_txt) < 100:  # thin excerpt: bullets must carry key noun
                 key = max((t for t in re.findall(r"[A-Za-z]+",
