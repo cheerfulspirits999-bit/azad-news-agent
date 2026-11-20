@@ -125,16 +125,34 @@ def _cache_key(*parts):
 
 
 # ---------------------------------------------------------------- feed image
-def story_image(story):
-    """The image the feed published with this story, if any."""
+def story_images(story):
+    """Every picture this card could use, best first, de-duplicated.
+
+    20 Nov owner "now you are not adding photos": a card used to offer the
+    renderer exactly ONE url. News CDNs block hotlinking from CI runners, so a
+    single 403 meant no photo on the card at all - silently. A digest carries
+    up to five stories, so it has up to five pictures to try.
+    """
+    out = []
+    for v in (story.get("image_urls") or []):
+        if isinstance(v, str) and v.strip():
+            out.append(v.strip())
     for key in ("image_url", "image", "img", "photo"):
         v = story.get(key)
         if isinstance(v, str) and v.strip():
-            return v.strip()
-    # a digest carries several source stories - take the first that has art
-    for u in (story.get("source_urls") or []):
-        pass
-    return None
+            out.append(v.strip())
+    seen, uniq = set(), []
+    for u in out:
+        if u.lower().startswith(("http://", "https://")) and u not in seen:
+            seen.add(u)
+            uniq.append(u)
+    return uniq
+
+
+def story_image(story):
+    """The first picture this card could use, if any."""
+    imgs = story_images(story)
+    return imgs[0] if imgs else None
 
 
 # ------------------------------------------------------------------- pixabay
@@ -182,34 +200,42 @@ def prepare(story, w, h, use_pixabay=True):
     (story slug, source url) so a re-render never re-downloads.
     """
     slug = str(story.get("slug") or "card")
-    cand = story_image(story)
-    if not cand and use_pixabay and _pixabay_on():
-        cand = pixabay_image(story, os.environ.get("PIXABAY_API_KEY", ""))
-        if cand:
+    cands = story_images(story)
+    if not cands and use_pixabay and _pixabay_on():
+        p = pixabay_image(story, os.environ.get("PIXABAY_API_KEY", ""))
+        if p:
             _log(f"pixabay art for {slug}: {_query(story)!r}")
-    if not cand:
+            cands = [p]
+    if not cands:
+        _log(f"no feed art offered for {slug} - card renders without a photo")
         return None
 
-    key = _cache_key(slug, cand, w, h)
-    try:
-        os.makedirs(CACHE, exist_ok=True)
-        cached = os.path.join(CACHE, key + ".jpg")
-        if os.path.exists(cached):
-            img = _open(open(cached, "rb").read())
-            if img is not None:
-                return img
-    except Exception:
-        pass
+    for i, cand in enumerate(cands):
+        key = _cache_key(slug, cand, w, h)
+        try:
+            os.makedirs(CACHE, exist_ok=True)
+            cached = os.path.join(CACHE, key + ".jpg")
+            if os.path.exists(cached):
+                img = _open(open(cached, "rb").read())
+                if img is not None:
+                    return img
+        except Exception:
+            pass
 
-    img = _open(_get(cand))
-    if img is None:
-        _log(f"unusable feed art for {slug} (download failed or too small) - "
-             f"card renders without a photo")
-        return None
-    img = _crop_cover(img, w, h)
-    try:
-        img.save(os.path.join(CACHE, key + ".jpg"), "JPEG", quality=90,
-                 optimize=True)
-    except Exception:
-        pass
-    return img
+        img = _open(_get(cand))
+        if img is None:
+            _log(f"art {i + 1}/{len(cands)} unusable for {slug} "
+                 f"({cand[:60]}) - trying the next story's picture")
+            continue
+        img = _crop_cover(img, w, h)
+        try:
+            img.save(os.path.join(CACHE, key + ".jpg"), "JPEG", quality=90,
+                     optimize=True)
+        except Exception:
+            pass
+        if i:
+            _log(f"photo for {slug} came from story {i + 1} of {len(cands)}")
+        return img
+
+    _log(f"all {len(cands)} pictures failed for {slug} - no photo on the card")
+    return None
