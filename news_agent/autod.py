@@ -27,7 +27,7 @@ import signal
 import sys
 import time
 import traceback
-from datetime import datetime
+from datetime import datetime, timedelta
 
 BASE = os.path.dirname(os.path.abspath(__file__))
 sys.path.insert(0, BASE)
@@ -595,16 +595,87 @@ CRICKET_RE = re.compile(
     r"double century|century stand|net run rate|run-chase|"
     r"playing XI|man of the (?:match|series)|player of the (?:match|series)|"
     r"stumped|Mankad|Duckworth|DRS|DLS|"
-    r"football|soccer|hockey|kabaddi|badminton|Wimbledon|Grand Slam|"
-    r"Olympics|Asian Games|Commonwealth Games|FIFA|Premier League|"
-    r"Champions League|NBA|NFL|Formula 1|Grand Prix|"
+    r"football|soccer|FIFA|UEFA|AFC|Ballon d.Or|"
+    r"Premier League|Champions League|Europa League|La Liga|Serie A|"
+    r"Bundesliga|Ligue 1|Indian Super League|ISL|I-League|Santosh Trophy|"
+    r"Messi|Ronaldo|Mbappe|Haaland|Neymar|Man City|Man United|"
+    r"Real Madrid|Barcelona|Liverpool|Arsenal|Chelsea|Bayern|Juventus|"
+    r"derby|striker|midfielder|goalkeeper|penalty shoot-?out|"
+    r"free kick|corner kick|offside|hat ?trick|clean sheet|"
+    r"hockey|kabaddi|badminton|Wimbledon|Grand Slam|"
+    r"Olympics|Asian Games|Commonwealth Games|"
+    r"NBA|NFL|Formula 1|Grand Prix|"
     r"gold medal|silver medal|bronze medal)\b",
     re.I)
 
 
+# 20 Nov owner "some news are also posted twice". The old guard compared
+# WORDS, so the same event written two ways slipped through: "Russian strikes
+# damage two bridges in Kyiv" and "Three Kyiv bridges hit during major Russian
+# missile attack" rode cards 1.2 hours apart. This compares the ACTORS and the
+# EVENT instead, which is what makes two reports the same story.
+_EV_GEN_CAP = set("""The A An And But For From Over Under After Before With Without
+Into Amid India Indian News More Details Officials Official Police Govt Government
+Minister Ministers Chief PM Hyderabad Telangana Reports Report Said Says Say Live
+Watch Man Woman Former First Second Third Two Three Four Five Six Seven Eight Nine
+Ten New Now Today Polls Poll Election Elections Local Body Bodies Court High Supreme
+State Centre Central City District Village Town Road Day Year Years Nov Dec Jan Feb
+Mar Apr May Jun Jul Aug Sep Oct Big Top Key Major Full Final Here What Why How When
+Where Who Will Can Not No Yes Congress BJP BRS AAP DMK TDP YSRCP Shiv Sena NDA UPA
+MLA MLAs MP MPs""".split())
+# names that appear in the news every day: sharing one proves nothing
+_EV_COMMON = set("""modi rahul gandhi amit shah revanth reddy naidu stalin mamata
+kejriwal yogi trump putin biden netanyahu senate republicans democrats house white
+police court judge medical college school hospital university student students
+minister ministry department cyclone rain weather temple festival market crime
+arrest raid probe case russia russian ukraine israel gaza iran china pakistan
+america american united states kashmir delhi mumbai chennai kolkata bengaluru
+andhra pradesh karnataka kerala""".split())
+_EV_STOP = set("""the a an of in on at to for and or is are was were be been being by
+with from as it its this that these those after before over under new news more said
+says say will would can could has have had not no who whom which what when where why
+how amid into out up down off than then them they their there here about against
+between during through across first second ahead""".split())
+_EV_CAP_RX = re.compile(r"\b[A-Z][A-Za-z'\u2019-]{3,}\b")
+_EV_LOW_RX = re.compile(r"\b[a-z][a-z'-]{4,}\b")
+
+
+def _event_actors(text):
+    out = set()
+    for w in _EV_CAP_RX.findall(text or ""):
+        if w in _EV_GEN_CAP:
+            continue
+        out.add(w.lower().strip("\u2019's"))
+    return out
+
+
+def _event_words(text):
+    return {w for w in _EV_LOW_RX.findall((text or "").lower())
+            if w not in _EV_STOP}
+
+
+def _same_event(t1, t2):
+    """True when two headlines report the same event in different words."""
+    a, b = _event_actors(t1), _event_actors(t2)
+    if not a or not b:
+        return False
+    shared = a & b
+    distinctive = shared - _EV_COMMON
+    if len(distinctive) >= 2:
+        return True          # two rare actors in common: same story
+    if len(shared) >= 3:
+        return True          # three actors in common: same story
+    if len(shared) >= 2 and distinctive and (_event_words(t1) & _event_words(t2)):
+        return True          # a rare actor plus the same event word
+    return False
+
+
 def _is_cricket(text):
-    """True for cricket / sport stories (owner 16 Nov)."""
+    """True for cricket, football and other sport (owner 16 + 20 Nov)."""
     return bool(CRICKET_RE.search(text or ""))
+
+
+_is_sport = _is_cricket  # the card calls it the sports slot
 
 
 MAIN_CATS = {"election_poll", "political_major", "govt_announcement", "economic_major",
@@ -1076,6 +1147,32 @@ def build_digest(cands, catchup=False):
         for _w in set(_MID_WORD.findall(_b)):
             _bullets_by_mid.setdefault(_w, []).append(_b)
 
+    # 20 Nov owner "some news are also posted twice": word-overlap misses the
+    # same event told differently ("Russian strikes damage two bridges in
+    # Kyiv" / "Three Kyiv bridges hit during major Russian missile attack",
+    # 1.2 hours apart). Index the last 36 hours of cards and compare by actors
+    # and event instead. The window keeps it cheap and stops a long-running
+    # story from being banned for ever.
+    _recent_heads = []
+    try:
+        _cut = datetime.now(IST) - timedelta(hours=36)
+        for r in _pub[-120:]:
+            try:
+                _ts = datetime.fromisoformat(r.get("published_at") or "")
+            except Exception:
+                continue
+            if _ts < _cut:
+                continue
+            if r.get("title"):
+                _recent_heads.append(r["title"])
+            _recent_heads += [b for b in (r.get("bullets_en") or []) if b]
+    except Exception:
+        _recent_heads = []
+
+    def _rode_recently(title):
+        """True when a card in the last 36h already carried this event."""
+        return any(_same_event(title, h) for h in _recent_heads)
+
     def _already_published(lead):
         """True when this exact story already rode a card, however worded."""
         if _norm_bullet(lead) in done_bullets:
@@ -1107,6 +1204,9 @@ def build_digest(cands, catchup=False):
                     continue  # 28 Sep: stories that rode a recent card must
                               # never re-enter the pool - they only came here
                               # to be net-dropped, starving picks to <3
+                if _rode_recently(c["title"]):
+                    _skip["dup"] += 1
+                    continue  # 20 Nov: same event, different words
                 # 16 Nov owner "cover all war news, cyber attacks etc, all big
                 # incidents whichever section": a war / cyber / major-incident
                 # story is never casualty-banned, whatever its category.
@@ -1249,69 +1349,71 @@ def build_digest(cands, catchup=False):
                     0 if c["class"] == "A" else 1,
                     age_bucket, -(c.get("score") or 0))
         picks = []
-        # 16 Nov owner "cricket matches are also going to start, cover that
-        # also": when the pool holds a cricket story one slot is kept for it,
-        # so a heavy war day cannot leave the card with no cricket at all.
-        _cric_avail = any(_is_cricket(_cand_text(x[0])) for x in pool)
-        _war_cap = DIGEST_SIZE - 1 if _cric_avail else DIGEST_SIZE
-        # 16 Nov owner "cover all war news, cyber attacks etc, all big
-        # incidents whichever section it may be": war / cyber / major-incident
-        # stories are picked FIRST, before the region leads, so a major
-        # incident is never crowded out by local leads or the election quota.
-        for x in sorted(pool, key=rank):
-            if len(picks) >= _war_cap:
-                break
-            if not _is_war_cyber(x[0].get("title")):
-                continue
+
+        def _taken(x, cur):
+            """A pick is refused if the card already carries this story -
+            same url, same wording, or (20 Nov owner "some news are also
+            posted twice") the same event written a different way."""
+            if x in cur:
+                return True
+            for p in cur:
+                if _same_story(x[0]["title"], p[0]["title"]):
+                    return True
+                if _same_event(x[0]["title"], p[0]["title"]):
+                    return True
+            return False
+
+        def _usable(x):
             if not x[2] and _line_h(x[1]) in _miss_bank:
                 _skip["bank"] += 1
-                continue  # banked (recently failed RU) - next story tries
-            if x not in picks and \
-               not any(_same_story(x[0]["title"], p[0]["title"]) for p in picks):
-                picks.append(x)
-        # cricket slot: one match story rides every card when one is available
-        for x in sorted(pool, key=rank):
-            if len(picks) >= DIGEST_SIZE:
-                break
-            if not _is_cricket(_cand_text(x[0])):
-                continue
-            if not x[2] and _line_h(x[1]) in _miss_bank:
-                _skip["bank"] += 1
-                continue  # banked (recently failed RU) - next story tries
-            if x not in picks and \
-               not any(_same_story(x[0]["title"], p[0]["title"]) for p in picks):
-                picks.append(x)
-                break  # exactly one cricket slot per card
-        for reg in DIGEST_REGIONS:
-            if len(picks) >= DIGEST_SIZE:
-                break
-            best = sorted((x for x in pool if x[0]["region"] == reg
-                           and x not in picks), key=rank)
-            for b in best:
-                if not b[2] and _line_h(b[1]) in _miss_bank:
-                    _skip["bank"] += 1
-                    continue  # banked (recently failed RU) - next story tries
-                if _is_election(_cand_text(b[0])) and \
-                   sum(1 for x in picks if _is_election(_cand_text(x[0]))) \
-                       >= _ELECTION_PICK_CAP:
-                    continue  # card already carries its election quota
-                if b not in picks and \
-                   not any(_same_story(b[0]["title"], x[0]["title"]) for x in picks):
-                    picks.append(b)
+                return False   # banked (recently failed RU) - next story tries
+            return True
+
+        def _election_full(cur):
+            return (sum(1 for p in cur if _is_election(_cand_text(p[0])))
+                    >= _ELECTION_PICK_CAP)
+
+        def _take(pred, cur, limit=1):
+            """Fill up to `limit` slots with the best stories matching pred."""
+            n = 0
+            for x in sorted(pool, key=rank):
+                if len(cur) >= DIGEST_SIZE or n >= limit:
                     break
-        for x in sorted(pool, key=rank):  # fill to 5, politics leading
-            if len(picks) >= DIGEST_SIZE:
-                break
-            if not x[2] and _line_h(x[1]) in _miss_bank:
-                _skip["bank"] += 1
-                continue  # banked line: give the slot to a fresh story
-            if _is_election(_cand_text(x[0])) and \
-               sum(1 for p in picks if _is_election(_cand_text(p[0]))) \
-                   >= _ELECTION_PICK_CAP:
-                continue  # leave the slot for a story the translator can render
-            if x not in picks and \
-               not any(_same_story(x[0]["title"], p[0]["title"]) for p in picks):
-                picks.append(x)
+                if not pred(x) or not _usable(x):
+                    continue
+                if _is_election(_cand_text(x[0])) and _election_full(cur):
+                    continue
+                if not _taken(x, cur):
+                    cur.append(x)
+                    n += 1
+            return n
+
+        # 20 Nov owner: "KEEP LOCAL NEWS HYDERABAD, TELANGANA, FIRST AND THEN
+        # INDIA AND SPORTS AND WORLD ONLY IMPORTANT NEWS". The card is built
+        # in exactly that order, so the bullets read in that order too.
+        #   1 Hyderabad   2 Telangana   3 India   4 Sports   5 World (important)
+        _take(lambda x: x[0]["region"] == "hyderabad", picks)
+        _take(lambda x: x[0]["region"] == "telangana", picks)
+        _take(lambda x: x[0]["region"] == "india", picks)
+        # sports slot: cricket or football, whichever is the better story.
+        # Trust monitor's "sports" category as well as the word list here, so
+        # a match report the word list words differently ("Jaiswal's 85,
+        # Rahul's unbeaten fifty") still reaches the slot the owner asked for.
+        _take(lambda x: ("sports" in (x[0].get("categories") or [])
+                         or _is_sport(_cand_text(x[0]))), picks)
+        # world slot: ONLY important world news - war, cyber or a big incident.
+        # Minor world news still never rides the card.
+        _take(lambda x: (x[0]["region"] == "world"
+                         and (_is_war_cyber(x[0].get("title"))
+                              or _is_big_incident(_cand_text(x[0])))), picks)
+        # any war story that is not tagged world (Manipur, Kashmir) still
+        # belongs on the card - it is the news the owner asked for on 16 Nov
+        _take(lambda x: _is_war_cyber(x[0].get("title")), picks)
+        # fill the rest local-first so the card never runs short
+        for _reg in ("hyderabad", "telangana", "india"):
+            _take(lambda x, r=_reg: x[0]["region"] == r, picks,
+                  limit=DIGEST_SIZE)
+        _take(lambda x: True, picks, limit=DIGEST_SIZE)
         if len(picks) < DIGEST_SIZE:  # fallback: full headline bullets with Urdu tags
             def rank2(c):
                 return (0 if "political_major" in c.get("categories", []) else 1,
@@ -1828,8 +1930,13 @@ def one_cycle():
     cfg = json.load(open(os.path.join(BASE, "config.json"), encoding="utf-8"))
     log("=== cycle start ===")
     _cu = os.environ.get("DIGEST_CATCHUP") == "1"
+    # owner 27 Sep: full breadth every run. 20 Nov: raised 120 -> 170 because
+    # adding sport to the candidate pool was pushing publishable stories out
+    # of a fixed 120 and the digest came up short. The cap only limits how
+    # many candidates are considered; selection and all quality gates are
+    # unchanged.
     cyc = monitor.run_cycle(26 if _cu else cfg["rules"]["max_post_age_hours"],
-                            120)  # owner 27 Sep: full breadth every run
+                            170)
 
     def _prio(c):  # owner 16 Nov "cover full up election": election & poll
                    # coverage first, then politics & main news, then by score
