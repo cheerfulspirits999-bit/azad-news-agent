@@ -548,13 +548,30 @@ BIG_INCIDENT_RE = re.compile(
     re.I)
 
 
+# 20 Nov owner: a union walkout was posted as breaking news because the war
+# detector matched the bare word "strike". A labour strike is never war.
+_LABOUR_STRIKE = re.compile(
+    r"\b(union|unions|workers?|employees?|staff|labour|labor|bandh|dharna|"
+    r"hunger strike|rail roko|transport strike|bus strike|auto strike|rtc|"
+    r"teachers?|doctors?|nurses?|drivers?|conductors?|lorry|truckers?|"
+    r"pay revision|wage|salaries|salary|strike call|called off the strike|"
+    r"indefinite strike|token strike|flash strike|work to rule|boycott)\b",
+    re.I)
+
+
 def _is_war_cyber(text):
     """True for war, terror or cyber-attack stories (owner 16 Nov, top tier).
 
     Called on the HEADLINE: genuine war news announces itself there, whereas
     excerpt-only matches ("a Yemeni military source", "attacks on
     candidates") are big incidents but not war headlines."""
-    return bool(WAR_CYBER_RE.search(text or ""))
+    t = text or ""
+    if not WAR_CYBER_RE.search(t):
+        return False
+    # "strike"/"attack" in a labour or ordinary-crime story is not war
+    if _LABOUR_STRIKE.search(t):
+        return False
+    return True
 
 
 def _is_big_incident(text):
@@ -606,8 +623,6 @@ def eligible(c):
     # this, a BBC/Al Jazeera war story (class C, score ~62, needs >=72) was
     # refused here and never reached the breaking test at all.
     if _is_war_cyber(c.get("title")) and score >= 50:
-        return True
-    if _is_big_incident(_cand_text(c)) and score >= 60:
         return True
     if cls in ("A", "B"):
         return True
@@ -1095,9 +1110,13 @@ def build_digest(cands, catchup=False):
                 # 16 Nov owner "cover all war news, cyber attacks etc, all big
                 # incidents whichever section": a war / cyber / major-incident
                 # story is never casualty-banned, whatever its category.
+                # 16 Nov owner wants war news through this ban. 20 Nov owner
+                # ("26 year old man found dead ???? news"): ONLY war, never
+                # ordinary local deaths. Exempting every "big incident" here
+                # re-opened the casualty ban the owner closed on 26 Sep.
                 _ban = (bool(set(c.get("categories", [])) & NO_CARD_CATS)
                         or bool(NO_CARD_RX.search(c["title"]))) \
-                       and not _is_big_incident(_cand_text(c))
+                       and not _is_war_cyber(c.get("title"))
                 _cv = casualty_allowed(c) if _ban else False
                 if _ban and not (_cv == "celeb"
                                  or (_cv == "major"
@@ -1608,6 +1627,14 @@ def build_digest(cands, catchup=False):
         "image_url": next((p[0].get("image") for p in picks
                            if isinstance(p[0].get("image"), str)
                            and p[0].get("image", "").strip()), ""),
+        # 20 Nov owner "now you are not adding photos": only ONE url was ever
+        # offered to the renderer, so if that one download failed (CDN hotlink
+        # block, 403, timeout) the card went out with no picture at all. Every
+        # story on the card now offers its artwork and the first that actually
+        # downloads is used.
+        "image_urls": [p[0].get("image") for p in picks
+                       if isinstance(p[0].get("image"), str)
+                       and p[0].get("image", "").strip()],
     }
 
 
@@ -1926,9 +1953,17 @@ def one_cycle():
         _breaking = ((c.get("class") == "A" and (c.get("score") or 0) >= 88
                       and bool(set(c.get("categories", [])) & MAIN_CATS))
                      or (_is_war_cyber(c.get("title"))
-                         and (c.get("score") or 0) >= 50)
-                     or (_is_big_incident(_cand_text(c))
-                         and (c.get("score") or 0) >= 65))
+                         and (c.get("score") or 0) >= 50))
+        # 20 Nov owner ("6 people died in a building incident at the area ...
+        # what type of news is this"): a casualty / accident / crime story is
+        # never posted as a breaking solo. War is the only exception, and it
+        # is the only thing the clause above lets through.
+        if _breaking and not _is_war_cyber(c.get("title")):
+            _cat_ban = (bool(set(c.get("categories", [])) & NO_CARD_CATS)
+                        or bool(NO_CARD_RX.search(c["title"])))
+            if _cat_ban and casualty_allowed(c) != "celeb":
+                log("casualty story never breaks:", c["title"][:60])
+                _breaking = False
         # never post as breaking a story that already rode this cycle's card
         if _breaking and dg and story.get("topic") in (dg.get("story_topics") or []):
             _breaking = False
