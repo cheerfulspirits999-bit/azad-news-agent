@@ -235,7 +235,13 @@ def _frame_casualty(c):
         return None
     verb_m = re.search(r"(killed|dead|died|injured|missing|rescued)", text, re.I)
     verb = verb_m.group(1).lower()
-    place = _m(PLACE, c["title"]) or _m(PLACE, c["excerpt"]) or "the area"
+    # 20 Nov owner: "6 people died in a building incident at the area" - the
+    # frame had thrown away a perfectly concrete headline ("6 dead, including
+    # child, after suspected gas explosion levels building in Georgia") and
+    # replaced it with a placeholder. No place, no bullet.
+    place = _m(PLACE, c["title"]) or _m(PLACE, c["excerpt"])
+    if not place:
+        return None
     event_en, event_ur = "an incident", "haadse"
     for k, ur in EVENT_MAP:
         if re.search(r"\b" + k + r"\w*", text, re.I):
@@ -321,7 +327,9 @@ def _frame_police(c):
     if detained:
         near = re.search(r"near\s+([A-Z][A-Za-z]+(?:\s[A-Z][A-Za-z]+){0,2})", title)
         place = near.group(1) if near else (_m(PLACE, title) or _m(PLACE, excerpt)
-                                            or "the area")
+                                            or "")
+        if not place:
+            return None  # no real place: refuse rather than say "the area"
         en1 = f"{n or 'Several'} protesters were detained near {place}, police said."
         ur1 = f"Police ke mutabiq {place} ke qareeb {n or 'kai'} pradarshankartaon ko hirasat mein liya gaya."
     else:
@@ -1935,6 +1943,11 @@ def urdu_headline(title):
     return None
 
 
+PLACEHOLDER_RX = re.compile(
+    r"\b(?:at|in|near|for)\s+the\s+area\b|\bthe area mein\b|"
+    r"\ban incident\b|\ba incident\b", re.I)
+
+
 def build(candidate):
     """Return {'bullets_en':[3], 'bullets_ur':[3], 'frame':cat} or None."""
     cats = set(candidate.get("categories", []))
@@ -1951,6 +1964,10 @@ def build(candidate):
             if en_s is None or ur_s is None:
                 continue  # a bullet failed safety sanitisation - refuse frame
             en, ur = _drop_bad_pairs(en_s, ur_s)
+            # 20 Nov owner: a bullet that says "at the area" / "an incident"
+            # carries no information. Refuse the frame outright.
+            if any(PLACEHOLDER_RX.search(b or "") for b in list(en) + list(ur)):
+                continue
             src_txt = candidate["title"] + " " + _dedateline(candidate["excerpt"])
             if cats & {"fire_explosion", "accident_casualty"} and not _has_loc(src_txt) \
                     and not ("international_conflict" in cats
