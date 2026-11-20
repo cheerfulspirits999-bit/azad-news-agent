@@ -69,6 +69,31 @@ REGION_KEYS = {
 }
 
 CATEGORY_RULES = [
+    # 20 Nov owner "add cricket and football news if available". Sport had no
+    # category at all, so every match report scored 0 for content and was
+    # truncated out of the 120-story candidate pool before the card was even
+    # built. Weighted below politics and elections, so local hard news still
+    # leads and sport takes the slot the owner gave it.
+    ("sports", ["cricket", "cricketer", "ipl", "bcci", "icc", "t20", "odi",
+                "ranji", "duleep", "ashes", "asia cup", "world cup",
+                "champions trophy", "test match", "test series", "wicket",
+                "wickets", "batsman", "batsmen", "batter", "bowler", "bowling",
+                "innings", "all-rounder", "wicket-keeper", "half-century",
+                "hat-trick", "run chase", "playing xi", "net run rate",
+                "football", "soccer", "fifa", "uefa", "premier league",
+                "champions league", "la liga", "serie a", "bundesliga",
+                "indian super league", "isl", "i-league", "santosh trophy",
+                "messi", "ronaldo", "mbappe", "real madrid", "barcelona",
+                "manchester united", "manchester city", "liverpool",
+                "hockey", "kabaddi", "badminton", "wimbledon", "grand slam",
+                "olympics", "asian games", "commonwealth games",
+                "gold medal", "silver medal", "bronze medal",
+                # scoreline and squad wording a match report always uses
+                "wickets", "overs", "stumps", "toss", "century",
+                "centuries", "fifty", "sixes", "boundaries", "batting",
+                "fielding", "scorecard", "squad", "captaincy", "selectors",
+                "smat", "syed mushtaq ali", "vijay hazare", "wtc",
+                "t20i", "odis", "spinner", "pacer", "seamer", "allrounder"]),
     # owner 16 Nov "cover full up election": election and poll coverage gets its
     # own category so it can be ranked on merit instead of being buried inside
     # political_major. All matching rules are collected, so this ADDS a tag
