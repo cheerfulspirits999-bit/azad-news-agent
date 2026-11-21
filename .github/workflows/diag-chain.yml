@@ -1,0 +1,49 @@
+name: diag-chain
+on:
+  workflow_dispatch:
+jobs:
+  verify:
+    runs-on: ubuntu-latest
+    timeout-minutes: 12
+    env:
+      RU_API_KEY: ${{ secrets.ROMAN_URDU_API_KEY }}
+      RU_PROVIDER: ${{ vars.RU_PROVIDER }}
+      RU_MODEL: ${{ vars.RU_MODEL }}
+      RU_BASE_URL: ${{ vars.RU_BASE_URL }}
+      RU_TIMEOUT: 40
+      GEMINI_API_KEY: ${{ secrets.GEMINI_API_KEY }}
+      OPENAI_API_KEY: ${{ secrets.OPENAI_API_KEY || secrets.OPENAI_API_KETS }}
+      FREELLM_API_KEY: ${{ secrets.FREELLM_API_KEY }}
+      FREELLM_BASE_URL: ${{ vars.FREELLM_BASE_URL }}
+    steps:
+      - uses: actions/checkout@v4
+      - name: chain order + the primary lane must still translate
+        run: |
+          python3 - <<'PY'
+          import sys
+          sys.path.insert(0, "news_agent")
+          import roman_urdu as ru, autod
+          lanes = [l for l, _ in autod._ru_attempts() if l != "primary"]
+          print("BATCH WINDOW (_RU_BATCH_TRIES=%d)" % autod._RU_BATCH_TRIES)
+          for i, l in enumerate(lanes, 1):
+              print("  %2d %-44s%s" % (i, l,
+                    "  <- reachable" if i <= autod._RU_BATCH_TRIES else ""))
+          B = ["A person was held with live ammunition at RGIA, police said.",
+               "MBBS students have begun a strike in Karimnagar."]
+          print()
+          for lbl, kw in autod._ru_attempts():
+              if lbl == "primary":
+                  continue
+              try:
+                  out = ru.translate_lines(list(B), **kw)
+              except Exception as e:
+                  print("  %-40s EXC %s" % (lbl, str(e)[:70])); continue
+              m = out.get("method") if isinstance(out, dict) else "?"
+              ok = autod._ru_translated(out)
+              print("  %-40s method=%-9s %s" % (lbl, m,
+                    "ACCEPT" if ok else "REFUSED"))
+              if ok:
+                  for t in (out.get("lines") or []):
+                      print("        >", str(t)[:118])
+                  break
+          PY
