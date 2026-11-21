@@ -88,12 +88,13 @@ CATEGORY_RULES = [
                 "hockey", "kabaddi", "badminton", "wimbledon", "grand slam",
                 "olympics", "asian games", "commonwealth games",
                 "gold medal", "silver medal", "bronze medal",
-                # scoreline and squad wording a match report always uses
-                "wickets", "overs", "stumps", "toss", "century",
-                "centuries", "fifty", "sixes", "boundaries", "batting",
-                "fielding", "scorecard", "squad", "captaincy", "selectors",
+                # scoreline wording a match report always uses
+                "wickets", "stumps", "scorecard",
                 "smat", "syed mushtaq ali", "vijay hazare", "wtc",
-                "t20i", "odis", "spinner", "pacer", "seamer", "allrounder"]),
+                "t20i", "odis", "spinner", "pacer", "seamer", "allrounder",
+                "century", "centuries", "fifty", "sixes", "boundaries",
+                "batting", "fielding", "squad", "toss", "overs", "captaincy",
+                "selectors", "innings", "bowling", "icc"]),
     # owner 16 Nov "cover full up election": election and poll coverage gets its
     # own category so it can be ranked on merit instead of being buried inside
     # political_major. All matching rules are collected, so this ADDS a tag
@@ -452,6 +453,14 @@ LABOUR_RX = re.compile(
     r"rail roko|transport strike|auto strike|bus strike|rtc)\b", re.I)
 
 
+# 21 Nov: these words are sport ONLY in a headline. Found in an excerpt they
+# tagged a land-resurvey story and a PhD complaint as sport, because "century"
+# matched "19th century" and "icc" matched the International Criminal Court.
+SPORT_TITLE_ONLY = ["icc", "century", "centuries", "fifty", "sixes",
+                    "boundaries", "batting", "fielding", "squad", "toss",
+                    "overs", "captaincy", "selectors", "innings", "bowling"]
+
+
 def detect_categories(item):
     """Category is decided from the TITLE. Excerpt is only used to corroborate,
     never to invent a category -- this is what keeps celebrity fluff from
@@ -461,7 +470,9 @@ def detect_categories(item):
     hits = []
     for cat, keys in CATEGORY_RULES:
         for k in keys:
-            if kw_hit(title, k) or kw_hit(excerpt, k):
+            _where = (title,) if (cat == "sports" and k in SPORT_TITLE_ONLY) \
+                else (title, excerpt)
+            if any(kw_hit(t, k) for t in _where):
                 hits.append(cat)
                 break
     if "fire_explosion" in hits and FIRE_METAPHOR.search(title):
