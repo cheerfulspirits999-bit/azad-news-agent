@@ -4,7 +4,7 @@ on:
 jobs:
   probe:
     runs-on: ubuntu-latest
-    timeout-minutes: 20
+    timeout-minutes: 25
     env:
       RU_API_KEY: ${{ secrets.ROMAN_URDU_API_KEY }}
       RU_PROVIDER: ${{ vars.RU_PROVIDER }}
@@ -14,45 +14,38 @@ jobs:
       RU_DAILY_CAP: 200
       RU_DAILY_HARD: 220
       GEMINI_API_KEY: ${{ secrets.GEMINI_API_KEY }}
-      OPENAI_API_KEY: ${{ secrets.OPENAI_API_KEY || secrets.OPENAI_API_KETS }}
     steps:
       - uses: actions/checkout@v4
-      - name: Exercise the REAL engine, lane by lane
+      - name: Rank the live Gemini family through the real engine
         run: |
           python3 - <<'PY'
-          import os, sys, importlib
+          import os, sys, time
           sys.path.insert(0, "news_agent")
           import roman_urdu as ru
-          print("ENGINE        :", ru.ENGINE)
-          print("configured()  :", ru.configured())
-          eng = sys.modules.get("roman_urdu_translator_engine")
-          print("DEFAULT_PROV  :", getattr(eng, "DEFAULT_PROVIDER", "?"))
-          print("RU_MODEL env  :", os.environ.get("RU_MODEL"))
-          print("RU_BASE_URL   :", os.environ.get("RU_BASE_URL"))
-          for k, v in getattr(eng, "API_KEYS", {}).items():
-              print("   API_KEYS[%-9s] len=%s" % (k, len(v or "")))
-          import autod
-          print("autod._ru_on():", autod._ru_on())
-          lanes = list(autod._ru_attempts())
-          print("LANES (%d):" % len(lanes))
-          for lbl, kw in lanes:
-              print("   %-42s prov=%-8s key=%s" % (
-                  lbl, kw.get("provider", "(RU_PROVIDER)"), len(kw.get("api_key", "") or "")))
-          BULLETS = ["A person was held with live ammunition at RGIA, police said.",
-                     "Housefly, cockroach infestations found in raids at 9 Hyderabad hotels.",
-                     "MBBS students have begun a strike in Karimnagar."]
-          for lbl, kw in lanes:
-              sys.stdout.flush()
+          K = os.environ["GEMINI_API_KEY"]
+          B = ["A person was held with live ammunition at RGIA, police said.",
+               "Housefly, cockroach infestations found in raids at 9 Hyderabad hotels.",
+               "MBBS students have begun a strike in Karimnagar.",
+               "Two people died after a lorry hit a car on the Outer Ring Road."]
+          CAND = ["gemini-flash-lite-latest", "gemini-3.1-flash-lite",
+                  "gemini-3.1-flash-lite-preview", "gemini-3.5-flash-lite",
+                  "gemini-3-flash-preview", "gemini-3.6-flash",
+                  "gemini-omni-1.2-flash", "gemini-3.8-flash"]
+          for m in CAND:
+              t0 = time.time()
               try:
-                  out = ru.translate_lines(list(BULLETS), **kw)
+                  out = ru.translate_lines(list(B), provider="gemini", model=m,
+                                           api_key=K, use_few_shot=False)
               except Exception as e:
-                  print("LANE %-40s EXC %s" % (lbl, str(e)[:110])); continue
-              if isinstance(out, dict):
-                  lines = out.get("lines") or out.get("translations") or []
-                  print("LANE %-40s method=%s" % (lbl, out.get("method")))
-              else:
-                  lines = out
-                  print("LANE %-40s (list)" % lbl)
-              for b, t in zip(BULLETS, lines or []):
-                  print("      >", str(t)[:130])
+                  print("%-32s EXC %.1fs %s" % (m, time.time() - t0, str(e)[:90]))
+                  sys.stdout.flush(); continue
+              dt = time.time() - t0
+              meth = out.get("method") if isinstance(out, dict) else "list"
+              lines = (out.get("lines") or out.get("translations") or []) \
+                      if isinstance(out, dict) else out
+              print("%-32s %-9s %5.1fs" % (m, meth, dt))
+              if meth == "llm":
+                  for t in lines:
+                      print("        >", str(t)[:125])
+              sys.stdout.flush()
           PY
