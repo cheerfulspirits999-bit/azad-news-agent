@@ -87,15 +87,38 @@ _RU_FALLBACK_MODELS = (
     # working lane must be first or the digest waits ~5 dead rotations
     # (~50 min) before it is even tried.
     # 6 Oct: gemini-2.5-flash returns HTTP 404 "no longer available to new
-    # users" - Google names gemini-3.8-flash as the replacement. The owner's
-    # GEMINI_API_KEY (aistudio, free ~1500 req/day) is now the pipeline's
-    # primary free lane, so the chain leads with it and falls through the
-    # current flash family when one model 503s.
-    ("gemini", "gemini-3.8-flash", "GEMINI_API_KEY"),
-    ("gemini", "gemini-flash-latest", "GEMINI_API_KEY"),
-    ("gemini", "gemini-3.7-flash", "GEMINI_API_KEY"),
-    ("gemini", "gemini-3.5-flash", "GEMINI_API_KEY"),
+    # users". The owner's GEMINI_API_KEY (aistudio, free ~1500 req/day) is
+    # the pipeline's primary free lane.
+    #
+    # 21 Nov ROOT-CAUSE FIX for the "engine.method=fallback" cards (the
+    # garbled "Passenger ne Ammunition ke saath RGIA par Live ka inqiad
+    # kiya" output). Every model below was run through the REAL engine in
+    # CI with the owner's key on live bullets (diag run 44904443919):
+    #
+    #     gemini-flash-lite-latest       llm        1.3s   <- lead
+    #     gemini-3.5-flash-lite          llm        1.4s
+    #     gemini-3-flash-preview         llm        6.4s
+    #     gemini-3.8-flash               fallback  14.4s
+    #     gemini-omni-1.2-flash          fallback  14.4s
+    #     gemini-3.6-flash               fallback  27.8s
+    #     gemini-3.1-flash-lite          fallback  55.7s
+    #     gemini-3.1-flash-lite-preview  fallback  63.0s
+    #     gemini-flash-latest            fallback  (503)
+    #     gemini-3.7-flash               fallback
+    #     gemini-3.5-flash               fallback
+    #
+    # Only THREE translate. The old chain led with four of the dead ones,
+    # so the batch spent its tries on English passthroughs before reaching
+    # a model that answers - and _RU_LANE_DEAD is per-process while every
+    # cycle is a fresh `autod.py --once`, so those four were re-walked
+    # EVERY hour, ~2 min of the cycle burned to produce fallback text.
+    #
+    # Keep this list ranked by VERIFIED method="llm". A model name that
+    # merely exists in /v1beta/models is NOT a live lane - re-run the diag
+    # before adding one.
     ("gemini", "gemini-flash-lite-latest", "GEMINI_API_KEY"),
+    ("gemini", "gemini-3.5-flash-lite", "GEMINI_API_KEY"),
+    ("gemini", "gemini-3-flash-preview", "GEMINI_API_KEY"),
     ("openai", "gpt-4o-mini", "OPENAI_API_KEY"),
     "nvidia/nemotron-3-ultra-550b-a55b:free",
     "qwen/qwen3.8-27b:free",
