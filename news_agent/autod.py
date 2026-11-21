@@ -1392,15 +1392,31 @@ def build_digest(cands, catchup=False):
         # INDIA AND SPORTS AND WORLD ONLY IMPORTANT NEWS". The card is built
         # in exactly that order, so the bullets read in that order too.
         #   1 Hyderabad   2 Telangana   3 India   4 Sports   5 World (important)
-        _take(lambda x: x[0]["region"] == "hyderabad", picks)
-        _take(lambda x: x[0]["region"] == "telangana", picks)
-        _take(lambda x: x[0]["region"] == "india", picks)
+        # 21 Nov: a Hyderabad paper's wire copy of a Test match is tagged
+        # region="hyderabad", so the local slots were swallowing cricket and
+        # pushing real local news off the card. Sport rides the sports slot.
+        def _sportish(x):
+            return ("sports" in (x[0].get("categories") or [])
+                    or _is_sport(_cand_text(x[0])))
+
+        _take(lambda x: x[0]["region"] == "hyderabad" and not _sportish(x),
+              picks)
+        _take(lambda x: x[0]["region"] == "telangana" and not _sportish(x),
+              picks)
+        _take(lambda x: x[0]["region"] == "india" and not _sportish(x), picks)
         # sports slot: cricket or football, whichever is the better story.
         # Trust monitor's "sports" category as well as the word list here, so
         # a match report the word list words differently ("Jaiswal's 85,
         # Rahul's unbeaten fifty") still reaches the slot the owner asked for.
-        _take(lambda x: ("sports" in (x[0].get("categories") or [])
-                         or _is_sport(_cand_text(x[0]))), picks)
+        # prefer a match report that brings a photo with it - the owner asked
+        # for pictures on every card, and sport is the slot most likely to
+        # have one going spare.
+        def _has_img(x):
+            return isinstance(x[0].get("image"), str) \
+                and bool(x[0].get("image", "").strip())
+
+        if not _take(lambda x: _sportish(x) and _has_img(x), picks):
+            _take(_sportish, picks)
         # world slot: ONLY important world news - war, cyber or a big incident.
         # Minor world news still never rides the card.
         _take(lambda x: (x[0]["region"] == "world"
@@ -1411,8 +1427,8 @@ def build_digest(cands, catchup=False):
         _take(lambda x: _is_war_cyber(x[0].get("title")), picks)
         # fill the rest local-first so the card never runs short
         for _reg in ("hyderabad", "telangana", "india"):
-            _take(lambda x, r=_reg: x[0]["region"] == r, picks,
-                  limit=DIGEST_SIZE)
+            _take(lambda x, r=_reg: x[0]["region"] == r and not _sportish(x),
+                  picks, limit=DIGEST_SIZE)
         _take(lambda x: True, picks, limit=DIGEST_SIZE)
         if len(picks) < DIGEST_SIZE:  # fallback: full headline bullets with Urdu tags
             def rank2(c):
