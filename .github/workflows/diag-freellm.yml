@@ -5,7 +5,7 @@ jobs:
   probe:
     runs-on: ubuntu-latest
     steps:
-      - name: Identify the provider behind FREELLM_API_KEY
+      - name: Find the FreeLLM endpoint and test a Roman Urdu translation
         env:
           FREELLM_API_KEY: ${{ secrets.FREELLM_API_KEY }}
         run: |
@@ -13,33 +13,54 @@ jobs:
           import os, json, urllib.request, urllib.error
           k = os.environ.get("FREELLM_API_KEY") or ""
           print("key length:", len(k))
-          print("key shape :", (k[:4] + "..." if k else "MISSING"),
-                "| has sk-or:", k.startswith("sk-or"),
-                "| has gsk_:", k.startswith("gsk_"),
-                "| has AIza:", k.startswith("AIza"))
-          CAND = [
-            ("openrouter", "https://openrouter.ai/api/v1/models", "bearer"),
-            ("groq",       "https://api.groq.com/openai/v1/models", "bearer"),
-            ("openai",     "https://api.openai.com/v1/models", "bearer"),
-            ("together",   "https://api.together.xyz/v1/models", "bearer"),
-            ("cerebras",   "https://api.cerebras.ai/v1/models", "bearer"),
-            ("mistral",    "https://api.mistral.ai/v1/models", "bearer"),
-            ("deepseek",   "https://api.deepseek.com/v1/models", "bearer"),
-            ("gemini", "https://generativelanguage.googleapis.com/v1beta/models?key=" + k, "query"),
+          BASES = [
+            "https://freeapi.n.cofire.cn/v1",
+            "https://api.freellmapi.co/v1",
+            "https://freellmapi.co/v1",
+            "https://api.freellm.ai/v1",
+            "https://openrouter.ai/api/v1",
           ]
-          ok = []
-          for name, url, mode in CAND:
-              req = urllib.request.Request(url)
-              if mode == "bearer":
-                  req.add_header("Authorization", "Bearer " + k)
+          def call(url, data=None, timeout=45):
+              req = urllib.request.Request(url, data=data)
+              req.add_header("Authorization", "Bearer " + k)
+              if data:
+                  req.add_header("Content-Type", "application/json")
               try:
-                  r = urllib.request.urlopen(req, timeout=25)
-                  body = r.read(400).decode("utf-8", "replace")
-                  print("%-11s HTTP %s  %s" % (name, r.status, body[:120].replace("\n", " ")))
-                  ok.append(name)
+                  r = urllib.request.urlopen(req, timeout=timeout)
+                  return r.status, r.read(3000).decode("utf-8", "replace")
               except urllib.error.HTTPError as e:
-                  print("%-11s HTTP %s  %s" % (name, e.code, e.read(120).decode("utf-8", "replace").replace("\n", " ")))
+                  return e.code, e.read(300).decode("utf-8", "replace")
               except Exception as e:
-                  print("%-11s ERR  %s" % (name, str(e)[:90]))
-          print("WORKING LANES:", ok)
+                  return 0, str(e)[:160]
+          good = []
+          for b in BASES:
+              s, body = call(b + "/models")
+              n = body.count('"id"')
+              print("%-34s models HTTP %s  ids=%d  %s" % (b, s, n, body[:90].replace("\n", " ")))
+              if s == 200 and n:
+                  good.append(b)
+          print("CANDIDATES:", good)
+          PROMPT = ("Translate this English news sentence into Roman Urdu. "
+                    "Reply with ONLY the translation, no quotes, no explanation.\n"
+                    "Sentence: Police arrested two men in Hyderabad after a raid "
+                    "on a hotel on Friday.")
+          for b in good:
+              for model in ("auto", "gpt-4o-mini", "gemini-2.0-flash"):
+                  payload = json.dumps({
+                      "model": model,
+                      "messages": [{"role": "user", "content": PROMPT}],
+                      "max_tokens": 120, "temperature": 0.2}).encode()
+                  s, body = call(b + "/chat/completions", payload, 90)
+                  if s == 200:
+                      try:
+                          d = json.loads(body)
+                          out = d["choices"][0]["message"]["content"].strip()
+                          print("WORKS base=%s model=%s" % (b, model))
+                          print("   served:", d.get("model"))
+                          print("   output:", out[:220])
+                      except Exception as ex:
+                          print("parse fail", ex, body[:160])
+                      break
+                  else:
+                      print("  %s model=%-16s HTTP %s %s" % (b, model, s, body[:110].replace("\n", " ")))
           PY
