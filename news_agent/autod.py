@@ -198,13 +198,22 @@ _RU_FALLBACK_MODELS = (
     "nvidia/nemotron-3.5-lightning:free",
     "inclusionai/ling-3.2-flash:free",
     "baidu/ernie-5.5-flash-preview:free",
-    ("openai", "gpt-4o-mini", "OPENAI_API_KEY"),
-    "openai/gpt-4o-mini",
-    "google/gemini-2.5-flash-lite",
-    "anthropic/claude-3.5-haiku",
-    "deepseek/deepseek-chat",
-    "mistralai/mistral-small-3.2-24b-instruct",
-    "qwen/qwen3-30b-a3b",
+    # 21 Nov (owner: "WHAT 20 DOLLAR USE IT FREE TIER ONLY"). SEVEN paid
+    # lanes used to sit here and have now been deleted outright:
+    #     ("openai", "gpt-4o-mini", "OPENAI_API_KEY")   direct OpenAI billing
+    #     openai/gpt-4o-mini                            OpenRouter, charged
+    #     google/gemini-2.5-flash-lite                  OpenRouter, charged
+    #     anthropic/claude-3.5-haiku                    OpenRouter, charged
+    #     deepseek/deepseek-chat                        OpenRouter, charged
+    #     mistralai/mistral-small-3.2-24b-instruct      OpenRouter, charged
+    #     qwen/qwen3-30b-a3b                            OpenRouter, charged
+    # They never actually billed anything, because an OpenRouter wallet at
+    # $0 answers 402 insufficient-credits rather than running up a tab, and
+    # OPENAI_API_KEY has never been set. But they were a loaded gun: the
+    # day any credit landed on that account, the pipeline would have
+    # started spending it automatically, unattended, every hour.
+    # Nothing paid remains in this chain, and _ru_paid() below refuses any
+    # that is reintroduced by a future edit.
 )
 
 # 6 Oct: how many live translator lanes one cycle may try for the BATCH, and
@@ -450,6 +459,8 @@ def _gem_candidates(limit=3):
             continue
         if "flash" not in n or n in pinned or any(b in n for b in _GEM_BAD):
             continue
+        if "pro" in n or "ultra" in n:
+            continue    # free-tier-only: pro/ultra tiers are charged
         out.append(n)
     # 'lite' variants empirically answer where the heavyweight flash models
     # return passthrough, and they are the fastest - try those first
@@ -489,6 +500,36 @@ def _gem_selfheal():
     return ""
 
 
+def _ru_paid(kw):
+    """True when an attempt could COST MONEY.
+
+    Owner law, 21 Nov: "USE IT FREE TIER ONLY". _ru_is_free() already
+    existed, but it only decided whether to charge a lane against an
+    internal call BUDGET - it never stopped a paid lane being called. This
+    does, and it is deliberately deny-by-default: a lane has to prove it is
+    $0, rather than prove it is not.
+
+      * provider "gemini" on the owner's own key -> aistudio FREE tier
+      * a lane carrying base_url -> the FreeLLM gateway, which only ever
+        fronts free provider tiers
+      * anything else resolves against RU_BASE_URL (OpenRouter), where only
+        an explicit ":free" slug costs nothing
+
+    RU_ALLOW_PAID=1 overrides this, and is not set anywhere. It exists so a
+    future decision to pay is an explicit, visible act rather than an edit
+    nobody reviews.
+    """
+    if str(os.environ.get("RU_ALLOW_PAID", "")).strip() in ("1", "true", "yes"):
+        return False
+    kw = kw or {}
+    if str(kw.get("provider", "")).lower() == "gemini":
+        return False
+    if kw.get("base_url"):
+        return False
+    model = str(kw.get("model") or os.environ.get("RU_MODEL") or "")
+    return not model.endswith(":free")
+
+
 def _ru_attempts():
     """(label, kwargs) salvage attempts: primary first (one-line prompts
     translate where the batch echo'd), then free-tier, direct keys (skipped
@@ -524,7 +565,11 @@ def _ru_attempts():
         actually about): use_few_shot=True, unchanged.
     Lanes parked by _ru_lane_failed() are skipped. The primary keeps its
     old setting."""
-    yield "primary", {}
+    if not _ru_paid({}):
+        yield "primary", {}
+    else:
+        log("[digest] primary lane blocked: RU_MODEL=%r is not a :free "
+            "slug (free-tier-only policy)" % (os.environ.get("RU_MODEL"),))
     for m in _RU_FALLBACK_MODELS:
         if m == _GEM_LEARNED:
             _lm, _gk = _gem_learned_model(), os.environ.get("GEMINI_API_KEY", "")
@@ -551,6 +596,8 @@ def _ru_attempts():
                 yield mdl, {"provider": prov, "model": mdl, "api_key": k,
                             "use_few_shot": False}
         elif _ru_lane_alive(m):
+            if _ru_paid({"model": m}):
+                continue        # free-tier-only: never call a charged slug
             # weak OpenRouter :free model -> the 3 Oct rationale still applies
             yield m, {"model": m, "use_few_shot": True}
 
