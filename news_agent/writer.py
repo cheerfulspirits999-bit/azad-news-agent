@@ -654,6 +654,10 @@ def _grounded(bullets, source):
 
 
 def _extend(c, en, ur):
+    # 21 Nov: "The incident came to light on Saturday." has no place on a
+    # cricket card.
+    if "sports" in set(c.get("categories") or []):
+        return en, ur
     text = c["title"] + " " + _dedateline(c["excerpt"])
     cats = set(c.get("categories", []))
     non_incident = bool(cats & {"disaster_weather", "govt_announcement",
@@ -1037,7 +1041,138 @@ def _frame_conflict(c):
     return en, ur
 
 
+# --------------------------------------------------------------------------
+# 21 Nov owner: "add sports news, test matches are going on". Sport reached the
+# candidate pool after the 20 Nov fix but never reached a card: with no builder
+# of its own every match report fell through to the headline converter, and
+# urdu_headline() returns nothing for cricket headlines ("1st Test: Shubman
+# Gill becomes first Indian to 3000 WTC runs" -> empty), so the story was
+# dropped at the conversion stage every single time. These patterns build the
+# English AND the Roman Urdu from the headline itself, so sport no longer
+# depends on the translator lane at all.
+NAME = r"([A-Z][\w'\u2019-]*(?:\s+[A-Z][\w'\u2019-]*){0,2})"
+SP_BEAT = re.compile(
+    NAME + r"\s+(?i:beat|beats|defeat|defeats|defeated|thrash|thrashed|"
+    r"edge|edged|stun|stunned)\s+" + NAME +
+    r"(?:\s+(?i:by)\s+(\d{1,3})\s+(?i:(wickets?|runs?|goals?|points?)))?")
+SP_LEAD = re.compile(
+    NAME + r"\s+(?i:(century|double century|fifty|ton|hundred))\s+"
+    r"(?i:helps|helped|powers|powered|guides|guided)\s+" + NAME +
+    r"\s+(?i:to\s+|take\s+a?\s*)([\w-]+(?:\s+[\w-]+){0,3})")
+SP_FIRST = re.compile(
+    NAME + r"\s+(?i:becomes?)\s+(?i:(first|fastest|youngest|oldest))\s+"
+    r"([^,.;]{4,60})")
+SP_LEADS = re.compile(
+    NAME + r"\s+(?i:to\s+(?:lead|captain))\s+" + NAME +
+    r"\s+(?i:in)\s+([^,.;]{4,52})")
+SP_POWER = re.compile(
+    NAME + r"(?:\u2019s|'s)?\s+(\d{1,3})\s+"
+    r"(?i:powers|powered|guides|guided|takes|took)\s+" + NAME +
+    r"\s+(?i:to)\s+([^,.;]{4,46})")
+
+
+def _sp_clean(s):
+    s = re.sub(r"\s+", " ", (s or "")).strip().rstrip(".,;:")
+    return re.sub(r"(?:\u2019s|'s)$", "", s)
+
+
+def _frame_sport(c):
+    title = _dedateline(c["title"]).strip()
+    excerpt = _dedateline(c.get("excerpt") or "")
+    # the competition, when the headline names one ("1st Test", "Ranji Trophy")
+    comp = re.search(r"\b(\d(?:st|nd|rd|th)\s+Test|Test\s+match|"
+                     r"[A-Z][\w’'-]+\s+Trophy|Ranji\s+Trophy|World\s+Cup|"
+                     r"Asia\s+Cup|T20|ODI|IPL|ISL|Premier\s+League)\b", title)
+    where = f" in the {comp.group(1)}" if comp else ""
+    where_ur = f"{comp.group(1)} mein " if comp else ""
+
+    m = SP_BEAT.search(title)
+    if m and m.group(1).lower() not in ("the", "a"):
+        a, b = _sp_clean(m.group(1)), _sp_clean(m.group(2))
+        if m.group(3):
+            n, unit = m.group(3), m.group(4).lower()
+            if not unit.endswith("s"):
+                unit += "s"
+            en = f"{a} beat {b} by {n} {unit}{where}."
+            ur = f"{where_ur}{a} ne {b} ko {n} {unit} se hara diya."
+        else:
+            en = f"{a} beat {b}{where}."
+            ur = f"{where_ur}{a} ne {b} ko hara diya."
+        return _sp_out(en, ur, title, excerpt)
+
+    m = SP_LEAD.search(title)
+    if m:
+        who, what = _sp_clean(m.group(1)), m.group(2).lower()
+        team, rest = _sp_clean(m.group(3)), _sp_clean(m.group(4))
+        en = f"{who}'s {what} helped {team} to {rest}."
+        # "364-run lead over Hyderabad" -> "Hyderabad par 364 run ki lead"
+        m_ov = re.match(r"([\d,]+)[- ]run\s+lead\s+over\s+(.+)$", rest, re.I)
+        if m_ov:
+            ur = (f"{who} ki {what} se {team} ne {m_ov.group(2)} par "
+                  f"{m_ov.group(1)} run ki lead hasil ki.")
+        else:
+            ur = f"{who} ki {what} se {team} ne {rest} hasil ki."
+        return _sp_out(en, ur, title, excerpt)
+
+    m = SP_FIRST.search(title)
+    if m:
+        who, rank, rest = (_sp_clean(m.group(1)), m.group(2).lower(),
+                           _sp_clean(m.group(3)))
+        en = f"{who} became the {rank} {rest}{where}."
+        rank_ur = {"first": "pehle", "fastest": "sab se tez",
+                   "youngest": "sab se kam umr", "oldest": "sab se umr-rasida"
+                   }.get(rank, "pehle")
+        if " to " in rest:
+            desc, feat = rest.split(" to ", 1)
+            ur = (f"{who} {where_ur}{feat} tak pohanchne wale {rank_ur} "
+                  f"{desc} ban gaye.")
+        else:
+            ur = f"{where_ur}{who} {rest} wale {rank_ur} khiladi ban gaye."
+        return _sp_out(en, ur, title, excerpt)
+
+    m = SP_LEADS.search(title)
+    if m:
+        who, team, ev = _sp_clean(m.group(1)), _sp_clean(m.group(2)), _sp_clean(m.group(3))
+        en = f"{who} will lead {team} in {ev}."
+        ur = f"{who} {ev} mein {team} ki qiyadat karenge."
+        return _sp_out(en, ur, title, excerpt)
+
+    m = SP_POWER.search(title)
+    if m:
+        who, n = _sp_clean(m.group(1)), m.group(2)
+        team, rest = _sp_clean(m.group(3)), _sp_clean(m.group(4))
+        en = f"{who}'s {n} took {team} to {rest}."
+        ur = f"{who} ke {n} runs se {team} ne {rest} hasil kiya."
+        return _sp_out(en, ur, title, excerpt)
+    return None
+
+
+def _ur_prep(s):
+    """Read the English prepositions the Urdu way."""
+    s = re.sub(r"\s+over\s+([A-Z][\w'\u2019-]*(?:\s+[A-Z][\w'\u2019-]*)?)",
+               r" \1 par", s)
+    s = re.sub(r"\s+against\s+([A-Z][\w'\u2019-]*(?:\s+[A-Z][\w'\u2019-]*)?)",
+               r" \1 ke khilaf", s)
+    return re.sub(r"\s+", " ", s).strip()
+
+
+def _sp_out(en1, ur1, title, excerpt):
+    """Add a second sourced detail - a score, a milestone or an innings."""
+    en, ur = [en1], [_ur_prep(ur1)]
+    tail = re.search(r",\s*([A-Z][\w’'-]*(?:\s+[A-Z][\w’'-]*){0,2})\s+"
+                     r"(fifty|century|ton|hat-trick|five-for|double century)\b",
+                     title)
+    if tail:
+        who2, feat = _sp_clean(tail.group(1)), tail.group(2).lower()
+        en.append(f"{who2} scored a {feat} in the same match.")
+        ur.append(f"Isi match mein {who2} ne {feat} banayi.")
+    en.append(AWAIT_EN)
+    ur.append(AWAIT_UR)
+    return en, ur
+
+
 BUILDERS = [
+    (("sports",), _frame_sport),
     # war first: a conflict story must not be framed as a bandh or a road crash
     (("international_conflict",), _frame_conflict),
     (("traffic_disruption", "protest_major"), _frame_strike),
@@ -2312,6 +2447,12 @@ SYNONYM = {
     "warning": ("alert", "warn", "warned"),
     "demanding": ("demand", "demands", "demanded"),
     "students": ("student",),
+    "became": ("becomes", "become"), "helped": ("helps", "help"),
+    "scored": ("score", "scores", "scoring", "fifty", "century", "runs"),
+    "took": ("takes", "take"), "won": ("win", "wins", "beat"),
+    "beat": ("beats", "won", "win", "defeat", "defeated"),
+    "lead": ("leads", "led", "captain"),
+    "match": ("test", "trophy", "cup", "clash"),
     "officials": ("official", "officer", "officers"),
 }
 
@@ -2408,9 +2549,12 @@ def build(candidate):
             # filler lines that asserted unsourced facts have been removed, so
             # many honest frames now carry a single sentence: one sentence
             # that names a place or a number is a real report.
+            # "India beat Australia by 5 wickets." is 34 characters and is a
+            # complete match report - sport is never padded to reach a floor.
             statement = ((bool(cats & {"political_major"})
                           and len(en[0]) >= 45)
-                         or "international_conflict" in cats)
+                         or "international_conflict" in cats
+                         or "sports" in cats)
             if subst == 1 and not statement:
                 _only = [b for b in en if b not in FILLER_EN][0]
                 if len(_only) >= 40 and (re.search(r"\d", _only) or
