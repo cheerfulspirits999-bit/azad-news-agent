@@ -5,73 +5,65 @@ jobs:
   probe:
     runs-on: ubuntu-latest
     steps:
-      - name: Which lane can produce good Roman Urdu today
+      - name: Current Gemini models and their Roman Urdu
         env:
-          FREELLM_API_KEY: ${{ secrets.FREELLM_API_KEY }}
-          RU_API_KEY: ${{ secrets.ROMAN_URDU_API_KEY }}
           GEMINI_API_KEY: ${{ secrets.GEMINI_API_KEY }}
+          RU_API_KEY: ${{ secrets.ROMAN_URDU_API_KEY }}
         run: |
           python3 - <<'PY'
           import os, json, urllib.request, urllib.error
-          FK = os.environ.get("FREELLM_API_KEY") or ""
+          GK = os.environ["GEMINI_API_KEY"]
           RK = os.environ.get("RU_API_KEY") or ""
-          GK = os.environ.get("GEMINI_API_KEY") or ""
-          print("FREELLM len", len(FK), "| RU len", len(RK), "| GEMINI len", len(GK))
-          PROMPT = ("Translate this English news sentence into Roman Urdu "
-                    "(Urdu written in English letters). Reply with ONLY the "
-                    "translation.\nSentence: Police arrested two men in Hyderabad "
-                    "after a raid on a hotel on Friday.")
-          def post(url, key, payload, timeout=70, hdr=None):
-              req = urllib.request.Request(url, data=json.dumps(payload).encode())
-              req.add_header("Content-Type", "application/json")
-              if key:
-                  req.add_header("Authorization", "Bearer " + key)
-              for k2, v2 in (hdr or {}).items():
-                  req.add_header(k2, v2)
+          def get(url, timeout=40):
               try:
-                  r = urllib.request.urlopen(req, timeout=timeout)
-                  return r.status, r.read(4000).decode("utf-8", "replace")
+                  r = urllib.request.urlopen(url, timeout=timeout)
+                  return r.status, r.read(20000).decode("utf-8", "replace")
               except urllib.error.HTTPError as e:
                   return e.code, e.read(300).decode("utf-8", "replace")
               except Exception as e:
-                  return 0, str(e)[:150]
-          # 1. more FreeLLM hosts
-          for base in ("https://freellmapi.com/v1", "https://api.freellmapi.com/v1",
-                       "https://freellm.dev/v1", "https://api.cofire.cn/v1"):
-              s, b = post(base + "/chat/completions", FK,
-                          {"model": "auto", "messages": [{"role": "user", "content": "hi"}],
-                           "max_tokens": 8})
-              print("FREELLM %-32s HTTP %s %s" % (base, s, b[:80].replace("\n", " ")))
-          # 2. OpenRouter free models with the existing key
-          MODELS = ["nvidia/nemotron-3-ultra-550b-a55b:free",
-                    "meta-llama/llama-3.3-70b-instruct:free",
-                    "google/gemma-3-27b-it:free",
-                    "qwen/qwen-2.5-72b-instruct:free",
-                    "deepseek/deepseek-chat-v3-0324:free",
-                    "mistralai/mistral-small-3.2-24b-instruct:free"]
-          for mdl in MODELS:
-              s, b = post("https://openrouter.ai/api/v1/chat/completions", RK,
-                          {"model": mdl, "messages": [{"role": "user", "content": PROMPT}],
-                           "max_tokens": 120, "temperature": 0.2},
-                          hdr={"HTTP-Referer": "https://github.com/azad-news-agent",
-                               "X-Title": "azad-news"})
-              if s == 200:
-                  try:
-                      out = json.loads(b)["choices"][0]["message"]["content"].strip()
-                  except Exception:
-                      out = b[:120]
-                  print("OR OK   %-45s %s" % (mdl, out[:150].replace("\n", " ")))
-              else:
-                  print("OR FAIL %-45s HTTP %s %s" % (mdl, s, b[:110].replace("\n", " ")))
-          # 3. Gemini direct
-          s, b = post("https://generativelanguage.googleapis.com/v1beta/models/"
-                      "gemini-2.0-flash:generateContent?key=" + GK, None,
-                      {"contents": [{"parts": [{"text": PROMPT}]}]})
+                  return 0, str(e)[:120]
+          s, b = get("https://generativelanguage.googleapis.com/v1beta/models?key=" + GK)
+          names = []
           if s == 200:
-              try:
-                  print("GEMINI OK:", json.loads(b)["candidates"][0]["content"]["parts"][0]["text"].strip()[:150])
-              except Exception as e:
-                  print("GEMINI parse", e, b[:150])
+              for m in json.loads(b).get("models", []):
+                  n = m.get("name", "").replace("models/", "")
+                  if "generateContent" in (m.get("supportedGenerationMethods") or []):
+                      names.append(n)
+              print("GEMINI MODELS:", len(names))
+              print("  flash-ish:", [n for n in names if "flash" in n][:14])
           else:
-              print("GEMINI HTTP", s, b[:150].replace("\n", " "))
+              print("list HTTP", s, b[:200])
+          PROMPT = ("Translate this English news sentence into Roman Urdu (Urdu "
+                    "written in English letters, as spoken in Hyderabad India). "
+                    "Reply with ONLY the translation.\nSentence: Police arrested "
+                    "two men in Hyderabad after a raid on a hotel on Friday.")
+          def gen(model):
+              url = ("https://generativelanguage.googleapis.com/v1beta/models/"
+                     + model + ":generateContent?key=" + GK)
+              data = json.dumps({"contents": [{"parts": [{"text": PROMPT}]}],
+                                 "generationConfig": {"temperature": 0.2,
+                                                      "maxOutputTokens": 200}}).encode()
+              req = urllib.request.Request(url, data=data)
+              req.add_header("Content-Type", "application/json")
+              try:
+                  r = urllib.request.urlopen(req, timeout=70)
+                  d = json.loads(r.read().decode("utf-8", "replace"))
+                  return 200, d["candidates"][0]["content"]["parts"][0]["text"].strip()
+              except urllib.error.HTTPError as e:
+                  return e.code, e.read(200).decode("utf-8", "replace")
+              except Exception as e:
+                  return 0, str(e)[:150]
+          prefer = [n for n in ("gemini-flash-latest", "gemini-2.5-flash",
+                                "gemini-2.5-flash-lite", "gemini-2.0-flash-001",
+                                "gemini-pro-latest") if n in names] or names[:3]
+          for mdl in prefer[:5]:
+              s, out = gen(mdl)
+              print("GEM %-26s HTTP %s  %s" % (mdl, s, out[:170].replace("\n", " ")))
+          # what free slugs does OpenRouter still serve?
+          s, b = get("https://openrouter.ai/api/v1/models")
+          if s == 200:
+              free = [m["id"] for m in json.loads(b).get("data", [])
+                      if m["id"].endswith(":free")]
+              print("OPENROUTER FREE SLUGS:", len(free))
+              print("  sample:", free[:12])
           PY
