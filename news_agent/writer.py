@@ -242,18 +242,28 @@ def _frame_casualty(c):
     place = _m(PLACE, c["title"]) or _m(PLACE, c["excerpt"])
     if not place:
         return None
+    # 21 Nov owner ("give proper details"): say what actually happened -
+    # "a bus crash", "a fire" - not the filler noun "a crash incident".
+    EVENT_EN = {"bus": "a bus accident", "train": "a train accident",
+                "boat": "a boat accident", "building": "a building collapse",
+                "collapse": "a building collapse",
+                "electrocution": "an electrocution",
+                "drown": "a drowning", "fire": "a fire",
+                "crash": "a road crash", "accident": "an accident"}
     event_en, event_ur = "an incident", "haadse"
     for k, ur in EVENT_MAP:
         if re.search(r"\b" + k + r"\w*", text, re.I):
-            event_en, event_ur = f"a {k} incident", ur
+            event_en, event_ur = EVENT_EN.get(k, f"a {k}"), ur
             break
     died = verb in ("killed", "dead", "died")
     if n == "1":
-        en1 = (f"1 person {'died' if died else 'was ' + verb} in {event_en} at {place}, reports suggest.")
+        en1 = (f"1 person {'died' if died else 'was ' + verb} in "
+               f"{event_en} in {place}, reports said.")
         ur1 = (f"Reports ke mutabiq {place} mein {event_ur} mein ek shakhs "
                + ("ki maut ho gayi." if died else f"{verb} hai."))
     else:
-        en1 = (f"{n} people {'died' if died else 'were ' + verb} in {event_en} at {place}, reports suggest.")
+        en1 = (f"{n} people {'died' if died else 'were ' + verb} in "
+               f"{event_en} in {place}, reports said.")
         ur1 = (f"Reports ke mutabiq {place} mein {event_ur} mein {n} log "
                + ("mare gaye." if died else f"{verb} hain."))
     n2 = None
@@ -479,8 +489,15 @@ def _grounded(bullets, source):
         for w in re.findall(r"\b[A-Z][a-z]{3,}\b", b):
             if w in ALLOWED_TOKENS or w in UR_TOKENS:
                 continue
-            if w.lower() not in low:
-                return False
+            if w.lower() in low:
+                continue
+            # A country derived from a demonym IS grounded: a source that says
+            # "8 Ukrainians killed" supports a bullet that says "Ukraine", and
+            # "Israeli strikes" supports "Israel". Stem match, >=5 chars only,
+            # so this cannot ground an unrelated proper noun.
+            if len(w) >= 5 and w[:5].lower() in low:
+                continue
+            return False
     return True
 
 
@@ -654,28 +671,79 @@ CONFLICT_TOLL = re.compile(
     r"\D{0,16}?(?:killed|dead|died)", re.I)
 
 
+NATIONALITY = {
+    "ukrainians": "Ukraine", "ukrainian": "Ukraine", "russians": "Russia",
+    "israelis": "Israel", "palestinians": "Gaza", "yemenis": "Yemen",
+    "syrians": "Syria", "iraqis": "Iraq", "afghans": "Afghanistan",
+    "lebanese": "Lebanon", "sudanese": "Sudan", "iranians": "Iran",
+    "pakistanis": "Pakistan", "indians": "India",
+}
+# where the people were HURT. "kill" bare is included on purpose: without it
+# "Saudi airstrikes kill 41 in Yemen ... claims strikes on Saudi power plant"
+# matched only the counter-claim and the card said 41 died in Saudi Arabia.
+VICTIM_RX = re.compile(
+    r"\b(?:kill|kills|killed|dead|died|deaths?|casualties|wounded|injured|"
+    r"attacks?|attacked|strikes?|struck|shelling|shelled|raids?|bombing|"
+    r"bombed|blast|explosion|fighting|clashes?|offensive)\b", re.I)
+PREP_PLACE = re.compile(
+    r"\b(?:in|on|at|inside|across)\s+(?:the\s+)?([A-Z][A-Za-z-]+)")
+VICTIM_NAT = re.compile(
+    r"\b([A-Z][a-z]+(?:s|is))\b[^.;]{0,20}?"
+    r"\b(?:[Kk]illed|[Dd]ead|[Dd]ied|[Ww]ounded|[Ii]njured)\b")
+# a country named right before its weapons is the ATTACKER, not the place
+ATTACKER_NEXT = re.compile(
+    r"^\s*(?:air ?strikes?|airstrikes?|strikes?|forces|troops|army|military|"
+    r"soldiers|drones?|missiles?|jets?|warplanes?|shelling|attacks?|"
+    r"bombers?|artillery)\b", re.I)
+
+
+def _place_ok(cand):
+    return bool(cand) and bool(CONFLICT_PLACE.fullmatch(cand)) \
+        and cand not in DEMONYM
+
+
 def _conflict_place(title, excerpt):
-    """The place the report is ABOUT - and only when the text actually puts
-    the event THERE ("attacks on Ukraine", "killed in Gaza"). The attacker in
-    subject position ("Israel launches ground push") is never used as the
-    location, because the casualties are usually somewhere else."""
-    victim = re.compile(
-        r"\b(?:attacks?|attacked|strikes?|struck|shelling|shelled|raids?|"
-        r"bombard\w*|killed|died|fighting|clashes?|offensive|operation|"
-        r"war|blast|explosion)\b[^.]{0,30}?\b(?:on|in|at|into|inside|"
-        r"across)\s+(?:the\s+)?([A-Z][\w-]+)", re.I)
+    """Where the casualties actually are.
+
+    Three passes, strictest first:
+      1. the first casualty verb, then the first REAL place after it - so
+         "killed in encounter with security forces in Manipur" skips
+         "encounter" and reaches Manipur, and "Saudi airstrikes kill 41 in
+         Yemen ... strikes on Saudi power plant" stays on Yemen.
+      2. the first place named in the headline that is not the attacker, so
+         "Three Kyiv bridges hit ..." is reported as Kyiv.
+      3. the victims' nationality ("8 Ukrainians Killed" -> Ukraine).
+    """
     for src in (title, excerpt):
-        for m in victim.finditer(src or ""):
-            cand = m.group(1)
-            if CONFLICT_PLACE.fullmatch(cand) and cand not in DEMONYM:
-                return cand
-    # "Kuwait, Bahrain face new Iran attacks": the place that is ACTED UPON
-    # leads the headline and is followed by a receiving verb.
+        if not src:
+            continue
+        for v in VICTIM_RX.finditer(src):
+            window = src[v.end():v.end() + 70]
+            for p in PREP_PLACE.finditer(window):
+                cand = p.group(1).rstrip("'\u2019s")
+                if _place_ok(cand):
+                    return cand
+    for src in (title, excerpt):
+        if not src:
+            continue
+        for m in re.finditer(r"\b([A-Z][A-Za-z-]+)\b", src):
+            cand = m.group(1).rstrip("'\u2019s")
+            if not _place_ok(cand):
+                continue
+            if ATTACKER_NEXT.match(src[m.end():]):
+                continue        # "Russian missiles" / "Saudi airstrikes"
+            return cand
+    for src in (title, excerpt):
+        m = VICTIM_NAT.search(src or "")
+        if m:
+            nat = NATIONALITY.get(m.group(1).lower())
+            if nat:
+                return nat
     recv = re.compile(
         r"^([A-Z][\w-]+)(?:,\s*[A-Z][\w-]+)?\s+(?:faces?|faced|hit|hits|"
         r"struck|mourns?|reels?|braces?|repels?|says?|reports?)\b")
     m = recv.match(title or "")
-    if m and CONFLICT_PLACE.fullmatch(m.group(1)) and m.group(1) not in DEMONYM:
+    if m and _place_ok(m.group(1)):
         return m.group(1)
     return None
 
@@ -690,41 +758,134 @@ def _conflict_toll(text):
     return v if re.fullmatch(r"\d{1,4}", v) and v != "0" else None
 
 
+CONFLICT_ACTOR = re.compile(
+    r"\b(Saudi|Russian|Russia|Israeli|Israel|Iranian|Iran|Ukrainian|Ukraine|"
+    r"US|American|Houthi|Hamas|Hezbollah|Turkish|Syrian|Pakistani|Indian|"
+    r"NATO|Taliban|Al-?Qaeda|ISIS|Islamic State)\s+"
+    r"(air ?strikes?|airstrikes?|strikes?|forces|troops|army|military|"
+    r"soldiers|drones?|missiles?|jets?|warplanes?|shelling|attacks?)\b", re.I)
+CONFLICT_ARREST = re.compile(
+    r"(\d{1,4})\s+(militants?|suspects?|terrorists?|rebels?|fighters?|people|"
+    r"persons?)\s+(?:were\s+)?(?:arrested|detained|held|captured)", re.I)
+CONFLICT_HURT = re.compile(
+    r"(\d{1,4})\s+(?:others?\s+)?(?:were\s+)?(?:injured|wounded|hurt)"
+    r"|(?:injur\w+|wound\w+|hurt)\s+(\d{1,4})", re.I)
+
+
+ATTACK_RX = re.compile(
+    r"\b(?:unleash\w*|launch\w*|strik\w*|hit|hits|attack\w*|bomb\w*|"
+    r"shell\w*|pound\w*|target\w*|rain\w*)\b[^.;]{0,40}?"
+    r"\b(?:on|at|in|against)\b", re.I)
+SINGLE_KILL = re.compile(
+    r"^([A-Z][a-z]{3,})\s+(?:was\s+)?(?:killed|shot dead|gunned down)\b")
+
+
+def _attacker(title, place):
+    """The country that struck, taken from before the verb - never the place."""
+    for m in re.finditer(r"\b([A-Z][A-Za-z-]+)\b", title or ""):
+        cand = m.group(1).rstrip("'\u2019s")
+        if cand == place or cand in NATIONALITY.values():
+            if cand == place:
+                continue
+        if cand in DEMONYM or CONFLICT_PLACE.fullmatch(cand):
+            if cand != place and ATTACK_RX.search(title[m.end():]):
+                return cand
+    return None
+
+
 def _frame_conflict(c):
-    title, excerpt = c["title"], _dedateline(c["excerpt"])
+    """Report a war story with the facts in it: who, how, how many, where.
+
+    21 Nov owner: "at least 8 people were killed, officials said the situation
+    is being monitored, more details awaited ... where, why, you didnt mention,
+    give proper details". The old frame printed a placeless toll and two filler
+    lines, and once named the WRONG country (41 dead "in Saudi" when they died
+    in Yemen). It now refuses outright unless it can say WHERE, and it names
+    the attacker and the weapon when the text does.
+    """
+    title = (c.get("title") or "").strip()
+    excerpt = _dedateline(c.get("excerpt") or "")
     if not CONFLICT_EVENT.search(title):
         return None
     text = title + " " + excerpt
     place = _conflict_place(title, excerpt)
+    if not place:
+        return None            # no WHERE -> no post. It rides the card instead.
     n = _conflict_toll(text)
-    if not place and not n:
-        return None  # nothing solid to report: leave it to the hourly card
-    low = text.lower()
-    if n and place:
-        en1 = f"At least {n} people were killed in {place}, reports said."
-        ur1 = f"{place} mein kam az kam {n} afraad halak ho gaye."
-    elif n:
-        # the text names no clear location for the casualties - say so plainly
-        # rather than pinning the deaths on the attacker's country
-        en1 = f"At least {n} people were killed, reports said."
-        ur1 = f"Kam az kam {n} afraad halak ho gaye."
-    elif re.search(r"\battack", low):
-        en1 = f"An attack was reported in {place}, reports said."
-        ur1 = f"{place} mein hamla report hua hai."
-    elif re.search(r"\bstrike|\bstruck", low):
-        en1 = f"A strike was reported in {place}, reports said."
-        ur1 = f"{place} mein strike report hui hai."
-    else:
-        en1 = f"Fighting was reported in {place}, reports said."
-        ur1 = f"{place} mein larai report hui hai."
     means = _m(CONFLICT_MEANS, text)
-    if means:
-        en2 = f"{means.capitalize()} attacks were reported, officials said."
-        ur2 = f"Officials ke mutabiq {means.lower()} hamle report hue."
+    m_actor = CONFLICT_ACTOR.search(text)
+    actor = weapon = None
+    if m_actor:
+        actor = m_actor.group(1)
+        weapon = re.sub(r"\s+", " ", m_actor.group(2)).lower()
+        if not weapon.endswith("s"):
+            weapon += "s"
+
+    # ---- line 1: the most complete true sentence the text supports ----
+    if actor and weapon and n:
+        if str(n) == "1":
+            en1 = (f"{actor} {weapon} killed at least one person in {place}, "
+                   f"reports said.")
+            ur1 = (f"{actor} {weapon} se {place} mein kam az kam ek shakhs "
+                   f"halak ho gaya.")
+        else:
+            en1 = (f"{actor} {weapon} killed at least {n} people in {place}, "
+                   f"reports said.")
+            ur1 = (f"{actor} {weapon} se {place} mein kam az kam {n} afraad "
+                   f"halak ho gaye.")
+    elif n:
+        if str(n) == "1":
+            en1 = f"At least one person was killed in {place}, reports said."
+            ur1 = f"{place} mein kam az kam ek shakhs halak ho gaya."
+        else:
+            en1 = f"At least {n} people were killed in {place}, reports said."
+            ur1 = f"{place} mein kam az kam {n} afraad halak ho gaye."
+    elif actor and weapon:
+        en1 = f"{actor} {weapon} struck {place}, reports said."
+        ur1 = f"{actor} {weapon} ne {place} ko nishana banaya."
+    elif ATTACK_RX.search(title) and _attacker(title, place):
+        who = _attacker(title, place)
+        en1 = f"{who} launched an attack on {place}, reports said."
+        ur1 = f"{who} ne {place} par hamla kiya."
+    elif SINGLE_KILL.match(title):
+        subj = SINGLE_KILL.match(title).group(1).lower()
+        en1 = f"A {subj} was killed in {place}, officials said."
+        ur1 = f"Officials ke mutabiq {place} mein ek {subj} halak hua."
+    elif means:
+        en1 = (f"{means.capitalize()} attacks were reported in {place}, "
+               f"officials said.")
+        ur1 = (f"Officials ke mutabiq {place} mein {means.lower()} hamle "
+               f"report hue.")
     else:
-        en2 = "Officials said the situation is being monitored."
-        ur2 = "Officials ke mutabiq soorat-e-haal par nazar rakhi ja rahi hai."
-    return [en1, en2, AWAIT_EN], [ur1, ur2, AWAIT_UR]
+        return None            # nothing concrete to say: refuse
+
+    # ---- line 2: a second REAL fact, never "the situation is monitored" ----
+    en2 = ur2 = None
+    m_ar = CONFLICT_ARREST.search(text)
+    m_hu = CONFLICT_HURT.search(_strip_money(text))
+    if m_ar:
+        k, who = m_ar.group(1), m_ar.group(2).lower()
+        if not who.endswith("s"):
+            who += "s"
+        en2 = f"{k} {who} were arrested during the operation, officials said."
+        ur2 = f"Officials ke mutabiq operation ke dauran {k} {who} giraftaar kiye gaye."
+    elif m_hu:
+        j = m_hu.group(1) or m_hu.group(2)
+        en2 = f"{j} people were injured, officials said."
+        ur2 = f"Officials ke mutabiq {j} afraad zakhmi hue."
+    elif means and means.lower() not in en1.lower():
+        en2 = (f"{means.capitalize()} attacks were reported in {place}, "
+               f"officials said.")
+        ur2 = (f"Officials ke mutabiq {place} mein {means.lower()} hamle "
+               f"report hue.")
+
+    en, ur = [en1], [ur1]
+    if en2:
+        en.append(en2)
+        ur.append(ur2)
+    en.append(AWAIT_EN)
+    ur.append(AWAIT_UR)
+    return en, ur
 
 
 BUILDERS = [
@@ -1948,6 +2109,14 @@ PLACEHOLDER_RX = re.compile(
     r"\ban incident\b|\ba incident\b", re.I)
 
 
+GENERIC_CAP = {
+    "After", "Amid", "Before", "During", "Hours", "More", "Over", "Says",
+    "Said", "Such", "That", "Their", "There", "These", "This", "Were",
+    "What", "When", "While", "With", "Will", "Report", "Reports", "Latest",
+    "News", "Update", "Updates", "Breaking", "Live", "Video", "Watch",
+}
+
+
 def build(candidate):
     """Return {'bullets_en':[3], 'bullets_ur':[3], 'frame':cat} or None."""
     cats = set(candidate.get("categories", []))
@@ -1980,10 +2149,29 @@ def build(candidate):
                 key = max((t for t in re.findall(r"[A-Za-z]+",
                            candidate["title"].lower()) if len(t) >= 8),
                           key=len, default="")
-                if key and not any(key in b.lower() for b in en):
+                # A bullet is specific enough if it names a proper noun from
+                # the headline - _grounded() has already proved that noun is
+                # real. That is the owner's test ("say WHERE"), and it lets a
+                # correct paraphrase through: "Russia unleashes massive attack
+                # on Kyiv" -> "Russia launched an attack on Kyiv". Headlines
+                # with no proper noun still fall back to the longest word.
+                proper = [t for t in re.findall(r"\b[A-Z][a-z]{3,}\b",
+                                                candidate["title"])
+                          if t not in GENERIC_CAP]
+                named = any(p.lower() in b.lower()
+                            or (len(p) >= 5 and p[:5].lower() in b.lower())
+                            for p in proper for b in en)
+                _stem = key[:6]
+                if not named and key and not any(_stem in b.lower()
+                                                 for b in en):
                     continue
             subst = len([b for b in en if b not in FILLER_EN])
-            statement = bool(cats & {"political_major"}) and len(en[0]) >= 45
+            # 21 Nov: a war line that names the attacker, the weapon, the
+            # toll AND the place is a complete report on its own - it must not
+            # be refused for having only one substantive bullet.
+            statement = ((bool(cats & {"political_major"})
+                          and len(en[0]) >= 45)
+                         or "international_conflict" in cats)
             if subst < (1 if statement else 2):
                 continue  # thin filler-only posts are refused
             while len(en) == len(ur) and len(en) < 3:
