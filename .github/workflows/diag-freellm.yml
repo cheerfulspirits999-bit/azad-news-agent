@@ -4,52 +4,55 @@ on:
 jobs:
   probe:
     runs-on: ubuntu-latest
+    timeout-minutes: 20
+    env:
+      RU_API_KEY: ${{ secrets.ROMAN_URDU_API_KEY }}
+      RU_PROVIDER: ${{ vars.RU_PROVIDER }}
+      RU_MODEL: ${{ vars.RU_MODEL }}
+      RU_BASE_URL: ${{ vars.RU_BASE_URL }}
+      RU_TIMEOUT: 40
+      RU_DAILY_CAP: 200
+      RU_DAILY_HARD: 220
+      GEMINI_API_KEY: ${{ secrets.GEMINI_API_KEY }}
+      OPENAI_API_KEY: ${{ secrets.OPENAI_API_KEY || secrets.OPENAI_API_KETS }}
     steps:
-      - name: Roman Urdu from the live Gemini models
-        env:
-          GEMINI_API_KEY: ${{ secrets.GEMINI_API_KEY }}
+      - uses: actions/checkout@v4
+      - name: Exercise the REAL engine, lane by lane
         run: |
           python3 - <<'PY'
-          import os, json, urllib.request, urllib.error
-          GK = os.environ["GEMINI_API_KEY"]
-          r = urllib.request.urlopen(
-              "https://generativelanguage.googleapis.com/v1beta/models?key=" + GK, timeout=40)
-          names = [m["name"].replace("models/", "")
-                   for m in json.loads(r.read().decode())["models"]
-                   if "generateContent" in (m.get("supportedGenerationMethods") or [])]
-          print("ALL FLASH MODELS:")
-          for n in names:
-              if "flash" in n and "tts" not in n and "image" not in n:
-                  print("   ", n)
-          PROMPT = ("Translate the English news sentences into Roman Urdu (Urdu in "
-                    "English letters, Hyderabad style). Keep proper nouns in English. "
-                    "Return ONLY the translations, one per line, numbered.\n"
-                    "1. Police arrested two men in Hyderabad after a raid on a hotel.\n"
-                    "2. Shubman Gill became the first Indian to 3000 WTC runs.\n"
-                    "3. A person was held with live ammunition at RGIA, police said.")
-          def gen(model, timeout=120):
-              url = ("https://generativelanguage.googleapis.com/v1beta/models/"
-                     + model + ":generateContent?key=" + GK)
-              data = json.dumps({"contents": [{"parts": [{"text": PROMPT}]}],
-                                 "generationConfig": {"temperature": 0.2,
-                                                      "maxOutputTokens": 400}}).encode()
-              req = urllib.request.Request(url, data=data)
-              req.add_header("Content-Type", "application/json")
+          import os, sys, importlib
+          sys.path.insert(0, "news_agent")
+          import roman_urdu as ru
+          print("ENGINE        :", ru.ENGINE)
+          print("configured()  :", ru.configured())
+          eng = sys.modules.get("roman_urdu_translator_engine")
+          print("DEFAULT_PROV  :", getattr(eng, "DEFAULT_PROVIDER", "?"))
+          print("RU_MODEL env  :", os.environ.get("RU_MODEL"))
+          print("RU_BASE_URL   :", os.environ.get("RU_BASE_URL"))
+          for k, v in getattr(eng, "API_KEYS", {}).items():
+              print("   API_KEYS[%-9s] len=%s" % (k, len(v or "")))
+          import autod
+          print("autod._ru_on():", autod._ru_on())
+          lanes = list(autod._ru_attempts())
+          print("LANES (%d):" % len(lanes))
+          for lbl, kw in lanes:
+              print("   %-42s prov=%-8s key=%s" % (
+                  lbl, kw.get("provider", "(RU_PROVIDER)"), len(kw.get("api_key", "") or "")))
+          BULLETS = ["A person was held with live ammunition at RGIA, police said.",
+                     "Housefly, cockroach infestations found in raids at 9 Hyderabad hotels.",
+                     "MBBS students have begun a strike in Karimnagar."]
+          for lbl, kw in lanes:
+              sys.stdout.flush()
               try:
-                  rr = urllib.request.urlopen(req, timeout=timeout)
-                  d = json.loads(rr.read().decode("utf-8", "replace"))
-                  c = d["candidates"][0]
-                  txt = "".join(p.get("text", "") for p in c["content"]["parts"]).strip()
-                  return 200, txt
-              except urllib.error.HTTPError as e:
-                  return e.code, e.read(220).decode("utf-8", "replace")
+                  out = ru.translate_lines(list(BULLETS), **kw)
               except Exception as e:
-                  return 0, str(e)[:130]
-          for mdl in ("gemini-3.8-flash", "gemini-3-flash-preview",
-                      "gemini-flash-latest", "gemini-flash-lite-latest",
-                      "gemini-3.1-flash-lite-preview"):
-              s, out = gen(mdl)
-              print("=== %s -> HTTP %s" % (mdl, s))
-              for line in out.splitlines()[:6]:
-                  print("     ", line[:150])
+                  print("LANE %-40s EXC %s" % (lbl, str(e)[:110])); continue
+              if isinstance(out, dict):
+                  lines = out.get("lines") or out.get("translations") or []
+                  print("LANE %-40s method=%s" % (lbl, out.get("method")))
+              else:
+                  lines = out
+                  print("LANE %-40s (list)" % lbl)
+              for b, t in zip(BULLETS, lines or []):
+                  print("      >", str(t)[:130])
           PY
