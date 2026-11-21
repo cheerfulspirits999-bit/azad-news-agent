@@ -130,6 +130,41 @@ DEAD_AFTER = re.compile(r"\b(?:killed|dead|died)\s*[:\-]?\s*"
                         r"\d[\d,]{0,6})", re.I)
 
 
+ARREST_HOLD = (r"(?:arrested|held|detained|nabbed|apprehended|booked|"
+               r"taken into custody|remanded)")
+ARREST_WHO = (r"(?:members?|persons?|people|men|women|accused|suspects?|"
+              r"youths?|individuals?|workers?|smugglers?|militants?|"
+              r"students?|officials?|activists?|miscreants?)")
+# "arrested four members of a gang" / "4 members of a gang held"
+ARREST_N_A = re.compile(ARREST_HOLD + r"\s+(\w+)\s+" + ARREST_WHO, re.I)
+ARREST_N_B = re.compile(r"\b(\w+)\s+" + ARREST_WHO +
+                        r"\b[^.;]{0,45}?\b(?:were\s+|was\s+|have been\s+|"
+                        r"has been\s+)?" + ARREST_HOLD, re.I)
+
+
+def _arrest_count(text):
+    """How many people were ARRESTED - never how many were killed.
+
+    21 Nov: the police frame read its number from _people_count(), which is a
+    DEATH-TOLL counter. On "Ex-IPS officer wife's murder: 4 members of
+    Nepal-based gang held" it found no toll, fell back to a hardcoded "one"
+    and published "arrested one accused" when four were held. On a story that
+    did mention a toll it would have published the victim count as the number
+    of arrests. Counts now come from words next to the arrest itself.
+    """
+    t = _strip_money(_dedateline(text or ""))
+    for rx in (ARREST_N_A, ARREST_N_B):
+        m = rx.search(t)
+        if not m:
+            continue
+        v = m.group(1).strip(" ,.").lower()
+        if v in WORD_NUM:
+            return str(WORD_NUM[v])
+        if re.fullmatch(r"\d[\d,]{0,5}", v) and v != "0":
+            return v
+    return None
+
+
 def _people_count(text):
     """Death toll ONLY from a number adjacent to killed/dead/died.
     Never from an injured/rescued count (that caused a 50-dead error)."""
@@ -474,9 +509,12 @@ def _frame_police(c):
                      AWAIT_EN],
                     [f"Police ke mutabiq ek shakhs ko {_it} ke saath{_at} "
                      f"giraftaar kiya gaya.", AWAIT_UR])
-        count_en = n or "one"
-        count_ur = f"{n} mulzameen" if n else "ek mulzim"
-        en1 = f"{actor} arrested {count_en} accused in connection with {case_en}."
+        _an = _arrest_count(text)
+        if not _an:
+            return None       # unknown number of arrests: say nothing, not "one"
+        count_en = f"{_an} accused" if _an != "1" else "one accused"
+        count_ur = f"{_an} mulzameen" if _an != "1" else "ek mulzim"
+        en1 = f"{actor} arrested {count_en} in connection with {case_en}."
         ur1 = f"{actor} ne {case_ur} ke silsile mein {count_ur} ko giraftaar kar liya."
     # seizure details come from the BODY only - the headline's own "seized"
     # would otherwise swallow the next sentence as if it were the haul
@@ -602,6 +640,22 @@ EXTENSIONS = [
     ("ndps", re.compile(r"\bNDPS\b"),
      "A case has been registered under the NDPS Act.",
      "NDPS Act ke tehat case darj kiya gaya hai."),
+    # 21 Nov owner: "GIVE MORE DETAILS". A card with one fact used to take
+    # "More details are awaited." as its second line; these pull a real one
+    # out of the body instead, with Roman Urdu written here (never the raw
+    # English clause, which is what the politics frame used to paste in).
+    ("probe", re.compile(r"\burges?\s+(?:the\s+)?([A-Z]{2,6}|police|"
+                         r"government)\s+to\s+(?:probe|investigate|"
+                         r"order a probe)", re.I),
+     "The party urges the {v} to probe the allegations.",
+     "Party ne {v} se ilzamaat ki tehqiqat ka mutalba kiya hai."),
+    ("locs", re.compile(r"\bat\s+(\d{1,3})\s+locations?\b", re.I),
+     "The complaint covers {v} locations.",
+     "Shikayat mein {v} maqamat shamil hain."),
+    ("toll2", re.compile(r"\b(\d{1,4})\s+(?:others?\s+)?(?:were\s+)?"
+                         r"injured\b", re.I),
+     "{v} people were injured, officials said.",
+     "Officials ke mutabiq {v} afraad zakhmi hue."),
     ("day", re.compile(r"\bon\s+(Saturday|Sunday|Monday|Tuesday|Wednesday|"
                        r"Thursday|Friday)"),
      "The incident came to light on {v}.",
@@ -718,6 +772,13 @@ POLI_ACTOR = re.compile(r"^([A-Z][A-Za-z().,'& ]{2,40}?)\s+(?:seeks|demands|urge
                         r"releases|released)\b")
 
 
+# function words that mark a clause as untranslated English
+UR_PASTE_FUNC = re.compile(
+    r"\b(?:of|in|the|to|and|for|on|with|from|that|which|over|after|before|"
+    r"against|between|into|during|is|are|was|were|has|have|had|will|their|"
+    r"its|this|these|not|by|at|as)\b", re.I)
+
+
 def _frame_politics(c):
     if len(c["title"].strip()) < 55:
         return None  # stub feed titles twist meanings - refuse
@@ -741,6 +802,15 @@ def _frame_politics(c):
     if verb[1] in ("maang", "virodh") and len(what) < 20:
         return None
     kind = verb[1]
+    # 21 Nov: every template below interpolates the ENGLISH clause {what}
+    # into its Roman Urdu line, so "CPI(M) accuses TDP cadre of obstructing
+    # nominations in local body polls" published the Urdu bullet "CPI(M) ne
+    # ilzaam lagaya ke TDP cadre of obstructing nominations in local body
+    # polls." - an Urdu sentence that is mostly English. A clause carrying
+    # English function words cannot be pasted into Urdu, so the card is
+    # refused instead of shipped half-translated.
+    if len(UR_PASTE_FUNC.findall(what or "")) >= 2:
+        return None
     if kind == "kaha":
         en1 = f"{actor} {verb[0]} {what}."
         if len(en1) > 95 and "," in what:  # split long claims at the comma
@@ -756,7 +826,9 @@ def _frame_politics(c):
             return None  # never overflow the card bullet limit
         return ([en1, AWAIT_EN], [f"{actor} ne kaha ke {what}.", AWAIT_UR])
     if kind == "ilzaam":
-        return ([f"{actor} {verb[0]} that {what}.", AWAIT_EN],
+        # "accuse X of Y" takes no "that": the inserted conjunction produced
+        # "CPI(M) accuses that TDP cadre of obstructing nominations".
+        return ([f"{actor} {verb[0]} {what}.", AWAIT_EN],
                 [f"{actor} ne ilzaam lagaya ke {what}.", AWAIT_UR])
     if kind == "uthaya":
         return ([f"{actor} {verb[0]} {what}.", AWAIT_EN],
@@ -800,7 +872,28 @@ CONFLICT_PLACE = re.compile(
     r"Houthi|Iran|Iranian|Tehran|Iraq|Baghdad|Kuwait|Bahrain|Qatar|Qeshm|"
     r"Saudi|Riyadh|Jordan|Egypt|Sudan|Khartoum|Somalia|Mali|Nigeria|Libya|"
     r"Afghanistan|Kabul|Pakistan|Taiwan|China|Myanmar|Armenia|Azerbaijan|"
-    r"Kashmir|Manipur|Imphal|Poland|Belarus|Estonia|Finland|Venezuela)\b")
+    r"Kashmir|Manipur|Imphal|Poland|Belarus|Estonia|Finland|Venezuela|"
+    # 21 Nov: a drone strike in the Baltic was published as happening "in
+    # Finland" purely because Baltic was missing here and Finland was not.
+    # A closed whitelist silently relocates any story it does not know, so
+    # the waters and regions that actually carry strikes are listed too.
+    r"Baltic|Black Sea|Red Sea|Mediterranean|Gulf of Finland|Gulf of Aden|"
+    r"Gulf of Oman|Strait of Hormuz|Arabian Sea|South China Sea|Donbas|"
+    r"Kherson|Kharkiv|Zaporizhzhia|Sumy|Dnipro|Lviv|Sevastopol|Belgorod|"
+    r"Rafah|Khan Younis|Deir al-Balah|Sanaa|Hodeidah|Latakia|Idlib)\b")
+
+# names that read wrong without an article: "reported in Baltic" -> "in the
+# Baltic Sea". Display form only; detection still matches the bare token.
+PLACE_ARTICLE = {
+    "Baltic": "the Baltic Sea", "Black Sea": "the Black Sea",
+    "Red Sea": "the Red Sea", "Mediterranean": "the Mediterranean",
+    "Gulf of Finland": "the Gulf of Finland",
+    "Gulf of Aden": "the Gulf of Aden", "Gulf of Oman": "the Gulf of Oman",
+    "Strait of Hormuz": "the Strait of Hormuz",
+    "Arabian Sea": "the Arabian Sea",
+    "South China Sea": "the South China Sea",
+    "West Bank": "the West Bank", "Donbas": "the Donbas",
+}
 CONFLICT_MEANS = re.compile(
     r"\b(missile|drone|rocket|artillery|shelling|air ?strike|airstrike|"
     r"bomb|bombing|gunfire|shooting|explosion)\b", re.I)
@@ -838,11 +931,59 @@ VICTIM_RX = re.compile(
     r"\b(?:kill|kills|killed|dead|died|deaths?|casualties|wounded|injured|"
     r"attacks?|attacked|strikes?|struck|shelling|shelled|raids?|bombing|"
     r"bombed|blast|explosion|fighting|clashes?|offensive)\b", re.I)
+# 21 Nov: this captured ONE capitalised word, so every multi-word location
+# ("Red Sea", "Gulf of Finland", "West Bank") was unmatchable no matter what
+# the whitelist contained - the resolver skipped it and settled on whatever
+# single-word country appeared elsewhere in the sentence.
 PREP_PLACE = re.compile(
-    r"\b(?:in|on|at|inside|across)\s+(?:the\s+)?([A-Z][A-Za-z-]+)")
+    r"\b(?:in|on|at|inside|across|off)\s+(?:the\s+)?"
+    r"([A-Z][A-Za-z-]+(?:\s+(?:of\s+)?[A-Z][A-Za-z-]+){0,2})")
+
+
+def _place_prefixes(run):
+    """'Russian cargo Ship' -> that, then 'Russian cargo', then 'Russian'.
+
+    Longest first, so "Red Sea" is tested before the bare "Red".
+    """
+    words = (run or "").split()
+    for k in range(len(words), 0, -1):
+        yield " ".join(words[:k]).rstrip("'\u2019s")
 VICTIM_NAT = re.compile(
     r"\b([A-Z][a-z]+(?:s|is))\b[^.;]{0,20}?"
     r"\b(?:[Kk]illed|[Dd]ead|[Dd]ied|[Ww]ounded|[Ii]njured)\b")
+# 21 Nov: a country named right before a REPORTING verb is the source of the
+# report, not the scene of it. The Hindu ran "Finland detects drone attack on
+# Russian cargo ship in Baltic" and this frame published "Drone attacks were
+# reported in Finland" - it moved the attack onto the country that merely
+# DETECTED it, dropped the Russian cargo ship entirely, and so told readers
+# something the article never said. Same failure class as the Yemen story that
+# was published as "in Saudi": a grammatical subject is not a location.
+# The possessive branch is deliberate: "Finland's military detected ..." is a
+# country reporting, while a bare "Gaza officials said ..." normally IS the
+# scene - so only a possessive may carry intervening words before the verb.
+OWN_TERRITORY = re.compile(
+    r"\b(?:its|their)\s+(?:own\s+)?(?:airspace|air space|waters|territory|"
+    r"territorial|soil|border|borders|coast|coastline|skies|land|"
+    r"capital|east|west|north|south)\b", re.I)
+REPORTER_NEXT = re.compile(
+    r"^\s*(?:['\u2019]s\s+(?:\w+\s+){0,2})?"
+    r"(?:detects?|detected|reports?|reported|says?|said|claims?|claimed|"
+    r"confirms?|confirmed|denies|denied|accuses?|accused|alleges?|alleged|"
+    r"announces?|announced|warns?|warned|investigates?|investigated|"
+    r"probes?|probed|monitors?|monitored|suspects?|suspected|observes?|"
+    r"observed|identifies|identified|tracks?|tracked)\b", re.I)
+# 21 Nov owner: "WHEN POSTING THIS TYPE OF NEWS GIVE MORE DETAILS". Real
+# second/third facts a war report usually carries, so the card can say
+# something instead of padding itself out with "More details are awaited."
+CONFLICT_FIRE = re.compile(
+    r"\b(ship|vessel|tanker|boat|ferry|building|depot|refinery|warehouse|"
+    r"plant|market|bus|train|aircraft|plane|house|shop)\b[^.;]{0,70}?"
+    r"\b(?:caught|catches|burst into) fire\b", re.I)
+CONFLICT_NOCLAIM = re.compile(
+    r"\b(?:did not|did n't|didn't|has not|have not|has yet to|"
+    r"not immediately)\s+\w{0,12}\s*(?:specify|say|name|named|identify|"
+    r"identified|claim|claimed|confirm|confirmed)\b[^.;]{0,60}?"
+    r"\b(?:who|responsibility)\b", re.I)
 # a country named right before its weapons is the ATTACKER, not the place
 ATTACKER_NEXT = re.compile(
     r"^\s*(?:air ?strikes?|airstrikes?|strikes?|forces|troops|army|military|"
@@ -873,19 +1014,30 @@ def _conflict_place(title, excerpt):
         for v in VICTIM_RX.finditer(src):
             window = src[v.end():v.end() + 70]
             for p in PREP_PLACE.finditer(window):
-                cand = p.group(1).rstrip("'\u2019s")
-                if _place_ok(cand):
-                    return cand
+                for cand in _place_prefixes(p.group(1)):
+                    if _place_ok(cand):
+                        return cand
     for src in (title, excerpt):
         if not src:
             continue
-        for m in re.finditer(r"\b([A-Z][A-Za-z-]+)\b", src):
-            cand = m.group(1).rstrip("'\u2019s")
-            if not _place_ok(cand):
-                continue
-            if ATTACKER_NEXT.match(src[m.end():]):
-                continue        # "Russian missiles" / "Saudi airstrikes"
-            return cand
+        for m in re.finditer(r"\b([A-Z][A-Za-z-]+(?:\s+(?:of\s+)?"
+                             r"[A-Z][A-Za-z-]+){0,2})\b", src):
+            run = m.group(1)
+            for cand in _place_prefixes(run):
+                if not _place_ok(cand):
+                    continue
+                rest = src[m.start() + len(cand):]
+                if ATTACKER_NEXT.match(rest):
+                    break       # "Russian missiles" / "Saudi airstrikes"
+                if REPORTER_NEXT.match(rest):
+                    # "Poland detects a missile over ITS airspace" happened
+                    # in Poland - a country reporting on its own territory
+                    # is still the scene, unlike Finland reporting a strike
+                    # on someone else's ship in international waters.
+                    if OWN_TERRITORY.search(rest[:90]):
+                        return cand
+                    break       # reporter, not scene
+                return cand
     for src in (title, excerpt):
         m = VICTIM_NAT.search(src or "")
         if m:
@@ -894,7 +1046,8 @@ def _conflict_place(title, excerpt):
                 return nat
     recv = re.compile(
         r"^([A-Z][\w-]+)(?:,\s*[A-Z][\w-]+)?\s+(?:faces?|faced|hit|hits|"
-        r"struck|mourns?|reels?|braces?|repels?|says?|reports?)\b")
+        r"struck|mourns?|reels?|braces?|repels?)\b")   # NOT says/reports:
+    # "Finland says drone hit a Russian ship" does not put the ship in Finland
     m = recv.match(title or "")
     if m and _place_ok(m.group(1)):
         return m.group(1)
@@ -941,8 +1094,16 @@ def _attacker(title, place):
             if cand == place:
                 continue
         if cand in DEMONYM or CONFLICT_PLACE.fullmatch(cand):
-            if cand != place and ATTACK_RX.search(title[m.end():]):
-                return cand
+            if cand == place or not ATTACK_RX.search(title[m.end():]):
+                continue
+            # 21 Nov: "Finland detects drone attack on a Russian ship" has a
+            # country, then an attack word, so this used to read Finland as
+            # the attacker and publish "Finland launched an attack on the
+            # Baltic Sea" - the exact opposite of the story. A country that
+            # DETECTS or REPORTS an attack never launched it.
+            if REPORTER_NEXT.match(title[m.end():]):
+                continue
+            return cand
     return None
 
 
@@ -962,6 +1123,10 @@ def _frame_conflict(c):
         return None
     text = title + " " + excerpt
     place = _conflict_place(title, excerpt)
+    place = PLACE_ARTICLE.get(place, place)   # "in Baltic" -> "in the Baltic Sea"
+    # Roman Urdu takes no English article: "Baltic Sea mein", not "the Baltic
+    # Sea mein". Every ur-template below interpolates place_ur instead.
+    place_ur = re.sub(r"^the\s+", "", place or "")
     if not place:
         return None            # no WHERE -> no post. It rides the card instead.
     n = _conflict_toll(text)
@@ -979,35 +1144,37 @@ def _frame_conflict(c):
         if str(n) == "1":
             en1 = (f"{actor} {weapon} killed at least one person in {place}, "
                    f"reports said.")
-            ur1 = (f"{actor} {weapon} se {place} mein kam az kam ek shakhs "
+            ur1 = (f"{actor} {weapon} se {place_ur} mein kam az kam ek shakhs "
                    f"halak ho gaya.")
         else:
             en1 = (f"{actor} {weapon} killed at least {n} people in {place}, "
                    f"reports said.")
-            ur1 = (f"{actor} {weapon} se {place} mein kam az kam {n} afraad "
+            ur1 = (f"{actor} {weapon} se {place_ur} mein kam az kam {n} afraad "
                    f"halak ho gaye.")
     elif n:
         if str(n) == "1":
             en1 = f"At least one person was killed in {place}, reports said."
-            ur1 = f"{place} mein kam az kam ek shakhs halak ho gaya."
+            ur1 = f"{place_ur} mein kam az kam ek shakhs halak ho gaya."
         else:
             en1 = f"At least {n} people were killed in {place}, reports said."
-            ur1 = f"{place} mein kam az kam {n} afraad halak ho gaye."
+            ur1 = f"{place_ur} mein kam az kam {n} afraad halak ho gaye."
     elif actor and weapon:
-        en1 = f"{actor} {weapon} struck {place}, reports said."
-        ur1 = f"{actor} {weapon} ne {place} ko nishana banaya."
+        # "Russian strikes struck Kyiv" - pick a verb that is not the weapon
+        _v = "hit" if "strike" in weapon or "attack" in weapon else "struck"
+        en1 = f"{actor} {weapon} {_v} {place}, reports said."
+        ur1 = f"{actor} {weapon} ne {place_ur} ko nishana banaya."
     elif ATTACK_RX.search(title) and _attacker(title, place):
         who = _attacker(title, place)
         en1 = f"{who} launched an attack on {place}, reports said."
-        ur1 = f"{who} ne {place} par hamla kiya."
+        ur1 = f"{who} ne {place_ur} par hamla kiya."
     elif SINGLE_KILL.match(title):
         subj = SINGLE_KILL.match(title).group(1).lower()
         en1 = f"A {subj} was killed in {place}, officials said."
-        ur1 = f"Officials ke mutabiq {place} mein ek {subj} halak hua."
+        ur1 = f"Officials ke mutabiq {place_ur} mein ek {subj} halak hua."
     elif means:
         en1 = (f"{means.capitalize()} attacks were reported in {place}, "
                f"officials said.")
-        ur1 = (f"Officials ke mutabiq {place} mein {means.lower()} hamle "
+        ur1 = (f"Officials ke mutabiq {place_ur} mein {means.lower()} hamle "
                f"report hue.")
     else:
         return None            # nothing concrete to say: refuse
@@ -1029,15 +1196,36 @@ def _frame_conflict(c):
     elif means and means.lower() not in en1.lower():
         en2 = (f"{means.capitalize()} attacks were reported in {place}, "
                f"officials said.")
-        ur2 = (f"Officials ke mutabiq {place} mein {means.lower()} hamle "
+        ur2 = (f"Officials ke mutabiq {place_ur} mein {means.lower()} hamle "
                f"report hue.")
 
-    en, ur = [en1], [ur1]
+    # ---- 21 Nov: collect REAL extra facts instead of padding ----
+    # The owner's complaint was a card reading "Drone attacks were reported
+    # in Finland. / More details are awaited. / More updates on this
+    # development will follow." Two of three lines carried no information at
+    # all, while the article itself said the ship caught fire and that the
+    # ministry would not say who was behind it. Those are the lines a reader
+    # wants, so build them when the text supports them - and when it does
+    # not, say less rather than padding.
+    extras = []
     if en2:
-        en.append(en2)
-        ur.append(ur2)
-    en.append(AWAIT_EN)
-    ur.append(AWAIT_UR)
+        extras.append((en2, ur2))
+    m_fire = CONFLICT_FIRE.search(text)
+    if m_fire:
+        obj = m_fire.group(1).lower()
+        extras.append((
+            f"The {obj} caught fire after the attack, officials said.",
+            f"Officials ke mutabiq hamle ke baad {obj} mein aag lag gayi."))
+    if CONFLICT_NOCLAIM.search(text):
+        extras.append((
+            "Officials did not say who was behind the attack.",
+            "Officials ne nahi bataya ke hamle ke peeche kaun tha."))
+
+    en, ur = [en1], [ur1]
+    for _e, _u in extras[:2]:
+        if _e.lower() != en[-1].lower():
+            en.append(_e)
+            ur.append(_u)
     return en, ur
 
 
@@ -2562,9 +2750,23 @@ def build(candidate):
                     statement = True
             if subst < (1 if statement else 2):
                 continue  # thin filler-only posts are refused
-            while len(en) == len(ur) and len(en) < 3:
-                en.append("More updates on this development will follow.")
-                ur.append("Is silsile mein mazeed updates aayengi.")
+            # 21 Nov owner: "WHEN POSTING THIS TYPE OF NEWS GIVE MORE
+            # DETAILS". This loop used to top every short card up to three
+            # bullets with "More updates on this development will follow."
+            # - a line that informs nobody. A card of two real sentences is
+            # worth more than a card of one real sentence and two fillers,
+            # and the owner has now objected to that padding twice.
+            # Cards are no longer padded; frames supply real extra facts
+            # (see _frame_conflict) or the card runs short.
+            # 21 Nov owner: drop every contentless line once the card has
+            # two real ones. AWAIT_EN is a legitimate last resort on a card
+            # that genuinely has one fact; it is never a filler row next to
+            # two facts that already stand on their own.
+            if subst >= 2 and len(en) == len(ur):
+                _keep = [i for i, b in enumerate(en) if b not in FILLER_EN]
+                if len(_keep) != len(en):
+                    en = [en[i] for i in _keep]
+                    ur = [ur[i] for i in _keep]
             _bad = _unsourced(en, candidate["title"] + " " + ex_txt)
             if _bad:
                 continue      # the bullet asserts something the story never said
