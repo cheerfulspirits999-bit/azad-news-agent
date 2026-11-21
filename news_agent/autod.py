@@ -76,6 +76,30 @@ _RU_MISS_TTL = 4 * 3600.0
 # slugs that auto-revive the premium lane the moment credits come back.
 # Every returned line is still judged by the same hard gates - only the
 # chance-to-answer widens, never the bar.
+# sentinel marking the FreeLLMAPI gateway lane inside the fallback chain -
+# it is not a model name, it is "ask the owner's gateway to choose one"
+_FREELLM = "\x00freellm-gateway"
+
+
+def _freellm_base():
+    """Public base URL of the owner's FreeLLMAPI gateway, or "" when unset.
+
+    Accepts the gateway root or the /v1 path and normalises to /v1, so
+    https://x.onrender.com, https://x.onrender.com/ and
+    https://x.onrender.com/v1 all work. A localhost value is rejected: it
+    would be the runner's own loopback, never the owner's machine.
+    """
+    b = (os.environ.get("FREELLM_BASE_URL") or "").strip().rstrip("/")
+    if not b:
+        return ""
+    low = b.lower()
+    if "localhost" in low or "127.0.0.1" in low or low.startswith("http://0."):
+        return ""
+    if not low.startswith(("http://", "https://")):
+        b = "https://" + b
+    return b if b.lower().endswith("/v1") else b + "/v1"
+
+
 _RU_FALLBACK_MODELS = (
     # 3 Oct: direct-key lanes FIRST. Proven with a raw HTTP probe (see the
     # diag-translator workflow): OpenRouter's :free tier is hard-capped at
@@ -119,6 +143,23 @@ _RU_FALLBACK_MODELS = (
     ("gemini", "gemini-flash-lite-latest", "GEMINI_API_KEY"),
     ("gemini", "gemini-3.5-flash-lite", "GEMINI_API_KEY"),
     ("gemini", "gemini-3-flash-preview", "GEMINI_API_KEY"),
+    # 21 Nov (owner: "FREELLM HAS UNIFIED KEYS, IT HAS GEMINI, GROK, OPEN AI,
+    # NVIDIA, ETC"). Correct - FreeLLMAPI fronts all of those behind ONE
+    # freellmapi-... token. The catch is that the token authenticates
+    # against the owner's OWN gateway, not against the providers, so the
+    # gateway has to have an address this runner can reach. Their own docs
+    # say it of Cursor, which is in exactly our position: "your router must
+    # be reachable from the internet (a tunnel or a host with a public
+    # address), not just localhost".
+    #
+    # This lane is therefore DORMANT until FREELLM_BASE_URL is set as a repo
+    # variable. Set it and the lane lights up with no code change; leave it
+    # unset and nothing about the cycle changes. It sits BEHIND Gemini on
+    # purpose: Gemini is measured at 1.3s and proven, so it stays the fast
+    # path, and FreeLLM becomes the broad failover (Grok/NVIDIA/OpenAI/...)
+    # for the day Gemini's free tier caps out - which is currently an
+    # unprotected single point of failure for the whole page.
+    _FREELLM,
     ("openai", "gpt-4o-mini", "OPENAI_API_KEY"),
     "nvidia/nemotron-3-ultra-550b-a55b:free",
     "qwen/qwen3.8-27b:free",
@@ -313,6 +354,17 @@ def _ru_attempts():
     old setting."""
     yield "primary", {}
     for m in _RU_FALLBACK_MODELS:
+        if m == _FREELLM:
+            # unified gateway: one key, many upstream providers. Dormant
+            # unless the owner has published a reachable address for it.
+            _b, _k = _freellm_base(), os.environ.get("FREELLM_API_KEY", "")
+            if _b and _k and _ru_lane_alive("freellm"):
+                yield "freellm", {"provider": "openai",
+                                  "model": os.environ.get("FREELLM_MODEL",
+                                                          "auto"),
+                                  "api_key": _k, "base_url": _b,
+                                  "use_few_shot": False}
+            continue
         if isinstance(m, tuple):
             prov, mdl, envi = m
             k = os.environ.get(envi, "")
