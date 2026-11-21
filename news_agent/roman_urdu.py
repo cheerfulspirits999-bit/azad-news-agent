@@ -84,37 +84,62 @@ if _ENGINE_NAME == "owner-package":
         # its own api_key, route it at the real OpenAI endpoint.
         return bool(kw.get("api_key")) and str(kw.get("provider", "")).lower() == "openai"
 
+    def _route(kw):
+        """Which OpenAI-compatible endpoint should THIS lane be sent to?
+
+        Returns a URL to swap in for the duration of the call, or None to
+        leave ENDPOINTS alone.
+
+        21 Nov: a lane may now carry its own base_url. That is how the
+        FreeLLMAPI gateway lane works - the owner's unified freellmapi-...
+        key is not a provider key, it authenticates against the owner's own
+        gateway, so that lane needs its own address instead of the module's
+        import-time RU_BASE_URL. base_url is popped here and never reaches
+        the engine, which does not accept it.
+        """
+        base = str(kw.pop("base_url", "") or "").rstrip("/")
+        if base:
+            return base + "/chat/completions"
+        if _direct_openai(kw):
+            return _OPENAI_REAL
+        return None
+
+    def _call(fn, arg, kw):
+        url = _route(kw)
+        if url is None:
+            return fn(arg, **kw)
+        saved = _mod.ENDPOINTS.get("openai")
+        _mod.ENDPOINTS["openai"] = url
+        try:
+            return fn(arg, **kw)
+        finally:
+            if saved is not None:
+                _mod.ENDPOINTS["openai"] = saved
+
     def translate_lines(lines, **kw):
         kw.setdefault("use_few_shot", False)
-        if _direct_openai(kw):
-            saved = _mod.ENDPOINTS.get("openai")
-            _mod.ENDPOINTS["openai"] = _OPENAI_REAL
-            try:
-                return _orig_translate_lines(lines, **kw)
-            finally:
-                if saved is not None:
-                    _mod.ENDPOINTS["openai"] = saved
-        return _orig_translate_lines(lines, **kw)
+        return _call(_orig_translate_lines, lines, kw)
 
     def translate_news(text, **kw):
         kw.setdefault("use_few_shot", False)
-        if _direct_openai(kw):
-            saved = _mod.ENDPOINTS.get("openai")
-            _mod.ENDPOINTS["openai"] = _OPENAI_REAL
-            try:
-                return _orig_translate_news(text, **kw)
-            finally:
-                if saved is not None:
-                    _mod.ENDPOINTS["openai"] = saved
-        return _orig_translate_news(text, **kw)
+        return _call(_orig_translate_news, text, kw)
 
     _mod.translate_lines = translate_lines
     _mod.translate_news = translate_news
 else:
-    translate_lines = _mod.translate_lines
-    translate_news = getattr(_mod, "translate_news", None) or (
-        lambda text, **kw: _mod.translate_lines([line.strip() for line in
-                                                  text.splitlines() if line.strip()]))
+    # the legacy engine knows nothing about per-lane endpoints; swallow the
+    # kwarg so a FreeLLM lane degrades instead of raising TypeError
+    def translate_lines(lines, **kw):
+        kw.pop("base_url", None)
+        return _mod.translate_lines(lines, **kw)
+
+    def translate_news(text, **kw):
+        kw.pop("base_url", None)
+        f = getattr(_mod, "translate_news", None)
+        if f:
+            return f(text, **kw)
+        return _mod.translate_lines([l.strip() for l in text.splitlines()
+                                     if l.strip()])
 
 # bind the (possibly wrapped) engine entry points as module globals
 _translate_lines = _mod.translate_lines
