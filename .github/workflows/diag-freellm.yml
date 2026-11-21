@@ -1,0 +1,45 @@
+name: diag-freellm
+on:
+  workflow_dispatch:
+jobs:
+  probe:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Identify the provider behind FREELLM_API_KEY
+        env:
+          FREELLM_API_KEY: ${{ secrets.FREELLM_API_KEY }}
+        run: |
+          python3 - <<'PY'
+          import os, json, urllib.request, urllib.error
+          k = os.environ.get("FREELLM_API_KEY") or ""
+          print("key length:", len(k))
+          print("key shape :", (k[:4] + "..." if k else "MISSING"),
+                "| has sk-or:", k.startswith("sk-or"),
+                "| has gsk_:", k.startswith("gsk_"),
+                "| has AIza:", k.startswith("AIza"))
+          CAND = [
+            ("openrouter", "https://openrouter.ai/api/v1/models", "bearer"),
+            ("groq",       "https://api.groq.com/openai/v1/models", "bearer"),
+            ("openai",     "https://api.openai.com/v1/models", "bearer"),
+            ("together",   "https://api.together.xyz/v1/models", "bearer"),
+            ("cerebras",   "https://api.cerebras.ai/v1/models", "bearer"),
+            ("mistral",    "https://api.mistral.ai/v1/models", "bearer"),
+            ("deepseek",   "https://api.deepseek.com/v1/models", "bearer"),
+            ("gemini", "https://generativelanguage.googleapis.com/v1beta/models?key=" + k, "query"),
+          ]
+          ok = []
+          for name, url, mode in CAND:
+              req = urllib.request.Request(url)
+              if mode == "bearer":
+                  req.add_header("Authorization", "Bearer " + k)
+              try:
+                  r = urllib.request.urlopen(req, timeout=25)
+                  body = r.read(400).decode("utf-8", "replace")
+                  print("%-11s HTTP %s  %s" % (name, r.status, body[:120].replace("\n", " ")))
+                  ok.append(name)
+              except urllib.error.HTTPError as e:
+                  print("%-11s HTTP %s  %s" % (name, e.code, e.read(120).decode("utf-8", "replace").replace("\n", " ")))
+              except Exception as e:
+                  print("%-11s ERR  %s" % (name, str(e)[:90]))
+          print("WORKING LANES:", ok)
+          PY
