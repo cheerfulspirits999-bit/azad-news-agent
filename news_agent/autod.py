@@ -204,6 +204,33 @@ _RU_FALLBACK_MODELS = (
 # lines went 1 -> 2, and gemini-flash-lite-latest (lane 5) started being reached.
 _RU_BATCH_TRIES = int(os.environ.get("RU_BATCH_TRIES", "7"))
 _RU_CARD_MIN = 3
+
+# 21 Nov (owner: "should a failed translation REFUSE the card?" -> "Yes,
+# refuse it"). The engine reports HOW a line was produced:
+#   "llm"      - the model translated it on the first attempt   ACCEPT
+#   "retry"    - the model translated it on a later attempt     ACCEPT
+#   "fallback" - NO model answered; a word-by-word dictionary   REFUSE
+#                substitution was returned instead
+#   "none"     - hard error                                     REFUSE
+#   "noop"     - empty input                                    REFUSE
+#
+# The fallback path returns ok=True whenever its dictionary output passes
+# the package's own paste validator, so every gate we had - echo, paste,
+# digits, Urdu-script - waved it straight through. That is precisely how
+# "Passenger ne Ammunition ke saath RGIA par Live ka inqiad kiya" reached a
+# published card: real English nouns glued together with Urdu connectives,
+# which is not a translation and does not mean anything.
+#
+# Refusing it costs bullets on a bad hour (<3 publishable lines -> no card,
+# and the hourly cadence rides). That is the trade the owner chose, and it
+# is the same rule as the rest of the pipeline: never publish something we
+# cannot stand behind.
+_RU_REAL_METHODS = frozenset(("llm", "retry"))
+
+
+def _ru_translated(res):
+    """True only when a real model produced this batch."""
+    return str((res or {}).get("method") or "") in _RU_REAL_METHODS
 # 16 Nov: the owner's "cover full up election" ranking is working (5/5
 # election picks), but it collides with the translator's gates. Election
 # headlines are the most proper-noun-dense copy in the pool - "Talasani
@@ -1666,6 +1693,10 @@ def build_digest(cands, catchup=False):
         # lines; the per-line salvage pass then rescued only 2 of the remaining
         # 3 through gemini-3.5-flash, so the card missed the 3-line gate by one
         # and the hour was lost. One fresh batch beats four private re-asks.
+        # _res is read after this loop; if no lane is live the loop never
+        # runs, and an unbound _res would take the WHOLE digest down - no
+        # card at all, which is worse than a short one.
+        _res = {}
         for _try, (_lbl, _kw) in enumerate(_order[:_RU_BATCH_TRIES]):
             _need = [i for i in _pend if i in _bad]
             if not _need:
@@ -1685,6 +1716,20 @@ def build_digest(cands, catchup=False):
                 log(f"[digest] lane '{_lbl}' hard-failed "
                     f"(rate limit/no credits) - parked for 30 min")
             _cand = _res.get("lines") or []
+            if not _ru_translated(_res):
+                # dictionary passthrough, not a translation - take nothing
+                # from this lane and let the next one answer
+                if _try == 0:
+                    _RU_STATS["engine"] = {
+                        "ok": bool(_res.get("ok")),
+                        "lines_in": len(_cand), "lines_want": len(_pend),
+                        "method": str(_res.get("method") or "?")[:16],
+                        "problems": str(_res.get("problems") or [])[:160]}
+                    _RU_STATS["kills"] = {"passthrough-refused": "all"}
+                log(f"[digest] lane '{_lbl}' returned "
+                    f"method={_res.get('method')!r} (no model answered) - "
+                    f"refused, not published")
+                continue
             if _try == 0:
                 _RU_STATS["engine"] = {
                     "ok": bool(_res.get("ok")),
@@ -1753,6 +1798,8 @@ def build_digest(cands, catchup=False):
                         log(f"[digest] salvage lane '{_lbl2}' hard-failed "
                             f"- parked for 30 min")
                         continue
+                    if not _ru_translated(_r2):
+                        continue        # dictionary passthrough - refuse
                     _l2 = ((_r2.get("lines") or [""])[0] or "").strip()
                     if (not _l2 or len(_l2) > 118 or _NONROMAN_RE.search(_l2)
                             or _real_paste(_en2, _l2)
@@ -1770,7 +1817,7 @@ def build_digest(cands, catchup=False):
             _RU_STATS["accepted"] = len(_pend) - len(_bad)
         log(f"[digest] roman-urdu step: {len(_pend) - len(_bad)}/"
             f"{len(_pend)} lines accepted"
-            + ("" if not _res["problems"] else
+            + ("" if not _res.get("problems") else
                " (watch: " + str(_res["problems"][0])[:60] + ")"))
         if _bad:
             _wipe = len(_bad) == len(_pend)  # nothing accepted at all
