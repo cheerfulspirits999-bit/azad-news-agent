@@ -191,40 +191,123 @@ def _sanitize(bullets):
 
 
 # --------------------------------------------------------------------------
+STRIKE_ACTOR = re.compile(
+    r"\b((?:[A-Z][A-Za-z&.]*\s+){0,3}"
+    r"(?:students?|doctors?|nurses?|employees?|workers?|drivers?|staff|"
+    r"teachers?|farmers?|lawyers?|residents?|traders?|conductors?|"
+    r"mechanics?|labourers?|labors?|union|unions|sangham|samithi|"
+    r"association|forum))\b")
+
+
+def _strike_actor(title, excerpt):
+    """WHO is striking. 21 Nov owner: a card said "The union has begun a
+    strike" when the story was "MBBS students of Karimnagar GMC on strike".
+    Inventing an actor is wrong news. If the text does not name one, refuse.
+    """
+    org = _first_group(re.compile("|".join(UNION_ORGS)), title + " " + excerpt)
+    if org:
+        return org
+    for src in (title, excerpt):
+        m = STRIKE_ACTOR.search(src or "")
+        if m:
+            actor = re.sub(r"\s+", " ", m.group(1)).strip()
+            # keep the qualifier that identifies them ("MBBS students")
+            return actor
+    return None
+
+
+REASON_RX = re.compile(
+    r"\b(demanding|seeking|protesting|over|against)\s+"
+    r"((?:the\s+)?[a-z][^.,;:]{5,58})", re.I)
+NO_X_RX = re.compile(r"^No\s+([a-z][^,.;]{3,40})\s*,")
+
+
+def _strike_reason(title, excerpt):
+    """WHY they are striking, in the SOURCE'S OWN WORDS - never invented.
+
+    Returns (english, roman_urdu) or (None, None). The excerpt is searched
+    first because it carries the demand ("demanding permanent hostels").
+    """
+    for src in (excerpt, title):
+        m = REASON_RX.search(src or "")
+        if m:
+            verb = m.group(1).lower()
+            why = re.sub(r"\s+", " ", m.group(2)).strip().lower()
+            why = re.sub(r"\s+(?:and|but|while|as|is|are|was|were)$", "", why)
+            if len(why) < 6:
+                continue
+            if verb in ("demanding", "seeking"):
+                return (f"They are {verb} {why}.",
+                        f"Woh {why} ka mutalba kar rahe hain.")
+            return (f"The strike is over {why}.",
+                    f"Yeh strike {why} ke masle par hai.")
+    m = NO_X_RX.match(title or "")
+    if m:
+        x = m.group(1).strip().lower()
+        return (f"They said there are no {x}.",
+                f"Un ke mutabiq {x} nahi hain.")
+    return (None, None)
+
+
 def _frame_strike(c):
     title, excerpt = c["title"], _dedateline(c["excerpt"])
     if not re.search(r"\b(strike|strikes|bandh|boycott|halt|halted|off the road|"
                      r"go off road)\b", title, re.I):
         return None
     text = title + " " + excerpt
-    actor = _first_group(re.compile("|".join(UNION_ORGS)), text) or "The union"
+    actor = _strike_actor(title, excerpt)
+    if not actor:
+        return None            # no named actor -> no post
     place = _m(PLACE, title) or _m(PLACE, excerpt)
     venue = _m(VENUE, title)
-    loc = " ".join(x for x in (place, venue) if x) or "the city"
+    loc = " ".join(x for x in (place, venue) if x)
+    if not loc:
+        return None            # no place -> no post
     veh = _m(VEHICLE_COUNT, _strip_money(text))
     issue_en, issue_ur = _issue(text)
-    service = _first_group(re.compile(r"\b(cab|taxi|auto|bus|delivery|metro)\w*", re.I),
-                           text, "transport")
-    en = [f"{actor} has begun a strike at {loc}, affecting {service} services."]
-    ur = [f"{actor} ne {loc} par strike shuru ki hai, jis se {service} services mutasir hain."]
-    fare = re.search(r"Rs\s?([\d,]+)(?:\s?to\s?Rs\s?([\d,]+))?\s+per\s+km", text, re.I)
+
+    # Only claim a service is disrupted when the TEXT says so. The Karimnagar
+    # story said "No hostels or buses" - the students lacked buses, the strike
+    # did not stop them - and the card wrongly reported "affecting bus services".
+    hit = re.search(r"\b(cab|taxi|auto|bus|delivery|metro|train|flight)\w*\s+"
+                    r"(?:services\s+)?(?:were\s+|was\s+|are\s+|is\s+)?"
+                    r"(?:hit|affected|disrupted|suspended|cancelled|halted|"
+                    r"stopped|off the road)", text, re.I)
+    if hit:
+        service = hit.group(1).lower()
+        en = [f"{actor} have begun a strike in {loc}, and {service} services "
+              f"were affected."]
+        ur = [f"{actor} ne {loc} mein strike shuru ki hai, jis se {service} "
+              f"services mutasir huin."]
+    else:
+        en = [f"{actor} have begun a strike in {loc}."]
+        ur = [f"{actor} ne {loc} mein strike shuru ki hai."]
+
+    fare = re.search(r"Rs\s?([\d,]+)(?:\s?to\s?Rs\s?([\d,]+))?\s+per\s+km",
+                     text, re.I)
     notified = re.search(r"(?:notified|prescribes|fixed|must receive|must get|"
                          r"fare of)\s+Rs\s?([\d,]+)\s+per\s+km", text, re.I)
     if fare and notified and notified.group(1) != fare.group(1):
         paid = f"Rs {fare.group(1)}" + (f"-{fare.group(2)}" if fare.group(2) else "")
-        en.append(f"Drivers receive {paid} per km against the notified Rs {notified.group(1)} per km, the union said.")
-        ur.append(f"Union ke mutabiq drivers ko notified Rs {notified.group(1)} per km ke muqable {paid} per km mil rahe hain.")
+        en.append(f"Drivers receive {paid} per km against the notified "
+                  f"Rs {notified.group(1)} per km, the union said.")
+        ur.append(f"Union ke mutabiq drivers ko notified Rs {notified.group(1)} "
+                  f"per km ke muqable {paid} per km mil rahe hain.")
     elif veh and issue_en:
-        en.append(f"{veh} {('workers' if 'worker' in veh.lower() or 'driver' in veh.lower() else 'vehicles')} stayed off the road over {issue_en}, the union said.")
-        ur.append(f"Union ke mutabiq {issue_ur} ke masle par {veh} vehicles sadak par nahi utre.")
+        en.append(f"{veh} stayed off the road over {issue_en}.")
+        ur.append(f"{issue_ur} ke masle par {veh} sadak par nahi utre.")
     elif issue_en:
-        en.append(f"The strike is over {issue_en}, the union said.")
-        ur.append(f"Union ke mutabiq yeh strike {issue_ur} ke masle par hai.")
+        en.append(f"The strike is over {issue_en}.")
+        ur.append(f"Yeh strike {issue_ur} ke masle par hai.")
     else:
-        en.append("The union said long-pending issues behind the strike were raised with the government.")
-        ur.append("Union ne kaha ke strike ke peeche arse se baqi masle government ke saamne rakhe gaye hain.")
-    en.append("The union has asked the government for talks and a written resolution.")
-    ur.append("Union ne government se baat cheet aur likhit resolution ka mutalba kiya hai.")
+        why_en, why_ur = _strike_reason(title, excerpt)
+        if why_en:
+            en.append(why_en)
+            ur.append(why_ur)
+    # NOTE: no "asked the government for talks and a written resolution" line.
+    # 21 Nov owner deleted a card carrying it: nothing in the source said it.
+    en.append(AWAIT_EN)
+    ur.append(AWAIT_UR)
     return en, ur
 
 
@@ -278,8 +361,8 @@ def _frame_casualty(c):
         en2, ur2 = ("Officials said rescue and relief work is underway.",
                     "Officials ne kaha ke rescue aur relief ka kaam jaari hai.")
     else:
-        en2, ur2 = ("Officials said an investigation into the incident has begun.",
-                    "Officials ne kaha ke waqia ki tehqiqat shuru kar di gayi hai.")
+        # 21 Nov: an investigation nobody reported is not news. Stay silent.
+        return [en1, AWAIT_EN], [ur1, AWAIT_UR]
     return [en1, en2, AWAIT_EN], [ur1, ur2, AWAIT_UR]
 
 
@@ -302,21 +385,37 @@ def _frame_fire(c):
     if not place and not venue:
         return None  # never publish a fire without a location
     loc = " ".join(x for x in (place, venue) if x)
-    en1 = f"Fire broke out at {loc}, officials said."
-    ur1 = f"Officials ke mutabiq {loc} mein aag lag gayi."
+    # 21 Nov: "Fire broke out at ..." asserted a word the story never used.
+    _toll = _conflict_toll(text)
+    if _toll:
+        en1 = f"A fire at {loc} killed at least {_toll} people."
+        ur1 = f"{loc} mein aag se kam az kam {_toll} afraad halak ho gaye."
+    else:
+        en1 = f"A fire was reported at {loc}."
+        ur1 = f"{loc} mein aag lagne ki ittila hai."
     cause = next((ur for k, ur in CAUSE_MAP if re.search(r"\b" + k, text, re.I)), None)
     if cause:
         en2, ur2 = (f"Reports suggest the fire started due to {cause}.",
                     f"Pehli reports ke mutabiq {cause} ki wajah se aag lagi.")
     else:
-        en2, ur2 = ("Reports suggest the cause of the fire is not yet confirmed.",
-                    "Reports ke mutabiq aag ki wajah abhi tasdeeq nahi hui.")
-    if re.search(r"\b(control|extinguish)", text, re.I):
-        en3 = "Fire services said the blaze has been brought under control."
-        ur3 = "Fire services ne kaha ke aag par qaboo pa liya gaya hai."
-    else:
-        en3, ur3 = AWAIT_EN, AWAIT_UR
-    return [en1, en2, en3], [ur1, ur2, ur3]
+        en2 = ur2 = None
+    out_en, out_ur = [en1], [ur1]
+    if en2:
+        out_en.append(en2)
+        out_ur.append(ur2)
+    _hurt = re.search(r"(\d{1,4})\s+(?:others?\s+)?(?:were\s+)?"
+                      r"(?:injured|wounded|hurt)|(?:injur\w+|wound\w+)\s+"
+                      r"(\d{1,4})", _strip_money(text), re.I)
+    if _hurt:
+        _j = _hurt.group(1) or _hurt.group(2)
+        out_en.append(f"{_j} people were injured, officials said.")
+        out_ur.append(f"Officials ke mutabiq {_j} afraad zakhmi hue.")
+    elif re.search(r"\b(control|extinguish|doused)", text, re.I):
+        out_en.append("The fire was brought under control, officials said.")
+        out_ur.append("Officials ke mutabiq aag par qaboo pa liya gaya.")
+    out_en.append(AWAIT_EN)
+    out_ur.append(AWAIT_UR)
+    return out_en, out_ur
 
 
 def _frame_police(c):
@@ -343,6 +442,38 @@ def _frame_police(c):
         en1 = f"{n or 'Several'} protesters were detained near {place}, police said."
         ur1 = f"Police ke mutabiq {place} ke qareeb {n or 'kai'} pradarshankartaon ko hirasat mein liya gaya."
     else:
+        # 21 Nov: "Police arrested one accused in connection with a case."
+        # went out on a FOOD SAFETY RAID story. No arrest, no accused, no
+        # case. An arrest is only reported when the story reports one.
+        if not re.search(r"\b(arrest|arrested|held|nabbed|apprehended|"
+                         r"detained|taken into custody|booked)\b", text, re.I):
+            return None
+        _wrx = re.compile(r"(?:arrested|held|apprehended)\s+with\s+"
+                          r"([^;,:]{4,70}?)(?:\.\s|[;,]|$)", re.I)
+        _withx = _wrx.search(title) or _wrx.search(excerpt)
+        if case_en == "a case" and not n and not _withx:
+            # Named person + place is still a complete, sourced report:
+            # "Kannada writer Ravi Hanj arrested at Kochi airport" ->
+            # "Ravi Hanj was arrested at Kochi airport, police said."
+            _nm = re.search(r"\b([A-Z][a-z]+(?:\s+[A-Z][a-z]+){1,2})\s+"
+                            r"(?:was\s+|were\s+)?(?:arrested|held|detained|"
+                            r"booked|nabbed)\b", title)
+            _pl2 = _m(PLACE, title) or _m(PLACE, excerpt)
+            if _nm and _pl2:
+                return ([f"{_nm.group(1)} was arrested at {_pl2}, police said.",
+                         AWAIT_EN],
+                        [f"Police ke mutabiq {_nm.group(1)} ko {_pl2} se "
+                         f"giraftaar kiya gaya.", AWAIT_UR])
+            return None        # nothing specific to say about the arrest
+        if case_en == "a case" and _withx:
+            # "Passenger Held with Live Ammunition at RGIA"
+            _it = re.sub(r"\s+", " ", _withx.group(1)).strip().rstrip(",; .")
+            _pl = _m(PLACE, title) or _m(PLACE, excerpt) or ""
+            _at = f" at {_pl}" if _pl and _pl.lower() not in _it.lower() else ""
+            return ([f"A person was held with {_it}{_at}, police said.",
+                     AWAIT_EN],
+                    [f"Police ke mutabiq ek shakhs ko {_it} ke saath{_at} "
+                     f"giraftaar kiya gaya.", AWAIT_UR])
         count_en = n or "one"
         count_ur = f"{n} mulzameen" if n else "ek mulzim"
         en1 = f"{actor} arrested {count_en} accused in connection with {case_en}."
@@ -362,8 +493,11 @@ def _frame_police(c):
                            r"([^;,:]{4,70}?)(?:\.\s|[;,]|$)", excerpt, re.I) or \
                  re.search(r"(?:arrested|held|apprehended)\s+with\s+"
                            r"([^;,:]{4,70}?)(?:\.\s|[;,]|$)", title, re.I)
-    if m_seiz and not detained:
+    if m_seiz and not detained and len(
+            re.sub(r"\s+", " ", m_seiz.group(1)).strip().rstrip(",; .")) >= 4:
         seized = re.sub(r"\s+", " ", m_seiz.group(1)).strip().rstrip(",; .")
+        if len(seized) < 4:
+            m_seiz = None
         en2 = f"Police seized {seized} during the operation, officials said."
         ur2 = f"Officials ke mutabiq police ne operation ke dauran {seized} zabt kiya."
     elif m_with and not detained:
@@ -371,25 +505,30 @@ def _frame_police(c):
         en2 = f"The accused were held with {withs}, officials said."
         ur2 = f"Officials ke mutabiq mulzameen ko {withs} ke saath giraftaar kiya gaya."
     else:
-        en2 = "Police said the investigation is underway."
-        ur2 = "Police ne kaha ke tehqiqat jaari hai."
+        # 21 Nov: "Police said the investigation is underway" attributes a
+        # statement nobody made. Say nothing rather than invent it.
+        return [en1, AWAIT_EN], [ur1, AWAIT_UR]
     return [en1, en2, AWAIT_EN], [ur1, ur2, AWAIT_UR]
 
 
 def _frame_court(c):
     title, text = c["title"], c["title"] + " " + _dedateline(c["excerpt"])
-    court = _m(COURTS, text, "The court")
+    # 21 Nov: "Supreme Court issued ban against Decide." was emitted for
+    # "Karnataka to Decide on Bike Taxis After Talks With AG" - no court, no
+    # ban, no such order. The court AND the order must both be in the HEADLINE.
+    court = _m(COURTS, title)
+    if not court:
+        return None
     order_en, order_ur = next(((k, ur) for k, ur in ORDER_MAP
-                               if re.search(r"\b" + k, text, re.I)), (None, None))
+                               if re.search(r"\b" + k, title, re.I)),
+                              (None, None))
     if not order_en:
         return None
     against = re.search(r"(?:against|to)\s+([A-Z][A-Za-z]+(?:\s[A-Z][A-Za-z]+){0,2})", title)
     who = against.group(1) if against else None
     en1 = f"{court} issued {order_en}" + (f" against {who}" if who else "") + "."
     ur1 = f"{court} ne {who + ' ke khilaf ' if who else ''}{order_ur} jaari kiya."
-    en2 = "The order was passed in ongoing proceedings, according to reports."
-    ur2 = "Reports ke mutabiq yeh hukm jaari karrwai ke dauran diya gaya."
-    return [en1, en2, AWAIT_EN], [ur1, ur2, AWAIT_UR]
+    return [en1, AWAIT_EN], [ur1, AWAIT_UR]
 
 
 def _frame_govt(c):
@@ -421,16 +560,32 @@ def _frame_weather(c):
     text = c["title"] + " " + _dedateline(c["excerpt"])
     if not re.search(r"\bIMD|alert|warning", text, re.I):
         return None
-    place = _m(PLACE, c["title"]) or _m(PLACE, c["excerpt"]) or "the region"
-    en1 = f"IMD issued a weather alert for {place}, reports suggest."
-    ur1 = f"Reports ke mutabiq IMD ne {place} ke liye mausam ka alert jaari kiya."
-    if re.search(r"\brain", text, re.I):
-        en2 = "Heavy rain is expected over the next few hours, officials said."
-        ur2 = "Officials ke mutabiq agle chand ghanton mein tez baarish ka imkaan hai."
-    else:
-        en2 = "Authorities asked residents to stay alert in low-lying areas."
-        ur2 = "Intezamiya ne neech ilaaqon ke rehne walon ko chokas rehne ko kaha."
-    return [en1, en2, AWAIT_EN], [ur1, ur2, AWAIT_UR]
+    place = _m(PLACE, c["title"]) or _m(PLACE, c["excerpt"])
+    if not place:
+        m_in = re.search(r"\b(?:in|for|over)\s+([A-Z][A-Za-z]+)", c["title"])
+        place = m_in.group(1) if m_in else None
+    if not place:
+        return None
+    if not re.search(r"\b(alert|warning|warned|warns)\b", text, re.I):
+        return None        # 21 Nov: no alert in the story, no alert on the card
+    issuer = "IMD" if re.search(r"\bIMD\b", text) else "The weather office"
+    col = re.search(r"\b(red|orange|yellow)\s+alert\b", text, re.I)
+    kind = (col.group(0).lower() if col
+            else ("an alert" if re.search(r"\balert\b", text, re.I)
+                  else "a warning"))
+    art = "a " if col else ""
+    en1 = f"{issuer} issued {art}{kind} for {place}."
+    ur1 = f"{issuer} ne {place} ke liye {kind} jaari kiya."
+    # 21 Nov: the old frame asserted "Heavy rain is expected over the next few
+    # hours" on stories that never said it. Only name what the story names.
+    phen = re.search(r"\b(heavy rain|very heavy rain|rain|thunderstorm|"
+                     r"cyclone|snow|heatwave|cold wave|hailstorm|squall)\b",
+                     text, re.I)
+    if phen:
+        p = phen.group(1).lower()
+        return ([en1, f"The alert is for {p} in {place}.", AWAIT_EN],
+                [ur1, f"Yeh alert {place} mein {p} ke liye hai.", AWAIT_UR])
+    return [en1, AWAIT_EN], [ur1, AWAIT_UR]
 
 
 EXTENSIONS = [
@@ -447,9 +602,6 @@ EXTENSIONS = [
     ("ndps", re.compile(r"\bNDPS\b"),
      "A case has been registered under the NDPS Act.",
      "NDPS Act ke tehat case darj kiya gaya hai."),
-    ("place", re.compile(r"\bat\s+([A-Z][A-Za-z]+(?:\s[A-Z][A-Za-z]+){0,2})"),
-     "The operation was carried out at {v}.",
-     "Yeh operation {v} mein kiya gaya."),
     ("day", re.compile(r"\bon\s+(Saturday|Sunday|Monday|Tuesday|Wednesday|"
                        r"Thursday|Friday)"),
      "The incident came to light on {v}.",
@@ -626,13 +778,10 @@ def _frame_politics(c):
     text = title + " " + _dedateline(c["excerpt"])
     issue_en, issue_ur = _issue(text)
     if issue_en:
-        en2 = f"The matter relates to {issue_en}."
-        ur2 = f"Yeh mamla {issue_ur} se mutalliq hai."
-    else:
-        en2, ur2 = AWAIT_EN, AWAIT_UR
-    en3 = "More updates on this development will follow."
-    ur3 = "Is silsile mein mazeed updates aayengi."
-    return [en1, en2, en3], [ur1, ur2, ur3]
+        en2 = f"The remarks relate to {issue_en}."
+        ur2 = f"Yeh remarks {issue_ur} se mutalliq hain."
+        return [en1, en2, AWAIT_EN], [ur1, ur2, AWAIT_UR]
+    return [en1, AWAIT_EN], [ur1, AWAIT_UR]
 
 
 # --------------------------------------------------------------------------
@@ -2109,6 +2258,93 @@ PLACEHOLDER_RX = re.compile(
     r"\ban incident\b|\ba incident\b", re.I)
 
 
+# Neutral reporting vocabulary a template is allowed to use. ANY other
+# content word in an English bullet must come from the story itself.
+SAFE_WORDS = {
+    "about", "according", "action", "added", "after", "against", "ahead",
+    "connection", "relate", "relates", "related", "underway",
+    "behind", "case", "remarks", "decision",
+    "also", "among", "another", "area", "around", "assembly",
+    "authorities", "awaited", "been", "before", "began", "begun", "being",
+    "between", "both", "came", "come", "could", "data", "department",
+    "details", "development", "during", "each", "early", "event", "filed",
+    "follow", "following", "found", "from", "further", "government", "have",
+    "held", "here", "high", "however", "include", "including", "incident",
+    "into", "issue", "issues", "itself", "just", "known", "large", "last",
+    "late", "later", "latest", "least", "light", "like", "local", "made",
+    "major", "make", "many", "meeting", "more", "most", "move", "much",
+    "near", "number", "office", "official", "officials", "once", "only",
+    "order", "other", "others", "over", "part", "people", "person",
+    "persons", "place", "police", "present", "public", "reported",
+    "reportedly", "reports", "residents", "response", "result", "said",
+    "same", "says", "second", "several", "since", "some", "soon", "staff",
+    "state", "statement", "still", "such", "take", "taken", "than", "that",
+    "their", "them", "then", "there", "these", "they", "third", "this",
+    "those", "three", "through", "time", "told", "took", "total", "under",
+    "until", "updates", "upon", "used", "were", "what", "when", "where",
+    "which", "while", "will", "with", "within", "without", "work", "would",
+    "year", "years",
+}
+
+
+# A word counts as sourced when the story uses a plain synonym of it.
+SYNONYM = {
+    "died": ("killed", "dead", "death", "deaths"),
+    "killed": ("died", "dead", "death", "deaths"),
+    "dead": ("died", "killed", "death"),
+    "injured": ("hurt", "wounded", "injuries"),
+    "wounded": ("injured", "hurt"),
+    "arrested": ("held", "arrest", "nabbed", "detained", "apprehended",
+                 "custody", "booked"),
+    "detained": ("held", "arrested", "custody"),
+    "accused": ("suspect", "suspects", "arrested", "held", "accused"),
+    "investigation": ("probe", "investigating", "inquiry", "enquiry",
+                      "investigation"),
+    "seized": ("seizure", "confiscated", "recovered"),
+    "strike": ("protest", "stir", "agitation", "boycott", "bandh"),
+    "protest": ("strike", "stir", "agitation", "demonstration"),
+    "crash": ("collided", "collision", "accident", "hit", "rammed"),
+    "blast": ("explosion", "exploded"),
+    "explosion": ("blast", "exploded"),
+    "fire": ("blaze", "fires"),
+    "raids": ("raid", "inspections", "inspection", "searches"),
+    "alert": ("warning", "alerts"),
+    "warning": ("alert", "warn", "warned"),
+    "demanding": ("demand", "demands", "demanded"),
+    "students": ("student",),
+    "officials": ("official", "officer", "officers"),
+}
+
+
+def _unsourced(bullets_en, source):
+    """21 Nov owner: "we cannot post wrong news or half news".
+
+    A card said "The union has begun a strike ... The union has asked the
+    government for talks and a written resolution" about a story that was
+    really MBBS students with no hostel. Nothing in it was sourced, and
+    _grounded() missed it because it only checks digits and proper nouns -
+    invented lower-case claims sailed through. Every content word must now be
+    traceable to the story text.
+    """
+    low = (source or "").lower()
+    for b in bullets_en:
+        if b in FILLER_EN:
+            continue
+        for word in re.findall(r"[A-Za-z]{4,}", b.lower()):
+            if word in SAFE_WORDS:
+                continue
+            if word in low:
+                continue
+            if len(word) >= 5 and word[:5] in low:
+                continue        # plural/tense variation of a sourced word
+            if len(word) >= 7 and word[:6] in low:
+                continue
+            if any(s in low for s in SYNONYM.get(word, ())):
+                continue        # the story says the same thing another way
+            return word         # this claim is not in the story
+    return None
+
+
 GENERIC_CAP = {
     "After", "Amid", "Before", "During", "Hours", "More", "Over", "Says",
     "Said", "Such", "That", "Their", "There", "These", "This", "Were",
@@ -2168,15 +2404,26 @@ def build(candidate):
             subst = len([b for b in en if b not in FILLER_EN])
             # 21 Nov: a war line that names the attacker, the weapon, the
             # toll AND the place is a complete report on its own - it must not
-            # be refused for having only one substantive bullet.
+            # be refused for having only one substantive bullet. Likewise,
+            # filler lines that asserted unsourced facts have been removed, so
+            # many honest frames now carry a single sentence: one sentence
+            # that names a place or a number is a real report.
             statement = ((bool(cats & {"political_major"})
                           and len(en[0]) >= 45)
                          or "international_conflict" in cats)
+            if subst == 1 and not statement:
+                _only = [b for b in en if b not in FILLER_EN][0]
+                if len(_only) >= 40 and (re.search(r"\d", _only) or
+                                         _has_loc(_only)):
+                    statement = True
             if subst < (1 if statement else 2):
                 continue  # thin filler-only posts are refused
             while len(en) == len(ur) and len(en) < 3:
                 en.append("More updates on this development will follow.")
                 ur.append("Is silsile mein mazeed updates aayengi.")
+            _bad = _unsourced(en, candidate["title"] + " " + ex_txt)
+            if _bad:
+                continue      # the bullet asserts something the story never said
             if en and ur and len(en) == len(ur) and \
                _grounded(en + ur, candidate["title"] + " " +
                          _dedateline(candidate["excerpt"])):
