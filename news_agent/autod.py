@@ -159,12 +159,38 @@ _RU_FALLBACK_MODELS = (
     # path, and FreeLLM becomes the broad failover (Grok/NVIDIA/OpenAI/...)
     # for the day Gemini's free tier caps out - which is currently an
     # unprotected single point of failure for the whole page.
-    _FREELLM,
-    ("openai", "gpt-4o-mini", "OPENAI_API_KEY"),
-    "nvidia/nemotron-3-ultra-550b-a55b:free",
-    "qwen/qwen3.8-27b:free",
-    "nvidia/nemotron-3-super-120b-a12b:free",
+    # --- THE OLD ROUTE (owner, 21 Nov: "KEEP THE OLD ROUTE ALSO ONLY IF
+    # THE QUOTE FINISHES YOU CAN USE THIS"). The OpenRouter :free lane is
+    # kept and now REPAIRED. It had rotted: of the four slugs configured
+    # here, "qwen/qwen3.8-27b:free" and
+    # "nvidia/nemotron-3-super-120b-a12b:free" no longer exist on
+    # OpenRouter at all (404 "unavailable for free"), so two of the four
+    # fallbacks were addresses for nothing. Checked against OpenRouter's
+    # live /models list on 21 Nov - these six all exist today.
+    #
+    # This route only ever runs when the Gemini lanes above are exhausted
+    # or failing, which is exactly the owner's rule. It is quota-bound in
+    # its own right: this account is at the free-models-per-day cap
+    # ("Add 10 credits to unlock 1000"), which resets 00:00 UTC, so the
+    # route is a genuine next-day backstop rather than a live lane today.
+    # Instruction-tuned models first - a translation prompt needs
+    # instruction-following, not raw scale.
     "google/gemma-4-31b-it:free",
+    "google/gemma-4-26b-a4b-it:free",
+    "nvidia/nemotron-3-ultra-550b-a55b:free",
+    # --- only once BOTH of the above are out of quota ---
+    # Position matters: _RU_BATCH_TRIES is 7, so with three Gemini lanes
+    # and three old-route lanes ahead of it this sentinel is the 7th and
+    # last lane a batch can reach. A lane that is parked by
+    # _ru_lane_failed() is dropped from the list entirely, which moves
+    # this one EARLIER, never later - so it stays reachable.
+    _FREELLM,
+    # deeper backstops, past the batch window; the salvage pass can still
+    # reach them one line at a time
+    "nvidia/nemotron-3.5-lightning:free",
+    "inclusionai/ling-3.2-flash:free",
+    "baidu/ernie-5.5-flash-preview:free",
+    ("openai", "gpt-4o-mini", "OPENAI_API_KEY"),
     "openai/gpt-4o-mini",
     "google/gemini-2.5-flash-lite",
     "anthropic/claude-3.5-haiku",
