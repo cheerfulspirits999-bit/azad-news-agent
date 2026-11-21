@@ -1,0 +1,36 @@
+name: diag-heal
+on:
+  workflow_dispatch:
+jobs:
+  verify:
+    runs-on: ubuntu-latest
+    timeout-minutes: 14
+    env:
+      RU_API_KEY: ${{ secrets.ROMAN_URDU_API_KEY }}
+      RU_PROVIDER: ${{ vars.RU_PROVIDER }}
+      RU_MODEL: ${{ vars.RU_MODEL }}
+      RU_BASE_URL: ${{ vars.RU_BASE_URL }}
+      RU_TIMEOUT: 40
+      GEMINI_API_KEY: ${{ secrets.GEMINI_API_KEY }}
+    steps:
+      - uses: actions/checkout@v4
+      - name: self-heal discovery against the real Gemini API
+        run: |
+          python3 - <<'PY'
+          import sys, tempfile
+          sys.path.insert(0, "news_agent")
+          import autod
+          autod.STATE = tempfile.mkdtemp()
+          print("pinned     :", sorted(autod._gem_pinned()))
+          c = autod._gem_candidates()
+          print("candidates :", c)
+          print()
+          print("--- simulating Google retiring all three pins ---")
+          got = autod._gem_selfheal()
+          print("self-heal picked:", repr(got))
+          print("persisted       :", autod._gem_state().get("model"))
+          lanes = [l for l, _ in autod._ru_attempts() if l != "primary"]
+          print("chain now       :", lanes[:5])
+          print()
+          print("throttle (immediate 2nd call):", repr(autod._gem_selfheal()))
+          PY
