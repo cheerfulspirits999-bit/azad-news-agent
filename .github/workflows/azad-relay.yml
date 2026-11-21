@@ -56,6 +56,13 @@ jobs:
       RU_DAILY_CAP: 200
       RU_DAILY_HARD: 220
       GEMINI_API_KEY: ${{ secrets.GEMINI_API_KEY }}
+      # FreeLLMAPI unified-gateway lane. The key alone is not enough: it
+      # authenticates against the owner's OWN gateway, so the lane stays
+      # dormant until FREELLM_BASE_URL names an address this runner can
+      # reach (a public host or a tunnel - localhost is rejected in code).
+      FREELLM_API_KEY: ${{ secrets.FREELLM_API_KEY }}
+      FREELLM_BASE_URL: ${{ vars.FREELLM_BASE_URL }}
+      FREELLM_MODEL: ${{ vars.FREELLM_MODEL }}
       OPENAI_API_KEY: ${{ secrets.OPENAI_API_KEY || secrets.OPENAI_API_KETS }}
       # 6 Oct (owner: "i am adding pixabay api also for free photos"): free
       # stock art for digest stories whose feed carried no image. Optional -
