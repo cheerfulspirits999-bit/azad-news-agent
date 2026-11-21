@@ -80,6 +80,10 @@ _RU_MISS_TTL = 4 * 3600.0
 # it is not a model name, it is "ask the owner's gateway to choose one"
 _FREELLM = "\x00freellm-gateway"
 
+# sentinel for a Gemini model discovered at runtime after Google retired
+# the pinned ones - see _gem_selfheal() further down
+_GEM_LEARNED = "\x00gemini-learned"
+
 
 def _freellm_base():
     """Public base URL of the owner's FreeLLMAPI gateway, or "" when unset.
@@ -143,6 +147,10 @@ _RU_FALLBACK_MODELS = (
     ("gemini", "gemini-flash-lite-latest", "GEMINI_API_KEY"),
     ("gemini", "gemini-3.5-flash-lite", "GEMINI_API_KEY"),
     ("gemini", "gemini-3-flash-preview", "GEMINI_API_KEY"),
+    # a Gemini model we PROVED works after Google retired the pins above
+    # (see _gem_selfheal). Empty until that happens; still ahead of every
+    # non-Gemini route, because Gemini stays primary.
+    _GEM_LEARNED,
     # 21 Nov (owner: "FREELLM HAS UNIFIED KEYS, IT HAS GEMINI, GROK, OPEN AI,
     # NVIDIA, ETC"). Correct - FreeLLMAPI fronts all of those behind ONE
     # freellmapi-... token. The catch is that the token authenticates
@@ -370,6 +378,117 @@ def _ru_lane_alive(label):
     return not (t and (time.time() - t) < _RU_LANE_COOLDOWN)
 
 
+# --- Gemini self-heal -----------------------------------------------------
+# 21 Nov (owner: "YES KEEP GEMINI ALWAYS ITS TRANSLATION IS GOOD"). Gemini
+# is the primary translator and stays that way. The one thing that has
+# repeatedly broken it is Google RETIRING a model id out from under us:
+# gemini-2.0-flash went 404, gemini-2.5-flash went 404, and the entire 3.x
+# flash family silently degraded to dictionary passthrough. Each time, the
+# page shipped garbage - or, after the method guard, shipped nothing - until
+# a human noticed and edited this file.
+#
+# So when NO Gemini lane translates in a cycle, ask Google what it is
+# actually serving now, probe the candidates through the real engine, and
+# remember the first that returns method="llm". The next cycle tries that
+# model straight after the pins. Costs one HTTP call, throttled to once an
+# hour, and only on a cycle where Gemini already failed.
+_GEM_BAD = ("tts", "image", "audio", "vision", "embed", "omni", "thinking")
+
+
+def _gem_state():
+    try:
+        with open(os.path.join(STATE, "ru_gemini.json")) as fh:
+            d = json.load(fh)
+        return d if isinstance(d, dict) else {}
+    except Exception:
+        return {}
+
+
+def _gem_save(d):
+    try:
+        os.makedirs(STATE, exist_ok=True)
+        with open(os.path.join(STATE, "ru_gemini.json"), "w") as fh:
+            json.dump(d, fh)
+    except Exception:
+        pass          # a read-only state dir must never break a cycle
+
+
+def _gem_pinned():
+    return {m[1] for m in _RU_FALLBACK_MODELS
+            if isinstance(m, tuple) and m[0] == "gemini"}
+
+
+def _gem_learned_model():
+    """A Gemini model id previously PROVED to translate, or ""."""
+    d = _gem_state()
+    m = str(d.get("model") or "")
+    try:
+        fresh = (time.time() - float(d.get("at") or 0)) < 30 * 86400
+    except Exception:
+        fresh = False
+    return m if (m and fresh) else ""
+
+
+def _gem_candidates(limit=3):
+    """Live text-capable Gemini flash models we have not already pinned."""
+    import urllib.request
+    k = os.environ.get("GEMINI_API_KEY", "")
+    if not k:
+        return []
+    try:
+        with urllib.request.urlopen(
+                "https://generativelanguage.googleapis.com/v1beta/models?key="
+                + k, timeout=25) as r:
+            d = json.loads(r.read().decode("utf-8", "replace"))
+    except Exception as e:
+        log(f"[digest] gemini discovery failed: {str(e)[:70]}")
+        return []
+    pinned, out = _gem_pinned(), []
+    for m in (d.get("models") or []):
+        n = str(m.get("name") or "").replace("models/", "")
+        if "generateContent" not in (m.get("supportedGenerationMethods") or []):
+            continue
+        if "flash" not in n or n in pinned or any(b in n for b in _GEM_BAD):
+            continue
+        out.append(n)
+    # 'lite' variants empirically answer where the heavyweight flash models
+    # return passthrough, and they are the fastest - try those first
+    out.sort(key=lambda n: (0 if "lite" in n else 1, len(n)))
+    return out[:limit]
+
+
+def _gem_selfheal():
+    """Find a Gemini model that still translates; remember it for next time."""
+    d = _gem_state()
+    try:
+        if time.time() - float(d.get("tried_at") or 0) < 3600:
+            return ""          # already probed within the hour
+    except Exception:
+        pass
+    d["tried_at"] = time.time()
+    _gem_save(d)
+    cands = _gem_candidates()
+    if not cands:
+        return ""
+    k = os.environ.get("GEMINI_API_KEY", "")
+    for n in cands:
+        try:
+            res = roman_urdu.translate_lines(
+                ["Police arrested two men in Hyderabad after a raid."],
+                provider="gemini", model=n, api_key=k, use_few_shot=False)
+        except Exception:
+            continue
+        if _ru_translated(res):
+            d.update(model=n, at=time.time())
+            _gem_save(d)
+            log(f"[digest] gemini self-heal: '{n}' translates - promoted "
+                f"for the next cycle")
+            return n
+    log(f"[digest] gemini self-heal: none of {len(cands)} live Gemini "
+        f"models translated")
+    return ""
+
+
 def _ru_attempts():
     """(label, kwargs) salvage attempts: primary first (one-line prompts
     translate where the batch echo'd), then free-tier, direct keys (skipped
@@ -407,6 +526,12 @@ def _ru_attempts():
     old setting."""
     yield "primary", {}
     for m in _RU_FALLBACK_MODELS:
+        if m == _GEM_LEARNED:
+            _lm, _gk = _gem_learned_model(), os.environ.get("GEMINI_API_KEY", "")
+            if _lm and _gk and _lm not in _gem_pinned() and _ru_lane_alive(_lm):
+                yield _lm, {"provider": "gemini", "model": _lm,
+                            "api_key": _gk, "use_few_shot": False}
+            continue
         if m == _FREELLM:
             # unified gateway: one key, many upstream providers. Dormant
             # unless the owner has published a reachable address for it.
@@ -1723,6 +1848,7 @@ def build_digest(cands, catchup=False):
         # runs, and an unbound _res would take the WHOLE digest down - no
         # card at all, which is worse than a short one.
         _res = {}
+        _gem_ok = False     # did a Gemini lane actually translate this cycle?
         for _try, (_lbl, _kw) in enumerate(_order[:_RU_BATCH_TRIES]):
             _need = [i for i in _pend if i in _bad]
             if not _need:
@@ -1788,6 +1914,8 @@ def build_digest(cands, catchup=False):
                 picks[i] = picks[i][:2] + (_l,) + picks[i][3:]
                 _bad.discard(i)
                 _got += 1
+            if _got and str(_lbl).startswith("gemini"):
+                _gem_ok = True
             if _got:
                 log(f"[digest] lane '{_lbl}' batch: {_got}/{len(_need)} "
                     f"accepted ({len(_pend) - len(_bad)}/{len(_pend)} total)")
@@ -1839,6 +1967,8 @@ def build_digest(cands, catchup=False):
                     _bad.discard(i)
                     _RU_STATS.setdefault("salvaged", []).append(i + 1)
                     _RU_STATS.setdefault("via", {})[str(i + 1)] = _lbl2
+                    if str(_lbl2).startswith("gemini"):
+                        _gem_ok = True
                     break
             _RU_STATS["accepted"] = len(_pend) - len(_bad)
         log(f"[digest] roman-urdu step: {len(_pend) - len(_bad)}/"
@@ -1855,6 +1985,14 @@ def build_digest(cands, catchup=False):
                     f"25-min fuse (API/echo storm) instead of 4h")
             _ru_miss_save(_miss_bank)
             picks = [p for j, p in enumerate(picks) if j not in _bad]
+        # Gemini is the primary lane and must stay usable. If it produced
+        # nothing this cycle, that is usually Google retiring a model id -
+        # go and find one that still answers (throttled to once an hour).
+        if not _gem_ok and _pend:
+            try:
+                _gem_selfheal()
+            except Exception as _e:
+                log(f"[digest] gemini self-heal errored: {str(_e)[:70]}")
         try:
             _acc = _RU_STATS.get("accepted", 0)
             _new = 0 if _acc > 0 else (_rot + 1)
