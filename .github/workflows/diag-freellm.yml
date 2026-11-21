@@ -5,62 +5,73 @@ jobs:
   probe:
     runs-on: ubuntu-latest
     steps:
-      - name: Find the FreeLLM endpoint and test a Roman Urdu translation
+      - name: Which lane can produce good Roman Urdu today
         env:
           FREELLM_API_KEY: ${{ secrets.FREELLM_API_KEY }}
+          RU_API_KEY: ${{ secrets.ROMAN_URDU_API_KEY }}
+          GEMINI_API_KEY: ${{ secrets.GEMINI_API_KEY }}
         run: |
           python3 - <<'PY'
           import os, json, urllib.request, urllib.error
-          k = os.environ.get("FREELLM_API_KEY") or ""
-          print("key length:", len(k))
-          BASES = [
-            "https://freeapi.n.cofire.cn/v1",
-            "https://api.freellmapi.co/v1",
-            "https://freellmapi.co/v1",
-            "https://api.freellm.ai/v1",
-            "https://openrouter.ai/api/v1",
-          ]
-          def call(url, data=None, timeout=45):
-              req = urllib.request.Request(url, data=data)
-              req.add_header("Authorization", "Bearer " + k)
-              if data:
-                  req.add_header("Content-Type", "application/json")
+          FK = os.environ.get("FREELLM_API_KEY") or ""
+          RK = os.environ.get("RU_API_KEY") or ""
+          GK = os.environ.get("GEMINI_API_KEY") or ""
+          print("FREELLM len", len(FK), "| RU len", len(RK), "| GEMINI len", len(GK))
+          PROMPT = ("Translate this English news sentence into Roman Urdu "
+                    "(Urdu written in English letters). Reply with ONLY the "
+                    "translation.\nSentence: Police arrested two men in Hyderabad "
+                    "after a raid on a hotel on Friday.")
+          def post(url, key, payload, timeout=70, hdr=None):
+              req = urllib.request.Request(url, data=json.dumps(payload).encode())
+              req.add_header("Content-Type", "application/json")
+              if key:
+                  req.add_header("Authorization", "Bearer " + key)
+              for k2, v2 in (hdr or {}).items():
+                  req.add_header(k2, v2)
               try:
                   r = urllib.request.urlopen(req, timeout=timeout)
-                  return r.status, r.read(3000).decode("utf-8", "replace")
+                  return r.status, r.read(4000).decode("utf-8", "replace")
               except urllib.error.HTTPError as e:
                   return e.code, e.read(300).decode("utf-8", "replace")
               except Exception as e:
-                  return 0, str(e)[:160]
-          good = []
-          for b in BASES:
-              s, body = call(b + "/models")
-              n = body.count('"id"')
-              print("%-34s models HTTP %s  ids=%d  %s" % (b, s, n, body[:90].replace("\n", " ")))
-              if s == 200 and n:
-                  good.append(b)
-          print("CANDIDATES:", good)
-          PROMPT = ("Translate this English news sentence into Roman Urdu. "
-                    "Reply with ONLY the translation, no quotes, no explanation.\n"
-                    "Sentence: Police arrested two men in Hyderabad after a raid "
-                    "on a hotel on Friday.")
-          for b in good:
-              for model in ("auto", "gpt-4o-mini", "gemini-2.0-flash"):
-                  payload = json.dumps({
-                      "model": model,
-                      "messages": [{"role": "user", "content": PROMPT}],
-                      "max_tokens": 120, "temperature": 0.2}).encode()
-                  s, body = call(b + "/chat/completions", payload, 90)
-                  if s == 200:
-                      try:
-                          d = json.loads(body)
-                          out = d["choices"][0]["message"]["content"].strip()
-                          print("WORKS base=%s model=%s" % (b, model))
-                          print("   served:", d.get("model"))
-                          print("   output:", out[:220])
-                      except Exception as ex:
-                          print("parse fail", ex, body[:160])
-                      break
-                  else:
-                      print("  %s model=%-16s HTTP %s %s" % (b, model, s, body[:110].replace("\n", " ")))
+                  return 0, str(e)[:150]
+          # 1. more FreeLLM hosts
+          for base in ("https://freellmapi.com/v1", "https://api.freellmapi.com/v1",
+                       "https://freellm.dev/v1", "https://api.cofire.cn/v1"):
+              s, b = post(base + "/chat/completions", FK,
+                          {"model": "auto", "messages": [{"role": "user", "content": "hi"}],
+                           "max_tokens": 8})
+              print("FREELLM %-32s HTTP %s %s" % (base, s, b[:80].replace("\n", " ")))
+          # 2. OpenRouter free models with the existing key
+          MODELS = ["nvidia/nemotron-3-ultra-550b-a55b:free",
+                    "meta-llama/llama-3.3-70b-instruct:free",
+                    "google/gemma-3-27b-it:free",
+                    "qwen/qwen-2.5-72b-instruct:free",
+                    "deepseek/deepseek-chat-v3-0324:free",
+                    "mistralai/mistral-small-3.2-24b-instruct:free"]
+          for mdl in MODELS:
+              s, b = post("https://openrouter.ai/api/v1/chat/completions", RK,
+                          {"model": mdl, "messages": [{"role": "user", "content": PROMPT}],
+                           "max_tokens": 120, "temperature": 0.2},
+                          hdr={"HTTP-Referer": "https://github.com/azad-news-agent",
+                               "X-Title": "azad-news"})
+              if s == 200:
+                  try:
+                      out = json.loads(b)["choices"][0]["message"]["content"].strip()
+                  except Exception:
+                      out = b[:120]
+                  print("OR OK   %-45s %s" % (mdl, out[:150].replace("\n", " ")))
+              else:
+                  print("OR FAIL %-45s HTTP %s %s" % (mdl, s, b[:110].replace("\n", " ")))
+          # 3. Gemini direct
+          s, b = post("https://generativelanguage.googleapis.com/v1beta/models/"
+                      "gemini-2.0-flash:generateContent?key=" + GK, None,
+                      {"contents": [{"parts": [{"text": PROMPT}]}]})
+          if s == 200:
+              try:
+                  print("GEMINI OK:", json.loads(b)["candidates"][0]["content"]["parts"][0]["text"].strip()[:150])
+              except Exception as e:
+                  print("GEMINI parse", e, b[:150])
+          else:
+              print("GEMINI HTTP", s, b[:150].replace("\n", " "))
           PY
