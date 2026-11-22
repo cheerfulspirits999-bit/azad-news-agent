@@ -1,56 +1,64 @@
 {
- "cycle": "20261122-2220",
- "at": "2026-11-22T22:25:12.902967+05:30",
+ "cycle": "20261122-2327",
+ "at": "2026-11-22T23:33:07.762741+05:30",
  "candidates": 170,
  "published_this_cycle": 0,
- "digest": "PUBLISHED auto-digest-2026-11-22-s2223",
+ "digest": "PUBLISHED auto-digest-2026-11-22-s2331",
  "ru": {
   "pre_ru_picks": 5,
   "to_translate": 5,
   "kills": {
-   "digits": [
-    2
-   ]
+   "passthrough-refused": "all"
   },
   "engine": {
-   "ok": true,
+   "ok": false,
    "lines_in": 5,
    "lines_want": 5,
-   "method": "retry",
-   "problems": "[]"
+   "method": "fallback",
+   "problems": "['Lines [1, 2, 3, 4, 5] copy 4+ consecutive English words verbatim into the Roman Urdu. Re-express those phrases in Urdu; keep only proper nouns/brands/technica"
   },
-  "accepted": 4
+  "accepted": 3,
+  "salvaged": [
+   2,
+   3,
+   4
+  ],
+  "via": {
+   "2": "gemini-flash-lite-latest",
+   "3": "gemini-3-flash-preview",
+   "4": "gemini-flash-lite-latest"
+  }
  },
  "tail": [
-  "[22 Nov 22:25:12] stale or low-score, skipped: Four family members killed as autorickshaw collides with lor",
-  "[22 Nov 22:25:12] stale or low-score, skipped: Bisleri Under Scanner After Carcinogenic Substances Found In",
-  "[22 Nov 22:25:12] stale or low-score, skipped: Telangana Police Bugle Team Wins Silver Medal in All India P",
-  "[22 Nov 22:25:12] stale or low-score, skipped: Four injured in car crash in Karimnagar",
-  "[22 Nov 22:25:12] stale or low-score, skipped: Blasting for Road Works Sparks ORR Crash, 5 Hurt",
-  "[22 Nov 22:25:12] stale or low-score, skipped: 40 Arunachal Border Villages Saw Reverse Migration: Amit Sha",
-  "[22 Nov 22:25:12] stale or low-score, skipped: Fire at Indonesian candy factory leaves 3 dead, dozens unacc",
-  "[22 Nov 22:25:12] stale or low-score, skipped: 11 killed in burst of violence in northern Mexico after capt",
-  "[22 Nov 22:25:12] queued for editorial pass (no safe auto frame): KTR Condemns Attack On Meta Office",
-  "[22 Nov 22:25:12] stale or low-score, skipped: Mumbai concert sees debut of India's first drug-testing fore",
-  "[22 Nov 22:25:12] stale or low-score, skipped: EMS Namboodiripad’s Daughter Radha Dies",
-  "[22 Nov 22:25:12] stale or low-score, skipped: 10-Year-Old Girl Ends Life After Infant Sister's Death In Ch",
-  "[22 Nov 22:25:12] stale or low-score, skipped: Jabardasth Artists Dorababu, Rising Raju Injured in Road Acc",
-  "[22 Nov 22:25:12] stale or low-score, skipped: Blanket Ban On AI In Legal Education Impractical, Says CJI S",
-  "[22 Nov 22:25:12] stale or low-score, skipped: 10-Year-Old Girl Dies by Suicide Following Infant Sister’s D",
-  "[22 Nov 22:25:12] stale or low-score, skipped: 'Boycott him, get him treated': Cong's Ajay Rai slams Dhiren",
-  "[22 Nov 22:25:12] stale or low-score, skipped: SCO civilisational forum adopts outcome document recognising",
-  "[22 Nov 22:25:12] stale or low-score, skipped: Will Jacks ruled out of remainder of England’s T20I series i",
-  "[22 Nov 22:25:12] stale or low-score, skipped: Sachin Tendulkar believes Ranveer Singh would make a good cr",
-  "[22 Nov 22:25:12] stale or low-score, skipped: Nellore: Four Injured as Private Bus Plunges into Agricultur",
-  "[22 Nov 22:25:12] stale or low-score, skipped: Rajasthan: 9 Khatu Shyam Pilgrims Killed in Midnight Crash",
-  "[22 Nov 22:25:12] stale or low-score, skipped: Crimes Against Women Dip 14%, Road Accidents 18% In Prakasam",
-  "[22 Nov 22:25:12] stale or low-score, skipped: ₹25,000 Reward For Helping Accident Victims",
-  "[22 Nov 22:25:12] stale or low-score, skipped: Friends Killed As Van Hits Bike On Chennai-Bengaluru NH",
-  "[22 Nov 22:25:12] stale or low-score, skipped: NH-167 Emerges as Deadly Stretch",
-  "[22 Nov 22:25:12] stale or low-score, skipped: Man crossing Kakinada highway triggers SUV collision, one de",
-  "[22 Nov 22:25:12] stale or low-score, skipped: Indonesia Factory Fire: 3 Dead, 36 Missing",
-  "[22 Nov 22:25:12] queued for editorial pass (no safe auto frame): E-mail threatens bomb attacks in Hyderabad, police step up security",
-  "[22 Nov 22:25:12] stale or low-score, skipped: Hyderabad: Special drive nabs 447 for drunk driving this wee",
-  "[22 Nov 22:25:12] stale or low-score, skipped: Iraq fire at Basra power station kills at least four, injure"
+  "[22 Nov 23:33:07] stale or low-score, skipped: Telangana Police Bugle Team Wins Silver Medal in All India P",
+  "[22 Nov 23:33:07] stale or low-score, skipped: Rajanna Sircilla: RTC Bus-Car Collision Leaves Two Injured",
+  "[22 Nov 23:33:07] stale or low-score, skipped: Four family members killed as autorickshaw collides with lor",
+  "[22 Nov 23:33:07] stale or low-score, skipped: Four injured in car crash in Karimnagar",
+  "[22 Nov 23:33:07] stale or low-score, skipped: Blasting for Road Works Sparks ORR Crash, 5 Hurt",
+  "[22 Nov 23:33:07] stale or low-score, skipped: Former England football captain David Beckham praises Madhya",
+  "[22 Nov 23:33:07] stale or low-score, skipped: Women in Hyderabad’s crime networks: Police cite cases of ex",
+  "[22 Nov 23:33:07] stale or low-score, skipped: Fire at Indonesian candy factory leaves 3 dead, dozens unacc",
+  "[22 Nov 23:33:07] stale or low-score, skipped: 11 killed in burst of violence in northern Mexico after capt",
+  "[22 Nov 23:33:07] stale or low-score, skipped: FSSAI orders prosecution of Bisleri over ‘unsafe’ packaged w",
+  "[22 Nov 23:33:07] stale or low-score, skipped: FSSAI orders prosecution against Bisleri International for u",
+  "[22 Nov 23:33:07] stale or low-score, skipped: EMS Namboodiripad’s Daughter Radha Dies",
+  "[22 Nov 23:33:07] stale or low-score, skipped: 10-Year-Old Girl Ends Life After Infant Sister's Death In Ch",
+  "[22 Nov 23:33:07] stale or low-score, skipped: Jabardasth Artists Dorababu, Rising Raju Injured in Road Acc",
+  "[22 Nov 23:33:07] stale or low-score, skipped: Blanket Ban On AI In Legal Education Impractical, Says CJI S",
+  "[22 Nov 23:33:07] stale or low-score, skipped: 10-Year-Old Girl Dies by Suicide Following Infant Sister’s D",
+  "[22 Nov 23:33:07] stale or low-score, skipped: 'Boycott him, get him treated': Cong's Ajay Rai slams Dhiren",
+  "[22 Nov 23:33:07] stale or low-score, skipped: Will Jacks ruled out of remainder of England’s T20I series i",
+  "[22 Nov 23:33:07] stale or low-score, skipped: Nellore: Four Injured as Private Bus Plunges into Agricultur",
+  "[22 Nov 23:33:07] stale or low-score, skipped: Rajasthan: 9 Khatu Shyam Pilgrims Killed in Midnight Crash",
+  "[22 Nov 23:33:07] stale or low-score, skipped: Crimes Against Women Dip 14%, Road Accidents 18% In Prakasam",
+  "[22 Nov 23:33:07] stale or low-score, skipped: ₹25,000 Reward For Helping Accident Victims",
+  "[22 Nov 23:33:07] stale or low-score, skipped: Friends Killed As Van Hits Bike On Chennai-Bengaluru NH",
+  "[22 Nov 23:33:07] stale or low-score, skipped: NH-167 Emerges as Deadly Stretch",
+  "[22 Nov 23:33:07] stale or low-score, skipped: Mumbai concert sees debut of India's first drug-testing fore",
+  "[22 Nov 23:33:07] stale or low-score, skipped: Man crossing Kakinada highway triggers SUV collision, one de",
+  "[22 Nov 23:33:07] stale or low-score, skipped: Indonesia Factory Fire: 3 Dead, 36 Missing",
+  "[22 Nov 23:33:07] stale or low-score, skipped: SCO civilisational forum adopts outcome document recognising",
+  "[22 Nov 23:33:07] stale or low-score, skipped: Sachin Tendulkar believes Ranveer Singh would make a good cr",
+  "[22 Nov 23:33:07] stale or low-score, skipped: Iraq fire at Basra power station kills at least four, injure"
  ]
 }
