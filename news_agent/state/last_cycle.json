@@ -1,66 +1,62 @@
 {
- "cycle": "20261124-0505",
- "at": "2026-11-24T05:10:46.716286+05:30",
+ "cycle": "20261124-0613",
+ "at": "2026-11-24T06:15:50.396368+05:30",
  "candidates": 170,
  "published_this_cycle": 0,
- "digest": "PUBLISHED auto-digest-2026-11-24-s0509",
+ "digest": "PUBLISHED auto-digest-2026-11-24-s0614",
  "ru": {
   "pre_ru_picks": 5,
   "to_translate": 5,
   "kills": {
-   "passthrough-refused": "all"
+   "digits": [
+    3
+   ]
   },
   "engine": {
-   "ok": false,
+   "ok": true,
    "lines_in": 5,
    "lines_want": 5,
-   "method": "fallback",
-   "problems": "['Lines [1, 2, 3, 4, 5] copy 4+ consecutive English words verbatim into the Roman Urdu. Re-express those phrases in Urdu; keep only proper nouns/brands/technica"
+   "method": "llm",
+   "problems": "[]"
   },
-  "accepted": 4,
+  "accepted": 5,
   "salvaged": [
-   1,
-   2,
-   3,
-   4
+   3
   ],
   "via": {
-   "1": "gemini-3.5-flash-lite",
-   "2": "gemini-3-flash-preview",
-   "3": "gemini-flash-lite-latest",
-   "4": "gemini-flash-lite-latest"
+   "3": "primary"
   }
  },
  "tail": [
-  "[24 Nov 05:10:46] stale or low-score, skipped: Influencers, sellers of unsafe cosmetics to face legal actio",
-  "[24 Nov 05:10:46] stale or low-score, skipped: Farmer attempts to die by suicide over land dispute in Adila",
-  "[24 Nov 05:10:46] stale or low-score, skipped: Gujarat Couple Killed, Over 12 Injured As Tourist Bus Falls ",
-  "[24 Nov 05:10:46] stale or low-score, skipped: Pregnant Woman Killed After Manipur Ambulance Collides With ",
-  "[24 Nov 05:10:46] stale or low-score, skipped: CBI brings Haryana murder accused back from Kazakhstan after",
-  "[24 Nov 05:10:46] stale or low-score, skipped: Telangana: ED widens probe into custom-milled rice scam",
-  "[24 Nov 05:10:46] stale or low-score, skipped: Telangana TGCSB Warns  Shoppers Against Black Friday Online ",
-  "[24 Nov 05:10:46] stale or low-score, skipped: Sangareddy: 120 kilos of soya crop gutted in fire",
-  "[24 Nov 05:10:46] queued for editorial pass (no safe auto frame): Man launches knife attack on 5 Delhi Police cops, shot during capture",
-  "[24 Nov 05:10:46] stale or low-score, skipped: India’s WTC Final hopes take a hit after draw against New Ze",
-  "[24 Nov 05:10:46] stale or low-score, skipped: Narsapur: Man Dies After Unidentified Vehicle Rams Into His ",
-  "[24 Nov 05:10:46] stale or low-score, skipped: Lorry Catches Fire on National Highway in Nalgonda",
-  "[24 Nov 05:10:46] stale or low-score, skipped: One Killed, Five Injured in Tractor-Car Collision in Kamared",
-  "[24 Nov 05:10:46] stale or low-score, skipped: Godavarikhani: Man Stabbed to Death by Unidentified Assailan",
-  "[24 Nov 05:10:46] stale or low-score, skipped: 5 injured as Amtrak train collides with bulldozer-carrying t",
-  "[24 Nov 05:10:46] stale or low-score, skipped: Delhi Police bust cybercrime syndicate that defrauded victim",
-  "[24 Nov 05:10:46] stale or low-score, skipped: 800 gloves for one patient, bills processed months after dea",
-  "[24 Nov 05:10:46] stale or low-score, skipped: Air India extends Saudi flight suspension, offers full refun",
-  "[24 Nov 05:10:46] stale or low-score, skipped: Indonesia says 24 killed in factory blaze as rescuers search",
-  "[24 Nov 05:10:46] queued for editorial pass (no safe auto frame): Five Cops Injured In Knife Attack At Delhi's Jama Masjid Police Statio",
-  "[24 Nov 05:10:46] stale or low-score, skipped: Hyderabad: Future City Police hold awareness programme on cy",
-  "[24 Nov 05:10:46] stale or low-score, skipped: Riverbank Erosion Causes Old Secretariat Building To Collaps",
-  "[24 Nov 05:10:46] stale or low-score, skipped: Black Friday deals look tempting, but could they be a scam: ",
-  "[24 Nov 05:10:46] stale or low-score, skipped: Black magic money-doubling scam: 5-member gang cheats 24 peo",
-  "[24 Nov 05:10:46] stale or low-score, skipped: Kannur CPI(M) Leader Murder: Keralam Court Finds 3 BJP-RSS W",
-  "[24 Nov 05:10:46] stale or low-score, skipped: IND vs NZ: Mitchell’s reprieves and a dead pitch hold India ",
-  "[24 Nov 05:10:46] queued for editorial pass (no safe auto frame): AP CID, Financial Institutions Join Hands To Combat Cyber Fraud",
-  "[24 Nov 05:10:46] stale or low-score, skipped: ‘Not a great Test wicket’: Shubman Gill complains after Indi",
-  "[24 Nov 05:10:46] stale or low-score, skipped: Where is Kuldeep or Manav Suthar: Ganguly asks BCCI after In",
-  "[24 Nov 05:10:46] stale or low-score, skipped: WTC Points Table update 2025-27: NZ dent India’s final hopes"
+  "[24 Nov 06:15:50] stale or low-score, skipped: Farmer attempts to die by suicide over land dispute in Adila",
+  "[24 Nov 06:15:50] stale or low-score, skipped: Gujarat Couple Killed, Over 12 Injured As Tourist Bus Falls ",
+  "[24 Nov 06:15:50] stale or low-score, skipped: Pregnant Woman Killed After Manipur Ambulance Collides With ",
+  "[24 Nov 06:15:50] stale or low-score, skipped: Telangana: ED widens probe into custom-milled rice scam",
+  "[24 Nov 06:15:50] stale or low-score, skipped: Telangana TGCSB Warns  Shoppers Against Black Friday Online ",
+  "[24 Nov 06:15:50] stale or low-score, skipped: Sangareddy: 120 kilos of soya crop gutted in fire",
+  "[24 Nov 06:15:50] queued for editorial pass (no safe auto frame): Man launches knife attack on 5 Delhi Police cops, shot during capture",
+  "[24 Nov 06:15:50] stale or low-score, skipped: Narsapur: Man Dies After Unidentified Vehicle Rams Into His ",
+  "[24 Nov 06:15:50] stale or low-score, skipped: Lorry Catches Fire on National Highway in Nalgonda",
+  "[24 Nov 06:15:50] stale or low-score, skipped: One Killed, Five Injured in Tractor-Car Collision in Kamared",
+  "[24 Nov 06:15:50] stale or low-score, skipped: Godavarikhani: Man Stabbed to Death by Unidentified Assailan",
+  "[24 Nov 06:15:50] stale or low-score, skipped: 5 injured as Amtrak train collides with bulldozer-carrying t",
+  "[24 Nov 06:15:50] stale or low-score, skipped: Influencers, sellers of unsafe cosmetics to face legal actio",
+  "[24 Nov 06:15:50] stale or low-score, skipped: 800 gloves for one patient, bills processed months after dea",
+  "[24 Nov 06:15:50] stale or low-score, skipped: India’s WTC Final hopes take a hit after draw against New Ze",
+  "[24 Nov 06:15:50] stale or low-score, skipped: Indonesia says 24 killed in factory blaze as rescuers search",
+  "[24 Nov 06:15:50] stale or low-score, skipped: Air India extends Saudi flight suspension, offers full refun",
+  "[24 Nov 06:15:50] stale or low-score, skipped: Hyderabad: Future City Police hold awareness programme on cy",
+  "[24 Nov 06:15:50] stale or low-score, skipped: Riverbank Erosion Causes Old Secretariat Building To Collaps",
+  "[24 Nov 06:15:50] stale or low-score, skipped: Delhi Police bust cybercrime syndicate that defrauded victim",
+  "[24 Nov 06:15:50] stale or low-score, skipped: Black Friday deals look tempting, but could they be a scam: ",
+  "[24 Nov 06:15:50] queued for editorial pass (no safe auto frame): Five Cops Injured In Knife Attack At Delhi's Jama Masjid Police Statio",
+  "[24 Nov 06:15:50] stale or low-score, skipped: Kannur CPI(M) Leader Murder: Keralam Court Finds 3 BJP-RSS W",
+  "[24 Nov 06:15:50] stale or low-score, skipped: IND vs NZ: Mitchell’s reprieves and a dead pitch hold India ",
+  "[24 Nov 06:15:50] stale or low-score, skipped: Black magic money-doubling scam: 5-member gang cheats 24 peo",
+  "[24 Nov 06:15:50] stale or low-score, skipped: ‘Not a great Test wicket’: Shubman Gill complains after Indi",
+  "[24 Nov 06:15:50] stale or low-score, skipped: Where is Kuldeep or Manav Suthar: Ganguly asks BCCI after In",
+  "[24 Nov 06:15:50] stale or low-score, skipped: WTC Points Table update 2025-27: NZ dent India’s final hopes",
+  "[24 Nov 06:15:50] stale or low-score, skipped: 2 Teens Die as Two-Wheeler Collides With Car on Karur NH",
+  "[24 Nov 06:15:50] stale or low-score, skipped: Watch: Female fan kisses Diljit Dosanjh during concert"
  ]
 }
