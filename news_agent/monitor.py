@@ -88,6 +88,23 @@ CATEGORY_RULES = [
                 "hockey", "kabaddi", "badminton", "wimbledon", "grand slam",
                 "olympics", "asian games", "commonwealth games",
                 "gold medal", "silver medal", "bronze medal",
+                # 21 Nov owner: "CRICKET , FOOTBALL, TENNIS PREFERRED,
+                # CRICKET MORE, MAN OF THE MATCH, MORE SIXES, HATTRICK".
+                # Tennis had only "wimbledon" and "grand slam", so the ATP /
+                # WTA tour - which runs all year - was invisible to the
+                # pipeline.
+                "tennis", "atp", "wta", "us open", "french open",
+                "australian open", "roland garros", "atp finals",
+                "wta finals", "davis cup", "billie jean king cup",
+                "djokovic", "alcaraz", "sinner", "swiatek", "sabalenka",
+                "medvedev", "zverev", "gauff", "rublev", "tsitsipas",
+                "man of the match", "player of the match",
+                "man of the series", "player of the series",
+                "sixes", "hat trick", "hattrick", "five-wicket haul",
+                "double hundred", "triple century", "stumps", "run out",
+                "duleep trophy", "vijay hazare", "syed mushtaq ali",
+                "ranji trophy", "wpl", "sa20", "ilt20", "bbl", "psl",
+                "county championship", "the hundred",
                 # scoreline wording a match report always uses
                 "wickets", "stumps", "scorecard",
                 "smat", "syed mushtaq ali", "vijay hazare", "wtc",
@@ -456,9 +473,46 @@ LABOUR_RX = re.compile(
 # 21 Nov: these words are sport ONLY in a headline. Found in an excerpt they
 # tagged a land-resurvey story and a PhD complaint as sport, because "century"
 # matched "19th century" and "icc" matched the International Criminal Court.
+# 21 Nov: "US judge blocks part of Trump's ICC sanctions order" was tagged
+# sport because ICC is also the International Criminal Council. A legal or
+# diplomatic context means the acronym is not cricket.
+SPORT_ANTI = re.compile(
+    r"\b(criminal court|prosecutor|sanctions?|tribunal|war crimes|"
+    r"arrest warrant|genocide|indictment|judge|hague|treaty|"
+    r"harassment|complaint|probe)\b", re.I)
+
 SPORT_TITLE_ONLY = ["icc", "century", "centuries", "fifty", "sixes",
                     "boundaries", "batting", "fielding", "squad", "toss",
                     "overs", "captaincy", "selectors", "innings", "bowling"]
+
+
+SPORTS_RESERVE = 14      # candidate slots held open for the sports card
+
+# 21 Nov: these words are sport only in the company of a real sport word.
+# On their own they tagged "King tides and big waves batter coastal
+# California" and "Jensen Huang needs a new playbook for his second innings
+# at Nvidia" as sport, and both were ranked as cricket for the sports card.
+SPORT_WEAK = {"innings", "century", "centuries", "fifty", "sixes",
+              "boundaries", "batting", "fielding", "squad", "toss", "overs",
+              "captaincy", "selectors", "batter", "batters", "stumps",
+              "run out", "duck", "pitch", "icc", "test match", "derby"}
+
+# a match report, not a think-piece: these outrank features inside the
+# sports block so the card carries results, not columns
+SPORT_CRICKET_RX = re.compile(
+    r"\b(cricket|Test|Tests|ODI|T20I?|IPL|BCCI|Ranji|Duleep|WPL|PSL|BBL|"
+    r"SA20|ILT20|Ashes|wickets?|batsman|batsmen|bowler|bowlers|innings|"
+    r"all-rounder|stumps|hat-?trick|sixes|half-century|century|"
+    r"Vijay Hazare|Syed Mushtaq Ali|The Hundred|county)\b", re.I)
+
+SPORT_RESULT_RX = re.compile(
+    r"\b(beat|beats|beaten|defeat|defeats|defeated|thrash|thrashed|won|wins|"
+    r"win|lose|loses|lost|held to|draw|draws|drew|stumps|declared|"
+    r"hat-?trick|five-wicket|wickets?|century|centuries|fifty|fifties|"
+    r"sixes|runs|not out|all out|ruled out|out of|clinch|clinches|clinched|"
+    r"seals?|sealed|title|final|semi-final|qualify|qualifies|qualified|"
+    r"man of the match|player of the match|record|retires?|retirement)\b",
+    re.I)
 
 
 def detect_categories(item):
@@ -468,15 +522,30 @@ def detect_categories(item):
     title = item["title"].lower()
     excerpt = item.get("excerpt", "").lower()[:400]
     hits = []
+    _sport_keys = []
     for cat, keys in CATEGORY_RULES:
         for k in keys:
             _where = (title,) if (cat == "sports" and k in SPORT_TITLE_ONLY) \
                 else (title, excerpt)
             if any(kw_hit(t, k) for t in _where):
+                if cat == "sports":
+                    _sport_keys.append(k)
+                    continue        # collect them all, judge below
                 hits.append(cat)
                 break
+    # one unambiguous sport word, or two weak ones together ("scores
+    # century in second innings" is cricket; "second innings at Nvidia" and
+    # "waves batter California" are not).
+    _sport_keys = set(_sport_keys)   # the list has duplicates ("innings")
+    if _sport_keys and (any(k not in SPORT_WEAK for k in _sport_keys)
+                        or len(_sport_keys) >= 2):
+        hits.append("sports")
     if "fire_explosion" in hits and FIRE_METAPHOR.search(title):
         hits.remove("fire_explosion")
+    # a legal/diplomatic story that merely contains ICC, Test or a club name
+    # is not sport - it would otherwise land on the sports card
+    if "sports" in hits and SPORT_ANTI.search(title):
+        hits.remove("sports")
     # 16 Nov: a MILITARY strike is not a labour strike. "Kuwait, Bahrain face
     # new Iran attacks after US strike on Qeshm Island" was tagged
     # traffic_disruption on the word "strike" and framed as a bandh, so war
@@ -569,6 +638,10 @@ def score(item):
             s += 2
         elif age_h > 24:
             s -= 8
+    if "sports" in cats and SPORT_RESULT_RX.search(title):
+        s += 14   # a result or a performance, not a column about the game
+    if "sports" in cats and SPORT_CRICKET_RX.search(title):
+        s += 6    # owner 21 Nov: "CRICKET MORE" - cricket leads the card
     if is_blocked(item):
         s -= 60
     # 16 Nov owner instruction: "lessen world news, only important world news like
@@ -576,7 +649,15 @@ def score(item):
     # and sinks below every local/national story, so the card's slots go to
     # Hyderabad / Telangana / India. A mass-casualty incident abroad is exempt:
     # that is important world news by severity, not by geography.
-    if region == "world" and not WORLD_MAJOR.search(title):
+    if region == "world" and not WORLD_MAJOR.search(title) \
+            and "sports" not in cats:
+        # 21 Nov owner: sport is wanted explicitly ("TEST MATCHES ARE GOING
+        # ON SO YOU WILL EASILY GET SPORTS NEWS"). An India tour of New
+        # Zealand is tagged region=world, so the minor-world penalty was
+        # taking 24 points off every overseas Test and sinking all of it
+        # below the candidate cut - which is why no sports card could ever
+        # be built. The penalty exists to keep trivial foreign politics off
+        # the news card; it must not apply to the sport the owner asked for.
         if not (set(cats) & WORLD_SEVERE_CATS) or \
            not re.search(r"\b\d+\s?(dead|killed|died|injured)\b", title):
             s -= CFG["scoring"].get("world_minor_penalty", 24)
@@ -734,7 +815,22 @@ def run_cycle(max_age_hours, limit):
         head["corroboration"] = [x["source"] for x in c[1:]]
         queue.append(head)
 
-    queue = queue[:limit]
+    # 21 Nov owner: the sports card needs 3-5 stories every cycle. Sport
+    # scores below hard local news by design, so a pure score cut left 2 of
+    # 98 sports stories in the pool and the card could never be built. Keep
+    # a reserved block of the best sport, trimming the weakest tail of the
+    # general pool - the top-ranked news is never touched.
+    _cap = queue[:limit]
+    _have = sum(1 for q in _cap if "sports" in (q.get("categories") or []))
+    _need = max(0, SPORTS_RESERVE - _have)
+    if _need:
+        _extra = [q for q in queue[limit:]
+                  if "sports" in (q.get("categories") or [])][:_need]
+        if _extra:
+            _cap = _cap[:max(0, limit - len(_extra))] + _extra
+            log(f"[queue] reserved {len(_extra)} sports slots for the "
+                f"sports card")
+    queue = _cap
 
     cycle = {
         "cycle_id": now.strftime("%Y%m%d-%H%M"),
