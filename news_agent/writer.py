@@ -222,7 +222,12 @@ def _sanitize(bullets):
         if not b.endswith("."):
             b += "."
         out.append(b)
-    return out if 2 <= len(out) <= 5 else None
+    # 21 Nov: a two-bullet floor here is what forced every frame to pad
+    # itself with "More details are awaited." just to survive. One real
+    # sentence is allowed through; build()'s `subst` gate still demands two
+    # substantive bullets for everything except a complete one-line report
+    # (sport, war, a long political statement).
+    return out if 1 <= len(out) <= 5 else None
 
 
 # --------------------------------------------------------------------------
@@ -682,15 +687,22 @@ def _grounded(bullets, source):
     """STRICT: every digit and every proper noun in a bullet must appear in
     the verified source text. Anything else = invented = refuse."""
     src = source or ""
-    src_nums = set(re.findall(r"\d[\d,.]*", src))
+    # 21 Nov: the capture is greedy over "." and ",", so a bullet ending in
+    # a number took the sentence's own full stop with it - "SA20." never
+    # equalled "SA20" and the bullet was refused as ungrounded. Every number
+    # is compared without trailing punctuation.
+    def _num(x):
+        return x.strip(".,")
+
+    src_nums = {_num(x) for x in re.findall(r"\d[\d,.]*", src)}
     # word numerals in the source count as their digits ("Two held" -> 2)
-    src_nums |= {WORD_NUM[w.lower()] for w in
+    src_nums |= {str(WORD_NUM[w.lower()]) for w in
                  re.findall(r"\b(one|two|three|four|five|six|seven|eight|nine|"
                             r"ten)\b", src, re.I)}
     low = src.lower()
     for b in bullets:
         for n in re.findall(r"\d[\d,.]*", b):
-            if n not in src_nums:
+            if _num(n) not in src_nums:
                 return False
         for w in re.findall(r"\b[A-Z][a-z]{3,}\b", b):
             if w in ALLOWED_TOKENS or w in UR_TOKENS:
@@ -1259,9 +1271,98 @@ SP_POWER = re.compile(
     r"\s+(?i:to)\s+([^,.;]{4,46})")
 
 
+SP_DESCRIPTOR = re.compile(
+    r"^(?:injured|former|ex|star|skipper|captain|veteran|young|debutant|"
+    r"record-breaking|in-form|out-of-form|seven-star|\w+-star|opener|"
+    r"all-rounder|spinner|pacer|keeper|teen|teenager|rising)\s+", re.I)
+
+
 def _sp_clean(s):
     s = re.sub(r"\s+", " ", (s or "")).strip().rstrip(".,;:")
-    return re.sub(r"(?:\u2019s|'s)$", "", s)
+    s = re.sub(r"(?:\u2019s|'s)$", "", s)
+    # "Injured Hasan Mahmud" / "Seven-star Mulder" - the adjective is not
+    # part of the name, and it turned the bullet into an assertion the
+    # headline never made about the player.
+    prev = None
+    while prev != s:
+        prev = s
+        s = SP_DESCRIPTOR.sub("", s).strip()
+    return s
+
+
+# 21 Nov owner: "FOR SPORTS MAKE 3-5 BULLETS CARD ... CRICKET MORE, MAN OF
+# THE MATCH, MORE SIXES, HATTRICK ETC". Measured against 363 live headlines
+# from the cricket/football/tennis feeds, the four original patterns framed
+# 3% of them - "X beat Y" and almost nothing else - which is why a sports
+# card could never be filled. These cover the shapes the feeds actually use.
+SP_N = r"(\d{1,3}|one|two|three|four|five|six|seven|eight|nine|ten|eleven)"
+SP_WKTS = re.compile(
+    NAME + r"\s+(?i:takes?|took|picks? up|picked up|claims?|claimed|grabs?|"
+    r"grabbed|bags?|bagged)\s+" + SP_N + r"[- ]?(?i:wickets?|wkts?)\b")
+SP_HAUL = re.compile(
+    NAME + r"[^,.;]{0,30}?\b" + SP_N + r"[- ](?i:wicket)[- ](?i:haul)\b")
+SP_HAT = re.compile(NAME + r"[^,.;]{0,24}?\b(?i:hat-?trick)\b")
+SP_MOTM = re.compile(
+    NAME + r"[^,.;]{0,30}?\b(?i:named|adjudged|wins?|won|is)\s+"
+    r"(?i:(player|man)\s+of\s+the\s+(match|series|tournament))\b")
+SP_SIX = re.compile(
+    NAME + r"[^,.;]{0,24}?\b(?i:hits?|hit|smashes|smashed|slams|slammed|"
+    r"blasts|blasted)\s+" + SP_N + r"\s+(?i:sixes|sixers)\b")
+SP_BALLS = re.compile(NAME + r"[^,.;]{0,18}?\b(\d{1,3})-ball\s+(\d{1,3})\b")
+SP_RANK = re.compile(
+    NAME + r"\s+(?i:(rises?|rose|climbs?|climbed|moves?|moved|jumps?|"
+    r"jumped))\s+"
+    r"(?i:to)\s+((?:joint-)?(?:first|second|third|fourth|fifth|sixth|"
+    r"seventh|eighth|ninth|tenth|No\.?\s?\d{1,2}|\d{1,2}(?:st|nd|rd|th)))"
+    r"\s+(?i:in\s+the\s+|in\s+)([^,.;]{4,42}?(?i:rankings?))")
+SP_RETIRE = re.compile(
+    NAME + r"\s+(?i:retires?|retired|announces? retirement|"
+    r"announced retirement)\s*(?i:from)?\s*([^,.;]{0,34})")
+SP_SQUAD = re.compile(
+    NAME + r"\s+(?i:returns? to|recalled to|named in|included in|added to|"
+    r"back in)\s+(?:the\s+)?" + NAME + r"?\s*(?i:squad|team|side)\b")
+SP_OUT = re.compile(
+    NAME + r"\s+(?i:out of|ruled out of|withdraws? from|pulls? out of)\s+"
+    r"([^,.;]{4,44}?)"
+    r"(?:\s+(?i:due to|because of|owing to|with|after)\s+"
+    r"(?:(?i:suffering|sustaining)\s+)?([^,.;]{3,34}))?$")
+SP_APPOINT = re.compile(
+    r"([A-Z][\w\u2019'-]*(?:\s+[A-Z][\w\u2019'-]*){0,3})\s+"
+    r"(?i:(appoints?|appointed|set to appoint|set to name|hires?|hired|"
+    r"names?|named))\s+" + NAME + r"\s+(?i:as)\s+([^,.;]{3,34})")
+SP_LEADTO = re.compile(
+    NAME + r"\s+(?i:leads?|led|guides?|guided|steers?|steered)\s+" + NAME +
+    r"\s+(?i:to)\s+([^,.;]{3,44})")
+# only a real title, never "wins family battle with a 15-ball fifty" - an
+# open-ended capture also truncated mid-word ("15-ball fif")
+SP_WINS = re.compile(
+    NAME + r"\s+(?i:wins?|won|clinch(?:es|ed)?|lifts?|lifted|seals?|sealed)"
+    r"\s+(?:the\s+|their\s+|its\s+)?"
+    r"((?:[\w\u2019'-]+\s+){0,4}?"
+    r"(?i:Cup|Trophy|Open|Final|Finals|title|series|championship|League|"
+    r"gold|medal|crown|Masters|Slam))\b")
+# the verb is captured and reused verbatim: writing "picked" where the
+# headline says "pick" fails the grounding gate, which is correct - a bullet
+# may only use words the story actually used.
+SP_PICK = re.compile(
+    NAME + r"\s+(?i:(pick|picks|picked|name|names|named|select|selects|"
+    r"selected|include|includes|included))\s+" + SP_N +
+    r"\s+([\w-]+\s+)?(?i:players?|debutants?)"
+    r"(?:\s+(?i:for)\s+([^,.;]{3,40}))?")
+SP_HOST = re.compile(
+    NAME + r"\s+(?i:to host|will host|hosts|hosted)\s+([^,.;]{4,46})")
+SP_BOWOUT = re.compile(
+    r"([A-Z][\w\u2019'-]*(?:[,\s]+[A-Z][\w\u2019'-]*){0,2})\s+"
+    r"(?i:(bow out of|bows out of|bowed out of|crash out of|"
+    r"crashed out of|exit|exits|exited))\s+([^,.;]{4,44})")
+SP_DRAW = re.compile(
+    NAME + r"\s+(?i:held to|draw with|drew with|play out)\s+"
+    r"(?:a\s+)?(?i:draws?|goalless draw|stalemate)\b")
+
+
+def _sp_num(v):
+    v = (v or "").strip().lower()
+    return str(WORD_NUM[v]) if v in WORD_NUM else v
 
 
 def _frame_sport(c):
@@ -1273,6 +1374,49 @@ def _frame_sport(c):
                      r"Asia\s+Cup|T20|ODI|IPL|ISL|Premier\s+League)\b", title)
     where = f" in the {comp.group(1)}" if comp else ""
     where_ur = f"{comp.group(1)} mein " if comp else ""
+
+    # ---- owner's named asks first: hat-trick, man of the match, sixes ----
+    m = SP_HAT.search(title)
+    if m and m.group(1).lower() not in ("the", "a", "his", "her"):
+        who = _sp_clean(m.group(1))
+        return _sp_out(f"{who} took a hat-trick{where}.",
+                       f"{where_ur}{who} ne hat-trick mukammal ki.",
+                       title, excerpt)
+
+    m = SP_MOTM.search(title)
+    if m:
+        who, award = _sp_clean(m.group(1)), m.group(3).lower()
+        return _sp_out(f"{who} was named player of the {award}.",
+                       f"{who} ko player of the {award} chuna gaya.",
+                       title, excerpt)
+
+    m = SP_SIX.search(title)
+    if m:
+        who, n = _sp_clean(m.group(1)), _sp_num(m.group(2))
+        return _sp_out(f"{who} hit {n} sixes{where}.",
+                       f"{where_ur}{who} ne {n} chhakke lagaye.",
+                       title, excerpt)
+
+    m = SP_HAUL.search(title)
+    if m:
+        who, n = _sp_clean(m.group(1)), _sp_num(m.group(2))
+        return _sp_out(f"{who} took a {n}-wicket haul{where}.",
+                       f"{where_ur}{who} ne {n} wickets haasil kiye.",
+                       title, excerpt)
+
+    m = SP_WKTS.search(title)
+    if m:
+        who, n = _sp_clean(m.group(1)), _sp_num(m.group(2))
+        return _sp_out(f"{who} took {n} wickets{where}.",
+                       f"{where_ur}{who} ne {n} wickets liye.",
+                       title, excerpt)
+
+    m = SP_BALLS.search(title)
+    if m:
+        who, b, r = _sp_clean(m.group(1)), m.group(2), m.group(3)
+        return _sp_out(f"{who} made a {b}-ball {r}{where}.",
+                       f"{where_ur}{who} ne {b} gendon par {r} runs banaye.",
+                       title, excerpt)
 
     m = SP_BEAT.search(title)
     if m and m.group(1).lower() not in ("the", "a"):
@@ -1332,6 +1476,104 @@ def _frame_sport(c):
         en = f"{who}'s {n} took {team} to {rest}."
         ur = f"{who} ke {n} runs se {team} ne {rest} hasil kiya."
         return _sp_out(en, ur, title, excerpt)
+
+    m = SP_LEADTO.search(title)
+    if m:
+        who, team, rest = (_sp_clean(m.group(1)), _sp_clean(m.group(2)),
+                           _sp_clean(m.group(3)))
+        return _sp_out(f"{who} led {team} to {rest}.",
+                       f"{who} ki qiyadat mein {team} ne {rest} haasil kiya.",
+                       title, excerpt)
+
+    m = SP_RANK.search(title)
+    if m:
+        who, verb = _sp_clean(m.group(1)), m.group(2).lower()
+        rank, what = m.group(3), _sp_clean(m.group(4))
+        return _sp_out(f"{who} {verb} to {rank} in the {what}.",
+                       f"{who} {what} mein {rank} par pohanch gaye.",
+                       title, excerpt)
+
+    m = SP_OUT.search(title)
+    if m:
+        who, ev = _sp_clean(m.group(1)), _sp_clean(m.group(2))
+        why = (m.group(3) or "").strip().lower()
+        if why:
+            return _sp_out(f"{who} is out of {ev} with {why}.",
+                           f"{who} {why} ki wajah se {ev} se bahar ho gaye.",
+                           title, excerpt)
+        return _sp_out(f"{who} is out of {ev}.",
+                       f"{who} {ev} se bahar ho gaye.", title, excerpt)
+
+    m = SP_SQUAD.search(title)
+    if m:
+        who = _sp_clean(m.group(1))
+        team = _sp_clean(m.group(2) or "")
+        if team:
+            return _sp_out(f"{who} is back in the {team} squad.",
+                           f"{who} {team} squad mein wapas aa gaye.",
+                           title, excerpt)
+        return _sp_out(f"{who} is back in the squad.",
+                       f"{who} squad mein wapas aa gaye.", title, excerpt)
+
+    m = SP_RETIRE.search(title)
+    if m:
+        who, what = _sp_clean(m.group(1)), _sp_clean(m.group(2) or "").lower()
+        what = what or "the game"
+        return _sp_out(f"{who} announced retirement from {what}.",
+                       f"{who} ne {what} se retirement ka elaan kar diya.",
+                       title, excerpt)
+
+    m = SP_APPOINT.search(title)
+    if m:
+        team, verb = _sp_clean(m.group(1)), m.group(2).lower()
+        who, role = _sp_clean(m.group(3)), _sp_clean(m.group(4))
+        # "set to appoint" has not happened yet - never report it as done
+        if verb.startswith("set to"):
+            return _sp_out(f"{team} are set to appoint {who} as {role}.",
+                           f"{team} {who} ko {role} muqarrar karne wale hain.",
+                           title, excerpt)
+        return _sp_out(f"{team} {verb} {who} as {role}.",
+                       f"{team} ne {who} ko {role} muqarrar kiya.",
+                       title, excerpt)
+
+    m = SP_PICK.search(title)
+    if m:
+        team, verb = _sp_clean(m.group(1)), m.group(2).lower()
+        n, kind = _sp_num(m.group(3)), (m.group(4) or "").strip()
+        series = _sp_clean(m.group(5) or "")
+        what = re.sub(r"\s+", " ", f"{n} {kind} players").strip()
+        if series:
+            return _sp_out(f"{team} {verb} {what} for {series}.",
+                           f"{team} ne {series} ke liye {what} chune.",
+                           title, excerpt)
+        return _sp_out(f"{team} {verb} {what}.",
+                       f"{team} ne {what} chune.", title, excerpt)
+
+    m = SP_BOWOUT.search(title)
+    if m:
+        who, verb = _sp_clean(m.group(1)), m.group(2).lower()
+        ev = _sp_clean(m.group(3))
+        return _sp_out(f"{who} {verb} {ev}.",
+                       f"{who} {ev} se bahar ho gaye.", title, excerpt)
+
+    m = SP_HOST.search(title)
+    if m:
+        where_, ev = _sp_clean(m.group(1)), _sp_clean(m.group(2))
+        return _sp_out(f"{where_} will host {ev}.",
+                       f"{where_} {ev} ki mezbani karega.", title, excerpt)
+
+    m = SP_DRAW.search(title)
+    if m:
+        who = _sp_clean(m.group(1))
+        return _sp_out(f"{who} were held to a draw{where}.",
+                       f"{where_ur}{who} ka match barabar raha.",
+                       title, excerpt)
+
+    m = SP_WINS.search(title)
+    if m and m.group(1).lower() not in ("the", "a"):
+        who, what = _sp_clean(m.group(1)), _sp_clean(m.group(2))
+        return _sp_out(f"{who} won the {what}.",
+                       f"{who} ne {what} jeet liya.", title, excerpt)
     return None
 
 
@@ -1354,8 +1596,34 @@ def _sp_out(en1, ur1, title, excerpt):
         who2, feat = _sp_clean(tail.group(1)), tail.group(2).lower()
         en.append(f"{who2} scored a {feat} in the same match.")
         ur.append(f"Isi match mein {who2} ne {feat} banayi.")
-    en.append(AWAIT_EN)
-    ur.append(AWAIT_UR)
+    return en, ur
+
+
+def sport_bullet(c):
+    """One sourced EN+UR line for the sports card (owner 21 Nov).
+
+    The sports card carries 3-5 stories, one line each, so it needs a single
+    pair rather than a whole card frame. Same grounding gates as build():
+    nothing is published that the headline does not say.
+    """
+    try:
+        res = _frame_sport(c)
+    except Exception:
+        return None
+    if not res or not res[0] or not res[1]:
+        return None
+    en = _sanitize([res[0][0]])
+    ur = _sanitize([res[1][0]])
+    if not en or not ur:
+        return None
+    en, ur = en[0], ur[0]
+    if PLACEHOLDER_RX.search(en) or PLACEHOLDER_RX.search(ur):
+        return None
+    src_txt = c["title"] + " " + _dedateline(c.get("excerpt") or "")
+    if _unsourced([en], src_txt):
+        return None
+    if not _grounded([en, ur], src_txt):
+        return None
     return en, ur
 
 
