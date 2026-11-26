@@ -1,56 +1,64 @@
 {
- "cycle": "20261126-2348",
- "at": "2026-11-26T23:52:22.461181+05:30",
+ "cycle": "20261127-0002",
+ "at": "2026-11-27T00:09:17.306084+05:30",
  "candidates": 170,
  "published_this_cycle": 0,
- "digest": "PUBLISHED auto-digest-2026-11-26-s2351",
+ "digest": "PUBLISHED auto-digest-2026-11-27-s0007",
  "ru": {
   "pre_ru_picks": 5,
   "to_translate": 5,
   "kills": {
-   "digits": [
-    3
-   ]
+   "passthrough-refused": "all"
   },
   "engine": {
-   "ok": true,
+   "ok": false,
    "lines_in": 5,
    "lines_want": 5,
-   "method": "retry",
-   "problems": "[]"
+   "method": "fallback",
+   "problems": "['Lines [1, 2, 3, 4, 5] copy 4+ consecutive English words verbatim into the Roman Urdu. Re-express those phrases in Urdu; keep only proper nouns/brands/technica"
   },
-  "accepted": 4
+  "accepted": 3,
+  "salvaged": [
+   1,
+   2,
+   4
+  ],
+  "via": {
+   "1": "gemini-flash-lite-latest",
+   "2": "gemini-flash-lite-latest",
+   "4": "gemini-flash-lite-latest"
+  }
  },
  "tail": [
-  "[26 Nov 23:52:22] stale or low-score, skipped: Telangana A-Division Kabaddi League begins with SCR victory",
-  "[26 Nov 23:52:22] stale or low-score, skipped: Norrie holds nerve to beat Struff in Davis Cup quarter-final",
-  "[26 Nov 23:52:22] stale or low-score, skipped: Coetzee, Maphaka ruled out of SA’s white-ball games vs Bangl",
-  "[26 Nov 23:52:22] stale or low-score, skipped: Knee surgery rules Sinner out of Australian Open",
-  "[26 Nov 23:52:22] stale or low-score, skipped: Champions League: Man United and PSG held to draws, Bayern l",
-  "[26 Nov 23:52:22] stale or low-score, skipped: Hyderabad Wedding Trip Ends in Tragedy, Four Killed in Anant",
-  "[26 Nov 23:52:22] stale or low-score, skipped: Hyderabad: Techie Dies in Road Accident Near Kondapur",
-  "[26 Nov 23:52:22] stale or low-score, skipped: Deepika-led India favourites to beat Malaysia and reach ACT ",
-  "[26 Nov 23:52:22] stale or low-score, skipped: Azharuddeen smashes 101 as Kerala qualify for SMAT Super Lea",
-  "[26 Nov 23:52:22] stale or low-score, skipped: Sindhu eyes Uber Cup title as badminton’s world team champio",
-  "[26 Nov 23:52:22] stale or low-score, skipped: Buzz at Cyberabad Moves 2026 as citizens, experts discuss mo",
-  "[26 Nov 23:52:22] stale or low-score, skipped: Public Transport Key to Solving Hyderabad’s Traffic Woes, Sa",
-  "[26 Nov 23:52:22] stale or low-score, skipped: Two women die in separate accidents in Khammam, Hanamkonda",
-  "[26 Nov 23:52:22] stale or low-score, skipped: Hyderabad must raise public transport share from 28% to at l",
-  "[26 Nov 23:52:22] stale or low-score, skipped: Cyberabad Moves summit to focus on traffic congestion, publi",
-  "[26 Nov 23:52:22] stale or low-score, skipped: Jannik Sinner out of Australian Open 2027 due to knee injury",
-  "[26 Nov 23:52:22] stale or low-score, skipped: Months after opening, roof plaster falls at government prima",
-  "[26 Nov 23:52:22] stale or low-score, skipped: Suicide pact note, money trail, missing boyfriend: DU studen",
-  "[26 Nov 23:52:22] stale or low-score, skipped: Shaun Tait appointed Lahore Qalandars head coach ahead of PS",
-  "[26 Nov 23:52:22] stale or low-score, skipped: Build cities for people, not cars: Former Bogota Mayor’s mes",
-  "[26 Nov 23:52:22] stale or low-score, skipped: Hockey India League 2026/27 season to begin early January; p",
-  "[26 Nov 23:52:22] stale or low-score, skipped: Kyrgios, Bublik, Svitolina and Pliskova to headline World Te",
-  "[26 Nov 23:52:22] stale or low-score, skipped: Mahabubabad: Tribal College Student Delivers In Bathroom, Ba",
-  "[26 Nov 23:52:22] stale or low-score, skipped: Seven missing Uppada fishermen found safe, set to reunite wi",
-  "[26 Nov 23:52:22] stale or low-score, skipped: Telangana: 138 Medical Shops Face Action Over Irregularities",
-  "[26 Nov 23:52:22] queued for editorial pass (no safe auto frame): ‘Zero tolerance for terror’: Amit Shah says India leading global fight",
-  "[26 Nov 23:52:22] stale or low-score, skipped: Nagendra Clean Chit Sparks Fresh Congress-BJP Clash Over Val",
-  "[26 Nov 23:52:22] queued for editorial pass (no safe auto frame): 70-Year-Old Man Dies After Wasp Attack in Thiruvananthapuram",
-  "[26 Nov 23:52:22] stale or low-score, skipped: Sams to return to Somerset for 2027 T20 Blast",
-  "[26 Nov 23:52:22] stale or low-score, skipped: India’s Big-Fat Wedding Attracts a Staggering 400,000 Guests"
+  "[27 Nov 00:09:17] stale or low-score, skipped: Norrie holds nerve to beat Struff in Davis Cup quarter-final",
+  "[27 Nov 00:09:17] stale or low-score, skipped: Coetzee, Maphaka ruled out of SA’s white-ball games vs Bangl",
+  "[27 Nov 00:09:17] stale or low-score, skipped: Knee surgery rules Sinner out of Australian Open",
+  "[27 Nov 00:09:17] stale or low-score, skipped: Champions League: Man United and PSG held to draws, Bayern l",
+  "[27 Nov 00:09:17] stale or low-score, skipped: Hyderabad Wedding Trip Ends in Tragedy, Four Killed in Anant",
+  "[27 Nov 00:09:17] stale or low-score, skipped: Hyderabad: Techie Dies in Road Accident Near Kondapur",
+  "[27 Nov 00:09:17] stale or low-score, skipped: Deepika-led India favourites to beat Malaysia and reach ACT ",
+  "[27 Nov 00:09:17] stale or low-score, skipped: Azharuddeen smashes 101 as Kerala qualify for SMAT Super Lea",
+  "[27 Nov 00:09:17] stale or low-score, skipped: Buzz at Cyberabad Moves 2026 as citizens, experts discuss mo",
+  "[27 Nov 00:09:17] stale or low-score, skipped: Public Transport Key to Solving Hyderabad’s Traffic Woes, Sa",
+  "[27 Nov 00:09:17] stale or low-score, skipped: Two women die in separate accidents in Khammam, Hanamkonda",
+  "[27 Nov 00:09:17] stale or low-score, skipped: Hyderabad must raise public transport share from 28% to at l",
+  "[27 Nov 00:09:17] stale or low-score, skipped: Cyberabad Moves summit to focus on traffic congestion, publi",
+  "[27 Nov 00:09:17] stale or low-score, skipped: Jannik Sinner out of Australian Open 2027 due to knee injury",
+  "[27 Nov 00:09:17] stale or low-score, skipped: Months after opening, roof plaster falls at government prima",
+  "[27 Nov 00:09:17] stale or low-score, skipped: Suicide pact note, money trail, missing boyfriend: DU studen",
+  "[27 Nov 00:09:17] stale or low-score, skipped: Shaun Tait appointed Lahore Qalandars head coach ahead of PS",
+  "[27 Nov 00:09:17] stale or low-score, skipped: Hockey India League 2026/27 season to begin early January; p",
+  "[27 Nov 00:09:17] stale or low-score, skipped: Kyrgios, Bublik, Svitolina and Pliskova to headline World Te",
+  "[27 Nov 00:09:17] stale or low-score, skipped: Mahabubabad: Tribal College Student Delivers In Bathroom, Ba",
+  "[27 Nov 00:09:17] stale or low-score, skipped: Seven missing Uppada fishermen found safe, set to reunite wi",
+  "[27 Nov 00:09:17] stale or low-score, skipped: Telangana: 138 Medical Shops Face Action Over Irregularities",
+  "[27 Nov 00:09:17] queued for editorial pass (no safe auto frame): ‘Zero tolerance for terror’: Amit Shah says India leading global fight",
+  "[27 Nov 00:09:17] stale or low-score, skipped: Sindhu eyes Uber Cup title as badminton’s world team champio",
+  "[27 Nov 00:09:17] stale or low-score, skipped: Nagendra Clean Chit Sparks Fresh Congress-BJP Clash Over Val",
+  "[27 Nov 00:09:17] stale or low-score, skipped: Build cities for people, not cars: Former Bogota Mayor’s mes",
+  "[27 Nov 00:09:17] queued for editorial pass (no safe auto frame): 70-Year-Old Man Dies After Wasp Attack in Thiruvananthapuram",
+  "[27 Nov 00:09:17] stale or low-score, skipped: Sams to return to Somerset for 2027 T20 Blast",
+  "[27 Nov 00:09:17] stale or low-score, skipped: India’s Big-Fat Wedding Attracts a Staggering 400,000 Guests",
+  "[27 Nov 00:09:17] stale or low-score, skipped: Aditya, Ketan bow out of World Cup Snooker in Muscat"
  ]
 }
