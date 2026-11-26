@@ -29,7 +29,10 @@
         "https://www.thehindu.com/news/cities/Hyderabad/feeder/default.rss",
         "https://www.thehindu.com/news/national/telangana/feeder/default.rss",
         "https://www.thehindu.com/news/national/feeder/default.rss",
-        "https://www.thehindu.com/news/international/feeder/default.rss"
+        "https://www.thehindu.com/news/international/feeder/default.rss",
+        "https://www.thehindu.com/sport/cricket/feeder/default.rss",
+        "https://www.thehindu.com/sport/football/feeder/default.rss",
+        "https://www.thehindu.com/sport/tennis/feeder/default.rss"
       ]
     },
     {
@@ -76,7 +79,8 @@
       "preferred": false,
       "urls": [
         "https://timesofindia.indiatimes.com/rssfeedstopstories.cms",
-        "https://timesofindia.indiatimes.com/rssfeeds/-2128936835.cms"
+        "https://timesofindia.indiatimes.com/rssfeeds/-2128936835.cms",
+        "https://timesofindia.indiatimes.com/rssfeeds/54829575.cms"
       ]
     },
     {
@@ -96,7 +100,8 @@
       "region_priority": 2,
       "preferred": false,
       "urls": [
-        "https://feeds.feedburner.com/ndtvnews-top-stories"
+        "https://feeds.feedburner.com/ndtvnews-top-stories",
+        "https://feeds.feedburner.com/ndtvsports-latest"
       ]
     },
     {
@@ -126,7 +131,9 @@
       "preferred": true,
       "urls": [
         "https://feeds.bbci.co.uk/news/world/rss.xml",
-        "https://feeds.bbci.co.uk/news/rss.xml"
+        "https://feeds.bbci.co.uk/news/rss.xml",
+        "https://feeds.bbci.co.uk/sport/cricket/rss.xml",
+        "https://feeds.bbci.co.uk/sport/tennis/rss.xml"
       ]
     },
     {
@@ -136,6 +143,15 @@
       "preferred": true,
       "urls": [
         "https://www.aljazeera.com/xml/rss/all.xml"
+      ]
+    },
+    {
+      "name": "ESPNcricinfo",
+      "source_key": "espncricinfo",
+      "region_priority": 2,
+      "preferred": true,
+      "urls": [
+        "https://www.espncricinfo.com/rss/content/story/feeds/0.xml"
       ]
     }
   ],
