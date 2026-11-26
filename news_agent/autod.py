@@ -905,8 +905,34 @@ CRICKET_RE = re.compile(
     r"hockey|kabaddi|badminton|Wimbledon|Grand Slam|"
     r"Olympics|Asian Games|Commonwealth Games|"
     r"NBA|NFL|Formula 1|Grand Prix|"
-    r"gold medal|silver medal|bronze medal)\b",
+    r"gold medal|silver medal|bronze medal|"
+    # 21 Nov owner: tennis preferred alongside cricket and football
+    r"tennis|ATP|WTA|US Open|French Open|Australian Open|Roland Garros|"
+    r"Davis Cup|Djokovic|Alcaraz|Sinner|Swiatek|Sabalenka|Medvedev|Zverev|"
+    r"sixes|stumps|run-out|Vijay Hazare|Syed Mushtaq Ali|WPL|The Hundred)\b",
     re.I)
+
+# 21 Nov: CRICKET_RE matched a club name inside ordinary news - a bus crash
+# near Barcelona was tagged sport purely because "Barcelona" is also a
+# football club, which would have put a road accident on the sports card.
+# A club or city name only counts as sport with real sport context nearby.
+_SPORT_AMBIG = re.compile(
+    r"\b(Barcelona|Liverpool|Arsenal|Chelsea|Juventus|Bayern|Derby|"
+    r"Real Madrid|Man City|Man United|Oval|Lords?|Ashes|ICC|Test|Tests)\b",
+    re.I)
+# ICC is the International Criminal Court far more often than the cricket
+# council: "US judge blocks part of Trump's ICC sanctions order" was tagged
+# sport and ranked as the pool's best cricket story.
+_SPORT_ANTI = re.compile(
+    r"\b(criminal court|prosecutor|sanctions?|tribunal|war crimes|"
+    r"arrest warrant|genocide|indictment|judge|hague|treaty|harassment|"
+    r"complaint|probe|nuclear|missile)\b", re.I)
+_SPORT_CONTEXT = re.compile(
+    r"\b(match|matches|goal|goals|scored|score|draw|beat|beats|defeat|"
+    r"defeated|win|wins|won|league|cup|trophy|title|final|semi-final|"
+    r"striker|midfielder|coach|manager|squad|player|players|fixture|"
+    r"penalty|kick-off|season|transfer|signing|club|game|innings|wicket|"
+    r"wickets|batting|bowling|Test|ODI|T20|tournament|trophy)\b", re.I)
 
 
 # 20 Nov owner "some news are also posted twice". The old guard compared
@@ -972,7 +998,19 @@ def _same_event(t1, t2):
 
 def _is_cricket(text):
     """True for cricket, football and other sport (owner 16 + 20 Nov)."""
-    return bool(CRICKET_RE.search(text or ""))
+    t = text or ""
+    m = CRICKET_RE.search(t)
+    if not m:
+        return False
+    if _SPORT_ANTI.search(t) and not _SPORT_CONTEXT.search(t):
+        return False
+    # the ONLY thing that matched was an ambiguous club/ground name, with no
+    # sport context anywhere: that is a place name, not a match report
+    if _SPORT_AMBIG.fullmatch(m.group(0)) and not _SPORT_CONTEXT.search(t):
+        rest = CRICKET_RE.sub("", t, count=1)
+        if not CRICKET_RE.search(rest):
+            return False
+    return True
 
 
 _is_sport = _is_cricket  # the card calls it the sports slot
@@ -1387,6 +1425,118 @@ def _same_story(t1, t2):
     return j >= 0.40 or (long_shared and j >= 0.25)
 
 
+# --------------------------------------------------------------------------
+# 21 Nov owner: "FOR SPORTS MAKE 3-5 BULLETS CARD SEPARATELY, COLLECT SPORTS
+# NEWS AND POST IN ONE CARD NOT MIX WITH OTHER NEWS ... CRICKET , FOOTBALL,
+# TENNIS PREFERRED, CRICKET MORE". Sport used to ride slot 4 of the general
+# card - one lonely match report wedged between a police raid and a war
+# story. It now gets a card of its own and is barred from the news card.
+SPORTS_GAP_HOURS = 4         # one sports card every ~4 hours
+SPORTS_PER_DAY = 3           # ... and at most three a day
+SPORTS_CARD_MIN = 3          # fewer than three real lines: no card at all
+SPORTS_CARD_MAX = 5
+
+_CRICKET_ONLY = re.compile(
+    r"\b(cricket|Test|Tests|ODI|T20I?|IPL|BCCI|ICC|Ranji|Duleep|WPL|PSL|BBL|"
+    r"SA20|ILT20|CPL|Ashes|wicket|wickets|batsman|batsmen|batter|batters|"
+    r"bowler|bowlers|bowling|innings|all-rounder|stumps|hat-trick|sixes|"
+    r"half-century|century|run-chase|playing XI|Vijay Hazare|"
+    r"Syed Mushtaq Ali|The Hundred|county)\b", re.I)
+_FOOTBALL_ONLY = re.compile(
+    r"\b(football|soccer|FIFA|UEFA|Premier League|Champions League|La Liga|"
+    r"Serie A|Bundesliga|Ligue 1|ISL|I-League|striker|midfielder|goalkeeper|"
+    r"goalless|penalty|Messi|Ronaldo|Mbappe|Haaland|Real Madrid|Barcelona|"
+    r"Man City|Man United|Liverpool|Arsenal|Chelsea|Bayern|Juventus)\b", re.I)
+_TENNIS_ONLY = re.compile(
+    r"\b(tennis|ATP|WTA|Wimbledon|US Open|French Open|Australian Open|"
+    r"Roland Garros|Grand Slam|Davis Cup|Djokovic|Alcaraz|Sinner|Swiatek|"
+    r"Sabalenka|Medvedev|Zverev|Gauff)\b", re.I)
+
+
+def _sport_kind(text):
+    """0 cricket, 1 football, 2 tennis, 3 any other sport.
+
+    The owner's order of preference, and the sort key for the card.
+    """
+    t = text or ""
+    if _CRICKET_ONLY.search(t):
+        return 0
+    if _FOOTBALL_ONLY.search(t):
+        return 1
+    if _TENNIS_ONLY.search(t):
+        return 2
+    return 3
+
+
+def build_sports_digest(cands):
+    """One card carrying 3-5 sports stories, one sourced line each."""
+    pool = []
+    for c in cands or []:
+        txt = _cand_text(c)
+        if not ("sports" in (c.get("categories") or []) or _is_sport(txt)):
+            continue
+        # a crash or a court case that merely mentions a club is not sport
+        if set(c.get("categories") or []) & NO_CARD_CATS:
+            continue
+        pair = writer.sport_bullet(c)
+        if not pair:
+            continue
+        pool.append((_sport_kind(txt), -(c.get("score") or 0), c, pair))
+    if len(pool) < SPORTS_CARD_MIN:
+        log(f"[sports] only {len(pool)} framed sports lines, need "
+            f"{SPORTS_CARD_MIN} - no sports card this cycle")
+        return None
+    pool.sort(key=lambda x: (x[0], x[1]))
+
+    # owner: "CRICKET MORE" - cricket leads and keeps the most slots, but a
+    # football and a tennis story still get a look in before extra cricket.
+    picks, used = [], set()
+
+    def _take(pred, limit):
+        for row in pool:
+            if len(picks) >= limit:
+                break
+            if id(row[2]) in used or not pred(row):
+                continue
+            # never two lines about the same match
+            if any(_same_story(row[2]["title"], p[2]["title"]) for p in picks):
+                continue
+            picks.append(row)
+            used.add(id(row[2]))
+
+    _take(lambda r: r[0] == 0, 3)                 # up to 3 cricket first
+    _take(lambda r: r[0] == 1, len(picks) + 1)    # one football
+    _take(lambda r: r[0] == 2, len(picks) + 1)    # one tennis
+    _take(lambda r: True, SPORTS_CARD_MAX)        # fill with the best rest
+    if len(picks) < SPORTS_CARD_MIN:
+        return None
+
+    now = datetime.now(IST)
+    today = now.strftime("%Y-%m-%d")
+    srcs = [p[2] for p in picks]
+    return {
+        "slug": f"auto-sports-{today}-s{now.strftime('%H%M')}",
+        "topic": f"sports-{today}-{now.strftime('%H%M')}",
+        "title": "Sports: " + " | ".join(c["title"][:40] for c in srcs),
+        "headline": "\U0001F3CF SPORTS",
+        "region": "india", "classification": "B",
+        "timestamp": now.strftime("%d %b %Y, %I:%M %p IST"),
+        "source": " / ".join(dict.fromkeys(c["source"] for c in srcs)),
+        "source_urls": [c["url"] for c in srcs],
+        "verified_by": "automated pipeline (multi-feed cross-check)",
+        "key_facts": [],
+        "story_topics": [c["url"] for c in srcs],
+        "bullets_en": [p[3][0] for p in picks],
+        "bullets_ur": [p[3][1] for p in picks],
+        "image_url": next((c.get("image") for c in srcs
+                           if isinstance(c.get("image"), str)
+                           and c.get("image", "").strip()), ""),
+        "image_urls": [c.get("image") for c in srcs
+                       if isinstance(c.get("image"), str)
+                       and c.get("image", "").strip()],
+    }
+
+
 def build_digest(cands, catchup=False):
     """One card, three full headlines: Hyderabad + Telangana + India.
     catchup (owner 25 Sep): after silence, older-but-clean stories may still
@@ -1704,19 +1854,9 @@ def build_digest(cands, catchup=False):
         _take(lambda x: x[0]["region"] == "telangana" and not _sportish(x),
               picks)
         _take(lambda x: x[0]["region"] == "india" and not _sportish(x), picks)
-        # sports slot: cricket or football, whichever is the better story.
-        # Trust monitor's "sports" category as well as the word list here, so
-        # a match report the word list words differently ("Jaiswal's 85,
-        # Rahul's unbeaten fifty") still reaches the slot the owner asked for.
-        # prefer a match report that brings a photo with it - the owner asked
-        # for pictures on every card, and sport is the slot most likely to
-        # have one going spare.
-        def _has_img(x):
-            return isinstance(x[0].get("image"), str) \
-                and bool(x[0].get("image", "").strip())
-
-        if not _take(lambda x: _sportish(x) and _has_img(x), picks):
-            _take(_sportish, picks)
+        # 21 Nov owner: "COLLECT SPORTS NEWS AND POST IN ONE CARD NOT MIX
+        # WITH OTHER NEWS". There is no sports slot on the news card any
+        # more - sport rides its own 3-5 bullet card (build_sports_digest).
         # world slot: ONLY important world news - war, cyber or a big incident.
         # Minor world news still never rides the card.
         _take(lambda x: (x[0]["region"] == "world"
@@ -1729,7 +1869,7 @@ def build_digest(cands, catchup=False):
         for _reg in ("hyderabad", "telangana", "india"):
             _take(lambda x, r=_reg: x[0]["region"] == r and not _sportish(x),
                   picks, limit=DIGEST_SIZE)
-        _take(lambda x: True, picks, limit=DIGEST_SIZE)
+        _take(lambda x: not _sportish(x), picks, limit=DIGEST_SIZE)
         if len(picks) < DIGEST_SIZE:  # fallback: full headline bullets with Urdu tags
             def rank2(c):
                 return (0 if "political_major" in c.get("categories", []) else 1,
@@ -1741,6 +1881,10 @@ def build_digest(cands, catchup=False):
                 if age > 12 or (c.get("score") or 0) < 55:
                     continue
                 if set(c.get("categories", [])) & NO_CARD_CATS:
+                    continue
+                # sport has its own card and never fills the news card
+                if "sports" in (c.get("categories") or []) \
+                        or _is_sport(_cand_text(c)):
                     continue
                 if NO_CARD_RX.search(c["title"]):
                     continue
@@ -2219,8 +2363,12 @@ def _drop_repeats(dg):
     return out
 
 
-def _cadence_from_published(today):
+def _cadence_from_published(today, sports=False):
     """(cards published today, minutes since the last one) from published.json.
+
+    21 Nov: the sports card has its own rhythm, so each kind counts only its
+    own cards. Otherwise a sports card would eat an hourly news slot and the
+    owner would get less news, not more sport.
 
     26 Oct owner "set the cycle to hourly" + "stop posting you posted so many
     cards": quota.json is written by whichever run finishes last, so two runs in
@@ -2237,6 +2385,8 @@ def _cadence_from_published(today):
         return 0, 9999.0
     if not isinstance(rows, list):
         return 0, 9999.0
+    rows = [r for r in rows
+            if str(r.get("topic") or "").startswith("sports-") == bool(sports)]
     stamps = [r.get("published_at") or "" for r in rows]
     stamps = [a for a in stamps if a[:10] == today]
     gap = 9999.0
@@ -2381,6 +2531,41 @@ def one_cycle():
                           "Meta side (permissions/review). Pipeline will resume on its own "
                           "the moment Graph accepts posts again.")
                 save_quota(q0)
+    # ---------------- sports card (owner 21 Nov) ----------------
+    # "FOR SPORTS MAKE 3-5 BULLETS CARD SEPARATELY ... NOT MIX WITH OTHER
+    # NEWS". It rides its own cadence so it never displaces a news card.
+    try:
+        _sn, _sgap = _cadence_from_published(today0, sports=True)
+        _sport_due = (_sn < SPORTS_PER_DAY
+                      and _sgap >= SPORTS_GAP_HOURS * 60
+                      and q0.get("day_total", 0) < DAILY_TOTAL_LIMIT)
+        log(f"[sports] today={_sn}/{SPORTS_PER_DAY} gap={_sgap:.0f}min "
+            f"due={_sport_due}")
+        if _sport_due:
+            try:
+                spc = build_sports_digest(cyc["candidates"])
+            except Exception as _se:
+                import traceback
+                log("SPORTS BUILD CRASH:", _se, traceback.format_exc()[-300:])
+                spc = None
+            if spc:
+                spc = _drop_repeats(spc)
+                if spc is None:
+                    log("[sports] every line had already ridden a card")
+            if spc:
+                _rcs, _ = try_publish(spc)
+                if _rcs == 0:
+                    q0["day_total"] = q0.get("day_total", 0) + 1
+                    q0["last_card_at"] = datetime.now(IST).isoformat()
+                    save_quota(q0)
+                    log("published sports card:", spc["slug"],
+                        "with", len(spc["bullets_en"]), "bullets")
+                    time.sleep(POST_SPACING_SECONDS)
+                else:
+                    log(f"[sports] publish refused rc={_rcs}")
+    except Exception as _se:
+        log("[sports] block errored:", str(_se)[:120])
+
     if posted == 5:
         alert("Facebook publish failed while retrying pending posts",
               "Check Page token permissions (pages_manage_posts).")
