@@ -1,62 +1,54 @@
 {
- "cycle": "20261127-1620",
- "at": "2026-11-27T16:23:19.550714+05:30",
+ "cycle": "20261127-1716",
+ "at": "2026-11-27T17:21:36.832013+05:30",
  "candidates": 170,
  "published_this_cycle": 0,
- "digest": "PUBLISHED auto-digest-2026-11-27-s1621",
+ "digest": "PUBLISHED auto-digest-2026-11-27-s1720",
  "ru": {
   "pre_ru_picks": 5,
   "to_translate": 5,
   "kills": {
-   "digits": [
-    2
-   ]
+   "passthrough-refused": "all"
   },
   "engine": {
-   "ok": true,
+   "ok": false,
    "lines_in": 5,
    "lines_want": 5,
-   "method": "llm",
-   "problems": "[]"
+   "method": "fallback",
+   "problems": "['Lines [1, 2, 3, 4, 5] copy 4+ consecutive English words verbatim into the Roman Urdu. Re-express those phrases in Urdu; keep only proper nouns/brands/technica"
   },
-  "accepted": 5,
-  "salvaged": [
-   2
-  ],
-  "via": {
-   "2": "primary"
-  }
+  "accepted": 5
  },
  "tail": [
-  "[27 Nov 16:23:19] stale or low-score, skipped: Anakapalli: Woman Dies After Iron Sheets Fall on Her in Lorr",
-  "[27 Nov 16:23:19] stale or low-score, skipped: 3 Teenagers Killed As Speeding Police Vehicle Hits Bike In M",
-  "[27 Nov 16:23:19] stale or low-score, skipped: CA announces sandpaper forum will be 'confidential', include",
-  "[27 Nov 16:23:19] stale or low-score, skipped: Man Stabbed To Death After Rash Driving Row In Delhi's Shaku",
-  "[27 Nov 16:23:19] stale or low-score, skipped: BSF Shoots Dead Pakistani Intruder Along India-Pakistan Bord",
-  "[27 Nov 16:23:19] stale or low-score, skipped: ‘Is he crying?’: Former India bowler reacts to Mohammed Sira",
-  "[27 Nov 16:23:19] stale or low-score, skipped: Australia set to axe bowling legend from Test squad ahead of",
-  "[27 Nov 16:23:19] stale or low-score, skipped: Wife, Paramour Murder Husband For Opposing Their Relationshi",
-  "[27 Nov 16:23:19] stale or low-score, skipped: Aviation Experts Urge Caution Over Trainer Aircraft Crash",
-  "[27 Nov 16:23:19] stale or low-score, skipped: BTech Student Attempts Suicide, Rescued By GRP Personnel",
-  "[27 Nov 16:23:19] stale or low-score, skipped: Suryapet: Farmer Dies As Tractor Overturns",
-  "[27 Nov 16:23:19] stale or low-score, skipped: Telangana: 68 farmers die by suicide in State in two months",
-  "[27 Nov 16:23:19] stale or low-score, skipped: Training Aircraft Cessna 152 Aircraft Makes Forced Landing o",
-  "[27 Nov 16:23:19] queued for editorial pass (no safe auto frame): Suspected JeM operative held in Vadodara; planned to attack IAF statio",
-  "[27 Nov 16:23:19] stale or low-score, skipped: Murali Kartik, Ajinkya Rahane react to Mohammed Siraj’s omis",
-  "[27 Nov 16:23:19] stale or low-score, skipped: Public Backing Swells For Kishan Reddy’s Anti-Narcotics Pada",
-  "[27 Nov 16:23:19] stale or low-score, skipped: Telangana paddler Hitesh Dolwani claims UTT Para Table Tenni",
-  "[27 Nov 16:23:19] stale or low-score, skipped: Telangana A-Division Kabaddi League begins with SCR victory",
-  "[27 Nov 16:23:19] stale or low-score, skipped: Kondapur: Hotel Walls Collapse During Cellar Construction",
-  "[27 Nov 16:23:19] stale or low-score, skipped: My dad's watch stopped the moment he died - I found it in th",
-  "[27 Nov 16:23:19] stale or low-score, skipped: Swachh Bharat Spirit Powers Hyderabad Walks For Drug-Free Bh",
-  "[27 Nov 16:23:19] stale or low-score, skipped: Deepika-led India favourites to beat Malaysia and reach ACT ",
-  "[27 Nov 16:23:19] stale or low-score, skipped: Azharuddeen smashes 101 as Kerala qualify for SMAT Super Lea",
-  "[27 Nov 16:23:19] stale or low-score, skipped: Sindhu eyes Uber Cup title as badminton’s world team champio",
-  "[27 Nov 16:23:19] stale or low-score, skipped: Nebraska man who saved woman from burning camper to be honou",
-  "[27 Nov 16:23:19] stale or low-score, skipped: 18 Yr Old Dies of Suspected Heart Arrest While Fleeing Stray",
-  "[27 Nov 16:23:19] stale or low-score, skipped: AP constable dies after drowning while pursuing suspected ca",
-  "[27 Nov 16:23:19] stale or low-score, skipped: England bowl, Owen and Stanlake come in for Australia",
-  "[27 Nov 16:23:19] stale or low-score, skipped: Man City owners should be forced to sell, say clubs",
-  "[27 Nov 16:23:19] stale or low-score, skipped: Hyderabad Must Prioritise People Over Vehicles To Fix Mobili"
+  "[27 Nov 17:21:36] stale or low-score, skipped: Wife, Paramour Murder Husband For Opposing Their Relationshi",
+  "[27 Nov 17:21:36] stale or low-score, skipped: Aviation Experts Urge Caution Over Trainer Aircraft Crash",
+  "[27 Nov 17:21:36] stale or low-score, skipped: BTech Student Attempts Suicide, Rescued By GRP Personnel",
+  "[27 Nov 17:21:36] stale or low-score, skipped: Suryapet: Farmer Dies As Tractor Overturns",
+  "[27 Nov 17:21:36] stale or low-score, skipped: Telangana: 68 farmers die by suicide in State in two months",
+  "[27 Nov 17:21:36] stale or low-score, skipped: Training Aircraft Cessna 152 Aircraft Makes Forced Landing o",
+  "[27 Nov 17:21:36] stale or low-score, skipped: There are weddings, and then there are big, fat weddings",
+  "[27 Nov 17:21:36] stale or low-score, skipped: Public Backing Swells For Kishan Reddy’s Anti-Narcotics Pada",
+  "[27 Nov 17:21:36] stale or low-score, skipped: Telangana paddler Hitesh Dolwani claims UTT Para Table Tenni",
+  "[27 Nov 17:21:36] stale or low-score, skipped: Telangana A-Division Kabaddi League begins with SCR victory",
+  "[27 Nov 17:21:36] stale or low-score, skipped: US sold HIV drug in Africa for $28,000. Indian firm will giv",
+  "[27 Nov 17:21:36] stale or low-score, skipped: Cops rescue UoH student from jumping off balcony in suicide ",
+  "[27 Nov 17:21:36] stale or low-score, skipped: CA announces sandpaper forum will be 'confidential', include",
+  "[27 Nov 17:21:36] stale or low-score, skipped: Man Stabbed To Death After Rash Driving Row In Delhi's Shaku",
+  "[27 Nov 17:21:36] stale or low-score, skipped: BSF Shoots Dead Pakistani Intruder Along India-Pakistan Bord",
+  "[27 Nov 17:21:36] stale or low-score, skipped: Kondapur: Hotel Walls Collapse During Cellar Construction",
+  "[27 Nov 17:21:36] stale or low-score, skipped: Swachh Bharat Spirit Powers Hyderabad Walks For Drug-Free Bh",
+  "[27 Nov 17:21:36] stale or low-score, skipped: Deepika-led India favourites to beat Malaysia and reach ACT ",
+  "[27 Nov 17:21:36] stale or low-score, skipped: Azharuddeen smashes 101 as Kerala qualify for SMAT Super Lea",
+  "[27 Nov 17:21:36] stale or low-score, skipped: Sindhu eyes Uber Cup title as badminton’s world team champio",
+  "[27 Nov 17:21:36] stale or low-score, skipped: US Chip Curbs Threaten to Derail China’s AI Labs",
+  "[27 Nov 17:21:36] stale or low-score, skipped: Gachibowli police foil suicide bid, rescue UoH student",
+  "[27 Nov 17:21:36] stale or low-score, skipped: 18 Yr Old Dies of Suspected Heart Arrest While Fleeing Stray",
+  "[27 Nov 17:21:36] stale or low-score, skipped: AP constable dies after drowning while pursuing suspected ca",
+  "[27 Nov 17:21:36] queued for editorial pass (no safe auto frame): Suspected JeM operative held in Vadodara; planned to attack IAF statio",
+  "[27 Nov 17:21:36] stale or low-score, skipped: Murali Kartik, Ajinkya Rahane react to Mohammed Siraj’s omis",
+  "[27 Nov 17:21:36] stale or low-score, skipped: England bowl, Owen and Stanlake come in for Australia",
+  "[27 Nov 17:21:36] stale or low-score, skipped: Man City owners should be forced to sell, say clubs",
+  "[27 Nov 17:21:36] stale or low-score, skipped: My dad's watch stopped the moment he died - I found it in th",
+  "[27 Nov 17:21:36] stale or low-score, skipped: Hyderabad Must Prioritise People Over Vehicles To Fix Mobili"
  ]
 }
